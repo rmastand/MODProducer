@@ -72,7 +72,7 @@ Note that this repository is concerned with steps (1) to (3) only. Steps (4) to 
 ### Workflow Instructions
 
 
-- The first step is to download ROOT files from the CMS server. You can start the download process using the Python script `utilities/download.py`. This script takes two arguments:
+- The first step is to download ROOT files from the CMS server. You can start the download process using the Python script `download.py`. This script takes two arguments:
 	
     1. a path to a file which contains a list of links to ROOT files to download from the CERN server (one link per line). For a sample file, see `file_paths/Jet/small_list.txt`.  
     2. a destination path to write the files to. Note that the ROOT files are each ~1 GB, so make sure that the destination has enough storage to hold all of the files you're trying to download. 
@@ -80,21 +80,21 @@ Note that this repository is concerned with steps (1) to (3) only. Steps (4) to 
     ```
     python download.py ./file_paths/Jet/small_list.txt ~/MITOpenDataProject/
     ```
-    The download script will skip any ROOT file that you have already downloaded and will resume any broken downloads. So you don't have to download all the files at once as long as you are downloading all of them to the same directory. Note that each file make take 5-10 minutes to download, depending on the quality of your internet connection.
+    The download script will skip any ROOT file that you have already downloaded and will resume any broken downloads. So you don't have to download all the files at once as long as you are downloading all of them to the same directory. Note that each file may take 5-10 minutes to download, depending on the quality of your internet connection.
 
-- Once you've downloaded the AOD files (these are ROOT files), you need to create what's called a "registry". A registry creates a map between event and run number, and the corresponding ROOT file. The registry creator is just an [EDProducer](https://twiki.cern.ch/twiki/bin/view/CMSPublic/WorkBookEDMTutorialProducer "EDProducer") that you run N times for N files, each time simply recording which events and runs are there in a certain ROOT file, in a human readable format. Because this is an [EDProducer](https://twiki.cern.ch/twiki/bin/view/CMSPublic/WorkBookEDMTutorialProducer "EDProducer"), you need to initiazlie CMSSW environment variables first with `cmsenv`. You then create the registry using the Python script `create_registry.py`. This script takes two arguments: 
+- Once you've downloaded the AOD files (these are ROOT files), you need to create what's called a "registry". A registry creates a map between event and run number, and the corresponding ROOT file. The registry creator is just an [EDProducer](https://twiki.cern.ch/twiki/bin/view/CMSPublic/WorkBookEDMTutorialProducer "EDProducer") that you run N times for N files, each time simply recording which events and runs are there in a certain ROOT file, in a human readable format. Because this is an [EDProducer](https://twiki.cern.ch/twiki/bin/view/CMSPublic/WorkBookEDMTutorialProducer "EDProducer"), you need to initialize CMSSW environment variables first with `cmsenv`. You then create the registry using the Python script `create_registry.py`. This script takes two arguments: 
 	
-    1. a path to the ROOT files that you want to process. Note that this is NOT the same as the second argument in the previous step. Because the code maintain the same directory structure as in the CMS servers, the download script creates sub-directories inside the directory that you specified in the previous step. So you need to manually go inside the directory you provided in the previous step, following the subdirectories until you find yourself inside a directory where the ROOT files reside. 
+    1. a path to the ROOT files that you want to process. Note that this is the same as the second argument in the previous command. 
     2. a path to the registry file.
 
     ```
     cmsenv
     ```
     ```
-    python ./create_registry.py ~/MITOpenDataProject/eos/opendata/cms/Run2010B/Jet/AOD/Apr21ReReco-v1/0000/ ~/MITOpenDataProject/registry.txt
+    python ./create_registry.py ./file_paths/Jet/small_list.txt ~/MITOpenDataProject/registry.txt
     ```
 
-- Now that you have created a registry for all the AOD files that tou want to process, you are ready to run another [EDProducer](https://twiki.cern.ch/twiki/bin/view/CMSPublic/WorkBookEDMTutorialProducer "EDProducer") called PFCandidateProducer to convert them into MOD (MIT Open Data) files. You can run PFCandidateProducer with the Python script `PFCandidateRun.py`. This script takes three arguments: 
+- Now that you have created a registry for all the AOD files that you want to process, you are ready to run another [EDProducer](https://twiki.cern.ch/twiki/bin/view/CMSPublic/WorkBookEDMTutorialProducer "EDProducer") called PFCandidateProducer to convert them into MOD (MIT Open Data) files. You can run PFCandidateProducer with the Python script `PFCandidateRun.py`. This script takes three arguments: 
 
 	1. input directory (path to the directory which contains all the AOD files). This is the same as the second argument that you supplied in the previous step.
 	2. output directory (path to the directory where you'd like to store all the MOD files). If this directory is not already present, it will create the directory.
@@ -108,8 +108,44 @@ Note that this repository is concerned with steps (1) to (3) only. Steps (4) to 
   ```
   cmsRun PFCandidateRun.py ~/MITOpenDataProject/eos/opendata/cms/Run2010B/Jet/AOD/Apr21ReReco-v1/0000/ ~/MITOpenDataProject/eos/opendata/cms/Run2010B/Jet/MOD/Apr21ReReco-v1/0000/ ~/MITOpenDataProject/registry.txt 1
   ```
+
+-Finally, we need to transfer all of the MOD files from the CernVM to a host computer, which is where all of the code for MODAnalyzer will be run.
+
+-On your host machine:
+
+	1. Create a directory to store all of the MOD files. Be sure that this directory is in a location where it has enough storage to hold all of your MOD files!
+
+	```
+	mkdir ProducedMOD
+-On the CernVML
+	```
+	1. Mount the shared folder in the CernVM by, in VirtualBox, going to Settings -> Shared Folders. Add the folder path as shown on the host machine. Check "Auto-Mount" and "Make Permanent", if available.
+
+	2. Create a directory to store all of the MOD files on the VM. This folder will link directly to the shared folder on your host machine.
+
+	```
+	mkdir ProducedMODVM
+	```
+
+ 	3. In the terminal application of the CernVM, type `id`. Note the values of uid and gid.
+
+	4. Type
+	
+	```
+	sudo mount -t vboxsf -o uid=<value>,gid=<value> ProducedMOD ProducedMODVM
+	``` 	
+	
+	5. Copy the MOD files from their MITOpenData directory to the shared folder
+	```
+	cp -a ~/MITOpenDataProject/eos/opendata/cms/Run2010B/Jet/MOD/Apr21ReReco-v1/0000/. /ProducedMOD/
+	```
+
+        You should see all of the MOD files on your host machine in the shared folder.
+
   
 - Congratulations! You've successfully converted all the AOD files that you downloaded to MOD files. In other words, you've completed steps (1) to (3) in the workflow given above. Heaad over to [MODAnalyzer](https://github.com/tripatheea/MODAnalyzer/ "MODAnalyzer") to see how you can analyze data in these MOD files to produce all sorts of super-interesting plots. 
+
+
 
 ### Notes about JEC
 While this repository already contains the necessary files to calculate JEC factors inside the directory `data/JEC/`, if you want to regenerate them or need to use a global tag other than GR_R_42:V25, you can use the Python script `JEC_cfg.py`. The global tag can be edited on line 9 and 19. It might take a while (~20 minutes or more) for the script to complete. 
