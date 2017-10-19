@@ -20,7 +20,7 @@ Within a terminal on the VM:
 - Create a CMSSW environment: 
 
     ```
-    cmsrel CMSSW_4_2_8
+cmsrel CMSSW_4_2_8
     ```
 
 - Change to the CMSSW_4_2_8/src/ directory:
@@ -91,17 +91,18 @@ Note that this repository is concerned with steps (1) to (3) only. Steps (4) to 
 
 ### Create the registry
 
-Once you've downloaded the AOD files (these are ROOT files), you need to create what's called a "registry". A registry creates a map between event and run number, and the corresponding ROOT file. The registry creator is just an [EDProducer](https://twiki.cern.ch/twiki/bin/view/CMSPublic/WorkBookEDMTutorialProducer "EDProducer") that you run N times for N files, each time simply recording which events and runs are there in a certain ROOT file, in a human readable format. Because this is an [EDProducer](https://twiki.cern.ch/twiki/bin/view/CMSPublic/WorkBookEDMTutorialProducer "EDProducer"), you need to initialize CMSSW environment variables first with `cmsenv`. You then create the registry using the Python script `create_registry.py`. This script takes two arguments: 
+Once you've downloaded the AOD files (these are ROOT files), you need to create what's called a "registry". A registry creates a map between event and run number, and the corresponding ROOT file. The registry creator is just an [EDProducer](https://twiki.cern.ch/twiki/bin/view/CMSPublic/WorkBookEDMTutorialProducer "EDProducer") that you run N times for N files, each time simply recording which events and runs are there in a certain ROOT file, in a human readable format. Because this is an [EDProducer](https://twiki.cern.ch/twiki/bin/view/CMSPublic/WorkBookEDMTutorialProducer "EDProducer"), you need to initialize CMSSW environment variables first with `cmsenv`. You then create the registry using the Python script ```create_registry.py```. This script takes two arguments: 
 	
    1. a path to the ROOT files that you want to process. Note that this is the same as the second argument in the previous command. 
    2. a path to the registry file.
 
-    ```
-    cmsenv
-    ```
-    ```
-    python ./create_registry.py ./file_paths/Jet/small_list.txt ~/MITOpenDataProject/registry.txt
-    ```
+   ```
+   cmsenv
+   ```
+    
+   ```
+   python ./create_registry.py ./file_paths/Jet/small_list.txt ~/MITOpenDataProject/registry.txt
+   ```
 
 ### Convert CERN AOD files to MOD files
 
@@ -112,13 +113,13 @@ Now that you have created a registry for all the AOD files that you want to proc
    3. path to the registry file, including the filename. 
    4. whether to process from the beginning or not (1 or 0). If set to 1, the Producer will start AOD->MOD conversion from the first file in the registry. However, because it's desirable to break this step into multiple instances, you can run the producer once, quit it and come back later to resume it. So if set to 0, the producer will skip the files already in the MOD output directory and resume from there. Note that, the smallest discrete interval that the producer can detect is one ROOT (or MOD) file. So if you interrupted the producer while it's running, make sure you remove that particular MOD file from the output directory because else, the producer will skip that the next time even though < 100% events of that file are done.
 
-	As mentioned earlier, the "download" step above maintains the directory structure of CMS servers. This includes a directory named "AOD". 
+   As mentioned earlier, the "download" step above maintains the directory structure of CMS servers. This includes a directory named "AOD". 
 
-	Note that to get trigger prescales, PFCandidateProducer needs to load GlobalTags and so, it takes a long time before anything happens (it takes ~10 minutes on my computer).
+   Note that to get trigger prescales, PFCandidateProducer needs to load GlobalTags and so, it takes a long time before anything happens (it takes ~10 minutes on my computer).
     
-  ```
-  cmsRun PFCandidateRun.py ~/MITOpenDataProject/eos/opendata/cms/Run2010B/Jet/AOD/Apr21ReReco-v1/0000/ ~/MITOpenDataProject/eos/opendata/cms/Run2010B/Jet/MOD/Apr21ReReco-v1/0000/ ~/MITOpenDataProject/registry.txt 1
-  ```
+   ```
+   cmsRun PFCandidateRun.py ~/MITOpenDataProject/eos/opendata/cms/Run2010B/Jet/AOD/Apr21ReReco-v1/0000/ ~/MITOpenDataProject/eos/opendata/cms/Run2010B/Jet/MOD/Apr21ReReco-v1/0000/ ~/MITOpenDataProject/registry.txt 1
+   ```
 
 ## Move MOD files to host machine
 
