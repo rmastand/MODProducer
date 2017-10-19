@@ -137,11 +137,12 @@ Note that this repository is concerned with steps (1) to (3) only. Steps (4) to 
 	``` 	
 	
 	5. Copy the MOD files from their MITOpenData directory to the shared folder
+	
 	```
-	cp -a ~/MITOpenDataProject/eos/opendata/cms/Run2010B/Jet/MOD/Apr21ReReco-v1/0000/. /ProducedMOD/
+	cp -a ~/MITOpenDataProject/eos/opendata/cms/Run2010B/Jet/MOD/Apr21ReReco-v1/0000/. ProducedMODVM/
 	```
 
-        You should see all of the MOD files on your host machine in the shared folder.
+- You should see all of the MOD files on your host machine in the shared folder.
 
   
 - Congratulations! You've successfully converted all the AOD files that you downloaded to MOD files. In other words, you've completed steps (1) to (3) in the workflow given above. Heaad over to [MODAnalyzer](https://github.com/tripatheea/MODAnalyzer/ "MODAnalyzer") to see how you can analyze data in these MOD files to produce all sorts of super-interesting plots. 
