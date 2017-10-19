@@ -11,7 +11,9 @@ This package downloads AOD files from the [CERN Open Data Portal](http://opendat
 
 ## Usage Instruction
 
-You're supposed to follow the following steps inside a VM you've created as instructed [here](http://opendata.cern.ch/VM/CMS "CERN Open Data Portal"). 
+All of the code relating to this GitHub should be run inside of a Cern Virtual Machine, which can be found [here](http://opendata.cern.ch/VM/CMS/2010 "CERN Open Data Portal"). For this example, use the CMS 2010 VM; for analysis on other data sets, you may need to use the CMS 2011 VM.
+
+Within a terminal on the VM:
 
 ### Preparation
 
@@ -35,7 +37,7 @@ You're supposed to follow the following steps inside a VM you've created as inst
 - Clone the source code:
 
   ```
-  git clone https://github.com/tripatheea/MODProducer.git CMSOpenData/MODProducer
+  git clone https://github.com/rmastand/MODProducer.git CMSOpenData/MODProducer
   ```
 - Go to the source directory:
 
@@ -53,11 +55,11 @@ You're supposed to follow the following steps inside a VM you've created as inst
 
 We adopt the following workflow for extracting MOD files out of the given AOD files.
 
-1.  Download all the ROOT files and arrange them in the same directory structure as they live on the CMS server.
+1.  Download all the ROOT files into the VM environment and arrange them in the same directory structure as they live on the CMS server.
 
-2. Create a registry that maps each event and run number to a certain ROOT file. This is done so that things can be done one file at a time as we're dealing with multiple TeraBytes of data here and it's a pain to have to do everything at once. 
+2. Create a registry that maps each event and run number to a certain ROOT file. This is done so that analysis can be performed on one file at a time (the alternative is performaning the analysis on multiple TeraBytes of data at one time, which could take several weeks). 
 
-3. Run the Producer on those AOD files. This reads the download directory and processes only the files in there. This produces N MOD files. 
+3. Run the Producer on those AOD files. This reads the download directory and processes only the files in there, as well as [validates](http://opendata.cern.ch/record/1000) the data. This produces N MOD files. 
 
 4. Filter those N MOD files to get only those files for which the correct trigger fired. This process is called Skimming in this workflow. This will produce M <= N MOD files. For a certain AOD file, if none of the events in there have the correct trigger fired, a corresponding skimmed MOD file will not be written. That's why M might be less than N.
 
@@ -72,13 +74,13 @@ Note that this repository is concerned with steps (1) to (3) only. Steps (4) to 
 
 - The first step is to download ROOT files from the CMS server. You can start the download process using the Python script `utilities/download.py`. This script takes two arguments:
 	
-    1. a path to a file which contains a list of links to files to download (one link per line) 
-    2. a destination path to write the files to. For a sample file that contains links to file, see `file_paths/Jet/small_list.txt`. Note that the ROOT files are each ~1 GB, so unless you have a lot of storage available, make sure you don't download too many files. 
+    1. a path to a file which contains a list of links to ROOT files to download from the CERN server (one link per line). For a sample file, see `file_paths/Jet/small_list.txt`.  
+    2. a destination path to write the files to. Note that the ROOT files are each ~1 GB, so make sure that the destination has enough storage to hold all of the files you're trying to download. 
 
     ```
-    python ./utilities/download.py ./file_paths/Jet/small_list.txt ~/MITOpenDataProject/
+    python download.py ./file_paths/Jet/small_list.txt ~/MITOpenDataProject/
     ```
-    The download script will skip any ROOT file that you have already downloaded and will resume any broken downloads. So you don't have to download all the files at once as long as you are downloading all of them to the same directory.
+    The download script will skip any ROOT file that you have already downloaded and will resume any broken downloads. So you don't have to download all the files at once as long as you are downloading all of them to the same directory. Note that each file make take 5-10 minutes to download, depending on the quality of your internet connection.
 
 - Once you've downloaded the AOD files (these are ROOT files), you need to create what's called a "registry". A registry creates a map between event and run number, and the corresponding ROOT file. The registry creator is just an [EDProducer](https://twiki.cern.ch/twiki/bin/view/CMSPublic/WorkBookEDMTutorialProducer "EDProducer") that you run N times for N files, each time simply recording which events and runs are there in a certain ROOT file, in a human readable format. Because this is an [EDProducer](https://twiki.cern.ch/twiki/bin/view/CMSPublic/WorkBookEDMTutorialProducer "EDProducer"), you need to initiazlie CMSSW environment variables first with `cmsenv`. You then create the registry using the Python script `create_registry.py`. This script takes two arguments: 
 	
