@@ -117,8 +117,9 @@ Note that this repository is concerned with steps (1) to (3) only. Steps (4) to 
 
 	```
 	mkdir ProducedMOD
-- On the CernVML
 	```
+- On the CernVM:
+
 	1. Mount the shared folder in the CernVM by, in VirtualBox, going to Settings -> Shared Folders. Add the folder path as shown on the host machine. Check "Auto-Mount" and "Make Permanent", if available.
 
 	2. Create a directory to store all of the MOD files on the VM. This folder will link directly to the shared folder on your host machine.
