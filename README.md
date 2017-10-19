@@ -109,15 +109,15 @@ Note that this repository is concerned with steps (1) to (3) only. Steps (4) to 
   cmsRun PFCandidateRun.py ~/MITOpenDataProject/eos/opendata/cms/Run2010B/Jet/AOD/Apr21ReReco-v1/0000/ ~/MITOpenDataProject/eos/opendata/cms/Run2010B/Jet/MOD/Apr21ReReco-v1/0000/ ~/MITOpenDataProject/registry.txt 1
   ```
 
--Finally, we need to transfer all of the MOD files from the CernVM to a host computer, which is where all of the code for MODAnalyzer will be run.
+- Finally, we need to transfer all of the MOD files from the CernVM to a host computer, which is where all of the code for MODAnalyzer will be run.
 
--On your host machine:
+- On your host machine:
 
 	1. Create a directory to store all of the MOD files. Be sure that this directory is in a location where it has enough storage to hold all of your MOD files!
 
 	```
 	mkdir ProducedMOD
--On the CernVML
+- On the CernVML
 	```
 	1. Mount the shared folder in the CernVM by, in VirtualBox, going to Settings -> Shared Folders. Add the folder path as shown on the host machine. Check "Auto-Mount" and "Make Permanent", if available.
 
