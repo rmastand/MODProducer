@@ -20,7 +20,7 @@ Within a terminal on the VM:
 - Create a CMSSW environment: 
 
     ```
-cmsrel CMSSW_4_2_8
+    cmsrel CMSSW_4_2_8
     ```
 
 - Change to the CMSSW_4_2_8/src/ directory:
@@ -43,7 +43,7 @@ cmsrel CMSSW_4_2_8
   Or, update the repository:
 
   ```
-  git pull origin master
+  git pull origin testroot
   ```
 
 - Go to the source directory:
@@ -55,6 +55,12 @@ cmsrel CMSSW_4_2_8
 
   ```
   scram b
+  ```
+  
+- Prepare a directory:
+
+  ```
+  mkdir -p ~/MITOpenDataProject/eos/opendata/cms/Run2010B/Jet/AOD
   ```
 
 
