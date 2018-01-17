@@ -24,11 +24,11 @@ using namespace edm;
 
 
 
-class filenameMapProducer : public EDProducer 
+class FilenameMapProducer : public EDProducer 
 {
 public: 
-   explicit filenameMapProducer(const ParameterSet&);
-   ~filenameMapProducer();
+   explicit FilenameMapProducer(const ParameterSet&);
+   ~FilenameMapProducer();
 
 private:
    virtual void beginJob();
@@ -47,7 +47,7 @@ private:
 
 
 
-filenameMapProducer::filenameMapProducer(const ParameterSet& iConfig)
+FilenameMapProducer::FilenameMapProducer(const ParameterSet& iConfig)
 : currentProcessingFilename_(iConfig.getParameter<string>("filename")),
   outputFilename_(iConfig.getParameter<string>("outputFile"))
 {
@@ -55,11 +55,11 @@ filenameMapProducer::filenameMapProducer(const ParameterSet& iConfig)
 }
 
 
-filenameMapProducer::~filenameMapProducer() {
+FilenameMapProducer::~FilenameMapProducer() {
 
 }
 
-void filenameMapProducer::produce(Event& iEvent, const EventSetup& iSetup) {
+void FilenameMapProducer::produce(Event& iEvent, const EventSetup& iSetup) {
    
    int runNum = iEvent.id().run();
    int eventNum = iEvent.id().event();
@@ -67,29 +67,29 @@ void filenameMapProducer::produce(Event& iEvent, const EventSetup& iSetup) {
    fileOutput_ << eventNum << " " << runNum << " " << currentProcessingFilename_ << endl;
 }
 
-void filenameMapProducer::beginJob() {
+void FilenameMapProducer::beginJob() {
 
 }
 
-void filenameMapProducer::endJob() {
+void FilenameMapProducer::endJob() {
    fileOutput_.close();
 }
 
-void filenameMapProducer::beginRun(edm::Run & iRun, edm::EventSetup const & iSetup){
+void FilenameMapProducer::beginRun(edm::Run & iRun, edm::EventSetup const & iSetup){
 
 }
 
-void filenameMapProducer::endRun(edm::Run&, edm::EventSetup const&) {
+void FilenameMapProducer::endRun(edm::Run&, edm::EventSetup const&) {
 
 }
 
-void filenameMapProducer::beginLuminosityBlock(edm::LuminosityBlock& iLumi, edm::EventSetup const& iSetup) {
+void FilenameMapProducer::beginLuminosityBlock(edm::LuminosityBlock& iLumi, edm::EventSetup const& iSetup) {
 
 }
 
-void filenameMapProducer::endLuminosityBlock(edm::LuminosityBlock& iLumi, edm::EventSetup const& iSetup) {
+void FilenameMapProducer::endLuminosityBlock(edm::LuminosityBlock& iLumi, edm::EventSetup const& iSetup) {
 
 }
 
 
-DEFINE_FWK_MODULE(filenameMapProducer);
+DEFINE_FWK_MODULE(FilenameMapProducer);
