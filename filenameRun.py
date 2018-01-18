@@ -8,7 +8,7 @@ registry_file_path = sys.argv[3]
 
 file_name = data_file_link[len(data_file_link) - 41:len(data_file_link)]
 
-process = cms.Process("filenameMapProducer")
+process = cms.Process("FilenameMapProducer")
 
 process.load("FWCore.MessageLogger.MessageLogger_cfi")
 
@@ -23,7 +23,7 @@ myLumis = LumiList.LumiList(filename = goodJSON).getCMSSWString().split(',')
 process.source.lumisToProcess = cms.untracked.VLuminosityBlockRange()
 process.source.lumisToProcess.extend(myLumis)
 
-process.filenameMapProducer = cms.EDProducer("filenameMapProducer", 
+process.FilenameMapProducer = cms.EDProducer("FilenameMapProducer", 
 						filename = cms.string(file_name), 
 						outputFile = cms.string(registry_file_path) 
 						)
@@ -34,5 +34,5 @@ process.MessageLogger = cms.Service("MessageLogger",
        )                                                  
 )       
 						
-process.producer = cms.Path(process.filenameMapProducer)
+process.producer = cms.Path(process.FilenameMapProducer)
 process.schedule = cms.Schedule( process.producer )
