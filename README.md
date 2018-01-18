@@ -57,10 +57,10 @@ Within a terminal on the VM:
   scram b
   ```
   
-- Prepare a directory:
+- Prepare a directory (may need to prepare more than 1?? may need to manually setup the directory substructure...will check back once the wget is fixed)
 
   ```
-  mkdir -p ~/MITOpenDataProject/eos/opendata/cms/Run2010B/Jet/AOD
+  mkdir -p ~/MITOpenDataProject/eos/opendata/cms/Run2010B/Jet/AOD/Apr21ReReco-v1/0000/
   ```
 
 
