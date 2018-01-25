@@ -23,12 +23,6 @@ Within a terminal on the VM:
     cmsrel CMSSW_4_2_8
     ```
     
-    If using the 2011 VM, use
-    
- 
-    ```
-    cmsrel CMSSW_5_3_32
-    ```
 
 - Change to the CMSSW_4_2_8/src/ directory:
 
@@ -124,7 +118,7 @@ Now that you have created a registry for all the AOD files that you want to proc
 
    Note that to get trigger prescales, PFCandidateProducer needs to load GlobalTags and so, it takes a long time before anything happens (it takes ~10 minutes on my computer).
    
-   Note: if using the 2011 data, you need to change goodJSON in  ```PFCandidateRun.py ``` to the proper list of validated runs for the dataset. Make sure you're downloaded the file first and placed it in the file_paths folder (look for: Cert_160404-180252_7TeV_ReRecoNov08_Collisions11_JSON.txt).
+   Note: if using the 2011 data, you need to change goodJSON in  ```PFCandidateRun.py ``` to the proper list of validated runs for the dataset. Make sure you're downloaded the file first and placed it in the file_paths folder.
     
    ```
    cmsRun PFCandidateRun.py ~/MITOpenDataProject/eos/opendata/cms/Run2010B/Jet/AOD/Apr21ReReco-v1/0000/ ~/MITOpenDataProject/eos/opendata/cms/Run2010B/Jet/MOD/Apr21ReReco-v1/0000/ ~/MITOpenDataProject/registry.txt 1
