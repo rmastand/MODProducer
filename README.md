@@ -20,7 +20,14 @@ Within a terminal on the VM:
 - Create a CMSSW environment: 
 
     ```
-cmsrel CMSSW_4_2_8
+    cmsrel CMSSW_4_2_8
+    ```
+    
+    If using the 2011 VM, use
+    
+ 
+    ```
+    cmsrel CMSSW_5_3_32
     ```
 
 - Change to the CMSSW_4_2_8/src/ directory:
