@@ -123,6 +123,8 @@ Now that you have created a registry for all the AOD files that you want to proc
    As mentioned earlier, the "download" step above maintains the directory structure of CMS servers. This includes a directory named "AOD". 
 
    Note that to get trigger prescales, PFCandidateProducer needs to load GlobalTags and so, it takes a long time before anything happens (it takes ~10 minutes on my computer).
+   
+   Note: if not using the 2010 data, you need to change goodJSON in  ```PFCandidateRun.py ``` to the proper list of validated runs for the dataset. Make sure you're downloaded the file first and placed it in the file_paths folder.
     
    ```
    cmsRun PFCandidateRun.py ~/MITOpenDataProject/eos/opendata/cms/Run2010B/Jet/AOD/Apr21ReReco-v1/0000/ ~/MITOpenDataProject/eos/opendata/cms/Run2010B/Jet/MOD/Apr21ReReco-v1/0000/ ~/MITOpenDataProject/registry.txt 1
