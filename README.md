@@ -65,7 +65,7 @@ Within a terminal on the VM:
   ```
 
 
-### Workflow
+### Workflow (optimized for the 2011 Jet data)
 
 We adopt the following workflow for extracting MOD files out of the given AOD files.
 
@@ -124,7 +124,7 @@ Now that you have created a registry for all the AOD files that you want to proc
 
    Note that to get trigger prescales, PFCandidateProducer needs to load GlobalTags and so, it takes a long time before anything happens (it takes ~10 minutes on my computer).
    
-   Note: if not using the 2010 data, you need to change goodJSON in  ```PFCandidateRun.py ``` to the proper list of validated runs for the dataset. Make sure you're downloaded the file first and placed it in the file_paths folder.
+   Note: if using the 2011 data, you need to change goodJSON in  ```PFCandidateRun.py ``` to the proper list of validated runs for the dataset. Make sure you're downloaded the file first and placed it in the file_paths folder (look for: Cert_160404-180252_7TeV_ReRecoNov08_Collisions11_JSON.txt).
     
    ```
    cmsRun PFCandidateRun.py ~/MITOpenDataProject/eos/opendata/cms/Run2010B/Jet/AOD/Apr21ReReco-v1/0000/ ~/MITOpenDataProject/eos/opendata/cms/Run2010B/Jet/MOD/Apr21ReReco-v1/0000/ ~/MITOpenDataProject/registry.txt 1
