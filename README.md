@@ -132,6 +132,8 @@ Now that you have created a registry for all the AOD files that you want to proc
    Note that to get trigger prescales, PFCandidateProducer needs to load GlobalTags and so, it takes a long time before anything happens (it takes ~10 minutes on my computer).
    
     If you downloaded the root files beforehand, use (note that as of 1/30/2018, you still need internet access for this step):
+    
+    
    ```
    cmsRun PFCandidateRun.py ~/MITOpenDataProject/eos/opendata/cms/Run2010B/Jet/AOD/Apr21ReReco-v1/0000/ ~/MITOpenDataProject/eos/opendata/cms/Run2010B/Jet/MOD/Apr21ReReco-v1/0000/ ~/MITOpenDataProject/registry.txt 1
    ```
