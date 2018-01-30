@@ -20,13 +20,13 @@ Within a terminal on the VM:
 - Create a CMSSW environment: 
 
     ```
-    cmsrel CMSSW_4_2_8
+    cmsrel CMSSW_5_3_32
     ```
 
-- Change to the CMSSW_4_2_8/src/ directory:
+- Change to the CMSSW_5_3_32/src/ directory:
 
     ```
-    cd CMSSW_4_2_8/src/
+    cd CMSSW_5_3_32/src/
     ```
 
 - Initialize the CMSSW environment:
@@ -57,11 +57,6 @@ Within a terminal on the VM:
   scram b
   ```
   
-- Prepare a directory (may need to prepare more than 1?? may need to manually setup the directory substructure...will check back once the wget is fixed)
-
-  ```
-  mkdir -p ~/MITOpenDataProject/eos/opendata/cms/Run2010B/Jet/AOD/Apr21ReReco-v1/0000/
-  ```
 
 
 ### Workflow
@@ -91,7 +86,7 @@ Note that this repository is concerned with steps (1) to (3) only. Steps (4) to 
     2. a destination path to write the files to. Note that the ROOT files are each ~1 GB, so make sure that the destination has enough storage to hold all of the files you're trying to download. 
 
     ```
-    python download.py ./file_paths/Jet/small_list.txt ~/MITOpenDataProject/
+    python download.py ./file_paths/Jet11/10000.txt ~/MITOpenDataProject/
     ```
     The download script will skip any ROOT file that you have already downloaded and will resume any broken downloads. So you don't have to download all the files at once as long as you are downloading all of them to the same directory. Note that each file may take 5-10 minutes to download, depending on the quality of your internet connection.
     
@@ -109,11 +104,11 @@ Once you've downloaded the AOD files (these are ROOT files), you need to create 
    ```
    If you downloaded the root files beforehand, use:
    ```
-   python ./create_registry.py ~/MITOpenDataProject/eos/opendata/cms/Run2010B/Jet/AOD/Apr21ReReco-v1/0000/ ~/MITOpenDataProject/registry.txt
+   python ./create_registry.py ~/MITOpenDataProject/eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/10000/ ~/MITOpenDataProject/registry.txt
    ```
    Or, use:
    ```
-   python ./create_registry_online.py ./file_paths/Jet/small_list.txt ~/MITOpenDataProject/registry.txt
+   python ./create_registry_online.py ./file_paths/Jet11/10000.txt ~/MITOpenDataProject/registry.txt
    ```
 
 ### Convert CERN AOD files to MOD files
@@ -135,11 +130,11 @@ Now that you have created a registry for all the AOD files that you want to proc
     
     
    ```
-   cmsRun PFCandidateRun.py ~/MITOpenDataProject/eos/opendata/cms/Run2010B/Jet/AOD/Apr21ReReco-v1/0000/ ~/MITOpenDataProject/eos/opendata/cms/Run2010B/Jet/MOD/Apr21ReReco-v1/0000/ ~/MITOpenDataProject/registry.txt 1
+   cmsRun PFCandidateRun.py ~/MITOpenDataProject/eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/10000/ ~/MITOpenDataProject/eos/opendata/cms/Run2011A/Jet/MOD/12Oct2013-v1/10000/ ~/MITOpenDataProject/registry.txt 1
    ```
    Or, use:
    ```
-   cmsRun PFCandidateRun_online.py file_paths/Jet/small_list.txt ~/MITOpenDataProject/eos/opendata/cms/Run2010B/Jet/MOD/Apr21ReReco-v1/0000/ ~/MITOpenDataProject/registry.txt 1
+   cmsRun PFCandidateRun_online.py file_paths/Jet11/10000.txt ~/MITOpenDataProject/eos/opendata/cms/Run2011A/Jet/MOD/12Oct2013-v1/10000/ ~/MITOpenDataProject/registry.txt 1
    ```
    
    If you're getting odd outputs (i.e. "File already processed" where you think there shouldn't be), try deleting the files 0 and / or 1 and try again.
