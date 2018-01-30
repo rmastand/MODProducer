@@ -56,7 +56,7 @@ def create_registry(path, log_file_path):
     
     
     
-	for file in os.listdir(input_dir):
+    for file in os.listdir(input_dir):
 	
 			files_to_process.append("file://" + input_dir + "/" + file)
 			
@@ -73,7 +73,7 @@ def create_registry(path, log_file_path):
             log_file.close()
 start = time()
 
-create_registry(file_with_source_paths, log_file_path)
+create_registry(input_dir, log_file_path)
 
 end = time()
 
