@@ -25,7 +25,7 @@ import os
 from time import time
 import sys
 
-file_with_source_paths = sys.argv[1]
+input_dir = sys.argv[1]
 registry_file_path = sys.argv[2]
 
 log_file_path = str(registry_file_path) + "_log.log"
@@ -52,9 +52,16 @@ def create_registry(path, log_file_path):
     print "File already processed", files_already_processed
 
     files_to_process = []
-    with open(path, 'r') as f:
-        for line in f:
-            files_to_process.append(line.strip("\n"))
+    
+    
+    
+    
+	for file in os.listdir(input_dir):
+	
+			files_to_process.append("file://" + input_dir + "/" + file)
+			
+			
+
 
     for root_file in sorted(files_to_process):
         stdoutdata, stderrdata = subprocess.Popen(
