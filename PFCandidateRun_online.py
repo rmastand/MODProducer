@@ -11,7 +11,7 @@ from RecoJets.JetProducers.AnomalousCellParameters_cfi import *
 from RecoJets.JetProducers.ak5PFJets_cfi import ak5PFJets
 from RecoJets.JetProducers.kt4PFJets_cfi import kt4PFJets
 
-input_dir = sys.argv[2]
+input_file = sys.argv[2]
 output_dir = sys.argv[3]
 map_file_path = sys.argv[4]
 completed_log_filename = sys.argv[5]
@@ -22,7 +22,7 @@ if not os.path.exists(dir_to_create):
 
 files_to_process = []
 
-with open(path, 'r') as f:
+with open(input_file, 'r') as f:
         for line in f:
             files_to_process.append(line.strip("\n"))
 			
