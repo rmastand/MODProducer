@@ -94,6 +94,8 @@ Note that this repository is concerned with steps (1) to (3) only. Steps (4) to 
     python download.py ./file_paths/Jet/small_list.txt ~/MITOpenDataProject/
     ```
     The download script will skip any ROOT file that you have already downloaded and will resume any broken downloads. So you don't have to download all the files at once as long as you are downloading all of them to the same directory. Note that each file may take 5-10 minutes to download, depending on the quality of your internet connection.
+    
+    ** Note: you may skip this step if desired and access all the root files from online. This will save lots of hard drive space, as these root files are huge and there are lots of them. However, downloading the files beforehand increases the runtime of the next 2 steps noticably. **
 
 ### Create the registry
 
@@ -105,9 +107,13 @@ Once you've downloaded the AOD files (these are ROOT files), you need to create 
    ```
    cmsenv
    ```
-    
+   If you downloaded the root files beforehand, use:
    ```
-   python ./create_registry.py ./file_paths/Jet/small_list.txt ~/MITOpenDataProject/registry.txt
+   python ./create_registry.py ~/MITOpenDataProject/eos/opendata/cms/Run2010B/Jet/AOD/Apr21ReReco-v1/0000/ ~/MITOpenDataProject/registry.txt
+   ```
+   Or, use:
+   ```
+   python ./create_registry_online.py ./file_paths/Jet/small_list.txt ~/MITOpenDataProject/registry.txt
    ```
 
 ### Convert CERN AOD files to MOD files
@@ -124,10 +130,17 @@ Now that you have created a registry for all the AOD files that you want to proc
    As mentioned earlier, the "download" step above maintains the directory structure of CMS servers. This includes a directory named "AOD". 
 
    Note that to get trigger prescales, PFCandidateProducer needs to load GlobalTags and so, it takes a long time before anything happens (it takes ~10 minutes on my computer).
-    
+   
+    If you downloaded the root files beforehand, use (note that as of 1/30/2018, you still need internet access for this step):
    ```
    cmsRun PFCandidateRun.py ~/MITOpenDataProject/eos/opendata/cms/Run2010B/Jet/AOD/Apr21ReReco-v1/0000/ ~/MITOpenDataProject/eos/opendata/cms/Run2010B/Jet/MOD/Apr21ReReco-v1/0000/ ~/MITOpenDataProject/registry.txt 1
    ```
+   Or, use:
+   ```
+   cmsRun PFCandidateRun_online.py file_paths/Jet/small_list.txt ~/MITOpenDataProject/eos/opendata/cms/Run2010B/Jet/MOD/Apr21ReReco-v1/0000/ ~/MITOpenDataProject/registry.txt 1
+   ```
+   
+   If you're getting odd outputs (i.e. "File already processed" where you think there shouldn't be), try deleting the files 0 and / or 1 and try again.
 
 ## Move MOD files to host machine
 
@@ -144,25 +157,14 @@ Finally, we need to transfer all of the MOD files from the CernVM to a host comp
 
 	1. Mount the shared folder in the CernVM by, in VirtualBox, going to Settings -> Shared Folders. Add the folder path as shown on the host machine. Check "Auto-Mount" and "Make Permanent", if available.
 
-	2. Create a directory to store all of the MOD files on the VM. This folder will link directly to the shared folder on your host machine.
 
-	```
-	mkdir ProducedMODVM
-	```
+ 	2. In the terminal application of the CernVM, type `id`. Note the values of uid and gid.
 
- 	3. In the terminal application of the CernVM, type `id`. Note the values of uid and gid.
-
-	4. Type
+	3. Type
 	
 	```
-	sudo mount -t vboxsf -o uid=<value>,gid=<value> ProducedMOD ProducedMODVM
+	sudo mount -t vboxsf -o uid=<value>,gid=<value> ProducedMOD ~/MITOpenDataProject
 	``` 	
-	
-	5. Copy the MOD files from their MITOpenData directory to the shared folder
-	
-	```
-	cp -a ~/MITOpenDataProject/eos/opendata/cms/Run2010B/Jet/MOD/Apr21ReReco-v1/0000/. ProducedMODVM/
-	```
 
 - You should see all of the MOD files on your host machine in the shared folder.
 
