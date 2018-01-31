@@ -40,16 +40,18 @@ Within a terminal on the VM:
   git clone https://github.com/rmastand/MODProducer.git CMSOpenData/MODProducer
   ```
    
-  Or, update the repository:
-
-  ```
-  git pull origin testroot
-  ```
+ 
 
 - Go to the source directory:
 
   ```
   cd CMSOpenData/MODProducer
+  ```
+  
+- Get the right branch
+
+  ```
+  git checkout testroot
   ```
 - Compile everything:
 
