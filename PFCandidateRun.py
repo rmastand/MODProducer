@@ -33,12 +33,12 @@ if os.path.isdir(input_dir):
 				#print "{} is already in the directory so skipping.".format(output_file)
 				pass
 
-			files_to_process.append("file://" + input_dir + "/" + file)
-			is_input_directory = True
+			#files_to_process.append("file://" + input_dir + "/" + file)
+			#is_input_directory = True
 			
 			
-else:
-	files_to_process.append("file://" + input_dir)
+#else:
+	#files_to_process.append("file://" + input_dir)
 
 files_to_process.sort()
 
