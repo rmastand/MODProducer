@@ -86,7 +86,7 @@ Note that this repository is concerned with steps (1) to (3) only. Steps (4) to 
     2. a destination path to write the files to. Note that the ROOT files are each ~1 GB, so make sure that the destination has enough storage to hold all of the files you're trying to download. 
 
     ```
-    python download.py ./file_paths/Jet11/10000.txt ~/MITOpenDataProject/
+    python download.py ./file_paths/Jet11/small_list.txt ~/MITOpenDataProject/
     ```
     The download script will skip any ROOT file that you have already downloaded and will resume any broken downloads. So you don't have to download all the files at once as long as you are downloading all of them to the same directory. Note that each file may take 5-10 minutes to download, depending on the quality of your internet connection.
     
@@ -104,11 +104,11 @@ Once you've downloaded the AOD files (these are ROOT files), you need to create 
    ```
    If you downloaded the root files beforehand, use:
    ```
-   python ./create_registry.py ~/MITOpenDataProject/eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/10000/ ~/MITOpenDataProject/registry.txt
+   python ./create_registry.py ~/MITOpenDataProject/eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20000/ ~/MITOpenDataProject/registry.txt
    ```
    Or, use:
    ```
-   python ./create_registry_online.py ./file_paths/Jet11/10000.txt ~/MITOpenDataProject/registry.txt
+   python ./create_registry_online.py ./file_paths/Jet11/small_list.txt ~/MITOpenDataProject/registry.txt
    ```
 
 ### Convert CERN AOD files to MOD files
@@ -127,14 +127,29 @@ Now that you have created a registry for all the AOD files that you want to proc
    Note that to get trigger prescales, PFCandidateProducer needs to load GlobalTags and so, it takes a long time before anything happens (it takes ~10 minutes on my computer).
    
    If you downloaded the root files beforehand, use (note that as of 1/30/2018, you still need internet access for this step):
+   
+   First set up the symbolic links to properly access the 2011 data:
+   
+   ```
+   ln -sf /cvmfs/cms-opendata-conddb.cern.ch/FT_53_LV5_AN1_RUNA FT_53_LV5_AN1
+   ln -sf /cvmfs/cms-opendata-conddb.cern.ch/FT_53_LV5_AN1_RUNA.db FT_53_LV5_AN1_RUNA.db
+   ```
+   
+   Check that the cms-opendata-conddb.cern.ch directory has actually expanded in the VM. 
+   ```
+   ls -l
+   ls -l /cvmfs/
+   ```
+  
+  Now analyze the files! If you've downloaded all the AOD files, run:
     
     
    ```
-   cmsRun PFCandidateRun.py ~/MITOpenDataProject/eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/10000/ ~/MITOpenDataProject/eos/opendata/cms/Run2011A/Jet/MOD/12Oct2013-v1/10000/ ~/MITOpenDataProject/registry.txt 1
+   cmsRun PFCandidateRun.py ~/MITOpenDataProject/eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20000/ ~/MITOpenDataProject/eos/opendata/cms/Run2011A/Jet/MOD/12Oct2013-v1/20000/ ~/MITOpenDataProject/registry.txt 1
    ```
    Or, use:
    ```
-   cmsRun PFCandidateRun_online.py file_paths/Jet11/10000.txt ~/MITOpenDataProject/eos/opendata/cms/Run2011A/Jet/MOD/12Oct2013-v1/10000/ ~/MITOpenDataProject/registry.txt 1
+   cmsRun PFCandidateRun_online.py file_paths/Jet11/small_list.txt ~/MITOpenDataProject/eos/opendata/cms/Run2011A/Jet/MOD/12Oct2013-v1/20000/ ~/MITOpenDataProject/registry.txt 1
    ```
    
    If you're getting odd outputs (i.e. "File already processed" where you think there shouldn't be), try deleting the files 0 and / or 1 and try again.
