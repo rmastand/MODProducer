@@ -39,17 +39,17 @@ Within a terminal on the VM:
   ```
   git clone https://github.com/rmastand/MODProducer.git CMSOpenData/MODProducer
   ```
-   
-  Or, update the repository:
-
-  ```
-  git pull origin testroot
-  ```
 
 - Go to the source directory:
 
   ```
   cd CMSOpenData/MODProducer
+  ```
+  
+- Switch branches
+
+  ```
+  git checkout 2011
   ```
 - Compile everything:
 
