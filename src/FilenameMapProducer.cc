@@ -22,14 +22,13 @@
 using namespace std;
 using namespace edm;
 
-
+int counts = 0;
 
 class FilenameMapProducer : public EDProducer 
 {
 public: 
    explicit FilenameMapProducer(const ParameterSet&);
    ~FilenameMapProducer();
-
 private:
    virtual void beginJob();
    virtual void produce(edm::Event&, const edm::EventSetup&);
@@ -38,21 +37,26 @@ private:
    virtual void endRun(edm::Run&, edm::EventSetup const&);
    virtual void beginLuminosityBlock(edm::LuminosityBlock&, edm::EventSetup const&);
    virtual void endLuminosityBlock(edm::LuminosityBlock&, edm::EventSetup const&);
-
+   
    ofstream fileOutput_;
+   ofstream numOutput_;
    string currentProcessingFilename_;
    string outputFilename_;
-
+   string numFilename_;
+    
 };
 
 
 
 FilenameMapProducer::FilenameMapProducer(const ParameterSet& iConfig)
 : currentProcessingFilename_(iConfig.getParameter<string>("filename")),
-  outputFilename_(iConfig.getParameter<string>("outputFile"))
+  outputFilename_(iConfig.getParameter<string>("outputFile")),
+  numFilename_(iConfig.getParameter<string>("numFile"))
 {
   fileOutput_.open(outputFilename_.c_str(), std::fstream::out | std::fstream::app);
 }
+
+
 
 
 FilenameMapProducer::~FilenameMapProducer() {
@@ -63,8 +67,8 @@ void FilenameMapProducer::produce(Event& iEvent, const EventSetup& iSetup) {
    
    int runNum = iEvent.id().run();
    int eventNum = iEvent.id().event();
-   
-   fileOutput_ << eventNum << " " << runNum << " " << currentProcessingFilename_ << endl;
+   counts = counts + 1;  
+   fileOutput_ << eventNum << " " << runNum  << " " << currentProcessingFilename_ << endl;
 }
 
 void FilenameMapProducer::beginJob() {
@@ -72,7 +76,11 @@ void FilenameMapProducer::beginJob() {
 }
 
 void FilenameMapProducer::endJob() {
+ 	
+   numOutput_.open(numFilename_.c_str(), std::fstream::out | std::fstream::app);	
+   numOutput_ << currentProcessingFilename_ << " " << counts << endl;
    fileOutput_.close();
+   numOutput_.close();
 }
 
 void FilenameMapProducer::beginRun(edm::Run & iRun, edm::EventSetup const & iSetup){
@@ -80,7 +88,6 @@ void FilenameMapProducer::beginRun(edm::Run & iRun, edm::EventSetup const & iSet
 }
 
 void FilenameMapProducer::endRun(edm::Run&, edm::EventSetup const&) {
-
 }
 
 void FilenameMapProducer::beginLuminosityBlock(edm::LuminosityBlock& iLumi, edm::EventSetup const& iSetup) {
