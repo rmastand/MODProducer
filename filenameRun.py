@@ -26,7 +26,7 @@ process.source.lumisToProcess.extend(myLumis)
 
 process.FilenameMapProducer = cms.EDProducer("FilenameMapProducer", 
 						filename = cms.string(file_name), 
-						outputFile = cms.string(registry_file_path) 
+						outputFile = cms.string(registry_file_path),
 					        numFile = cms.string(path_to_counts)
 						)
 
