@@ -120,9 +120,6 @@ You may want to run this step to ensure that you're downloaded all the AOD file 
    1. a path to the ROOT files that you want to process. Note that this is the same as the second argument in the previous command.
    2. a path to a text file that will count the number of total events.
    
-   ```
-   cmsenv
-   ```
    If you downloaded the root files beforehand, use:
    ```
    python ./get_total_counts.py ~/MITOpenDataProject/eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20000/ ~/MITOpenDataProject/total_events.txt
