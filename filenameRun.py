@@ -5,6 +5,7 @@ import sys
 
 data_file_link = sys.argv[2]
 registry_file_path = sys.argv[3]
+path_to_counts = sys.argv[4]
 
 file_name = data_file_link[len(data_file_link) - 41:len(data_file_link)]
 
@@ -26,6 +27,7 @@ process.source.lumisToProcess.extend(myLumis)
 process.FilenameMapProducer = cms.EDProducer("FilenameMapProducer", 
 						filename = cms.string(file_name), 
 						outputFile = cms.string(registry_file_path) 
+					        numFile = cms.string(path_to_counts)
 						)
 
 process.MessageLogger = cms.Service("MessageLogger",
