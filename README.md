@@ -11,7 +11,7 @@ This package downloads AOD files from the [CERN Open Data Portal](http://opendat
 
 ## Usage Instruction
 
-All of the code relating to this GitHub should be run inside of a Cern Virtual Machine, which can be found [here](http://opendata.cern.ch/VM/CMS/2010 "CERN Open Data Portal"). For this example, use the CMS 2010 VM; for analysis on other data sets, you may need to use the CMS 2011 VM.
+All of the code relating to this GitHub should be run inside of a Cern Virtual Machine, which can be found [here](http://opendata.cern.ch/VM/CMS/2011 "CERN Open Data Portal"). For this example, use the CMS 2011 VM; for analysis on other data sets, you may need to use the CMS 2010 VM.
 
 Within a terminal on the VM:
 
