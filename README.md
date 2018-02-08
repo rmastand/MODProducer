@@ -131,7 +131,7 @@ You may want to run this step to ensure that you're downloaded all the AOD file 
    
    Now, actually count the total number of events:
    ```
-   python count.py ~/MITOpenDataProject/total_events.txt
+   python count_events.py ~/MITOpenDataProject/total_events.txt
    ```
    
 
