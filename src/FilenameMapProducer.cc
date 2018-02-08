@@ -39,10 +39,8 @@ private:
    virtual void endLuminosityBlock(edm::LuminosityBlock&, edm::EventSetup const&);
    
    ofstream fileOutput_;
-   ofstream numOutput_;
    string currentProcessingFilename_;
    string outputFilename_;
-   string numFilename_;
     
 };
 
@@ -50,8 +48,7 @@ private:
 
 FilenameMapProducer::FilenameMapProducer(const ParameterSet& iConfig)
 : currentProcessingFilename_(iConfig.getParameter<string>("filename")),
-  outputFilename_(iConfig.getParameter<string>("outputFile")),
-  numFilename_(iConfig.getParameter<string>("numFile"))
+  outputFilename_(iConfig.getParameter<string>("outputFile"))
 {
   fileOutput_.open(outputFilename_.c_str(), std::fstream::out | std::fstream::app);
 }
@@ -77,10 +74,9 @@ void FilenameMapProducer::beginJob() {
 
 void FilenameMapProducer::endJob() {
  	
-   numOutput_.open(numFilename_.c_str(), std::fstream::out | std::fstream::app);	
-   numOutput_ << currentProcessingFilename_ << " " << counts << endl;
+ 
    fileOutput_.close();
-   numOutput_.close();
+
 }
 
 void FilenameMapProducer::beginRun(edm::Run & iRun, edm::EventSetup const & iSetup){
