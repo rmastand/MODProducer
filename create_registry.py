@@ -27,6 +27,7 @@ import sys
 
 input_dir = sys.argv[1]
 registry_file_path = sys.argv[2]
+path_to_counts = sys.argv[3]
 
 log_file_path = str(registry_file_path) + "_log.log"
 
@@ -65,7 +66,7 @@ def create_registry(path, log_file_path):
 
     for root_file in sorted(files_to_process):
         stdoutdata, stderrdata = subprocess.Popen(
-            ["cmsRun", "filenameRun.py", root_file, registry_file_path]).communicate()
+            ["cmsRun", "filenameRun.py", root_file, registry_file_path, path_to_counts]).communicate()
 
         if str(stderrdata) != "None":
             log_file = open(log_file_path, 'a')
