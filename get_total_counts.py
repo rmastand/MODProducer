@@ -25,7 +25,7 @@ import os
 from time import time
 import sys
 
-file_with_source_paths = sys.argv[1]
+input_dir = sys.argv[1]
 path_to_total_counts = sys.argv[2]
 
 
@@ -70,7 +70,7 @@ def create_registry(path):
             log_file.close()
 start = time()
 
-create_registry(file_with_source_paths)
+create_registry(input_dir)
 
 end = time()
 
