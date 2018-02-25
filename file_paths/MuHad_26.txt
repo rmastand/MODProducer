@@ -1,0 +1,2 @@
+root://eospublic.cern.ch//eos/opendata/cms/Run2011A/MuHad/AOD/12Oct2013-v1/20000/000D9F2B-4E45-E311-826F-003048FFD796.root
+root://eospublic.cern.ch//eos/opendata/cms/Run2011A/MuHad/AOD/12Oct2013-v1/20000/0019D57D-6945-E311-A6B2-003048678E92.root
