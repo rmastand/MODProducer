@@ -1,0 +1,2 @@
+root://eospublic.cern.ch//eos/opendata/cms/Run2011A/SingleMu/AOD/12Oct2013-v1/10000/00082EAF-C03D-E311-8E53-003048F00B1C.root
+root://eospublic.cern.ch//eos/opendata/cms/Run2011A/SingleMu/AOD/12Oct2013-v1/10000/00209631-9C37-E311-BACA-002590494FDE.root
