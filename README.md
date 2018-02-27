@@ -37,7 +37,7 @@ Within a terminal on the VM:
 - Clone the source code:
 
   ```
-  git clone https://github.com/rmastand/MODProducer.git CMSOpenData/MODProducer
+  git clone git://github.com/rmastand/MODProducer.git CMSOpenData/MODProducer
   ```
 
 - Go to the source directory:
@@ -55,6 +55,12 @@ Within a terminal on the VM:
 
   ```
   scram b
+  ```
+  
+- Prepare a directory:
+
+  ```
+  mkdir -p ~/MITOpenDataProject
   ```
   
 
@@ -240,6 +246,11 @@ This error message generally means that you didn't use  an encrypted Internet co
 
 ## TODO
 
+- [] Get simulated data working!
+
+####PFCandidateProducer_online.py:
+- [] Change so the dataset isn't hardocded in but can be run as a command line argument
+
 ####create_registry.py:
 - [x] Is there a reason this isn't in the utilities folder?  Alternatively, does download.py need to be in a separate utilities folder?
 - [ ] Can you put comments at the beginning of this file saying how to run it?  (i.e. what the arguments are and what this does?)  This comment holds for all of the .py files that the user might call directly.
@@ -253,11 +264,6 @@ This error message generally means that you didn't use  an encrypted Internet co
 ####JEC_cfg.py:
 - [ ] Can this be moved to the utilities folder, or does it have to stay here?
 
-####filenameRun.py:
-- [ ] You should change this to FilenameMapRun.py for consistency.
-
-####filenameMapProducer.cc:
-- [ ] Capitalize this as FilenameMapProducer.cc for consistency.  (.cc and .hh files should always be capitalized.)
 
 ####PFCanidateProducer.cc:
 - [ ] Line 200: You shouldn't hard code "CMS_2010" and "Jet_Primary_Dataset".  Rather, they should be parameters just like the version number that can be changed easily.  Note that it should be "CMS_2010B".
