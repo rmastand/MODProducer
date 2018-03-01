@@ -246,7 +246,7 @@ This error message generally means that you didn't use  an encrypted Internet co
 
 ## TODO
 
-- [] Get simulated data working!
+
 
 ####PFCandidateProducer_online.py:
 - [] Change so the dataset isn't hardocded in but can be run as a command line argument
@@ -264,8 +264,9 @@ This error message generally means that you didn't use  an encrypted Internet co
 ####JEC_cfg.py:
 - [ ] Can this be moved to the utilities folder, or does it have to stay here?
 
-
 ####PFCanidateProducer.cc:
 - [ ] Line 200: You shouldn't hard code "CMS_2010" and "Jet_Primary_Dataset".  Rather, they should be parameters just like the version number that can be changed easily.  Note that it should be "CMS_2010B".
 - [ ] Line 273:  You shouldn't hard code "Jet" here.  Rather, the name of the primary data set should correlate with the name given in the header.  That way, we can run other primary datasets without having to change too much.
 - [ ] Line 453:  What's up with "TopPairElectronPlusJetsSelectionFilter"?
+- [ ] add more spaces for trigger names'
+- [] Get simulated data working!
