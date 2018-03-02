@@ -11,11 +11,13 @@ This package downloads AOD files from the [CERN Open Data Portal](http://opendat
 
 ## Usage Instruction
 
-All of the code relating to this GitHub should be run inside of a Cern Virtual Machine, which can be found [here](http://opendata.cern.ch/VM/CMS/2011 "CERN Open Data Portal"). For this example, use the CMS 2011 VM; for analysis on other data sets, you may need to use the CMS 2010 VM.
+All of the code relating to this GitHub should be run inside of a Cern Virtual Machine, which can be found [here](http://opendata.cern.ch/VM/CMS/2011 "CERN Open Data Portal"). If analyzing 2010 data, use the CMS 2010 VM; if analyzing 2011 or simulated data, use the CMS 2011 VM.
 
 Within a terminal on the VM:
 
 ### Preparation
+
+This section is for 2011 and simulated data. If analyzing 2010 data, replace all instances of ```CMSSW_5_3_32``` with ```CMSSW_4_2_8```.
 
 - Create a CMSSW environment: 
 
@@ -46,7 +48,7 @@ Within a terminal on the VM:
   cd CMSOpenData/MODProducer
   ```
   
-- Switch branches
+- Switch branches (replace 2011 with 2010 if necessary):
 
   ```
   git checkout 2011
@@ -87,11 +89,11 @@ Note that this repository is concerned with steps (1) to (3) only. Steps (4) to 
 
 - The first step is to download ROOT files from the CMS server. You can start the download process using the Python script `download.py`. This script takes two arguments:
 	
-    1. a path to a file which contains a list of links to ROOT files to download from the CERN server (one link per line). For a sample file, see `file_paths/Jet/small_list.txt`.  
+    1. a path to a file which contains a list of links to ROOT files to download from the CERN server (one link per line). You will probably need to manually create this and place it in the ```file_paths``` folder. There are many examples in ```file_paths/samples```; the number at the end of each sample is the record number and going to http://opendata.cern.ch/record/# will tell you what year this dataset is from. This example will use a 2011 sample. ```Jet_21.txt```.  
     2. a destination path to write the files to. Note that the ROOT files are each ~1 GB, so make sure that the destination has enough storage to hold all of the files you're trying to download. 
 
     ```
-    python download.py ./file_paths/Jet11/small_list.txt ~/MITOpenDataProject/
+    python download.py ./file_paths/samples/Jet_21.txt ~/MITOpenDataProject/
     ```
     The download script will skip any ROOT file that you have already downloaded and will resume any broken downloads. So you don't have to download all the files at once as long as you are downloading all of them to the same directory. Note that each file may take 5-10 minutes to download, depending on the quality of your internet connection.
     
@@ -105,7 +107,7 @@ Once you've downloaded the AOD files (these are ROOT files), you need to create 
    2. a path to the registry file.
    3. a path to a text file that will count the number of validated events.
    
-   You may need to change the  "goodJSON" in filenameRun.py to the corresponding list of validated events for whatever datasey you're using.
+   You may need to change the  "goodJSON" in filenameRun.py to the corresponding list of validated events for whatever dataset you're using.
 
    ```
    cmsenv
@@ -116,7 +118,7 @@ Once you've downloaded the AOD files (these are ROOT files), you need to create 
    ```
    Or, use:
    ```
-   python ./create_registry_online.py ./file_paths/Jet11/small_list.txt ~/MITOpenDataProject/registry.txt  ~/MITOpenDataProject/valid_events.txt
+   python ./create_registry_online.py ./file_paths/samples/Jet_21.txt ~/MITOpenDataProject/registry.txt  ~/MITOpenDataProject/valid_events.txt
    ```
    
 ### (Optional) Count the total number of events 
@@ -132,7 +134,7 @@ You may want to run this step to ensure that you're downloaded all the AOD file 
    ```
    Or, use:
    ```
-   python ./get_total_counts_online.py ./file_paths/Jet11/small_list.txt ~/MITOpenDataProject/total_events.txt
+   python ./get_total_counts_online.py ./file_paths/samples/Jet_21.txt ~/MITOpenDataProject/total_events.txt
    ```
    
    Now, actually count the total number of events:
@@ -155,8 +157,12 @@ Now that you have created a registry for all the AOD files that you want to proc
 
    Note that to get trigger prescales, PFCandidateProducer needs to load GlobalTags and so, it takes a long time before anything happens (it takes ~10 minutes on my computer).
    
-   First set up the symbolic links to properly access the 2011 data:
    
+#### Check that you have the correct global tags 
+
+If using 2010 data, no extra steps are needed.
+
+If using 2011 data, first set up the symbolic links to properly access the 2011 global tags.
    ```
    ln -sf /cvmfs/cms-opendata-conddb.cern.ch/FT_53_LV5_AN1_RUNA FT_53_LV5_AN1
    ln -sf /cvmfs/cms-opendata-conddb.cern.ch/FT_53_LV5_AN1_RUNA.db FT_53_LV5_AN1_RUNA.db
@@ -167,6 +173,24 @@ Now that you have created a registry for all the AOD files that you want to proc
    ls -l
    ls -l /cvmfs/
    ```
+   
+If using simulated data, the opendata page for that record will tell you which global tag to use. Set up the symbolic links as before:
+
+  ```
+  ln -sf /cvmfs/cms-opendata-conddb.cern.ch/START53_LV6A1 START53_LV6A1
+  ln -sf /cvmfs/cms-opendata-conddb.cern.ch/START53_LV6A1.db START53_LV6A1.db
+   ```
+  Then change the global tag in lines 45 and 46 of ```SimRun_online.py```.
+  
+  
+#### Check that you have the correct Jet energy correction factors (for Jet analysis)
+
+If using 2010 or 2011 data, all these corrections are in the ```data/JEC``` folder. If using simulated data, see the "Notes about JEC" section before proceding.
+
+#### Set up PFCandidateProducer.
+
+If using 2011 (or 2010) data, run ```cp src/PFCandidateProducer2011.cc src/PFCandidateProducer.cc``` (```cp src/PFCandidateProducer2010.cc src/PFCandidateProducer.cc```), then run ```scram b```. If using simulated data, do nothing.
+
   
   Now analyze the files! If you've downloaded all the AOD files, run:
     
@@ -176,7 +200,12 @@ Now that you have created a registry for all the AOD files that you want to proc
    ```
    Or, use:
    ```
-   cmsRun PFCandidateRun_online.py file_paths/Jet11/small_list.txt ~/MITOpenDataProject/eos/opendata/cms/Run2011A/Jet/MOD/12Oct2013-v1/20000/ ~/MITOpenDataProject/registry.txt 1
+   cmsRun PFCandidateRun_online.py file_paths/samples/Jet_21.txt ~/MITOpenDataProject/eos/opendata/cms/Run2011A/Jet/MOD/12Oct2013-v1/20000/ ~/MITOpenDataProject/registry.txt 1
+   ```
+   
+   Or for simulated data, use:
+   ```
+   cmsRun SimRun_online.py file_paths/samples/sim_1361.txt ~/MITOpenDataProject/eos/opendata/cms/Run2011A/Jet/MOD/12Oct2013-v1/20000/ ~/MITOpenDataProject/registry.txt 1
    ```
    
    If you're getting odd outputs (i.e. "File already processed" where you think there shouldn't be), try deleting the files 0 and / or 1 and try again.
