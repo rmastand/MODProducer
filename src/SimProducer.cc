@@ -328,7 +328,7 @@ void SimProducer::produce(Event& iEvent, const EventSetup& iSetup) {
 	   
 	   
 	   // Get all trigger names associated with the "Jet" dataset.
-	   const vector<string> triggerNames = hltConfig_.datasetContent(triggerCat);
+	   const vector<string> triggerNames = hltConfig_.datasetContent(triggerCat_);
 	   
 	   for (unsigned i = 0; i < triggerNames.size(); i++) {
 	      if (i == 0)
