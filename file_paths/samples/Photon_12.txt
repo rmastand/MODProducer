@@ -1,0 +1,2 @@
+root://eospublic.cern.ch//eos/opendata/cms/Run2010B/Photon/AOD/Apr21ReReco-v1/0000/0003D1EF-B071-E011-BA0A-78E7D1651098.root
+root://eospublic.cern.ch//eos/opendata/cms/Run2010B/Photon/AOD/Apr21ReReco-v1/0000/001CE57A-F470-E011-8208-001CC4A934D8.root
