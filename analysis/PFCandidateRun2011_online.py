@@ -58,7 +58,7 @@ process.ak5PFJets = ak5PFJets.clone(doAreaFastjet = cms.bool(True))
 		    	
 process.kt6PFJetsForIsolation = kt4PFJets.clone(rParam = 0.6, doRhoFastjet = True)
 
-process.PFCandidateProducer = cms.EDProducer("PFCandidateProducer",
+process.PFCandidateProducer2011 = cms.EDProducer("PFCandidateProducer2011",
 					rho = cms.InputTag("kt6PFJets","rho"),
 					PFCandidateInputTag = cms.InputTag("particleFlow"),
 					AK5PFInputTag = cms.InputTag("ak5PFJets"),
@@ -70,5 +70,5 @@ process.PFCandidateProducer = cms.EDProducer("PFCandidateProducer",
 					completedLogFilename = cms.string(completed_log_filename)
 				)
 				
-process.producer = cms.Path( process.ak5PFJets * process.kt6PFJetsForIsolation * process.PFCandidateProducer)
+process.producer = cms.Path( process.ak5PFJets * process.kt6PFJetsForIsolation * process.PFCandidateProducer2011)
 process.schedule = cms.Schedule( process.producer )
