@@ -62,11 +62,11 @@ using namespace reco;
 using namespace fastjet;
 
 
-class PFCandidateProducer : public EDProducer 
+class PFCandidateProducer2011 : public EDProducer 
 {
 public: 
-   explicit PFCandidateProducer(const ParameterSet&);
-   ~PFCandidateProducer();
+   explicit PFCandidateProducer2011(const ParameterSet&);
+   ~PFCandidateProducer2011();
 
 private:
    virtual void beginJob();
@@ -148,7 +148,7 @@ private:
 
 
 
-PFCandidateProducer::PFCandidateProducer(const ParameterSet& iConfig)
+PFCandidateProducer2011::PFCandidateProducer2011(const ParameterSet& iConfig)
 : hltConfig_(),
   hltInputTag_("TriggerResults","","HLT"),
   rhoTag_(iConfig.getParameter<edm::InputTag>("rho")),
@@ -171,12 +171,12 @@ PFCandidateProducer::PFCandidateProducer(const ParameterSet& iConfig)
 }
 
 
-PFCandidateProducer::~PFCandidateProducer() {
+PFCandidateProducer2011::~PFCandidateProducer2011() {
 
 }
 
 
-std::string PFCandidateProducer::to_string ( int number ) {
+std::string PFCandidateProducer2011::to_string ( int number ) {
   std::ostringstream oss;
 
   // Works just like cout
@@ -187,7 +187,7 @@ std::string PFCandidateProducer::to_string ( int number ) {
 }
 
 
-void PFCandidateProducer::produce(Event& iEvent, const EventSetup& iSetup) {
+void PFCandidateProducer2011::produce(Event& iEvent, const EventSetup& iSetup) {
    
    if (skipNextEvent_) {
 	skipNextEvent_ = false;
@@ -438,7 +438,7 @@ void PFCandidateProducer::produce(Event& iEvent, const EventSetup& iSetup) {
    
 }
 
-void PFCandidateProducer::beginJob() {
+void PFCandidateProducer2011::beginJob() {
    eventSerialNumber_ = 1;
    
    // Start timer.
@@ -519,7 +519,7 @@ void PFCandidateProducer::beginJob() {
 
 }
 
-void PFCandidateProducer::endJob() {
+void PFCandidateProducer2011::endJob() {
    struct timeval tp2;
    gettimeofday(&tp2, NULL);
    long int endTime_ = tp2.tv_sec * 1000 + tp2.tv_usec / 1000;   
@@ -528,7 +528,7 @@ void PFCandidateProducer::endJob() {
    cout << endl << endl << endl << "Finished processing " << (eventSerialNumber_ - 1) << " events in " << elapsed_milliseconds / (60*1000) << " minutes!" << endl;
 }
 
-void PFCandidateProducer::beginRun(edm::Run & iRun, edm::EventSetup const & iSetup){
+void PFCandidateProducer2011::beginRun(edm::Run & iRun, edm::EventSetup const & iSetup){
 
    bool changed = true;
    if ( hltConfig_.init(iRun, iSetup, hltInputTag_.process(), changed) ) {
@@ -543,19 +543,19 @@ void PFCandidateProducer::beginRun(edm::Run & iRun, edm::EventSetup const & iSet
 
 }
 
-void PFCandidateProducer::endRun(edm::Run&, edm::EventSetup const&) {
+void PFCandidateProducer2011::endRun(edm::Run&, edm::EventSetup const&) {
 
 }
 
-void PFCandidateProducer::beginLuminosityBlock(edm::LuminosityBlock& iLumi, edm::EventSetup const& iSetup) {
+void PFCandidateProducer2011::beginLuminosityBlock(edm::LuminosityBlock& iLumi, edm::EventSetup const& iSetup) {
    
 }
 
-void PFCandidateProducer::endLuminosityBlock(edm::LuminosityBlock& iLumi, edm::EventSetup const& iSetup) {
+void PFCandidateProducer2011::endLuminosityBlock(edm::LuminosityBlock& iLumi, edm::EventSetup const& iSetup) {
 
 }
 
-bool PFCandidateProducer::triggerFired(const std::string& triggerWildCard, const edm::TriggerResults& triggerResults) {
+bool PFCandidateProducer2011::triggerFired(const std::string& triggerWildCard, const edm::TriggerResults& triggerResults) {
    bool fired = false;
    unsigned int index = findTrigger(triggerWildCard);
 
@@ -569,7 +569,7 @@ bool PFCandidateProducer::triggerFired(const std::string& triggerWildCard, const
 
 }
 
-unsigned int PFCandidateProducer::findTrigger(const std::string& triggerWildCard) {
+unsigned int PFCandidateProducer2011::findTrigger(const std::string& triggerWildCard) {
    const std::vector<std::string>& triggers = hltConfig_.triggerNames();
    unsigned int found = 9999;
 
@@ -584,9 +584,9 @@ unsigned int PFCandidateProducer::findTrigger(const std::string& triggerWildCard
    return found;
 }
 
-bool PFCandidateProducer::file_exists(const std::string& name) {
+bool PFCandidateProducer2011::file_exists(const std::string& name) {
   struct stat buffer;   
   return (stat (name.c_str(), &buffer) == 0); 
 }
 
-DEFINE_FWK_MODULE(PFCandidateProducer);
+DEFINE_FWK_MODULE(PFCandidateProducer2011);
