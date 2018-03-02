@@ -47,7 +47,7 @@ process.GlobalTag.globaltag = cms.string('START53_LV6A1::All')
 
 process.source = cms.Source("PoolSource", fileNames=readFiles)
 
-process.maxEvents = cms.untracked.PSet(input = cms.untracked.int32(10))
+process.maxEvents = cms.untracked.PSet(input = cms.untracked.int32(-1))
 
 process.ak5PFJets = ak5PFJets.clone(doAreaFastjet = cms.bool(True))
 		    	
