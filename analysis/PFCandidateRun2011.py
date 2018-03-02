@@ -11,10 +11,11 @@ from RecoJets.JetProducers.AnomalousCellParameters_cfi import *
 from RecoJets.JetProducers.ak5PFJets_cfi import ak5PFJets
 from RecoJets.JetProducers.kt4PFJets_cfi import kt4PFJets
 
-input_dir = sys.argv[2]
+input_file = sys.argv[2]
 output_dir = sys.argv[3]
 map_file_path = sys.argv[4]
-completed_log_filename = sys.argv[5]
+trigger_category = sys.argv[5]
+completed_log_filename = sys.argv[6]
 
 dir_to_create = output_dir
 if not os.path.exists(dir_to_create):
@@ -72,6 +73,7 @@ process.PFCandidateProducer = cms.EDProducer("PFCandidateProducer",
 					rho = cms.InputTag("kt6PFJets","rho"),
 					PFCandidateInputTag = cms.InputTag("particleFlow"),
 					AK5PFInputTag = cms.InputTag("ak5PFJets"),
+					triggerCat = cms.string(trigger_category),
 					mapFilename = cms.string(map_file_path),
 					outputDir = cms.string(output_dir), 
 					primaryVertices = cms.InputTag("offlinePrimaryVertices"),
