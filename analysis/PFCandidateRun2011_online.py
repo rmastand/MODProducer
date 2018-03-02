@@ -46,7 +46,7 @@ process.GlobalTag.globaltag = 'FT_53_LV5_AN1::All'
 
 process.source = cms.Source("PoolSource", fileNames=readFiles)
 
-process.maxEvents = cms.untracked.PSet(input = cms.untracked.int32(10))
+process.maxEvents = cms.untracked.PSet(input = cms.untracked.int32(-1))
 
 goodJSON = "file_paths/Cert_160404-180252_7TeV_ReRecoNov08_Collisions11_JSON.txt"
 myLumis = LumiList.LumiList(filename = goodJSON).getCMSSWString().split(',')
