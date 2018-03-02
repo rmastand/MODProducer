@@ -120,6 +120,7 @@ private:
    
    string registry_filename_;
    string completedLogFilename_;
+   string triggerCat_;
    boost::unordered_map<string, string> registry_info_;
    
    boost::unordered_map<string, int> completedEvents_;
@@ -159,7 +160,7 @@ PFCandidateProducer::PFCandidateProducer(const ParameterSet& iConfig)
 {
   registry_filename_ = iConfig.getParameter<string>("mapFilename");
   completedLogFilename_ = iConfig.getParameter<string>("completedLogFilename");
-  
+  triggerCat_ = iConfig.getParameter<string>("triggerCat");  
   outputDir_ = iConfig.getParameter<string>("outputDir");
   outputFilename_ = "";
   lastOutputFilename_ = "";
@@ -250,7 +251,7 @@ void PFCandidateProducer::produce(Event& iEvent, const EventSetup& iSetup) {
 	   output_.str("");
 	   output_.clear(); // Clear state flags.
 	
-	   output_ << "BeginEvent Version " << dataVersion_ << " CMS_2010 Jet_Primary_Dataset" << endl;
+	   output_ << "BeginEvent Version " << dataVersion_ << endl;
 	   
 	   
 	   // Primary Vertices.
@@ -323,7 +324,7 @@ void PFCandidateProducer::produce(Event& iEvent, const EventSetup& iSetup) {
 	   
 	   
 	   // Get all trigger names associated with the "Jet" dataset.
-	   const vector<string> triggerNames = hltConfig_.datasetContent("Jet");
+	   const vector<string> triggerNames = hltConfig_.datasetContent(triggerCat_);
 	   
 	   for (unsigned i = 0; i < triggerNames.size(); i++) {
 	      if (i == 0)
@@ -336,7 +337,7 @@ void PFCandidateProducer::produce(Event& iEvent, const EventSetup& iSetup) {
 	      bool fired = triggerFired(name, ( * trigResults));
 	
 	      output_ << "    Trig"
-	       	          << setw(32) << name
+	       	          << setw(40) << name
 		          << setw(16) << prescale.first
 		          << setw(16) << prescale.second
 	                  << setw(16) << fired
