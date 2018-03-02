@@ -188,11 +188,7 @@ If using simulated data, the opendata page for that record will tell you which g
 
 If using 2010 or 2011 data, all these corrections are in the ```data/JEC``` folder and are properly implemented in the EDProducer source files. If using simulated data, see the "Notes about JEC" section before proceding.
 
-#### Set up PFCandidateProducer.
 
-If using 2011 (or 2010) data, run ```cp src/PFCandidateProducer2011.cc src/PFCandidateProducer.cc``` (```cp src/PFCandidateProducer2010.cc src/PFCandidateProducer.cc```), then run ```scram b```. If using simulated data, do nothing.
-
-  
   Now analyze the files! If you've downloaded all the AOD files, run:
     
     
