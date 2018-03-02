@@ -14,7 +14,9 @@ from RecoJets.JetProducers.kt4PFJets_cfi import kt4PFJets
 input_file = sys.argv[2]
 output_dir = sys.argv[3]
 map_file_path = sys.argv[4]
-completed_log_filename = sys.argv[5]
+trigger_category = sys.argv[5]
+completed_log_filename = sys.argv[6]
+
 
 dir_to_create = output_dir
 if not os.path.exists(dir_to_create):
@@ -42,10 +44,9 @@ process.load('Configuration.StandardSequences.FrontierConditions_GlobalTag_cff')
 process.GlobalTag.connect = cms.string('sqlite_file:/cvmfs/cms-opendata-conddb.cern.ch/FT_53_LV5_AN1_RUNA.db')
 process.GlobalTag.globaltag = 'FT_53_LV5_AN1::All'
 
-
 process.source = cms.Source("PoolSource", fileNames=readFiles)
 
-process.maxEvents = cms.untracked.PSet(input = cms.untracked.int32(-1))
+process.maxEvents = cms.untracked.PSet(input = cms.untracked.int32(10))
 
 goodJSON = "file_paths/Cert_160404-180252_7TeV_ReRecoNov08_Collisions11_JSON.txt"
 myLumis = LumiList.LumiList(filename = goodJSON).getCMSSWString().split(',')
@@ -61,6 +62,7 @@ process.PFCandidateProducer = cms.EDProducer("PFCandidateProducer",
 					rho = cms.InputTag("kt6PFJets","rho"),
 					PFCandidateInputTag = cms.InputTag("particleFlow"),
 					AK5PFInputTag = cms.InputTag("ak5PFJets"),
+					triggerCat = cms.string(trigger_category),
 					mapFilename = cms.string(map_file_path),
 					outputDir = cms.string(output_dir), 
 					primaryVertices = cms.InputTag("offlinePrimaryVertices"),
