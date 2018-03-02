@@ -197,7 +197,7 @@ If using 2010 or 2011 data, all these corrections are in the ```data/JEC``` fold
    ```
    Or, use:
    ```
-   cmsRun ./analysis/PFCandidateRun_online2011.py file_paths/samples/Jet_21.txt ~/MITOpenDataProject/eos/opendata/cms/Run2011A/Jet/MOD/12Oct2013-v1/20000/ ~/MITOpenDataProject/registry.txt Jet 1
+   cmsRun ./analysis/PFCandidateRun2011_online.py file_paths/samples/Jet_21.txt ~/MITOpenDataProject/eos/opendata/cms/Run2011A/Jet/MOD/12Oct2013-v1/20000/ ~/MITOpenDataProject/registry.txt Jet 1
    ```
    
    Or for simulated data, use:
