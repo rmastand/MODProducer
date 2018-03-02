@@ -48,7 +48,7 @@ This section is for 2011 and simulated data. If analyzing 2010 data, replace all
   cd CMSOpenData/MODProducer
   ```
   
-- Switch branches (replace 2011 with 2010 if necessary):
+- Switch branches:
 
   ```
   git checkout 2011
@@ -89,7 +89,7 @@ Note that this repository is concerned with steps (1) to (3) only. Steps (4) to 
 
 - The first step is to download ROOT files from the CMS server. You can start the download process using the Python script `download.py`. This script takes two arguments:
 	
-    1. a path to a file which contains a list of links to ROOT files to download from the CERN server (one link per line). You will probably need to manually create this and place it in the ```file_paths``` folder. There are many examples in ```file_paths/samples```; the number at the end of each sample is the record number and going to http://opendata.cern.ch/record/# will tell you what year this dataset is from. This example will use a 2011 sample. ```Jet_21.txt```.  
+    1. a path to a file which contains a list of links to ROOT files to download from the CERN server (one link per line). You will probably need to manually create this and place it in the ```file_paths``` folder. There are many examples in ```file_paths/samples```; the number at the end of each sample is the record number and going to http://opendata.cern.ch/record/# will tell you what year this dataset is from. This example will use a 2011 sample: ```Jet_21.txt```.  
     2. a destination path to write the files to. Note that the ROOT files are each ~1 GB, so make sure that the destination has enough storage to hold all of the files you're trying to download. 
 
     ```
@@ -97,7 +97,7 @@ Note that this repository is concerned with steps (1) to (3) only. Steps (4) to 
     ```
     The download script will skip any ROOT file that you have already downloaded and will resume any broken downloads. So you don't have to download all the files at once as long as you are downloading all of them to the same directory. Note that each file may take 5-10 minutes to download, depending on the quality of your internet connection.
     
-    ** Note: you may skip this step if desired and access all the root files from online. This will save lots of hard drive space, as these root files are huge and there are lots of them. However, downloading the files beforehand increases the runtime of the next 2 steps noticably. **
+    ** Note: you may skip this step if desired and access all the root files from online. This will save lots of hard drive space, as these root files are huge and there are lots of them.**
 
 ### Create the registry
 
@@ -114,11 +114,11 @@ Once you've downloaded the AOD files (these are ROOT files), you need to create 
    ```
    If you downloaded the root files beforehand, use:
    ```
-   python ./create_registry.py ~/MITOpenDataProject/eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20000/ ~/MITOpenDataProject/registry.txt ~/MITOpenDataProject/valid_events.txt
+   python ./reg/create_registry.py ~/MITOpenDataProject/eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20000/ ~/MITOpenDataProject/registry.txt ~/MITOpenDataProject/valid_events.txt
    ```
    Or, use:
    ```
-   python ./create_registry_online.py ./file_paths/samples/Jet_21.txt ~/MITOpenDataProject/registry.txt  ~/MITOpenDataProject/valid_events.txt
+   python ./reg/create_registry_online.py ./file_paths/samples/Jet_21.txt ~/MITOpenDataProject/registry.txt  ~/MITOpenDataProject/valid_events.txt
    ```
    
 ### (Optional) Count the total number of events 
@@ -130,16 +130,16 @@ You may want to run this step to ensure that you're downloaded all the AOD file 
    
    If you downloaded the root files beforehand, use:
    ```
-   python ./get_total_counts.py ~/MITOpenDataProject/eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20000/ ~/MITOpenDataProject/total_events.txt
+   python ./reg/get_total_counts.py ~/MITOpenDataProject/eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20000/ ~/MITOpenDataProject/total_events.txt
    ```
    Or, use:
    ```
-   python ./get_total_counts_online.py ./file_paths/samples/Jet_21.txt ~/MITOpenDataProject/total_events.txt
+   python ./reg/get_total_counts_online.py ./file_paths/samples/Jet_21.txt ~/MITOpenDataProject/total_events.txt
    ```
    
    Now, actually count the total number of events:
    ```
-   python count_events.py ~/MITOpenDataProject/total_events.txt
+   python ./reg/count_events.py ~/MITOpenDataProject/total_events.txt
    ```
    
 
@@ -186,7 +186,7 @@ If using simulated data, the opendata page for that record will tell you which g
   
 #### Check that you have the correct Jet energy correction factors (for Jet analysis)
 
-If using 2010 or 2011 data, all these corrections are in the ```data/JEC``` folder. If using simulated data, see the "Notes about JEC" section before proceding.
+If using 2010 or 2011 data, all these corrections are in the ```data/JEC``` folder and are properly implemented in the EDProducer source files. If using simulated data, see the "Notes about JEC" section before proceding.
 
 #### Set up PFCandidateProducer.
 
@@ -279,7 +279,7 @@ This error message generally means that you didn't use  an encrypted Internet co
 
 
 ####PFCandidateProducer_online.py:
-- [] Change so the dataset isn't hardocded in but can be run as a command line argument
+- [x] Change so the dataset isn't hardocded in but can be run as a command line argument
 
 ####create_registry.py:
 - [x] Is there a reason this isn't in the utilities folder?  Alternatively, does download.py need to be in a separate utilities folder?
@@ -298,5 +298,5 @@ This error message generally means that you didn't use  an encrypted Internet co
 - [ ] Line 200: You shouldn't hard code "CMS_2010" and "Jet_Primary_Dataset".  Rather, they should be parameters just like the version number that can be changed easily.  Note that it should be "CMS_2010B".
 - [ ] Line 273:  You shouldn't hard code "Jet" here.  Rather, the name of the primary data set should correlate with the name given in the header.  That way, we can run other primary datasets without having to change too much.
 - [ ] Line 453:  What's up with "TopPairElectronPlusJetsSelectionFilter"?
-- [ ] add more spaces for trigger names'
-- [] Get simulated data working!
+- [x ] add more spaces for trigger names'
+- [x] Get simulated data working!
