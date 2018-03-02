@@ -197,16 +197,16 @@ If using 2011 (or 2010) data, run ```cp src/PFCandidateProducer2011.cc src/PFCan
     
     
    ```
-   cmsRun PFCandidateRun.py ~/MITOpenDataProject/eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20000/ ~/MITOpenDataProject/eos/opendata/cms/Run2011A/Jet/MOD/12Oct2013-v1/20000/ ~/MITOpenDataProject/registry.txt Jet 1
+   cmsRun ./analysis/PFCandidateRun2011.py ~/MITOpenDataProject/eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20000/ ~/MITOpenDataProject/eos/opendata/cms/Run2011A/Jet/MOD/12Oct2013-v1/20000/ ~/MITOpenDataProject/registry.txt Jet 1
    ```
    Or, use:
    ```
-   cmsRun PFCandidateRun_online.py file_paths/samples/Jet_21.txt ~/MITOpenDataProject/eos/opendata/cms/Run2011A/Jet/MOD/12Oct2013-v1/20000/ ~/MITOpenDataProject/registry.txt Jet 1
+   cmsRun ./analysis/PFCandidateRun_online2011.py file_paths/samples/Jet_21.txt ~/MITOpenDataProject/eos/opendata/cms/Run2011A/Jet/MOD/12Oct2013-v1/20000/ ~/MITOpenDataProject/registry.txt Jet 1
    ```
    
    Or for simulated data, use:
    ```
-   cmsRun SimRun_online.py file_paths/samples/sim_1361.txt ~/MITOpenDataProject/eos/opendata/cms/Run2011A/Jet/MOD/12Oct2013-v1/20000/ ~/MITOpenDataProject/registry.txt Jet 1
+   cmsRun ./analysis/SimRun_online.py file_paths/samples/sim_1361.txt ~/MITOpenDataProject/eos/opendata/cms/Run2011A/Jet/MOD/12Oct2013-v1/20000/ ~/MITOpenDataProject/registry.txt Jet 1
    ```
    
    If you're getting odd outputs (i.e. "File already processed" where you think there shouldn't be), try deleting the files 0 and / or 1 and try again.
