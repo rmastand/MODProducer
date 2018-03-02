@@ -150,7 +150,8 @@ Now that you have created a registry for all the AOD files that you want to proc
    1. input directory (path to the directory which contains all the AOD files). This is the same as the second argument that you supplied in the previous step.
    2. output directory (path to the directory where you'd like to store all the MOD files). If this directory is not already present, it will create the directory.
    3. path to the registry file, including the filename. 
-   4. whether to process from the beginning or not (1 or 0). If set to 1, the Producer will start AOD->MOD conversion from the first file in the registry. However, because it's desirable to break this step into multiple instances, you can run the producer once, quit it and come back later to resume it. So if set to 0, the producer will skip the files already in the MOD output directory and resume from there. Note that, the smallest discrete interval that the producer can detect is one ROOT (or MOD) file. So if you interrupted the producer while it's running, make sure you remove that particular MOD file from the output directory because else, the producer will skip that the next time even though < 100% events of that file are done.
+   4. The trigger category you want to use.
+   5. whether to process from the beginning or not (1 or 0). If set to 1, the Producer will start AOD->MOD conversion from the first file in the registry. However, because it's desirable to break this step into multiple instances, you can run the producer once, quit it and come back later to resume it. So if set to 0, the producer will skip the files already in the MOD output directory and resume from there. Note that, the smallest discrete interval that the producer can detect is one ROOT (or MOD) file. So if you interrupted the producer while it's running, make sure you remove that particular MOD file from the output directory because else, the producer will skip that the next time even though < 100% events of that file are done.
    
    You may need to change the  "goodJSON" in PFCandidate.py to the corresponding list of validated events for whatever datasey you're using.
    As mentioned earlier, the "download" step above maintains the directory structure of CMS servers. This includes a directory named "AOD". 
@@ -196,16 +197,16 @@ If using 2011 (or 2010) data, run ```cp src/PFCandidateProducer2011.cc src/PFCan
     
     
    ```
-   cmsRun PFCandidateRun.py ~/MITOpenDataProject/eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20000/ ~/MITOpenDataProject/eos/opendata/cms/Run2011A/Jet/MOD/12Oct2013-v1/20000/ ~/MITOpenDataProject/registry.txt 1
+   cmsRun PFCandidateRun.py ~/MITOpenDataProject/eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20000/ ~/MITOpenDataProject/eos/opendata/cms/Run2011A/Jet/MOD/12Oct2013-v1/20000/ ~/MITOpenDataProject/registry.txt Jet 1
    ```
    Or, use:
    ```
-   cmsRun PFCandidateRun_online.py file_paths/samples/Jet_21.txt ~/MITOpenDataProject/eos/opendata/cms/Run2011A/Jet/MOD/12Oct2013-v1/20000/ ~/MITOpenDataProject/registry.txt 1
+   cmsRun PFCandidateRun_online.py file_paths/samples/Jet_21.txt ~/MITOpenDataProject/eos/opendata/cms/Run2011A/Jet/MOD/12Oct2013-v1/20000/ ~/MITOpenDataProject/registry.txt Jet 1
    ```
    
    Or for simulated data, use:
    ```
-   cmsRun SimRun_online.py file_paths/samples/sim_1361.txt ~/MITOpenDataProject/eos/opendata/cms/Run2011A/Jet/MOD/12Oct2013-v1/20000/ ~/MITOpenDataProject/registry.txt 1
+   cmsRun SimRun_online.py file_paths/samples/sim_1361.txt ~/MITOpenDataProject/eos/opendata/cms/Run2011A/Jet/MOD/12Oct2013-v1/20000/ ~/MITOpenDataProject/registry.txt Jet 1
    ```
    
    If you're getting odd outputs (i.e. "File already processed" where you think there shouldn't be), try deleting the files 0 and / or 1 and try again.
