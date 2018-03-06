@@ -424,37 +424,30 @@ void SimProducer::produce(Event& iEvent, const EventSetup& iSetup) {
 	  // Gen Particles
 	  for(reco::GenParticleCollection::const_iterator it = genParticles->begin(), end = genParticles->end(); it != end; it++) {
 	    if (it == genParticles->begin())
-	       		output_ << "#    Gen" << "              px              py              pz              energy              status              pdgId             dauId " << endl;  
+	       		output_ << "#    GEN" << "              px              py              pz              energy              status              pdgId" << endl;  
 	    
-	    		//px = it->px();
-	    		//py = it->py();
-	    		//pz = it->pz();
-	    		//energy = it->energy();
+	    
 	    		int pdgId = it->pdgId();
-	    		//int status = it->status();
-                        int n = it->numberOfDaughters();
-	                for(int j = 0; j < n; ++ j) {
-       				const Candidate * d = it->daughter( j );
-                                int status = d->status();				
-                                if ( status==1 ) {
- 				        int dauId = d->pdgId();
-					px = d->px();
-					py = d->py();
-					pz = d->pz();
-					energy = d->energy();
-					int status = d->status();
+	    		int status = it->status();
+   			
+                        if ( status==1 ) {
+ 				        
+					px = it->px();
+					py = it->py();
+					pz = it->pz();
+					energy = it->energy();
+					
                         
-	    				output_ << "     Gen"
+	    				output_ << "     GEN"
 	       				<< setw(16) << fixed << setprecision(8) << px
 	        			<< setw(16) << fixed << setprecision(8) << py
 	        			<< setw(16) << fixed << setprecision(8) << pz
 	        			<< setw(16) << fixed << setprecision(8) << energy
 					<< setw(16) << noshowpos << status
 	        			<< setw(16) << noshowpos << pdgId
-					<< setw(16) << noshowpos << dauId
 	        			<< endl;
                                 }
-	                } 
+	                
            }
 	   
 	   
