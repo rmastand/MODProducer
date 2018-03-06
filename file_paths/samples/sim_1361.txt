@@ -1,3 +1,0 @@
-root://eospublic.cern.ch//eos/opendata/cms/MonteCarlo2011/Summer11LegDR/TTJets_MSDecays_dileptonic_matchingup_7TeV-madgraph-tauola/AODSIM/PU_S13_START53_LV6-v1/50000/22CF87FD-23D4-E411-9015-0025905A608A.root
-root://eospublic.cern.ch//eos/opendata/cms/MonteCarlo2011/Summer11LegDR/TTJets_MSDecays_dileptonic_matchingup_7TeV-madgraph-tauola/AODSIM/PU_S13_START53_LV6-v1/50000/24932C61-D2DE-E411-AA1C-0025905A610A.root
-root://eospublic.cern.ch//eos/opendata/cms/MonteCarlo2011/Summer11LegDR/TTJets_MSDecays_dileptonic_matchingup_7TeV-madgraph-tauola/AODSIM/PU_S13_START53_LV6-v1/50000/24968F65-11D1-E411-A2D1-003048FFD752.root
