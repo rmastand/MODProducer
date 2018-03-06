@@ -202,7 +202,7 @@ If using 2010 or 2011 data, all these corrections are in the ```data/JEC``` fold
    
    Or for simulated data, use:
    ```
-   cmsRun ./analysis/SimRun_online.py file_paths/samples/sim_1361.txt ~/MITOpenDataProject/eos/opendata/cms/Run2011A/Jet/MOD/12Oct2013-v1/20000/ ~/MITOpenDataProject/registry.txt Jet 1
+   cmsRun ./analysis/SimRun_online.py file_paths/samples/sim_1393.txt ~/MITOpenDataProject/eos/opendata/cms/MonteCarlo2011/Summer11LegDR/DYJetsToLL_M-10To50_TuneZ2_7TeV-pythia6/AODSIM/PU_S13_START53_LV6-v1/00000/ ~/MITOpenDataProject/registry.txt Jet 1
    ```
    
    If you're getting odd outputs (i.e. "File already processed" where you think there shouldn't be), try deleting the files 0 and / or 1 and try again.
