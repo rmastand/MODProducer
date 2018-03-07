@@ -107,7 +107,7 @@ Once you've downloaded the AOD files (these are ROOT files), you need to create 
    2. a path to the registry file.
    3. a path to a text file that will count the number of validated events.
    
-   You may need to change the  "goodJSON" in filenameRun.py to the corresponding list of validated events for whatever dataset you're using.
+   You may need to change the  "goodJSON" in filenameRun.py to the corresponding list of validated events for whatever dataset you're using. If you're using simulated data, comment out lines 22-25 (all the luminosity information).
 
    ```
    cmsenv
@@ -153,7 +153,7 @@ Now that you have created a registry for all the AOD files that you want to proc
    4. The trigger category you want to use.
    5. whether to process from the beginning or not (1 or 0). If set to 1, the Producer will start AOD->MOD conversion from the first file in the registry. However, because it's desirable to break this step into multiple instances, you can run the producer once, quit it and come back later to resume it. So if set to 0, the producer will skip the files already in the MOD output directory and resume from there. Note that, the smallest discrete interval that the producer can detect is one ROOT (or MOD) file. So if you interrupted the producer while it's running, make sure you remove that particular MOD file from the output directory because else, the producer will skip that the next time even though < 100% events of that file are done.
    
-   You may need to change the  "goodJSON" in PFCandidate.py to the corresponding list of validated events for whatever datasey you're using.
+ 
    As mentioned earlier, the "download" step above maintains the directory structure of CMS servers. This includes a directory named "AOD". 
 
    Note that to get trigger prescales, PFCandidateProducer needs to load GlobalTags and so, it takes a long time before anything happens (it takes ~10 minutes on my computer).
