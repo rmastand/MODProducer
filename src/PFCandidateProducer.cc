@@ -314,6 +314,9 @@ void PFCandidateProducer::produce(Event& iEvent, const EventSetup& iSetup) {
 	   
 	   edm::Handle<reco::PFJetCollection> AK5Collection;
 	   iEvent.getByLabel(AK5PFInputTag_, AK5Collection);
+	     
+	   Handle<GenParticleCollection> genParticles;
+           iEvent.getByLabel("genParticles", genParticles);
 	   
 	   if ( ! PFCollection.isValid()){
 	    cerr << "Invalid collection." << endl;
