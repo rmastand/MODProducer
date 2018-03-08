@@ -251,7 +251,7 @@ void PFCandidateProducer2010::produce(Event& iEvent, const EventSetup& iSetup) {
 	   output_.str("");
 	   output_.clear(); // Clear state flags.
 	
-	   output_ << "BeginEvent Version " << dataVersion_ << endl;
+	   output_ << "BeginEvent Version " << dataVersion_ << " CMS_2010 " << triggerCat_ << endl;
 	   
 	   
 	   // Primary Vertices.
