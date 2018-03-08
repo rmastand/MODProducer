@@ -251,8 +251,7 @@ void SimProducer::produce(Event& iEvent, const EventSetup& iSetup) {
 	   output_.str("");
 	   output_.clear(); // Clear state flags.
 	
-	   output_ << "BeginEvent Version " << dataVersion_  << endl;
-	   
+	   output_ << "BeginEvent Version " << dataVersion_ << " CMS_2011_Sim " << triggerCat_ << endl;	   
 	   
 	   // Primary Vertices.
 	   edm::Handle<VertexCollection> primaryVerticesHandle;
