@@ -18,7 +18,6 @@ process.load("FWCore.MessageLogger.MessageLogger_cfi")
 print "Running filenameRun.py on ", file_name
 process.source = cms.Source ("PoolSource", fileNames=cms.untracked.vstring( data_file_link ) )
 process.maxEvents = cms.untracked.PSet(input = cms.untracked.int32(-1))
-process.load('Configuration.StandardSequences.FrontierConditions_GlobalTag_cff')
 
 if (data_type == "real") and (data_year == "2010"):
 	goodJSON = "file_paths/Cert_136033-149442_7TeV_Apr21ReReco_Collisions10_JSON_v2.txt"
@@ -28,12 +27,14 @@ if (data_type == "real") and (data_year == "2010"):
 
 if (data_type == "real") and (data_year == "2011"):
 	
+	
 	goodJSON = "file_paths/Cert_160404-180252_7TeV_ReRecoNov08_Collisions11_JSON.txt"
 	myLumis = LumiList.LumiList(filename = goodJSON).getCMSSWString().split(',')
 	process.source.lumisToProcess = cms.untracked.VLuminosityBlockRange()
 	process.source.lumisToProcess.extend(myLumis)
 
 if (data_type == "sim") and (data_year == "2011"):
+	pass
 	
 
 process.FilenameMapProducer = cms.EDProducer("FilenameMapProducer", 
