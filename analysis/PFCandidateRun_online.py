@@ -16,7 +16,9 @@ output_dir = sys.argv[3]
 map_file_path = sys.argv[4]
 trigger_category = sys.argv[5]
 JEC_filepath = sys.argv[6]
-completed_log_filename = sys.argv[7]
+data_type = sys.argv[7]
+data_year = sys.argv[8]
+completed_log_filename = sys.argv[9]
 
 
 dir_to_create = output_dir
@@ -40,19 +42,28 @@ readFiles.extend(files_to_process)
 
 process = cms.Process("MITCMSOpenData")
 
+process.source = cms.Source("PoolSource", fileNames=readFiles)
+process.maxEvents = cms.untracked.PSet(input = cms.untracked.int32(-1))
 process.load('Configuration.StandardSequences.FrontierConditions_GlobalTag_cff')
 
-process.GlobalTag.connect = cms.string('sqlite_file:/cvmfs/cms-opendata-conddb.cern.ch/FT_53_LV5_AN1_RUNA.db')
-process.GlobalTag.globaltag = 'FT_53_LV5_AN1::All'
+if (data_type == "real") and (data_year == "2010"):
+	process.GlobalTag.globaltag='GR_R_42_V25::All'
+	goodJSON = "file_paths/Cert_136033-149442_7TeV_Apr21ReReco_Collisions10_JSON_v2.txt"
+	myLumis = LumiList.LumiList(filename = goodJSON).getCMSSWString().split(',')
+	process.source.lumisToProcess = cms.untracked.VLuminosityBlockRange()
+	process.source.lumisToProcess.extend(myLumis)
 
-process.source = cms.Source("PoolSource", fileNames=readFiles)
+if (data_type == "real") and (data_year == "2011"):
+	process.GlobalTag.connect = cms.string('sqlite_file:/cvmfs/cms-opendata-conddb.cern.ch/FT_53_LV5_AN1_RUNA.db')
+	process.GlobalTag.globaltag = 'FT_53_LV5_AN1::All'
+	goodJSON = "file_paths/Cert_160404-180252_7TeV_ReRecoNov08_Collisions11_JSON.txt"
+	myLumis = LumiList.LumiList(filename = goodJSON).getCMSSWString().split(',')
+	process.source.lumisToProcess = cms.untracked.VLuminosityBlockRange()
+	process.source.lumisToProcess.extend(myLumis)
 
-process.maxEvents = cms.untracked.PSet(input = cms.untracked.int32(-1))
-
-goodJSON = "file_paths/Cert_160404-180252_7TeV_ReRecoNov08_Collisions11_JSON.txt"
-myLumis = LumiList.LumiList(filename = goodJSON).getCMSSWString().split(',')
-process.source.lumisToProcess = cms.untracked.VLuminosityBlockRange()
-process.source.lumisToProcess.extend(myLumis)
+if (data_type == "sim") and (data_year == "2011"):
+	process.GlobalTag.connect = cms.string('sqlite_file:/cvmfs/cms-opendata-conddb.cern.ch/START53_LV6A1.db')
+	process.GlobalTag.globaltag = cms.string('START53_LV6A1::All')
 
 
 process.ak5PFJets = ak5PFJets.clone(doAreaFastjet = cms.bool(True))
@@ -65,6 +76,8 @@ process.PFCandidateProducer = cms.EDProducer("PFCandidateProducer",
 					AK5PFInputTag = cms.InputTag("ak5PFJets"),
 					triggerCat = cms.string(trigger_category),
 					mapFilename = cms.string(map_file_path),
+					dataType = cms.string(data_type),
+					dataYear = cms.string(data_year), 
 			                JECPath = cms.string(JEC_filepath),
 					outputDir = cms.string(output_dir), 
 					primaryVertices = cms.InputTag("offlinePrimaryVertices"),
