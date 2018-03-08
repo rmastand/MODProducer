@@ -61,7 +61,7 @@ process.SimProducer = cms.EDProducer("SimProducer",
 					mapFilename = cms.string(map_file_path),
 					outputDir = cms.string(output_dir), 
 					primaryVertices = cms.InputTag("offlinePrimaryVertices"),
-					dataVersion = cms.string("5"),
+					dataVersion = cms.string("6"),
 					completedLogFilename = cms.string(completed_log_filename)
 				)
 				
