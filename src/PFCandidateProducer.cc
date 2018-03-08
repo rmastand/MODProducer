@@ -137,8 +137,8 @@ private:
    stringstream output_;
    
    string JECPath_;
-   string dataType;
-   string dataYear;
+   string dataType_;
+   string dataYear_;
    string outputFilename_;
    string lastOutputFilename_;
    
