@@ -136,6 +136,7 @@ private:
    
    stringstream output_;
    
+   string JECPath_;
    string outputFilename_;
    string lastOutputFilename_;
    
@@ -160,7 +161,8 @@ PFCandidateProducer::PFCandidateProducer(const ParameterSet& iConfig)
 {
   registry_filename_ = iConfig.getParameter<string>("mapFilename");
   completedLogFilename_ = iConfig.getParameter<string>("completedLogFilename");
-  triggerCat_ = iConfig.getParameter<string>("triggerCat");  
+  triggerCat_ = iConfig.getParameter<string>("triggerCat"); 
+  JECPath_ = iConfig.getParameter<string>("JECPath");  
   outputDir_ = iConfig.getParameter<string>("outputDir");
   outputFilename_ = "";
   lastOutputFilename_ = "";
@@ -452,10 +454,12 @@ void PFCandidateProducer::beginJob() {
    
    // Create the JetCorrectorParameter objects, the order does not matter.
    // YYYY is the first part of the txt files: usually the global tag from which they are retrieved
-   JetCorrectorParameters *AK5ResJetPar = new JetCorrectorParameters("data/JEC/FT_53/FT_53_LV5_AN1_L2L3Residual_AK5PF.txt"); 
-   JetCorrectorParameters *AK5L3JetPar  = new JetCorrectorParameters("data/JEC/FT_53/FT_53_LV5_AN1_L3Absolute_AK5PF.txt");
-   JetCorrectorParameters *AK5L2JetPar  = new JetCorrectorParameters("data/JEC/FT_53/FT_53_LV5_AN1_L2Relative_AK5PF.txt");
-   JetCorrectorParameters *AK5L1JetPar  = new JetCorrectorParameters("data/JEC/FT_53/FT_53_LV5_AN1_L1FastJet_AK5PF.txt");
+	
+   
+   JetCorrectorParameters *AK5ResJetPar = new JetCorrectorParameters("data/JEC/"+JECPath_+"_L2L3Residual_AK5PF.txt"); 
+   JetCorrectorParameters *AK5L3JetPar  = new JetCorrectorParameters("data/JEC/"+JECPath_+"_L3Absolute_AK5PF.txt");
+   JetCorrectorParameters *AK5L2JetPar  = new JetCorrectorParameters("data/JEC/"+JECPath_+"_L2Relative_AK5PF.txt");
+   JetCorrectorParameters *AK5L1JetPar  = new JetCorrectorParameters("data/JEC/"+JECPath_+"_L1FastJet_AK5PF.txt");
    
    //  Load the JetCorrectorParameter objects into a vector, IMPORTANT: THE ORDER MATTERS HERE !!!! 
    vector<JetCorrectorParameters> vParAK5;
