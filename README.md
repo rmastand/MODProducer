@@ -51,7 +51,7 @@ This section is for 2011 and simulated data. If analyzing 2010 data, replace all
 - Switch branches:
 
   ```
-  git checkout 2011
+  git checkout compile
   ```
 - Compile everything:
 
@@ -106,6 +106,8 @@ Once you've downloaded the AOD files (these are ROOT files), you need to create 
    1. a path to the ROOT files that you want to process. Note that this is the same as the second argument in the previous command. 
    2. a path to the registry file.
    3. a path to a text file that will count the number of validated events.
+   6. data type, real or sim
+   7. data year, 2010 or 2011
    
    You may need to change the  "goodJSON" in filenameRun.py to the corresponding list of validated events for whatever dataset you're using. If you're using simulated data, comment out lines 22-25 (all the luminosity information).
 
@@ -114,11 +116,11 @@ Once you've downloaded the AOD files (these are ROOT files), you need to create 
    ```
    If you downloaded the root files beforehand, use:
    ```
-   python ./reg/create_registry.py ~/MITOpenDataProject/eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20000/ ~/MITOpenDataProject/registry.txt ~/MITOpenDataProject/valid_events.txt
+   python ./reg/create_registry.py ~/MITOpenDataProject/eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20000/ ~/MITOpenDataProject/registry.txt ~/MITOpenDataProject/valid_events.txt real 2011
    ```
    Or, use:
    ```
-   python ./reg/create_registry_online.py ./file_paths/samples/Jet_21.txt ~/MITOpenDataProject/registry.txt  ~/MITOpenDataProject/valid_events.txt
+   python ./reg/create_registry_online.py ./file_paths/samples/Jet_21.txt ~/MITOpenDataProject/registry.txt  ~/MITOpenDataProject/valid_events.txt real 2011
    ```
    
 ### (Optional) Count the total number of events 
@@ -150,8 +152,11 @@ Now that you have created a registry for all the AOD files that you want to proc
    1. input directory (path to the directory which contains all the AOD files). This is the same as the second argument that you supplied in the previous step.
    2. output directory (path to the directory where you'd like to store all the MOD files). If this directory is not already present, it will create the directory.
    3. path to the registry file, including the filename. 
-   4. The trigger category you want to use.
-   5. whether to process from the beginning or not (1 or 0). If set to 1, the Producer will start AOD->MOD conversion from the first file in the registry. However, because it's desirable to break this step into multiple instances, you can run the producer once, quit it and come back later to resume it. So if set to 0, the producer will skip the files already in the MOD output directory and resume from there. Note that, the smallest discrete interval that the producer can detect is one ROOT (or MOD) file. So if you interrupted the producer while it's running, make sure you remove that particular MOD file from the output directory because else, the producer will skip that the next time even though < 100% events of that file are done.
+   4. The trigger category you want to use (Jet, Photon, Mu, etc)
+   5. path to the JEC triggers, starting within the "data" folder. i.e. FT_53/FT_53_LV5_AN1, GR_R/GR_R_42_V25_AK5PF, S53/START53_LV6A1
+   6. data type, real or sim
+   7. data year, 2010 or 2011
+   8. whether to process from the beginning or not (1 or 0). If set to 1, the Producer will start AOD->MOD conversion from the first file in the registry. However, because it's desirable to break this step into multiple instances, you can run the producer once, quit it and come back later to resume it. So if set to 0, the producer will skip the files already in the MOD output directory and resume from there. Note that, the smallest discrete interval that the producer can detect is one ROOT (or MOD) file. So if you interrupted the producer while it's running, make sure you remove that particular MOD file from the output directory because else, the producer will skip that the next time even though < 100% events of that file are done.
    
  
    As mentioned earlier, the "download" step above maintains the directory structure of CMS servers. This includes a directory named "AOD". 
@@ -193,16 +198,16 @@ If using 2010 or 2011 (real or simulated) data, all these corrections are in the
     
     
    ```
-   cmsRun ./analysis/PFCandidateRun2011.py ~/MITOpenDataProject/eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20000/ ~/MITOpenDataProject/eos/opendata/cms/Run2011A/Jet/MOD/12Oct2013-v1/20000/ ~/MITOpenDataProject/registry.txt Jet 1
+   cmsRun ./analysis/PFCandidateRun2011.py ~/MITOpenDataProject/eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20000/ ~/MITOpenDataProject/eos/opendata/cms/Run2011A/Jet/MOD/12Oct2013-v1/20000/ ~/MITOpenDataProject/registry.txt Jet FT_53/FT_53_LV5_AN1 real 2011 1
    ```
    Or, use:
    ```
-   cmsRun ./analysis/PFCandidateRun2011_online.py file_paths/samples/Jet_21.txt ~/MITOpenDataProject/eos/opendata/cms/Run2011A/Jet/MOD/12Oct2013-v1/20000/ ~/MITOpenDataProject/registry.txt Jet 1
+   cmsRun ./analysis/PFCandidateRun_online.py file_paths/samples/Jet_21.txt ~/MITOpenDataProject/eos/opendata/cms/Run2011A/Jet/MOD/12Oct2013-v1/20000/ ~/MITOpenDataProject/registry.txt Jet FT_53/FT_53_LV5_AN1 real 2011 1
    ```
    
    Or for simulated data, use:
    ```
-   cmsRun ./analysis/SimRun_online.py file_paths/samples/sim_1369.txt ~/MITOpenDataProject/eos/opendata/cms/MonteCarlo2011/Summer11LegDR/QCD_Pt-170to300_TuneZ2_7TeV_pythia6/AODSIM/PU_S13_START53_LV6-v1/00000/ ~/MITOpenDataProject/registry.txt Jet 1
+   cmsRun ./analysis/PFCandidateRun_online.py file_paths/samples/sim_1369.txt ~/MITOpenDataProject/eos/opendata/cms/MonteCarlo2011/Summer11LegDR/QCD_Pt-170to300_TuneZ2_7TeV_pythia6/AODSIM/PU_S13_START53_LV6-v1/00000/ ~/MITOpenDataProject/registry.txt Jet S53/START53_LV6A1 sim 2011 1
    ```
    
    If you're getting odd outputs (i.e. "File already processed" where you think there shouldn't be), try deleting the files 0 and / or 1 and try again.
