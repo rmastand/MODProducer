@@ -298,3 +298,4 @@ This error message generally means that you didn't use  an encrypted Internet co
 - [ ] Line 453:  What's up with "TopPairElectronPlusJetsSelectionFilter"?
 - [x] add more spaces for trigger names'
 - [x] Get simulated data working!
+- [ ] Add DOI and name of AOD file to header for each event
