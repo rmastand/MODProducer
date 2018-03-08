@@ -57,6 +57,8 @@ readFiles.extend(files_to_process)
 process = cms.Process("MITCMSOpenData")
 
 process.load('Configuration.StandardSequences.FrontierConditions_GlobalTag_cff')
+process.load("FWCore.MessageLogger.MessageLogger_cfi")
+process.MessageLogger.cerr.FwkReport.reportEvery = 1000
 
 
 process.source = cms.Source("PoolSource", fileNames=readFiles)
