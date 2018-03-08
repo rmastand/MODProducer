@@ -15,7 +15,8 @@ input_file = sys.argv[2]
 output_dir = sys.argv[3]
 map_file_path = sys.argv[4]
 trigger_category = sys.argv[5]
-completed_log_filename = sys.argv[6]
+JEC_filepath = sys.argv[6]
+completed_log_filename = sys.argv[7]
 
 
 dir_to_create = output_dir
@@ -58,17 +59,18 @@ process.ak5PFJets = ak5PFJets.clone(doAreaFastjet = cms.bool(True))
 		    	
 process.kt6PFJetsForIsolation = kt4PFJets.clone(rParam = 0.6, doRhoFastjet = True)
 
-process.PFCandidateProducer2011 = cms.EDProducer("PFCandidateProducer2011",
+process.PFCandidateProducer = cms.EDProducer("PFCandidateProducer",
 					rho = cms.InputTag("kt6PFJets","rho"),
 					PFCandidateInputTag = cms.InputTag("particleFlow"),
 					AK5PFInputTag = cms.InputTag("ak5PFJets"),
 					triggerCat = cms.string(trigger_category),
 					mapFilename = cms.string(map_file_path),
+			                JECPath = cms.string(JEC_filepath),
 					outputDir = cms.string(output_dir), 
 					primaryVertices = cms.InputTag("offlinePrimaryVertices"),
 					dataVersion = cms.string("6"),
 					completedLogFilename = cms.string(completed_log_filename)
 				)
 				
-process.producer = cms.Path( process.ak5PFJets * process.kt6PFJetsForIsolation * process.PFCandidateProducer2011)
+process.producer = cms.Path( process.ak5PFJets * process.kt6PFJetsForIsolation * process.PFCandidateProducer)
 process.schedule = cms.Schedule( process.producer )
