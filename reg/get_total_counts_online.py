@@ -55,7 +55,7 @@ def create_registry(path):
 
     for root_file in sorted(files_to_process):
         stdoutdata, stderrdata = subprocess.Popen(
-            ["cmsRun", "totalCounts.py", root_file, path_to_total_counts]).communicate()
+            ["cmsRun", "./reg/totalCounts.py", root_file, path_to_total_counts]).communicate()
 
         if str(stderrdata) != "None":
             log_file = open(log_file_path, 'a')
