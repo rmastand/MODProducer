@@ -273,19 +273,19 @@ void PFCandidateProducer::produce(Event& iEvent, const EventSetup& iSetup) {
 	   }
 	      
 	   // Luminosity Block Ends
-	   output_ << "#   Cond          RunNum        EventNum       LumiBlock       validLumi     intgDelLumi     intgRecLumi     AvgInstLumi             NPV       timestamp        msOffset" << endl;
+	   output_ << "#   Cond          RunNum        EventNum             NPV       timestamp        msOffset       LumiBlock       validLumi     intgDelLumi     intgRecLumi     AvgInstLumi" << endl;
 	   if (dataType_=="real"){
 	   	output_ << "    Cond"
 	   		<< setw(16) << runNum
 		        << setw(16) << eventNum
+	   	        << setw(16) << primaryVerticesHandle->size()
+		        << setw(16) << iEvent.time().unixTime()
+		        << setw(16) << iEvent.time().microsecondOffset()
 			<< setw(16) << lumiBlockNumber_
 			<< setw(16) << lumi->isValid()
 			<< setw(16) << lumi->intgDelLumi()
 			<< setw(16) << lumi->intgRecLumi()
 			<< setw(16) << lumi->avgInsDelLumi()
-	   	        << setw(16) << primaryVerticesHandle->size()
-		        << setw(16) << iEvent.time().unixTime()
-		        << setw(16) << iEvent.time().microsecondOffset()
 	 	        << endl;   
 	   }
 	     
