@@ -440,6 +440,39 @@ void PFCandidateProducer::produce(Event& iEvent, const EventSetup& iSetup) {
 	        << setw(16) << noshowpos << pdgId
 	        << endl;
 	   }
+	     
+	     
+	     
+	     
+	    // Gen Particles
+	  if (dataType_=="sim"){
+		  for(reco::GenParticleCollection::const_iterator it = genParticles->begin(), end = genParticles->end(); it != end; it++) {
+		    if (it == genParticles->begin())
+				output_ << "#    GEN" << "              px              py              pz              energy              pdgId" << endl;  
+
+
+				int pdgId = it->pdgId();
+				int status = it->status();
+
+				if ( status==1 ) {
+
+						px = it->px();
+						py = it->py();
+						pz = it->pz();
+						energy = it->energy();
+
+
+						output_ << "     GEN"
+						<< setw(16) << fixed << setprecision(8) << px
+						<< setw(16) << fixed << setprecision(8) << py
+						<< setw(16) << fixed << setprecision(8) << pz
+						<< setw(16) << fixed << setprecision(8) << energy
+						<< setw(16) << noshowpos << pdgId
+						<< endl;
+					}
+
+		   }
+	   }
 	   
 	   
 	   output_ << "EndEvent" << endl;
