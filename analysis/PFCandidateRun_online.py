@@ -42,9 +42,11 @@ readFiles.extend(files_to_process)
 
 process = cms.Process("MITCMSOpenData")
 
+process.load('Configuration.StandardSequences.FrontierConditions_GlobalTag_cff')
+
+
 process.source = cms.Source("PoolSource", fileNames=readFiles)
 process.maxEvents = cms.untracked.PSet(input = cms.untracked.int32(-1))
-process.load('Configuration.StandardSequences.FrontierConditions_GlobalTag_cff')
 
 if (data_type == "real") and (data_year == "2010"):
 	process.GlobalTag.globaltag='GR_R_42_V25::All'
