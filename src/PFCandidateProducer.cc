@@ -137,6 +137,8 @@ private:
    stringstream output_;
    
    string JECPath_;
+   string dataType;
+   string dataYear;
    string outputFilename_;
    string lastOutputFilename_;
    
@@ -163,6 +165,8 @@ PFCandidateProducer::PFCandidateProducer(const ParameterSet& iConfig)
   completedLogFilename_ = iConfig.getParameter<string>("completedLogFilename");
   triggerCat_ = iConfig.getParameter<string>("triggerCat"); 
   JECPath_ = iConfig.getParameter<string>("JECPath");  
+  dataType_ = iConfig.getParameter<string>("dataType"); 
+  dataYear_ = iConfig.getParameter<string>("dataYear");  
   outputDir_ = iConfig.getParameter<string>("outputDir");
   outputFilename_ = "";
   lastOutputFilename_ = "";
@@ -200,7 +204,7 @@ void PFCandidateProducer::produce(Event& iEvent, const EventSetup& iSetup) {
 
    runNum = iEvent.id().run();
    eventNum = iEvent.id().event();
-   lumiBlockNumber_ = iEvent.luminosityBlock();
+   if (dataType_=="sim") {lumiBlockNumber_ = iEvent.luminosityBlock();}
    
    // Check if we've already processed this event.
    // Proceed only if we haven't.
@@ -253,7 +257,7 @@ void PFCandidateProducer::produce(Event& iEvent, const EventSetup& iSetup) {
 	   output_.str("");
 	   output_.clear(); // Clear state flags.
 	
-	   output_ << "BeginEvent Version " << dataVersion_ << " CMS_2011 " << triggerCat_ << endl;	   
+	   output_ << "BeginEvent Version " << dataVersion_ << " CMS " << dataYear << " " << dataType << " " << triggerCat_ << endl;	   
 	   
 	   // Primary Vertices.
 	   edm::Handle<VertexCollection> primaryVerticesHandle;
@@ -261,20 +265,24 @@ void PFCandidateProducer::produce(Event& iEvent, const EventSetup& iSetup) {
 	   
 	   // Luminosity Block Begins
 	   
-	   LuminosityBlock const& iLumi = iEvent.getLuminosityBlock();
-	   Handle<LumiSummary> lumi;
-	   iLumi.getByLabel(lumiSummaryLabel_, lumi);
+	   if (dataType_=="sim"){
+		   LuminosityBlock const& iLumi = iEvent.getLuminosityBlock();
+		   Handle<LumiSummary> lumi;
+		   iLumi.getByLabel(lumiSummaryLabel_, lumi);
+	   }
 	      
 	   // Luminosity Block Ends
 	   output_ << "#   Cond          RunNum        EventNum       LumiBlock       validLumi     intgDelLumi     intgRecLumi     AvgInstLumi             NPV       timestamp        msOffset" << endl;
 	   output_ << "    Cond"
 	   	       << setw(16) << runNum
 		       << setw(16) << eventNum
-		       << setw(16) << lumiBlockNumber_
-	   	       << setw(16) << lumi->isValid()
-	   	       << setw(16) << lumi->intgDelLumi()
-	   	       << setw(16) << lumi->intgRecLumi()
-	   	       << setw(16) << lumi->avgInsDelLumi()
+		       if (dataType_=="sim"){
+			       << setw(16) << lumiBlockNumber_
+			       << setw(16) << lumi->isValid()
+			       << setw(16) << lumi->intgDelLumi()
+			       << setw(16) << lumi->intgRecLumi()
+			       << setw(16) << lumi->avgInsDelLumi()
+		       }
 	   	       << setw(16) << primaryVerticesHandle->size()
 		       << setw(16) << iEvent.time().unixTime()
 		       << setw(16) << iEvent.time().microsecondOffset()
