@@ -250,7 +250,7 @@ While this repository already contains the necessary files to calculate JEC fact
 cmsRun JEC_cfg.py
 ```
 
-If you're using a global tag other than GR_R_42:V25, the filenames will be different from what they are in the repository. For those cases, you need to edit the filenames in `src/PFCandidateProducer.cc`, under the method `PFCandidateProducer::beginJob()`, lines 389 to 392.
+If you're using a global tag other than GR_R_42:V25, the filenames will be different from what they are in the repository. For those cases, take all the JEC files that the aove code generates and place them in a directory in "data". Then change argument 5 of PFCandidateRun(online).py accordingly.
 
 ## Other Notes
 Some random notes that might be helpful as you play around with the code here:
