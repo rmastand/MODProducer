@@ -423,7 +423,7 @@ void SimProducer::produce(Event& iEvent, const EventSetup& iSetup) {
 	  // Gen Particles
 	  for(reco::GenParticleCollection::const_iterator it = genParticles->begin(), end = genParticles->end(); it != end; it++) {
 	    if (it == genParticles->begin())
-	       		output_ << "#    GEN" << "              px              py              pz              energy              status              pdgId" << endl;  
+	       		output_ << "#    GEN" << "              px              py              pz              energy              pdgId" << endl;  
 	    
 	    
 	    		int pdgId = it->pdgId();
@@ -442,7 +442,6 @@ void SimProducer::produce(Event& iEvent, const EventSetup& iSetup) {
 	        			<< setw(16) << fixed << setprecision(8) << py
 	        			<< setw(16) << fixed << setprecision(8) << pz
 	        			<< setw(16) << fixed << setprecision(8) << energy
-					<< setw(16) << noshowpos << status
 	        			<< setw(16) << noshowpos << pdgId
 	        			<< endl;
                                 }
