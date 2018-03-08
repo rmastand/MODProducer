@@ -14,6 +14,7 @@ file_name = data_file_link[len(data_file_link) - 41:len(data_file_link)]
 process = cms.Process("FilenameMapProducer")
 
 process.load("FWCore.MessageLogger.MessageLogger_cfi")
+process.MessageLogger.cerr.FwkReport.reportEvery = 1000
 
 print "Running filenameRun.py on ", file_name
 process.source = cms.Source ("PoolSource", fileNames=cms.untracked.vstring( data_file_link ) )
