@@ -186,7 +186,7 @@ If using simulated data, the opendata page for that record will tell you which g
   
 #### Check that you have the correct Jet energy correction factors (for Jet analysis)
 
-If using 2010 or 2011 data, all these corrections are in the ```data/JEC``` folder and are properly implemented in the EDProducer source files. If using simulated data, see the "Notes about JEC" section before proceding.
+If using 2010 or 2011 (real or simulated) data, all these corrections are in the ```data/JEC``` folder and are properly implemented in the EDProducer source files. Otherwise, see the "Notes about JEC" section before proceding.
 
 
   Now analyze the files! If you've downloaded all the AOD files, run:
@@ -274,9 +274,6 @@ This error message generally means that you didn't use  an encrypted Internet co
 
 
 
-####PFCandidateProducer_online.py:
-- [x] Change so the dataset isn't hardocded in but can be run as a command line argument
-
 ####create_registry.py:
 - [x] Is there a reason this isn't in the utilities folder?  Alternatively, does download.py need to be in a separate utilities folder?
 - [ ] Can you put comments at the beginning of this file saying how to run it?  (i.e. what the arguments are and what this does?)  This comment holds for all of the .py files that the user might call directly.
@@ -291,8 +288,8 @@ This error message generally means that you didn't use  an encrypted Internet co
 - [ ] Can this be moved to the utilities folder, or does it have to stay here?
 
 ####PFCanidateProducer.cc:
-- [ ] Line 200: You shouldn't hard code "CMS_2010" and "Jet_Primary_Dataset".  Rather, they should be parameters just like the version number that can be changed easily.  Note that it should be "CMS_2010B".
-- [ ] Line 273:  You shouldn't hard code "Jet" here.  Rather, the name of the primary data set should correlate with the name given in the header.  That way, we can run other primary datasets without having to change too much.
+- [x] Line 200: You shouldn't hard code "CMS_2010" and "Jet_Primary_Dataset".  Rather, they should be parameters just like the version number that can be changed easily.  Note that it should be "CMS_2010B".
+- [x] Line 273:  You shouldn't hard code "Jet" here.  Rather, the name of the primary data set should correlate with the name given in the header.  That way, we can run other primary datasets without having to change too much.
 - [ ] Line 453:  What's up with "TopPairElectronPlusJetsSelectionFilter"?
-- [x ] add more spaces for trigger names'
+- [x] add more spaces for trigger names'
 - [x] Get simulated data working!
