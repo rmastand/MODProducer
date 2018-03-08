@@ -50,6 +50,7 @@
 #include "DataFormats/TrackReco/interface/TrackFwd.h"
 #include "DataFormats/VertexReco/interface/Vertex.h"
 #include "DataFormats/VertexReco/interface/VertexFwd.h"
+#include "DataFormats/HepMCCandidate/interface/GenParticle.h"
 
 #include "DataFormats/Provenance/interface/Timestamp.h"
 
@@ -204,7 +205,7 @@ void PFCandidateProducer::produce(Event& iEvent, const EventSetup& iSetup) {
 
    runNum = iEvent.id().run();
    eventNum = iEvent.id().event();
-   if (dataType_=="sim") {lumiBlockNumber_ = iEvent.luminosityBlock();}
+   if (dataType_=="real") {lumiBlockNumber_ = iEvent.luminosityBlock();}
    
    // Check if we've already processed this event.
    // Proceed only if we haven't.
@@ -257,36 +258,50 @@ void PFCandidateProducer::produce(Event& iEvent, const EventSetup& iSetup) {
 	   output_.str("");
 	   output_.clear(); // Clear state flags.
 	
-	   output_ << "BeginEvent Version " << dataVersion_ << " CMS " << dataYear << " " << dataType << " " << triggerCat_ << endl;	   
+	   output_ << "BeginEvent Version " << dataVersion_ << " CMS " << dataYear_ << " " << dataType_ << " " << triggerCat_ << endl;	   
 	   
 	   // Primary Vertices.
 	   edm::Handle<VertexCollection> primaryVerticesHandle;
 	   iEvent.getByLabel( edm::InputTag("offlinePrimaryVertices"), primaryVerticesHandle);   
 	   
 	   // Luminosity Block Begins
-	   
-	   if (dataType_=="sim"){
+	   Handle<LumiSummary> lumi;
+	   if (dataType_=="real"){
 		   LuminosityBlock const& iLumi = iEvent.getLuminosityBlock();
-		   Handle<LumiSummary> lumi;
+		   
 		   iLumi.getByLabel(lumiSummaryLabel_, lumi);
 	   }
 	      
 	   // Luminosity Block Ends
 	   output_ << "#   Cond          RunNum        EventNum       LumiBlock       validLumi     intgDelLumi     intgRecLumi     AvgInstLumi             NPV       timestamp        msOffset" << endl;
-	   output_ << "    Cond"
-	   	       << setw(16) << runNum
-		       << setw(16) << eventNum
-		       if (dataType_=="sim"){
-			       << setw(16) << lumiBlockNumber_
-			       << setw(16) << lumi->isValid()
-			       << setw(16) << lumi->intgDelLumi()
-			       << setw(16) << lumi->intgRecLumi()
-			       << setw(16) << lumi->avgInsDelLumi()
-		       }
-	   	       << setw(16) << primaryVerticesHandle->size()
-		       << setw(16) << iEvent.time().unixTime()
-		       << setw(16) << iEvent.time().microsecondOffset()
-	 	       << endl;   
+	   if (dataType_=="real"){
+	   	output_ << "    Cond"
+	   		<< setw(16) << runNum
+		        << setw(16) << eventNum
+			<< setw(16) << lumiBlockNumber_
+			<< setw(16) << lumi->isValid()
+			<< setw(16) << lumi->intgDelLumi()
+			<< setw(16) << lumi->intgRecLumi()
+			<< setw(16) << lumi->avgInsDelLumi()
+	   	        << setw(16) << primaryVerticesHandle->size()
+		        << setw(16) << iEvent.time().unixTime()
+		        << setw(16) << iEvent.time().microsecondOffset()
+	 	        << endl;   
+	   }
+	     
+	   if (dataType_=="sim"){
+	   	output_ << "    Cond"
+	   		<< setw(16) << runNum
+		        << setw(16) << eventNum
+	   	        << setw(16) << primaryVerticesHandle->size()
+		        << setw(16) << iEvent.time().unixTime()
+		        << setw(16) << iEvent.time().microsecondOffset()
+	 	        << endl;   
+	   }
+	     
+	     
+	     
+	
 	
 	   // timeValue = timeHigh (unixTime); timeValue = timeValue << 32; timeValue += microsecondsOffset;
 	   
