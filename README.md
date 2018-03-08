@@ -108,8 +108,6 @@ Once you've downloaded the AOD files (these are ROOT files), you need to create 
    3. a path to a text file that will count the number of validated events.
    6. data type, real or sim
    7. data year, 2010 or 2011
-   
-   You may need to change the  "goodJSON" in filenameRun.py to the corresponding list of validated events for whatever dataset you're using. If you're using simulated data, comment out lines 22-25 (all the luminosity information).
 
    ```
    cmsenv
