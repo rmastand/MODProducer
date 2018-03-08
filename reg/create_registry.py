@@ -25,9 +25,11 @@ import os
 from time import time
 import sys
 
-input_dir = sys.argv[1]
+file_with_source_paths = sys.argv[1]
 registry_file_path = sys.argv[2]
 path_to_counts = sys.argv[3]
+data_type = sys.argv[4]
+data_year = sys.argv[5]
 
 log_file_path = str(registry_file_path) + "_log.log"
 
@@ -53,20 +55,13 @@ def create_registry(path, log_file_path):
     print "File already processed", files_already_processed
 
     files_to_process = []
-    
-    
-    
-    
     for file in os.listdir(input_dir):
 	
 			files_to_process.append("file://" + input_dir + "/" + file)
-			
-			
-
 
     for root_file in sorted(files_to_process):
         stdoutdata, stderrdata = subprocess.Popen(
-            ["cmsRun", "filenameRun.py", root_file, registry_file_path, path_to_counts]).communicate()
+            ["cmsRun", "filenameRun.py", root_file, registry_file_path, path_to_counts, data_type, data_year]).communicate()
 
         if str(stderrdata) != "None":
             log_file = open(log_file_path, 'a')
@@ -74,7 +69,7 @@ def create_registry(path, log_file_path):
             log_file.close()
 start = time()
 
-create_registry(input_dir, log_file_path)
+create_registry(file_with_source_paths, log_file_path)
 
 end = time()
 
