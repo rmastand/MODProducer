@@ -205,7 +205,7 @@ void PFCandidateProducer::produce(Event& iEvent, const EventSetup& iSetup) {
 
    runNum = iEvent.id().run();
    eventNum = iEvent.id().event();
-   if (dataType_=="real") {lumiBlockNumber_ = iEvent.luminosityBlock();}
+   if (dataType_=="Data") {lumiBlockNumber_ = iEvent.luminosityBlock();}
    
    // Check if we've already processed this event.
    // Proceed only if we haven't.
@@ -267,7 +267,7 @@ void PFCandidateProducer::produce(Event& iEvent, const EventSetup& iSetup) {
 	   
 	   // Luminosity Block Begins
 	   Handle<LumiSummary> lumi;
-	   if (dataType_=="real"){
+	   if (dataType_=="Data"){
 		   LuminosityBlock const& iLumi = iEvent.getLuminosityBlock();
 		   
 		   iLumi.getByLabel(lumiSummaryLabel_, lumi);
@@ -275,7 +275,7 @@ void PFCandidateProducer::produce(Event& iEvent, const EventSetup& iSetup) {
 	      
 	   // Luminosity Block Ends
 	   output_ << "#   Cond          RunNum        EventNum             NPV       timestamp        msOffset       LumiBlock       validLumi     intgDelLumi     intgRecLumi     AvgInstLumi" << endl;
-	   if (dataType_=="real"){
+	   if (dataType_=="Data"){
 	   	output_ << "    Cond"
 	   		<< setw(16) << runNum
 		        << setw(16) << eventNum
@@ -290,7 +290,7 @@ void PFCandidateProducer::produce(Event& iEvent, const EventSetup& iSetup) {
 	 	        << endl;   
 	   }
 	     
-	   if (dataType_=="sim"){
+	   if (dataType_=="Sim"){
 	   	output_ << "    Cond"
 	   		<< setw(16) << runNum
 		        << setw(16) << eventNum
@@ -356,7 +356,7 @@ void PFCandidateProducer::produce(Event& iEvent, const EventSetup& iSetup) {
 	   
 	   for (unsigned i = 0; i < triggerNames.size(); i++) {
 	      if (i == 0)
-	         output_ << "#                                    Trig            Name      Prescale_1      Prescale_2          Fired?" << endl;
+	         output_ << "#                                            Trig            Name      Prescale_1      Prescale_2          Fired?" << endl;
 	      
 	      string name = triggerNames[i];
 	      
@@ -449,7 +449,7 @@ void PFCandidateProducer::produce(Event& iEvent, const EventSetup& iSetup) {
 	     
 	     
 	    // Gen Particles
-	  if (dataType_=="sim"){
+	  if (dataType_=="Sim"){
 		  for(reco::GenParticleCollection::const_iterator it = genParticles->begin(), end = genParticles->end(); it != end; it++) {
 		    if (it == genParticles->begin())
 				output_ << "#    Gen" << "              px              py              pz          energy           pdgId" << endl;  
