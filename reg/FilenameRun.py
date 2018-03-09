@@ -45,8 +45,8 @@ process.FilenameMapProducer = cms.EDProducer("FilenameMapProducer",
 #process.MessageLogger = cms.Service("MessageLogger",
 #        				default   =  cms.untracked.PSet(
 #                                                     timespan = cms.untracked.int32(60)
-       )                                                  
-)       
+#       )                                                  
+#)       
 						
 process.producer = cms.Path(process.FilenameMapProducer)
 process.schedule = cms.Schedule( process.producer )
