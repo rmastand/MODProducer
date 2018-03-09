@@ -356,7 +356,7 @@ void PFCandidateProducer::produce(Event& iEvent, const EventSetup& iSetup) {
 	   
 	   for (unsigned i = 0; i < triggerNames.size(); i++) {
 	      if (i == 0)
-	         output_ << "#   Trig                            Name      Prescale_1      Prescale_2          Fired?" << endl;
+	         output_ << "#                                    Trig            Name      Prescale_1      Prescale_2          Fired?" << endl;
 	      
 	      string name = triggerNames[i];
 	      
@@ -452,7 +452,7 @@ void PFCandidateProducer::produce(Event& iEvent, const EventSetup& iSetup) {
 	  if (dataType_=="sim"){
 		  for(reco::GenParticleCollection::const_iterator it = genParticles->begin(), end = genParticles->end(); it != end; it++) {
 		    if (it == genParticles->begin())
-				output_ << "#    Gen" << "              px              py              pz              energy              pdgId" << endl;  
+				output_ << "#    Gen" << "              px              py              pz          energy           pdgId" << endl;  
 
 
 				int pdgId = it->pdgId();
