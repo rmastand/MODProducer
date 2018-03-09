@@ -42,9 +42,9 @@ process.FilenameMapProducer = cms.EDProducer("FilenameMapProducer",
 					        numFile = cms.string(path_to_counts)
 						)
 
-process.MessageLogger = cms.Service("MessageLogger",
-        				default   =  cms.untracked.PSet(
-                                                     timespan = cms.untracked.int32(60)
+#process.MessageLogger = cms.Service("MessageLogger",
+#        				default   =  cms.untracked.PSet(
+#                                                     timespan = cms.untracked.int32(60)
        )                                                  
 )       
 						
