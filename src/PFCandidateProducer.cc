@@ -258,7 +258,7 @@ void PFCandidateProducer::produce(Event& iEvent, const EventSetup& iSetup) {
 	   output_.str("");
 	   output_.clear(); // Clear state flags.
 	
-	   output_ << "BeginEvent Version " << dataVersion_ << " CMS " << dataYear_ << " " << dataType_ << " " << triggerCat_ << " " << outputFilename_ << endl;	   
+	   output_ << "BeginEvent Version " << dataVersion_ << " CMS_" << dataYear_ << " " << dataType_ << " " << triggerCat_ << " " << outputFilename_ << endl;	   
 	   
 	   // Primary Vertices.
 	   edm::Handle<VertexCollection> primaryVerticesHandle;
