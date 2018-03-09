@@ -11,7 +11,7 @@ from RecoJets.JetProducers.AnomalousCellParameters_cfi import *
 from RecoJets.JetProducers.ak5PFJets_cfi import ak5PFJets
 from RecoJets.JetProducers.kt4PFJets_cfi import kt4PFJets
 
-input_file = sys.argv[2]
+input_dir = sys.argv[2]
 output_dir = sys.argv[3]
 map_file_path = sys.argv[4]
 trigger_category = sys.argv[5]
