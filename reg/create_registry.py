@@ -25,7 +25,7 @@ import os
 from time import time
 import sys
 
-file_with_source_paths = sys.argv[1]
+input_dir = sys.argv[1]
 registry_file_path = sys.argv[2]
 path_to_counts = sys.argv[3]
 data_type = sys.argv[4]
@@ -69,7 +69,7 @@ def create_registry(path, log_file_path):
             log_file.close()
 start = time()
 
-create_registry(file_with_source_paths, log_file_path)
+create_registry(input_dir, log_file_path)
 
 end = time()
 
