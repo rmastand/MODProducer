@@ -258,7 +258,8 @@ void PFCandidateProducer::produce(Event& iEvent, const EventSetup& iSetup) {
 	   output_.str("");
 	   output_.clear(); // Clear state flags.
 	
-	   output_ << "BeginEvent Version " << dataVersion_ << " CMS_" << dataYear_ << " " << dataType_ << " " << triggerCat_ << " " << outputFilename_ << endl;	   
+	   output_ << "BeginEvent Version " << dataVersion_ << " CMS_" << dataYear_ << " " << dataType_ << " " << triggerCat_ << endl;
+	   output_ << outputFilename_ << endl;
 	   
 	   // Primary Vertices.
 	   edm::Handle<VertexCollection> primaryVerticesHandle;
@@ -451,7 +452,7 @@ void PFCandidateProducer::produce(Event& iEvent, const EventSetup& iSetup) {
 	  if (dataType_=="sim"){
 		  for(reco::GenParticleCollection::const_iterator it = genParticles->begin(), end = genParticles->end(); it != end; it++) {
 		    if (it == genParticles->begin())
-				output_ << "#    GEN" << "              px              py              pz              energy              pdgId" << endl;  
+				output_ << "#    Gen" << "              px              py              pz              energy              pdgId" << endl;  
 
 
 				int pdgId = it->pdgId();
