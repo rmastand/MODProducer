@@ -356,7 +356,7 @@ void PFCandidateProducer::produce(Event& iEvent, const EventSetup& iSetup) {
 	   
 	   for (unsigned i = 0; i < triggerNames.size(); i++) {
 	      if (i == 0)
-	         output_ << "#                                            Trig            Name      Prescale_1      Prescale_2          Fired?" << endl;
+	         output_ << "#                                           Trig            Name      Prescale_1      Prescale_2          Fired?" << endl;
 	      
 	      string name = triggerNames[i];
 	      
@@ -466,7 +466,7 @@ void PFCandidateProducer::produce(Event& iEvent, const EventSetup& iSetup) {
 						energy = it->energy();
 
 
-						output_ << "     GEN"
+						output_ << "     Gen"
 						<< setw(16) << fixed << setprecision(8) << px
 						<< setw(16) << fixed << setprecision(8) << py
 						<< setw(16) << fixed << setprecision(8) << pz
