@@ -114,11 +114,11 @@ Once you've downloaded the AOD files (these are ROOT files), you need to create 
    ```
    If you downloaded the root files beforehand, use:
    ```
-   python ./reg/create_registry.py ~/MITOpenDataProject/eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20000/ ~/MITOpenDataProject/registry.txt ~/MITOpenDataProject/valid_events.txt real 2011
+   python ./reg/create_registry.py ~/MITOpenDataProject/eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20000/ ~/MITOpenDataProject/registry.txt ~/MITOpenDataProject/valid_events.txt Data 2011A
    ```
    Or, use:
    ```
-   python ./reg/create_registry_online.py ./file_paths/samples/Jet_21.txt ~/MITOpenDataProject/registry.txt  ~/MITOpenDataProject/valid_events.txt real 2011
+   python ./reg/create_registry_online.py ./file_paths/samples/Jet_21.txt ~/MITOpenDataProject/registry.txt  ~/MITOpenDataProject/valid_events.txt Data 2011A
    ```
    
 ### (Optional) Count the total number of events 
@@ -196,16 +196,16 @@ If using 2010 or 2011 (real or simulated) data, all these corrections are in the
     
     
    ```
-   cmsRun ./analysis/PFCandidateRun2011.py ~/MITOpenDataProject/eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20000/ ~/MITOpenDataProject/eos/opendata/cms/Run2011A/Jet/MOD/12Oct2013-v1/20000/ ~/MITOpenDataProject/registry.txt Jet FT_53/FT_53_LV5_AN1 real 2011 1
+   cmsRun ./analysis/PFCandidateRun2011.py ~/MITOpenDataProject/eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20000/ ~/MITOpenDataProject/eos/opendata/cms/Run2011A/Jet/MOD/12Oct2013-v1/20000/ ~/MITOpenDataProject/registry.txt Jet FT_53/FT_53_LV5_AN1 Data 2011A 1
    ```
    Or, use:
    ```
-   cmsRun ./analysis/PFCandidateRun_online.py file_paths/samples/Jet_21.txt ~/MITOpenDataProject/eos/opendata/cms/Run2011A/Jet/MOD/12Oct2013-v1/20000/ ~/MITOpenDataProject/registry.txt Jet FT_53/FT_53_LV5_AN1 real 2011 1
+   cmsRun ./analysis/PFCandidateRun_online.py file_paths/samples/Jet_21.txt ~/MITOpenDataProject/eos/opendata/cms/Run2011A/Jet/MOD/12Oct2013-v1/20000/ ~/MITOpenDataProject/registry.txt Jet FT_53/FT_53_LV5_AN1 Data 2011A 1
    ```
    
    Or for simulated data, use:
    ```
-   cmsRun ./analysis/PFCandidateRun_online.py file_paths/samples/sim_1369.txt ~/MITOpenDataProject/eos/opendata/cms/MonteCarlo2011/Summer11LegDR/QCD_Pt-170to300_TuneZ2_7TeV_pythia6/AODSIM/PU_S13_START53_LV6-v1/00000/ ~/MITOpenDataProject/registry.txt Jet S53/START53_LV6A1 sim 2011 1
+   cmsRun ./analysis/PFCandidateRun_online.py file_paths/samples/sim_1369.txt ~/MITOpenDataProject/eos/opendata/cms/MonteCarlo2011/Summer11LegDR/QCD_Pt-170to300_TuneZ2_7TeV_pythia6/AODSIM/PU_S13_START53_LV6-v1/00000/ ~/MITOpenDataProject/registry.txt Jet S53/START53_LV6A1 Sim 2011 1
    ```
    
    If you're getting odd outputs (i.e. "File already processed" where you think there shouldn't be), try deleting the files 0 and / or 1 and try again.
