@@ -184,7 +184,7 @@ If using simulated data, the opendata page for that record will tell you which g
   ln -sf /cvmfs/cms-opendata-conddb.cern.ch/START53_LV6A1 START53_LV6A1
   ln -sf /cvmfs/cms-opendata-conddb.cern.ch/START53_LV6A1.db START53_LV6A1.db
    ```
-  Then change the global tag in lines 45 and 46 of ```SimRun_online.py```.
+
   
   
 #### Check that you have the correct Jet energy correction factors (for Jet analysis)
@@ -196,7 +196,7 @@ If using 2010 or 2011 (real or simulated) data, all these corrections are in the
     
     
    ```
-   cmsRun ./analysis/PFCandidateRun2011.py ~/MITOpenDataProject/eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20000/ ~/MITOpenDataProject/eos/opendata/cms/Run2011A/Jet/MOD/12Oct2013-v1/20000/ ~/MITOpenDataProject/registry.txt Jet FT_53/FT_53_LV5_AN1 Data 2011A 1
+   cmsRun ./analysis/PFCandidateRun.py ~/MITOpenDataProject/eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20000/ ~/MITOpenDataProject/eos/opendata/cms/Run2011A/Jet/MOD/12Oct2013-v1/20000/ ~/MITOpenDataProject/registry.txt Jet FT_53/FT_53_LV5_AN1 Data 2011A 1
    ```
    Or, use:
    ```
