@@ -259,7 +259,7 @@ void PFCandidateProducer::produce(Event& iEvent, const EventSetup& iSetup) {
 	   output_.clear(); // Clear state flags.
 	
 	   output_ << "BeginEvent Version " << dataVersion_ << " CMS_" << dataYear_ << " " << dataType_ << " " << triggerCat_ << endl;
-	   output_ << outputFilename_ << endl;
+	   output_ << "# " << outputFilename_ << endl;
 	   
 	   // Primary Vertices.
 	   edm::Handle<VertexCollection> primaryVerticesHandle;
@@ -297,6 +297,11 @@ void PFCandidateProducer::produce(Event& iEvent, const EventSetup& iSetup) {
 	   	        << setw(16) << primaryVerticesHandle->size()
 		        << setw(16) << iEvent.time().unixTime()
 		        << setw(16) << iEvent.time().microsecondOffset()
+			<< setw(16) << "-1"
+			<< setw(16) << "-1"
+			<< setw(16) << "-1"
+			<< setw(16) << "-1"
+			<< setw(16) << "-1"
 	 	        << endl;   
 	   }
 	     
