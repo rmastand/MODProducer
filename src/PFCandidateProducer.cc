@@ -393,13 +393,27 @@ void PFCandidateProducer::produce(Event& iEvent, const EventSetup& iSetup) {
 	   }
 	     
 	    //RunLumiSelector runLumiSel( lumis_ );
-          checkFileOutput_ //<< BoolToString(runLumiSel(iEvent)) << " "
-                                   << iEvent.id().run() << " "
-                                   << iEvent.id().event() << " "
-                                   << iEvent.id().luminosityBlock() << " "
-                                   << registry_info_[to_string(runNum) + "_" + to_string(eventNum)] << " "
-                                   << trigger_list
-                                   << endl;
+	     
+	     
+	  if (dataType_=="Data") {
+		  checkFileOutput_ //<< BoolToString(runLumiSel(iEvent)) << " "
+					   << iEvent.id().run() << " "
+					   << iEvent.id().event() << " "			
+					   << iEvent.id().luminosityBlock() << " "
+					   << registry_info_[to_string(runNum) + "_" + to_string(eventNum)] << " "
+					   << trigger_list
+					   << endl;
+	  }
+	     
+	   if (dataType_=="Sim") {
+		  checkFileOutput_ //<< BoolToString(runLumiSel(iEvent)) << " "
+					   << iEvent.id().run() << " "
+					   << iEvent.id().event() << " "			
+					   << "0" << " "
+					   << registry_info_[to_string(runNum) + "_" + to_string(eventNum)] << " "
+					   << trigger_list
+					   << endl;
+	  }
 
 	   
 	  // Get AK5 Jets.
