@@ -131,6 +131,7 @@ private:
 
    ofstream completedEventsFileOutput_;
    ofstream logFileOutput_; 
+   ofstream statsFileOutput_;
 
    string outputDir_;
    ofstream fileOutput_;
@@ -173,6 +174,7 @@ PFCandidateProducer::PFCandidateProducer(const ParameterSet& iConfig)
   lastOutputFilename_ = "";
 
   logFileOutput_.open("log.log", ios::out | ios::app );
+  statsFileOutput_.open("stats.txt", ios::out | ios::app );
 
   skipNextEvent_ = false;
 }
@@ -368,6 +370,8 @@ void PFCandidateProducer::produce(Event& iEvent, const EventSetup& iSetup) {
 	      pair<int, int> prescale = hltConfig_.prescaleValues(iEvent, iSetup, name);
 	
 	      bool fired = triggerFired(name, ( * trigResults));
+	      bool present = true;
+
 	
 	      output_ << "    Trig"
 	       	          << setw(40) << name
@@ -375,7 +379,28 @@ void PFCandidateProducer::produce(Event& iEvent, const EventSetup& iSetup) {
 		          << setw(16) << prescale.second
 	                  << setw(16) << fired
 	                  << endl;
+		   
+		   
+              stringstream ss1;
+              ss1 << prescale.first;
+              string str1 = ss1.str();
+
+              stringstream ss2;
+              ss2 << prescale.second;
+              string str2 = ss2.str();
+              trigger_list = trigger_list+name+" "+BoolToString(present)+" "+str1+" "+str2+" "+BoolToString(fired)+" n ";
+
 	   }
+	     
+	    //RunLumiSelector runLumiSel( lumis_ );
+          checkFileOutput_ //<< BoolToString(runLumiSel(iEvent)) << " "
+                                   << iEvent.id().run() << " "
+                                   << iEvent.id().event() << " "
+                                   << iEvent.id().luminosityBlock() << " "
+                                   << registry_info_[to_string(runNum) + "_" + to_string(eventNum)] << " "
+                                   << trigger_list
+                                   << endl;
+
 	   
 	  // Get AK5 Jets.
 	  
