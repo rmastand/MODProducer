@@ -1,7 +1,9 @@
 import numpy as np
+import sys
 
+stats_file = sys.argv[1]
 
-with open("stats.txt") as f:
+with open(stats_file) as f:
     content = f.readlines()
 # you may also want to remove whitespace characters like `\n` at the end of each line
 content = [x.strip().split(" ") for x in content] 
