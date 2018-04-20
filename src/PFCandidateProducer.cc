@@ -62,6 +62,11 @@ using namespace trigger;
 using namespace reco;
 using namespace fastjet;
 
+inline const char * const BoolToString(bool b)
+{
+  return b ? "true" : "false";
+}
+
 
 class PFCandidateProducer : public EDProducer 
 {
@@ -360,6 +365,7 @@ void PFCandidateProducer::produce(Event& iEvent, const EventSetup& iSetup) {
 	   
 	   // Get all trigger names associated with the "Jet" dataset.
 	   const vector<string> triggerNames = hltConfig_.datasetContent(triggerCat_);
+	   string trigger_list = "";
 	   
 	   for (unsigned i = 0; i < triggerNames.size(); i++) {
 	      if (i == 0)
@@ -396,7 +402,7 @@ void PFCandidateProducer::produce(Event& iEvent, const EventSetup& iSetup) {
 	     
 	     
 	  if (dataType_=="Data") {
-		  checkFileOutput_ //<< BoolToString(runLumiSel(iEvent)) << " "
+		  statsFileOutput_ //<< BoolToString(runLumiSel(iEvent)) << " "
 					   << iEvent.id().run() << " "
 					   << iEvent.id().event() << " "			
 					   << iEvent.id().luminosityBlock() << " "
@@ -406,7 +412,7 @@ void PFCandidateProducer::produce(Event& iEvent, const EventSetup& iSetup) {
 	  }
 	     
 	   if (dataType_=="Sim") {
-		  checkFileOutput_ //<< BoolToString(runLumiSel(iEvent)) << " "
+		  statsFileOutput_ //<< BoolToString(runLumiSel(iEvent)) << " "
 					   << iEvent.id().run() << " "
 					   << iEvent.id().event() << " "			
 					   << "0" << " "
