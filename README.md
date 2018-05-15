@@ -123,24 +123,21 @@ Once you've downloaded the AOD files (these are ROOT files), you need to create 
    
 ### (Optional) Count the total number of events 
 
-You may want to run this step to ensure that you're downloaded all the AOD file correctly and completely / are able to access all of the AOD files fully. This script takes two arguments: 
-	
-   1. a path to the ROOT files that you want to process. Note that this is the same as the second argument in the previous command.
-   2. a path to a text file that will count the number of total events.
+You may want to run this step as a cross check to ensure that your VM can actually access all of the events that CERN cites to be in the dataset.
    
-   If you downloaded the root files beforehand, use:
+   In the virtual machine environment, type ```root```. Then in the root environment, type:
    ```
-   python ./reg/get_total_counts.py ~/MITOpenDataProject/eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20000/ ~/MITOpenDataProject/total_events.txt
-   ```
-   Or, use:
-   ```
-   python ./reg/get_total_counts_online.py ./file_paths/samples/Jet_21.txt ~/MITOpenDataProject/total_events.txt
-   ```
+   .x reg/check_total_counts_fast.cxx("file_paths/Jet11/100000.txt","counts10000.txt")
+   ```    
+   Replace the arguments of the function as necessary. Note that running this script will initially produce a lot of warnings; you can ignore them all.
    
-   Now, actually count the total number of events:
+   When the script stops running, exit the root environment and type:
    ```
-   python ./reg/count_events.py ~/MITOpenDataProject/total_events.txt
+   tail -1 counts10000.txt
    ```
+   The number you see should be the number of events in the ```Jet11/100000.txt``` file.
+   
+
    
 
 ### Convert CERN AOD files to MOD files
