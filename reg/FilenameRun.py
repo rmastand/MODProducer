@@ -21,16 +21,18 @@ process.source = cms.Source ("PoolSource", fileNames=cms.untracked.vstring( data
 process.maxEvents = cms.untracked.PSet(input = cms.untracked.int32(-1))
 
 if (data_type == "Data") and (data_year == "2010B"):
-	goodJSON = "data/Cert_136033-149442_7TeV_Apr21ReReco_Collisions10_JSON_v2.txt"
-	myLumis = LumiList.LumiList(filename = goodJSON).getCMSSWString().split(',')
-	process.source.lumisToProcess = cms.untracked.VLuminosityBlockRange()
-	process.source.lumisToProcess.extend(myLumis)
+	#goodJSON = "data/Cert_136033-149442_7TeV_Apr21ReReco_Collisions10_JSON_v2.txt"
+	#myLumis = LumiList.LumiList(filename = goodJSON).getCMSSWString().split(',')
+	#process.source.lumisToProcess = cms.untracked.VLuminosityBlockRange()
+	#process.source.lumisToProcess.extend(myLumis)
+	pass
 
 if (data_type == "Data") and (data_year == "2011A"):
-	goodJSON = "data/Cert_160404-180252_7TeV_ReRecoNov08_Collisions11_JSON.txt"
-	myLumis = LumiList.LumiList(filename = goodJSON).getCMSSWString().split(',')
-	process.source.lumisToProcess = cms.untracked.VLuminosityBlockRange()
-	process.source.lumisToProcess.extend(myLumis)
+	#goodJSON = "data/Cert_160404-180252_7TeV_ReRecoNov08_Collisions11_JSON.txt"
+	#myLumis = LumiList.LumiList(filename = goodJSON).getCMSSWString().split(',')
+	#process.source.lumisToProcess = cms.untracked.VLuminosityBlockRange()
+	#process.source.lumisToProcess.extend(myLumis)
+	pass
 
 if (data_type == "Sim") and (data_year == "2011"):
 	pass
