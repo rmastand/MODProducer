@@ -207,6 +207,20 @@ If using 2010 or 2011 (real or simulated) data, all these corrections are in the
    
    If you're getting odd outputs (i.e. "File already processed" where you think there shouldn't be), try deleting the files 0 and / or 1 and try again.
 
+
+### (Optional) Create a global statistics file
+
+   After running the PFCCandidate Producer script, run:
+   ```
+   python reg/make_stats_file.py stats.txt
+
+   ```
+   This will create two text files: ```reg_by_file.txt``` and ```reg_by_lumi.txt```. They contain statistics about how many events there are per file (or luminosity block), which triggers were present / fired, and what the average prescale values were. It also notes which luminosity blocks were in which files and vice versa.
+   
+   ** This currrently does not work for the simulated data
+
+
+
 ## Move MOD files to host machine
 
 Finally, we need to transfer all of the MOD files from the CernVM to a host computer, which is where all of the code for MODAnalyzer will be run.
