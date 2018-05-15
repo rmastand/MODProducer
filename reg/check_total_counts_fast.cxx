@@ -7,7 +7,7 @@
 
 using namespace std;
 Long64_t total_counts = 0;
-int macro(string inputFile, string output){
+int check_total_counts_fast(string inputFile, string output){
 	ofstream outputFile(output.c_str());
 	std::ifstream input(inputFile.c_str());
 	for( std::string line; getline( input, line ); )
