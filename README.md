@@ -127,13 +127,13 @@ You may want to run this step as a cross check to ensure that your VM can actual
    
    In the virtual machine environment, type ```root```. Then in the root environment, type:
    ```
-   .x reg/check_total_counts_fast.cxx("file_paths/Jet11/100000.txt","counts10000.txt")
+   .x reg/check_total_counts_fast.cxx("file_paths/samples/Jet_21.txt","Jet21counts.txt")
    ```    
    Replace the arguments of the function as necessary. Note that running this script will initially produce a lot of warnings; you can ignore them all.
    
    When the script stops running, exit the root environment and type:
    ```
-   tail -1 counts10000.txt
+   tail -1 Jet21counts.txt
    ```
    The number you see should be the number of events in the ```Jet11/100000.txt``` file.
    
