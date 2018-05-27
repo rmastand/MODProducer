@@ -214,7 +214,6 @@ If using 2010 or 2011 (real or simulated) data, all these corrections are in the
    After running the PFCCandidate Producer script, run:
    ```
    python post/make_stats_file.py stats.txt
-
    ```
    This will create two text files: ```reg_by_file.txt``` and ```reg_by_lumi.txt```. They contain statistics about how many events there are per file (or luminosity block), which triggers were present / fired, and what the average prescale values were. It also notes which luminosity blocks were in which files and vice versa.
    
@@ -222,11 +221,11 @@ If using 2010 or 2011 (real or simulated) data, all these corrections are in the
    
 #### Make a graph of the integrated luminosity
 
-	Works for the 2011 data at the moment
-	```
-   	python post/integrated_lumi_graph.py 2011lumibyls.csv 2011RunAlumi.txt
+   Works for the 2011 data at the moment
+   ```
+   python post/integrated_lumi_graph.py 2011lumibyls.csv 2011RunAlumi.txt
 
-  	```
+   ```
 
 
 ## Move MOD files to host machine
