@@ -7,16 +7,15 @@ import ast
 import matplotlib.pyplot as plt
 
 
-# analysis for the 2011lumibyls.csv
-orig_data_file = "2011lumibyls.csv"
-orig_data = open(orig_data_file)
-lines =  orig_data.readlines()
+lumibyls_file = sys.argv[1]
+lumibyls = open(lumibyls_file)
+lines =  lumibyls.readlines()
 split_lines = [line.split(",") for line in lines][2:]
 char = ""
-lumi_gps_times = {}
-lumi_delivered= []
-lumi_recorded = []
-lumi_time = []
+lumibyls_gps_times = {}
+lumibyls_delivered= []
+lumibyls_recorded = []
+lumibyls_time = []
 i = 0
 choose_xticks = np.ceil(np.linspace(1,len(split_lines),6))
 x_ticks = []
@@ -30,10 +29,10 @@ while char !="#":
 	hms = [int(x) for x in tim.split(":")]
 	dt = datetime.datetime(mdy[2], mdy[0], mdy[1], hms[0], hms[1],hms[2])
 	gpstime = time.mktime(dt.timetuple())
-	lumi_gps_times[(run,lumi)] = gpstime
-	lumi_delivered.append(float(split_lines[i][5]))
-	lumi_recorded.append(float(split_lines[i][6]))
-	lumi_time.append(gpstime)
+	lumibyls_gps_times[(run,lumi)] = gpstime
+	lumibyls_delivered.append(float(split_lines[i][5]))
+	lumibyls_recorded.append(float(split_lines[i][6]))
+	lumibyls_time.append(gpstime)
 	if i in choose_xticks:
 		x_ticks.append(gpstime)
 		x_tick_labels.append(str(mdy[0])+"/"+str(mdy[1]))
@@ -41,10 +40,10 @@ while char !="#":
         char = split_lines[i][0][0]
 
 
-# analysis for the 2011RunAlumi.txt
-new_data_file = "2011RunAlumi.txt"
-new_data = open(new_data_file)
-lines =  new_data.readlines()
+
+runalumi_file = sys.argv[2]
+runalumi_data = open(runalumi_file)
+lines =  runalumi_data.readlines()
 split_lines = [line.split("|") for line in lines][4:]
 char = ""
 rlumi_gps_times = {}
@@ -72,32 +71,12 @@ while char !="+":
 		char = split_lines[i][0][0]
 	except: pass
 
-'''
-rego = open(reg)
-lines = rego.readlines()
-split_lines = [line.split("   ") for line in lines][1:]
-triggers_dict = {}
-times_dict = {}
-for line in split_lines:
-	triggers = line[3].strip().split(",,")
-	for trigger in triggers[:-1]:
-		values = trigger.split(",")
-		if values[0] not in triggers_dict.keys():
-			triggers_dict[values[0]] = [float(values[-1])]
-			times_dict[values[0]] = [float(lumi_times[ast.literal_eval(line[0])])]
-		else:
-			triggers_dict[values[0]].append(float(values[-1]))
-			times_dict[values[0]].append(float(lumi_times[ast.literal_eval(line[0])]))
-'''
-#print triggers_dict.keys()
-
-
 
 
 
 plt.figure()
-times,lumi_rec = (list(t) for t in zip(*sorted(zip(lumi_time,lumi_recorded))))
-times,lumi_del = (list(t) for t in zip(*sorted(zip(lumi_time,lumi_delivered))))
+times,lumi_rec = (list(t) for t in zip(*sorted(zip(lumibyls_time,lumibyls_recorded))))
+times,lumi_del = (list(t) for t in zip(*sorted(zip(lumibyls_time,lumibyls_delivered))))
 
 plt.plot(times,np.cumsum(lumi_del),label = "delivered")
 plt.plot(times,np.cumsum(lumi_rec),label="recorded")
@@ -111,4 +90,4 @@ ax.set(xticks=x_ticks, xticklabels=x_tick_labels)
 plt.legend(loc = "upper left")
 plt.ylabel("integrated luminosity (/ub)")
 plt.show()
-plt.savefig("1.png")
+plt.savefig("integrated_lumi.png")
