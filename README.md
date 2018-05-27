@@ -207,8 +207,9 @@ If using 2010 or 2011 (real or simulated) data, all these corrections are in the
    
    If you're getting odd outputs (i.e. "File already processed" where you think there shouldn't be), try deleting the files 0 and / or 1 and try again.
 
+### Other commands that might be useful
 
-### (Optional) Create a global statistics file
+#### Create a global statistics file
 
    After running the PFCCandidate Producer script, run:
    ```
