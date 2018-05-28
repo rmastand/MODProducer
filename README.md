@@ -222,8 +222,9 @@ If using 2010 or 2011 (real or simulated) data, all these corrections are in the
 #### Make a graph of the integrated luminosity
 
    Works for the 2011 data at the moment
+   This should probably be run on the home machine, not on a vm (problems with installing pandas, matplotlib, etc)
    ```
-   python post/integrated_lumi_graph.py 2011lumibyls.csv 2011RunAlumi.txt
+   python post/integrated_lumi_graph.py post/2011lumibyls.csv post/2011RunAlumi.txt
 
    ```
 
