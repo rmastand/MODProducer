@@ -141,43 +141,52 @@ void FilenameMapProducer::endJob() {
    
    statsOutput_.open(statsFilename_.c_str(), ios::out | ios::app );
    statsOutput_ << "BeginFile Version 6 CMS Dataset" << endl;
-   statsOutput_ << "#     File                                Filename         TotalEvents          GoodEvents      IntLumiDel    IntLumiRec
+   statsOutput_ << "#   File                                Filename    TotalEvents    ValidEvents     IntLumiDel     IntLumiRec
 " << endl;
       
    statsOutput_ << "    File"
-	   		   << setw(10) << currentProcessingFilename_
-		         << setw(20) << totEvents
-	   	      << setw(20) << validEvents
-		         << setw(10) << intLumiTotDel
-		         << setw(10) << intLumiTotDel
-	 	          << endl;   
+	   	<< setw(40) << currentProcessingFilename_
+		<< setw(15) << totEvents
+	   	<< setw(15) << validEvents
+		<< setw(15) << intLumiTotDel
+		<< setw(15) << intLumiTotDel
+	 	<< endl;   
    
     
       
-   statsOutput_ << "#LumiBlock              RunNum                Lumi    Events     Valid      IntLumiDel IntLumiRec" << end;
+   statsOutput_ << "#LumiBlock         RunNum      Lumi    Events    Valid?     IntLumiDel     IntLumiRec" << end;
    
    for(std::map<Key,Val>::iterator iter = lumiNumEvents.begin(); iter != lumiNumEvents.end(); ++iter)
             {
-            Key k =  iter->first;
-      
+            Key k =  iter->first;  
+	    if (lumiDelData.count(std::to_string(runNum)+"_"+std::to_string(lumiBlock))==1) {
+		        statsOutput_ << " LumiBlock"
+	   		   	     << setw(15) << lumiToRun[k]
+		                     << setw(10) << lumiToLumi[k]
+	   	      		     << setw(10) << lumiNumEvents[k]
+		         	     << setw(10) << "1"
+		         	     << setw(15) << lumiDelData
+				     << setw(15) << lumiRecData
+	 	          	     << endl;   
+		    
+	    }
+     		else
+		{
+			statsOutput_ << " LumiBlock"
+	   		   	     << setw(15) << lumiToRun[k]
+		                     << setw(10) << lumiToLumi[k]
+	   	      		     << setw(10) << lumiNumEvents[k]
+		         	     << setw(10) << "0"
+		         	     << setw(15) << "0.0"
+				     << setw(15) << "0.0"
+	 	          	     << endl;   
+		}
  
-               statsOutput_ << "    LumiBlock"
-	   		   << setw(10) << lumiToRun[k]
-		         << setw(20) << lumiToLumi[k]
-	   	      << setw(20) << lumiNumEvents[k]
-		         << setw(10) << iEvent.time().unixTime()
-		         << setw(10) << iEvent.time().microsecondOffset()
-	 	          << endl;   
+           
             }
    
 
-   statsOutput_ << "    LumiBlock"
-	   		   << setw(10) << runNum
-		         << setw(20) << eventNum
-	   	      << setw(20) << primaryVerticesHandle->size()
-		         << setw(10) << iEvent.time().unixTime()
-		         << setw(10) << iEvent.time().microsecondOffset()
-	 	          << endl;   
+  
   
    numOutput_.open(numFilename_.c_str(), std::fstream::out | std::fstream::app);
    numOutput_ << currentProcessingFilename_ << " " << counts << endl;
