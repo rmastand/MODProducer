@@ -10,6 +10,7 @@ data_type = sys.argv[5]
 data_year = sys.argv[6]
 
 file_name = data_file_link[len(data_file_link) - 41:len(data_file_link)]
+full_file_name = data_file_link[:-4]
 
 process = cms.Process("FilenameMapProducer")
 
@@ -41,7 +42,8 @@ if (data_type == "Sim") and (data_year == "2011"):
 process.FilenameMapProducer = cms.EDProducer("FilenameMapProducer", 
 						filename = cms.string(file_name), 
 						outputFile = cms.string(registry_file_path),
-					        numFile = cms.string(path_to_counts)
+					        numFile = cms.string(path_to_counts),
+					     	fullFilename = cms.string(full_file_name)
 						)
 
 #process.MessageLogger = cms.Service("MessageLogger",
