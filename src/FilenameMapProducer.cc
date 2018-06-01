@@ -161,41 +161,7 @@ void FilenameMapProducer::endJob() {
       
    statsOutput_ << "#LumiBlock         RunNum      Lumi    Events    Valid?     IntLumiDel     IntLumiRec" << end;
 	
-	
 
-
-   
-   map<string, int>::iterator it = lumiNumEvents.begin();
-   while (it != lumiNumEvents.end())
-   
-            {
-	    
-          
-	    if (lumiDelData.count(it->first)==1) {
-		        statsOutput_ << " LumiBlock"
-	   		   	     << setw(15) << lumiToRun[it->first]
-		                     << setw(10) << lumiToLumiB[it->first]
-	   	      		     << setw(10) << lumiNumEvents[it->first]
-		         	     << setw(10) << "1"
-		         	     << setw(15) << lumiDelData[it->first]
-				     << setw(15) << lumiRecData[it->first]
-	 	          	     << endl;   
-		    
-	    }
-     		else
-		{
-			statsOutput_ << " LumiBlock"
-	   		   	     << setw(15) << lumiToRun[it->first]
-		                     << setw(10) << lumiToLumiB[it->first]
-	   	      		     << setw(10) << lumiNumEvents[it->first]
-		         	     << setw(10) << "0"
-		         	     << setw(15) << "0.0"
-				     << setw(15) << "0.0"
-	 	          	     << endl;   
-		}
- 
-           
-            }
  	
    numOutput_.open(numFilename_.c_str(), std::fstream::out | std::fstream::app);
    numOutput_ << currentProcessingFilename_ << " " << counts << endl;
