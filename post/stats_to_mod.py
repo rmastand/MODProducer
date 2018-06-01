@@ -51,7 +51,7 @@ total_lum_rec = 0.0
 
 for mod_orig in os.listdir(input_dir):
 # counters for what to write to stats2
-	with open(mod_orig, "rb") as mod_file:
+	with open(input_dir+"/"+mod_orig, "rb") as mod_file:
 	    for line in mod_file:
 		if ("#" not in line.split()) and ("Cond" in line.split()):
 			run = line.split()[1]
