@@ -75,7 +75,7 @@ FilenameMapProducer::FilenameMapProducer(const ParameterSet& iConfig)
   
      
   statsFilename_ = outputDir_ + "/" + currentProcessingFilename_.substr(0,currentProcessingFilename_.length()-5) + ".stats";
-  cout << statsFilename_ << endl;
+
      
      
   
@@ -149,7 +149,7 @@ void FilenameMapProducer::endJob() {
 
 
    statsOutput_.open(statsFilename_.c_str(), ios::out | ios::app );
-   cout << "reached" << endl;
+
    statsOutput_ << "BeginFile Version 6 CMS Dataset" << endl;
    statsOutput_ << "#   File                                Filename    TotalEvents    ValidEvents     IntLumiDel     IntLumiRec" << endl;
       
@@ -168,7 +168,7 @@ void FilenameMapProducer::endJob() {
   
             {
             string k =  it->first;  
-	    cout << k << endl;
+	
 	    if (lumiDelData.count(k)==1) {
 		        statsOutput_ << " LumiBlock"
 	   		   	     << setw(15) << lumiToRun[k]
