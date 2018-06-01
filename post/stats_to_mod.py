@@ -47,8 +47,8 @@ total_lum_del = 0.0
 total_lum_rec = 0.0
 
 
-with open(mod_orig) as f:
-    for line in f:
+with open(mod_orig) as mod_file:
+    for line in mod_file:
 	if ("#" not in line.split()) and ("Cond" in line.split()):
 		run = line.split()[1]
 		lumiBlock = line.split()[6]
