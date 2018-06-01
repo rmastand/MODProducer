@@ -74,7 +74,7 @@ FilenameMapProducer::FilenameMapProducer(const ParameterSet& iConfig)
   fileOutput_.open(outputFilename_.c_str(), std::fstream::out | std::fstream::app);
   
      
-  statsFilename_ = outputDir_ + "/" + currentProcessingFilename_[:-4] + ".stats";
+  statsFilename_ = outputDir_ + "/" + currentProcessingFilename_.substr(0,currentProcessingFilename_.length()-4) + ".stats";
   cout << statsFilename_ << endl;
      
      
