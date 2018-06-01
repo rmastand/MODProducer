@@ -186,7 +186,7 @@ void FilenameMapProducer::endJob() {
 		{
 			statsOutput_ << " LumiBlock"
 	   		   	     << setw(15) << lumiToRun[key]
-		                     << setw(10) << lumiToLumi[key]
+		                     << setw(10) << lumiToLumiB[key]
 	   	      		     << setw(10) << lumiNumEvents[key]
 		         	     << setw(10) << "0"
 		         	     << setw(15) << "0.0"
