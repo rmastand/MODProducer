@@ -48,7 +48,7 @@ private:
    string outputFilename_;
    string numFilename_;
    string statsFilename_;
-   ifstream lumiByLs("11lumibyls.txt");
+   ifstream lumiByLs("11lumibyls.txt".c_str());
 
     
 };
