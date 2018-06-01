@@ -149,7 +149,7 @@ void FilenameMapProducer::endJob() {
 
 
    statsOutput_.open(statsFilename_.c_str(), ios::out | ios::app );
-   cout << "reached" << end;
+   cout << "reached" << endl;
    statsOutput_ << "BeginFile Version 6 CMS Dataset" << endl;
    statsOutput_ << "#   File                                Filename    TotalEvents    ValidEvents     IntLumiDel     IntLumiRec" << endl;
       
