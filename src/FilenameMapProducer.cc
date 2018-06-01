@@ -167,7 +167,7 @@ void FilenameMapProducer::endJob() {
    statsOutput_ << "#   File                                Filename    TotalEvents    ValidEvents     IntLumiDel     IntLumiRec" << endl;
       
    statsOutput_ << "    File"
-	   	<< setw(40) << currentProcessingFilename_
+	   	<< setw(40) << currentProcessingFilename_.substr(0,currentProcessingFilename_.length()-5)
 		<< setw(15) << totEvents
 	   	<< setw(15) << validEvents
 		<< setw(15) << intLumiTotDel
