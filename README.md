@@ -51,7 +51,7 @@ This section is for 2011 and simulated data. If analyzing 2010 data, replace all
 - Switch branches:
 
   ```
-  git checkout compile
+  git checkout newstats
   ```
 - Compile everything:
 
@@ -105,9 +105,16 @@ Once you've downloaded the AOD files (these are ROOT files), you need to create 
 	
    1. a path to the ROOT files that you want to process. Note that this is the same as the second argument in the previous command. 
    2. a path to the registry file.
-   3. a path to a text file that will count the number of validated events.
+   3. a path to the output directory
+   4. a path to the lumibyls csv file
+   5. a path to the output for the skimmed lumibyls file
    6. data type, Data or Sim
    7. data year, 2010B, 2011A, or 2011
+   8. trigger category
+   9. version number
+   
+ 
+
 
    ```
    cmsenv
@@ -118,7 +125,7 @@ Once you've downloaded the AOD files (these are ROOT files), you need to create 
    ```
    Or, use:
    ```
-   python ./reg/create_registry_online.py ./file_paths/samples/Jet_21.txt ~/MITOpenDataProject/registry.txt  ~/MITOpenDataProject/valid_events.txt Data 2011A
+   python ./reg/create_registry_online.py ./file_paths/samples/Jet_21.txt ~/MITOpenDataProject/registry.txt  ~/MITOpenDataProject/eos/opendata/cms/Run2011A/Jet/stats/12Oct2013-v1/20000/ ./reg/2011lumibyls.csv ./reg/11skimlumi.txt Data 2011A 6 Jet 
    ```
    
 ### (Optional) Count the total number of events 
