@@ -168,6 +168,7 @@ void FilenameMapProducer::endJob() {
   
             {
             string k =  it->first;  
+	    cout << k << endl;
 	    if (lumiDelData.count(k)==1) {
 		        statsOutput_ << " LumiBlock"
 	   		   	     << setw(15) << lumiToRun[k]
