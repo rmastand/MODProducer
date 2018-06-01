@@ -56,7 +56,7 @@ for i in xrange(len(mod_lines)):
 		try:
 			total_lum_del += run_lumi_dict[(run,lumiBlock)][0]
 			total_lum_rec += run_lumi_dict[(run,lumiBlock)][1]
-			lumi_info[(run,lumiBlock)] = {"events":1,"valid":1}
+			lumi_info[(run,lumiBlock)]["valid"] = 1
 			valid_events += 1
 		except KeyError:
 			pass
