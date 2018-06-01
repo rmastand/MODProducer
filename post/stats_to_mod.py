@@ -16,6 +16,11 @@ trigger_cat = "Jet"
 def format2_6(string,num):
 	return " "*(num-len(string))+ string
 
+def assure_path_exists(path):
+        dir = os.path.dirname(path)
+        if not os.path.exists(dir):
+                os.makedirs(dir)
+
 
 def runs_to_lumi(filename):
 	lumibyls_data = open(filename)
@@ -39,17 +44,16 @@ def runs_to_lumi(filename):
 	return run_lumi_dict		
 
 
-
-
-lumi_info = {}
-total_events = 0
-valid_events = 0
+assure_path_exists(input_dir.replace("MOD","stats2")+"/")
 run_lumi_dict = runs_to_lumi(lumibyls)
-total_lum_del = 0.0
-total_lum_rec = 0.0
 
 
 for mod_orig in os.listdir(input_dir):
+	total_lum_del = 0.0
+	total_lum_rec = 0.0
+	lumi_info = {}
+	total_events = 0
+	valid_events = 0
 # counters for what to write to stats2
 	with open(input_dir+"/"+mod_orig, "rb") as mod_file:
 	    for line in mod_file:
@@ -71,7 +75,7 @@ for mod_orig in os.listdir(input_dir):
 			except KeyError:
 				pass
 	mod_file.close()
-
+	
 	# actually writes stats2
 	w = open(input_dir.replace("MOD","stats2")+"/"+str(mod_orig[-40:-4])+".stats2","w")
 	w.write("BeginFile Version " + version + " CMS_" + data_year + " " + data_type + " " + trigger_cat + "\n")
