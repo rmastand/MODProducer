@@ -140,13 +140,19 @@ void FilenameMapProducer::beginJob() {
 }
 
 void FilenameMapProducer::endJob() {
-   
-   
-   vents
+   statsOutput_.open(statsFilename_.c_str(), ios::out | ios::app );
+   statsOutput_ << "BeginFile Version 6 CMS Dataset" << endl;
+   statsOutput_ << "#   File                                Filename    TotalEvents    ValidEvents     IntLumiDel     IntLumiRec" << endl;
+      
+   statsOutput_ << "    File"
+	   	<< setw(40) << currentProcessingFilename_
+		<< setw(15) << totEvents
+	   	<< setw(15) << validEvents
 		<< setw(15) << intLumiTotDel
 		<< setw(15) << intLumiTotDel
 	 	<< endl;   
    
+
     
       
    statsOutput_ << "#LumiBlock         RunNum      Lumi    Events    Valid?     IntLumiDel     IntLumiRec" << end;
