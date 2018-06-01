@@ -6,6 +6,19 @@
 #include <iomanip> 
 #include <limits>
 #include <cmath>
+#include <map>
+
+typedef map<string, int> ScoreMap;
+typedef ScoreMap::iterator ScoreMapIterator;
+
+class key_iterator : public ScoreMapIterator
+{
+  public:
+    key_iterator() : ScoreMapIterator() {};
+    key_iterator(ScoreMapIterator s) : ScoreMapIterator(s) {};
+    string* operator->() { return (string* const)&(ScoreMapIterator::operator->()->first); }
+    string operator*() { return ScoreMapIterator::operator*().first; }
+};
 
 #include "FWCore/Framework/interface/Frameworkfwd.h"
 #include "FWCore/Framework/interface/EDProducer.h"
@@ -160,18 +173,20 @@ void FilenameMapProducer::endJob() {
 	
 	
 
+
    
-   for(std::map<string,int>::iterator iter = lumiNumEvents.begin(); iter != lumiNumEvents.end(); ++iter)
+   for (key_iterator s = lumiNumEvents.begin(); s != lumiNumEvents.end(); ++s)
+   
             {
             string k =  iter->first;  
 	    if (lumiDelData.count(std::to_string(runNum)+"_"+std::to_string(lumiBlock))==1) {
 		        statsOutput_ << " LumiBlock"
-	   		   	     << setw(15) << lumiToRun[k]
-		                     << setw(10) << lumiToLumi[k]
-	   	      		     << setw(10) << lumiNumEvents[k]
+	   		   	     << setw(15) << lumiToRun[s->c_str()]
+		                     << setw(10) << lumiToLumi[s->c_str()]
+	   	      		     << setw(10) << lumiNumEvents[s->c_str()]
 		         	     << setw(10) << "1"
-		         	     << setw(15) << lumiDelData[k]
-				     << setw(15) << lumiRecData[k]
+		         	     << setw(15) << lumiDelData[s->c_str()]
+				     << setw(15) << lumiRecData[s->c_str()]
 	 	          	     << endl;   
 		    
 	    }
