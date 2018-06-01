@@ -25,7 +25,7 @@
 using namespace std;
 using namespace edm;
 
-int counts = 0;
+
 int totEvents = 0;
 int validEvents = 0;
 float intLumiTotDel = 0.;
@@ -46,14 +46,17 @@ private:
    virtual void endLuminosityBlock(edm::LuminosityBlock&, edm::EventSetup const&);
    
    ofstream fileOutput_;
-   ofstream numOutput_;
    ofstream statsOutput_;
    string currentProcessingFilename_;
    string outputFilename_;
-   string numFilename_;
    string statsFilename_;
    ifstream lumiLumin_;
    string outputDir_;
+   string outputLsFile_;
+   string dataType_;
+   string dataYear_;
+   string version_;
+   string triggerCat_;
    
    map<string, int> lumiNumEvents; 
    map<string, float> lumiDelData; 
@@ -68,7 +71,11 @@ private:
 FilenameMapProducer::FilenameMapProducer(const ParameterSet& iConfig)
 : currentProcessingFilename_(iConfig.getParameter<string>("filename")),
   outputFilename_(iConfig.getParameter<string>("outputFile")),
-  numFilename_(iConfig.getParameter<string>("numFile")),
+  outputLsFile_(iConfig.getParameter<string>("outputLsFile")),
+  dataType_(iConfig.getParameter<string>("dataType")),
+  dataYear_(iConfig.getParameter<string>("dataYear")),
+  version_(iConfig.getParameter<string>("version")),
+  triggerCat_(iConfig.getParameter<string>("triggerCat")),
   outputDir_(iConfig.getParameter<string>("outputDir"))
 {
   fileOutput_.open(outputFilename_.c_str(), std::fstream::out | std::fstream::app);
@@ -77,10 +84,8 @@ FilenameMapProducer::FilenameMapProducer(const ParameterSet& iConfig)
   statsFilename_ = outputDir_ + "/" + currentProcessingFilename_.substr(0,currentProcessingFilename_.length()-5) + ".stats";
 
      
-     
-  
    
-  lumiLumin_.open("skimmed.txt");
+  lumiLumin_.open(outputLsFile_.c_str());
   int line_number = 1;
 
   string line;
@@ -113,7 +118,7 @@ void FilenameMapProducer::produce(Event& iEvent, const EventSetup& iSetup) {
    int runNum = iEvent.id().run();
    int eventNum = iEvent.id().event();
    int lumiBlock = iEvent.luminosityBlock();
-   counts = counts + 1;  
+
    fileOutput_ << eventNum << " " << runNum  << " " << currentProcessingFilename_ << endl;
    
    
@@ -149,8 +154,12 @@ void FilenameMapProducer::endJob() {
 
 
    statsOutput_.open(statsFilename_.c_str(), ios::out | ios::app );
+	
+   statsOutput_ << "BeginFile Version " << version_ << " CMS_" << dataYear_ << " " << dataType_ << " " << triggerCat_ << endl;
+   
 
-   statsOutput_ << "BeginFile Version 6 CMS Dataset" << endl;
+
+   
    statsOutput_ << "#   File                                Filename    TotalEvents    ValidEvents     IntLumiDel     IntLumiRec" << endl;
       
    statsOutput_ << "    File"
@@ -198,9 +207,7 @@ void FilenameMapProducer::endJob() {
 
  
  	
-   numOutput_.open(numFilename_.c_str(), std::fstream::out | std::fstream::app);
-   numOutput_ << currentProcessingFilename_ << " " << counts << endl;
-   numOutput_.close();
+   
    fileOutput_.close();
    lumiLumin_.close();
    statsOutput_.close();
