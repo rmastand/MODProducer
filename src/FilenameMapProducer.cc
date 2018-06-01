@@ -23,6 +23,10 @@ using namespace std;
 using namespace edm;
 
 int counts = 0;
+int totEvents = 0;
+int validEvents = 0;
+float intLumiTotDel = 0.;
+float intLumiTotRec = 0.;
 
 class FilenameMapProducer : public EDProducer 
 {
@@ -43,6 +47,8 @@ private:
    string currentProcessingFilename_;
    string outputFilename_;
    string numFilename_;
+   string statsFilename_;
+   ifstream lumiByLs("11lumibyls.txt");
 
     
 };
