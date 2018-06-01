@@ -32,6 +32,13 @@ data_type = sys.argv[4]
 data_year = sys.argv[5]
 output_dir = sys.argv[6]
 
+
+def assure_path_exists(path):
+        dir = os.path.dirname(path)
+        if not os.path.exists(dir):
+                os.makedirs(dir)
+
+
 log_file_path = str(registry_file_path) + "_log.log"
 
 
@@ -70,6 +77,7 @@ def create_registry(path, log_file_path):
             log_file.close()
 start = time()
 
+assure_path_exists(output_dir)
 create_registry(file_with_source_paths, log_file_path)
 
 end = time()
