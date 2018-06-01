@@ -50,6 +50,12 @@ private:
    string statsFilename_;
    ifstream lumiLumin_;
    string outputDir_;
+   
+   map<string, int> lumiNumEvents; 
+   map<string, float> lumiDelData; 
+   map<string, float> lumiRecData; 
+   map<string, string> lumiToRun; 
+   map<string, string> lumiToLumiB; 
     
 };
 
@@ -67,11 +73,7 @@ FilenameMapProducer::FilenameMapProducer(const ParameterSet& iConfig)
   statsFilename_ = outputDir_ + "/" + outputFilename_ + ".stats";
      
      
-  map<string, int> lumiNumEvents; 
-  map<string, float> lumiDelData; 
-  map<string, float> lumiRecData; 
-  map<string, string> lumiToRun; 
-  map<string, string> lumiToLumiB; 
+  
    
   lumiLumin_.open("skimmed.txt");
   int line_number = 1;
