@@ -4,9 +4,9 @@ import gc
 gc.collect()
 
 
-mod_orig = sys.argv[1]
-lumibyls = sys.argv[2]
-input_dir = sys.argv[3]
+
+lumibyls = sys.argv[1]
+input_dir = sys.argv[2]
 version = "6"
 data_year = "2011A"
 data_type = "Data"
