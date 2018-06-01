@@ -165,11 +165,11 @@ void FilenameMapProducer::endJob() {
 
 
    
-   std::map<std::string, int>::iterator it = lumiNumEvents.begin();
+   map<string, int>::iterator it = lumiNumEvents.begin();
    while (it != lumiNumEvents.end())
    
             {
-	    std::string key = it->first;
+	    string key = it->first;
           
 	    if (lumiDelData.count(key)==1) {
 		        statsOutput_ << " LumiBlock"
