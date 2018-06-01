@@ -24,13 +24,17 @@ import subprocess
 import os
 from time import time
 import sys
+from skim_lumibyls import *
 
 file_with_source_paths = sys.argv[1]
 registry_file_path = sys.argv[2]
-path_to_counts = sys.argv[3]
-data_type = sys.argv[4]
-data_year = sys.argv[5]
-output_dir = sys.argv[6]
+output_dir = sys.argv[3]
+runbyls_file = sys.argv[4]
+output_ls_file = sys.argv[5]
+data_type = sys.argv[6]
+data_year = sys.argv[7]
+
+
 
 
 def assure_path_exists(path):
@@ -69,7 +73,7 @@ def create_registry(path, log_file_path):
 
     for root_file in sorted(files_to_process):
         stdoutdata, stderrdata = subprocess.Popen(
-            ["cmsRun", "./reg/FilenameRun.py", root_file, registry_file_path, path_to_counts, data_type, data_year, output_dir]).communicate()
+            ["cmsRun", "./reg/FilenameRun.py", root_file, registry_file_path, output_dir, output_ls_file, data_type, data_year]).communicate()
 
         if str(stderrdata) != "None":
             log_file = open(log_file_path, 'a')
@@ -77,6 +81,7 @@ def create_registry(path, log_file_path):
             log_file.close()
 start = time()
 
+runs_to_lumi(runbyls_file,output_ls_file)
 assure_path_exists(output_dir)
 create_registry(file_with_source_paths, log_file_path)
 
