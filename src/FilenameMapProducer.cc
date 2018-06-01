@@ -191,6 +191,7 @@ void FilenameMapProducer::endJob() {
 				     << setw(15) << "0.0"
 	 	          	     << endl;   
 		}
+	      ++it
  
            
             }
