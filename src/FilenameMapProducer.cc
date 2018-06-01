@@ -160,10 +160,12 @@ void FilenameMapProducer::endJob() {
 	
    statsOutput_ << "#LumiBlock         RunNum      Lumi    Events    Valid?     IntLumiDel     IntLumiRec" << endl;
 	
-   for(std::map<Key,Val>::iterator iter = lumiNumEvents.begin(); iter != lumiNumEvents.end(); ++iter)
+   std::map<std::string, int>::iterator it = lumiNumEvents.begin();
+   while (it != lumiNumEvents.end())
+  
             {
-            Key k =  iter->first;  
-	    if (lumiDelData.count(std::to_string(runNum)+"_"+std::to_string(lumiBlock))==1) {
+            string k =  iter->first;  
+	    if (lumiDelData.count(k)==1) {
 		        statsOutput_ << " LumiBlock"
 	   		   	     << setw(15) << lumiToRun[k]
 		                     << setw(10) << lumiToLumi[k]
