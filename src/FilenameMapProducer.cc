@@ -44,6 +44,7 @@ private:
    
    ofstream fileOutput_;
    ofstream numOutput_;
+   ofstream statsOutput_;
    string currentProcessingFilename_;
    string outputFilename_;
    string numFilename_;
@@ -156,10 +157,13 @@ void FilenameMapProducer::endJob() {
     
       
    statsOutput_ << "#LumiBlock         RunNum      Lumi    Events    Valid?     IntLumiDel     IntLumiRec" << end;
+	
+	
+
    
-   for(std::map<Key,Val>::iterator iter = lumiNumEvents.begin(); iter != lumiNumEvents.end(); ++iter)
+   for(std::map<string,int>::iterator iter = lumiNumEvents.begin(); iter != lumiNumEvents.end(); ++iter)
             {
-            Key k =  iter->first;  
+            string k =  iter->first;  
 	    if (lumiDelData.count(std::to_string(runNum)+"_"+std::to_string(lumiBlock))==1) {
 		        statsOutput_ << " LumiBlock"
 	   		   	     << setw(15) << lumiToRun[k]
