@@ -49,6 +49,7 @@ private:
    string numFilename_;
    string statsFilename_;
    ifstream lumiLumin_;
+   string outputDir_;
     
 };
 
