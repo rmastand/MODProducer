@@ -33,6 +33,8 @@ runbyls_file = sys.argv[4]
 output_ls_file = sys.argv[5]
 data_type = sys.argv[6]
 data_year = sys.argv[7]
+version = sys.argv[8]
+trigger_cat = sys.argv[9]
 
 
 
@@ -73,7 +75,7 @@ def create_registry(path, log_file_path):
 
     for root_file in sorted(files_to_process):
         stdoutdata, stderrdata = subprocess.Popen(
-            ["cmsRun", "./reg/FilenameRun.py", root_file, registry_file_path, output_dir, output_ls_file, data_type, data_year]).communicate()
+            ["cmsRun", "./reg/FilenameRun.py", root_file, registry_file_path, output_dir, output_ls_file, data_type, data_year, version, trigger_cat]).communicate()
 
         if str(stderrdata) != "None":
             log_file = open(log_file_path, 'a')
