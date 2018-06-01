@@ -134,7 +134,7 @@ void FilenameMapProducer::produce(Event& iEvent, const EventSetup& iSetup) {
       intLumiTotDel = intLumiTotDel + lumiDelData[std::to_string(runNum)+"_"+std::to_string(lumiBlock)];
       intLumiTotRec = intLumiTotRec + lumiRecData[std::to_string(runNum)+"_"+std::to_string(lumiBlock)];
    }
-   cout << "event" << endl;
+
    
    
    
