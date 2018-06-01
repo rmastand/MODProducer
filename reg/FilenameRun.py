@@ -9,6 +9,8 @@ output_dir = sys.argv[4]
 output_ls_file = sys.argv[5]
 data_type = sys.argv[6]
 data_year = sys.argv[7]
+version = sys.argv[8]
+triggerCat = sys.argv[9]
 
 file_name = data_file_link[len(data_file_link) - 41:len(data_file_link)]
 
@@ -47,6 +49,8 @@ process.FilenameMapProducer = cms.EDProducer("FilenameMapProducer",
 						outputLsFile = cms.string(output_ls_file),
 					     	outputDir = cms.string(output_dir),
 					        dataType = cms.string(data_type),
+					        version = cms.string(version),
+					        triggerCat = cms.string(triggerCat),
 					        dataYear = cms.string(data_year)			     
 						)
 
