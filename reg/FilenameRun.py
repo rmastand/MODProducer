@@ -5,10 +5,10 @@ import sys
 
 data_file_link = sys.argv[2]
 registry_file_path = sys.argv[3]
-path_to_counts = sys.argv[4]
-data_type = sys.argv[5]
-data_year = sys.argv[6]
-output_dir = sys.argv[7]
+output_dir = sys.argv[4]
+output_ls_file = sys.argv[5]
+data_type = sys.argv[6]
+data_year = sys.argv[7]
 
 file_name = data_file_link[len(data_file_link) - 41:len(data_file_link)]
 
@@ -40,11 +40,14 @@ if (data_type == "Sim") and (data_year == "2011"):
 	pass
 	
 
+
 process.FilenameMapProducer = cms.EDProducer("FilenameMapProducer", 
 						filename = cms.string(file_name), 
 						outputFile = cms.string(registry_file_path),
-					        numFile = cms.string(path_to_counts),
-					     	outputDir = cms.string(output_dir)
+						outputLsFile = cms.string(output_ls_file),
+					     	outputDir = cms.string(output_dir),
+					        dataType = cms.string(data_type),
+					        dataYear = cms.string(data_year)			     
 						)
 
 #process.MessageLogger = cms.Service("MessageLogger",
