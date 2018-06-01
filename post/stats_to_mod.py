@@ -2,12 +2,17 @@ import sys
 import numpy as np
 import gc
 gc.collect()
+
+
 mod_orig = sys.argv[1]
 lumibyls = sys.argv[2]
-mod_file = open(mod_orig)
-mod_lines = mod_file.readlines()
-mod_file.close()
+version = "6"
+data_year = "2011A"
+data_type = "Data"
+triger_ cat = "Jet"
 
+def format2_6(string,num):
+	return " "*(num-len(string))+ string
 
 
 def runs_to_lumi(filename):
@@ -42,10 +47,11 @@ total_lum_del = 0.0
 total_lum_rec = 0.0
 
 
-for i in xrange(len(mod_lines)):
-	if ("#" in mod_lines[i].split()) and ("Cond" in mod_lines[i].split()):
-		run = mod_lines[i+1].split()[1]
-		lumiBlock = mod_lines[i+1].split()[6]
+with open(mod_orig) as f:
+    for line in f:
+	if ("#" not in line.split()) and ("Cond" in line.split()):
+		run = line.split()[1]
+		lumiBlock = line.split()[6]
 		
 		if (run,lumiBlock) not in lumi_info.keys():
 			lumi_info[(run,lumiBlock)] = {"events":1,"valid":0}
@@ -60,13 +66,11 @@ for i in xrange(len(mod_lines)):
 			valid_events += 1
 		except KeyError:
 			pass
-
-def format2_6(string,num):
-	return " "*(num-len(string))+ string
+mod_file.close()
 
 
 w = open("stats2.txt","w")
-w.write("BeginFile \n")
+w.write("BeginFile Version " + version + " CMS_" + data_year + " " + data_type + " " + trigger_cat + "\n")
 w.write("#   File"+format2_6("Filename",40)+format2_6("TotalEvents",15)+format2_6("ValidEvents",15)+format2_6("IntLumiDel",20)+format2_6("IntLumiRec",20)+"\n")
 w.write("    File"+format2_6(str(mod_orig[-40:-4]),40)+format2_6(str(total_events),15)+format2_6(str(valid_events),15)+format2_6(str(total_lum_del),20)+format2_6(str(total_lum_rec),20)+"\n")
 
@@ -77,4 +81,4 @@ for lumi in sorted(sorted(lumi_info.keys(),key=lambda tup: tup[1]),key=lambda tu
 		w.write(" LumiBlock"+format2_6(str(lumi[0]),15)+format2_6(str(lumi[1]),10)+format2_6(str(lumi_info[lumi]["events"]),10)+format2_6(str(lumi_info[lumi]["valid"]),10)+format2_6(str(run_lumi_dict[lumi][0]),20)+format2_6(str(run_lumi_dict[lumi][1]),20)+"\n")
 	except KeyError:
 		w.write(" LumiBlock"+format2_6(str(lumi[0]),15)+format2_6(str(lumi[1]),10)+format2_6(str(lumi_info[lumi]["events"]),10)+format2_6(str(lumi_info[lumi]["valid"]),10)+format2_6("0.0",20)+format2_6("0.0",20)+"\n")
-	
+w.write("EndFile")
