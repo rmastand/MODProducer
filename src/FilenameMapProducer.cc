@@ -170,7 +170,7 @@ void FilenameMapProducer::endJob() {
 	   	<< setw(40) << currentProcessingFilename_.substr(0,currentProcessingFilename_.length()-5)
 		<< setw(15) << totEvents
 	   	<< setw(15) << validEvents
-		<< setw(20) << intLumiTotDel
+		<< setw(20) <<fixed<< std::setprecision(3)<< intLumiTotDel
 		<< setw(20) << intLumiTotRec
 	 	<< endl;   
 	
