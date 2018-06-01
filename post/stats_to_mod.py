@@ -20,7 +20,7 @@ def runs_to_lumi(filename):
 	i = 0
 	while char != "#":
 		run = split_lines[i][0].strip().split(":")[0]
-		lumi = split_lines[i][1].strip().split(".")[0]
+		lumi = split_lines[i][1].strip().split(":")[0]
 		rlumi_delivered = float(split_lines[i][5])
 		rlumi_recorded = float(split_lines[i][6])
 		run_lumi_dict[(run,lumi)] = (rlumi_delivered,rlumi_recorded)
