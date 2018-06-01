@@ -57,10 +57,16 @@ private:
 FilenameMapProducer::FilenameMapProducer(const ParameterSet& iConfig)
 : currentProcessingFilename_(iConfig.getParameter<string>("filename")),
   outputFilename_(iConfig.getParameter<string>("outputFile")),
-  numFilename_(iConfig.getParameter<string>("numFile"))
+  numFilename_(iConfig.getParameter<string>("numFile")),
+  outputDir_(iConfig.getParameter<string>("outputDir"))
 {
   fileOutput_.open(outputFilename_.c_str(), std::fstream::out | std::fstream::app);
   lumiLumin_.open("skimmed.txt");
+     
+  statsFilename_ = outputDir_ + "/" + outputFilename_ + ".stats";
+
+     
+    
 }
 
 
