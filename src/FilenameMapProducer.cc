@@ -178,7 +178,7 @@ void FilenameMapProducer::endJob() {
    for (key_iterator s = lumiNumEvents.begin(); s != lumiNumEvents.end(); ++s)
    
             {
-            string k =  iter->first;  
+          
 	    if (lumiDelData.count(s->c_str())==1) {
 		        statsOutput_ << " LumiBlock"
 	   		   	     << setw(15) << lumiToRun[s->c_str()]
