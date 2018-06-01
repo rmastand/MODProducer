@@ -105,8 +105,32 @@ void FilenameMapProducer::produce(Event& iEvent, const EventSetup& iSetup) {
    
    int runNum = iEvent.id().run();
    int eventNum = iEvent.id().event();
+   int lumiBlock = iEvent.luminosityBlock();
    counts = counts + 1;  
    fileOutput_ << eventNum << " " << runNum  << " " << currentProcessingFilename_ << endl;
+   
+   
+   lumiToRun[std::to_string(runNum)+"_"+std::to_string(lumiBlock)] = std::to_string(runNum);
+   lumiToLumiB[std::to_string(runNum)+"_"+std::to_string(lumiBlock)] = std::to_string(lumiBlock);
+   
+   // counter for number of events per lumi block
+   if (lumiNumEvents.count(std::to_string(runNum)+"_"+std::to_string(lumiBlock)) == 1) {
+      ++lumiNumEvents[std::to_string(runNum)+"_"+std::to_string(lumiBlock)];     
+      }
+   else {
+      lumiNumEvents[std::to_string(runNum)+"_"+std::to_string(lumiBlock)] = 1;
+      }
+   
+   
+   if (lumiDelData.count(std::to_string(runNum)+"_"+std::to_string(lumiBlock))==1) {
+      ++validEvents;
+      intLumiTotDel = intLumiTotDel + lumiDelData[std::to_string(runNum)+"_"+std::to_string(lumiBlock)];
+      intLumiTotRec = intLumiTotRec + lumiRecData[std::to_string(runNum)+"_"+std::to_string(lumiBlock)];
+   }
+   
+   
+   
+   
 }
 
 void FilenameMapProducer::beginJob() {
