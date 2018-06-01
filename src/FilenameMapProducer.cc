@@ -72,11 +72,14 @@ FilenameMapProducer::FilenameMapProducer(const ParameterSet& iConfig)
 : currentProcessingFilename_(iConfig.getParameter<string>("filename")),
   outputFilename_(iConfig.getParameter<string>("outputFile")),
   outputLsFile_(iConfig.getParameter<string>("outputLsFile")),
+  outputDir_(iConfig.getParameter<string>("outputDir")),
   dataType_(iConfig.getParameter<string>("dataType")),
-  dataYear_(iConfig.getParameter<string>("dataYear")),
   version_(iConfig.getParameter<string>("version")),
   triggerCat_(iConfig.getParameter<string>("triggerCat")),
-  outputDir_(iConfig.getParameter<string>("outputDir"))
+  dataYear_(iConfig.getParameter<string>("dataYear"))
+  
+  
+  
 {
   fileOutput_.open(outputFilename_.c_str(), std::fstream::out | std::fstream::app);
   
