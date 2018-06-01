@@ -168,7 +168,7 @@ void FilenameMapProducer::endJob() {
 	    if (lumiDelData.count(k)==1) {
 		        statsOutput_ << " LumiBlock"
 	   		   	     << setw(15) << lumiToRun[k]
-		                     << setw(10) << lumiToLumi[k]
+		                     << setw(10) << lumiToLumiB[k]
 	   	      		     << setw(10) << lumiNumEvents[k]
 		         	     << setw(10) << "1"
 		         	     << setw(15) << lumiDelData[k]
@@ -180,7 +180,7 @@ void FilenameMapProducer::endJob() {
 		{
 			statsOutput_ << " LumiBlock"
 	   		   	     << setw(15) << lumiToRun[k]
-		                     << setw(10) << lumiToLumi[k]
+		                     << setw(10) << lumiToLumiB[k]
 	   	      		     << setw(10) << lumiNumEvents[k]
 		         	     << setw(10) << "0"
 		         	     << setw(15) << "0.0"
