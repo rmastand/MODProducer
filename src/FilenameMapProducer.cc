@@ -8,17 +8,7 @@
 #include <cmath>
 #include <map>
 
-typedef map<string, int> ScoreMap;
-typedef ScoreMap::iterator ScoreMapIterator;
 
-class key_iterator : public ScoreMapIterator
-{
-  public:
-    key_iterator() : ScoreMapIterator() {};
-    key_iterator(ScoreMapIterator s) : ScoreMapIterator(s) {};
-    string* operator->() { return (string* const)&(ScoreMapIterator::operator->()->first); }
-    string operator*() { return ScoreMapIterator::operator*().first; }
-};
 
 #include "FWCore/Framework/interface/Frameworkfwd.h"
 #include "FWCore/Framework/interface/EDProducer.h"
@@ -175,27 +165,29 @@ void FilenameMapProducer::endJob() {
 
 
    
-   for (key_iterator s = lumiNumEvents.begin(); s != lumiNumEvents.end(); ++s)
+   std::map<std::string, int>::iterator it = lumiNumEvents.begin();
+   while (it != lumiNumEvents.end())
    
             {
+	    std::string key = it->first;
           
-	    if (lumiDelData.count(s->c_str())==1) {
+	    if (lumiDelData.count(key)==1) {
 		        statsOutput_ << " LumiBlock"
-	   		   	     << setw(15) << lumiToRun[s->c_str()]
-		                     << setw(10) << lumiToLumiB[s->c_str()]
-	   	      		     << setw(10) << lumiNumEvents[s->c_str()]
+	   		   	     << setw(15) << lumiToRun[key]
+		                     << setw(10) << lumiToLumiB[key]
+	   	      		     << setw(10) << lumiNumEvents[key]
 		         	     << setw(10) << "1"
-		         	     << setw(15) << lumiDelData[s->c_str()]
-				     << setw(15) << lumiRecData[s->c_str()]
+		         	     << setw(15) << lumiDelData[key]
+				     << setw(15) << lumiRecData[key]
 	 	          	     << endl;   
 		    
 	    }
      		else
 		{
 			statsOutput_ << " LumiBlock"
-	   		   	     << setw(15) << lumiToRun[s->c_str()]
-		                     << setw(10) << lumiToLumi[s->c_str()]
-	   	      		     << setw(10) << lumiNumEvents[s->c_str()]
+	   		   	     << setw(15) << lumiToRun[key]
+		                     << setw(10) << lumiToLumi[key]
+	   	      		     << setw(10) << lumiNumEvents[key]
 		         	     << setw(10) << "0"
 		         	     << setw(15) << "0.0"
 				     << setw(15) << "0.0"
