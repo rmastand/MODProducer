@@ -142,8 +142,7 @@ void FilenameMapProducer::endJob() {
    
    statsOutput_.open(statsFilename_.c_str(), ios::out | ios::app );
    statsOutput_ << "BeginFile Version 6 CMS Dataset" << endl;
-   statsOutput_ << "#   File                                Filename    TotalEvents    ValidEvents     IntLumiDel     IntLumiRec
-" << endl;
+   statsOutput_ << "#   File                                Filename    TotalEvents    ValidEvents     IntLumiDel     IntLumiRec" << endl;
       
    statsOutput_ << "    File"
 	   	<< setw(40) << currentProcessingFilename_
