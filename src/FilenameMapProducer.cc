@@ -49,6 +49,7 @@ private:
    string outputFilename_;
    string numFilename_;
    string statsFilename_;
+   ifstream lumiByLs("11lumibyls.txt");
 
     
 };
@@ -72,7 +73,7 @@ FilenameMapProducer::FilenameMapProducer(const ParameterSet& iConfig)
   map<string, string> lumiToRun; 
   map<string, string> lumiToLumi; 
        
-  ifstream lumiByLs("11lumibyls.txt);
+  
    
 
   int line_number = 1;
