@@ -179,10 +179,10 @@ void FilenameMapProducer::endJob() {
    
             {
             string k =  iter->first;  
-	    if (lumiDelData.count(std::to_string(runNum)+"_"+std::to_string(lumiBlock))==1) {
+	    if (lumiDelData.count(s->c_str())==1) {
 		        statsOutput_ << " LumiBlock"
 	   		   	     << setw(15) << lumiToRun[s->c_str()]
-		                     << setw(10) << lumiToLumi[s->c_str()]
+		                     << setw(10) << lumiToLumiB[s->c_str()]
 	   	      		     << setw(10) << lumiNumEvents[s->c_str()]
 		         	     << setw(10) << "1"
 		         	     << setw(15) << lumiDelData[s->c_str()]
