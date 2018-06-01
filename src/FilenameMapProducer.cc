@@ -188,8 +188,8 @@ void FilenameMapProducer::endJob() {
 		                     << setw(10) << lumiToLumiB[k]
 	   	      		     << setw(10) << lumiNumEvents[k]
 		         	     << setw(10) << "1"
-		         	     << setw(15) << lumiDelData[k]
-				     << setw(15) << lumiRecData[k]
+		         	     << setw(15) << round(lumiDelData[k]* 1000.0 ) / 1000.0
+				     << setw(15) << round(lumiRecData[k]* 1000.0 ) / 1000.0
 	 	          	     << endl;   
 		    
 	    }
