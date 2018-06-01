@@ -164,7 +164,7 @@ void FilenameMapProducer::endJob() {
    while (it != lumiNumEvents.end())
   
             {
-            string k =  iter->first;  
+            string k =  it->first;  
 	    if (lumiDelData.count(k)==1) {
 		        statsOutput_ << " LumiBlock"
 	   		   	     << setw(15) << lumiToRun[k]
