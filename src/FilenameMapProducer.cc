@@ -146,7 +146,7 @@ void FilenameMapProducer::beginJob() {
 void FilenameMapProducer::endJob() {
 
 
-    
+   statsOutput_.open(statsFilename_.c_str(), ios::out | ios::app );
  
  	
    numOutput_.open(numFilename_.c_str(), std::fstream::out | std::fstream::app);
