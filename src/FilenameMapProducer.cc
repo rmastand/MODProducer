@@ -211,7 +211,7 @@ void FilenameMapProducer::endJob() {
 
  
  	
-   
+   statsOutput_ << "EndFile" << endl;
    fileOutput_.close();
    lumiLumin_.close();
    statsOutput_.close();
