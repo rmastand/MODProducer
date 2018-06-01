@@ -23,10 +23,6 @@ using namespace std;
 using namespace edm;
 
 int counts = 0;
-int totEvents = 0;
-int validEvents = 0;
-float intLumiTotDel = 0.;
-float intLumiTotRec = 0.;
 
 class FilenameMapProducer : public EDProducer 
 {
@@ -44,12 +40,9 @@ private:
    
    ofstream fileOutput_;
    ofstream numOutput_;
-   ofstream statsOutput_;
    string currentProcessingFilename_;
    string outputFilename_;
    string numFilename_;
-   string statsFilename_;
-   ifstream lumiByLs("11lumibyls.txt");
 
     
 };
@@ -59,41 +52,12 @@ private:
 FilenameMapProducer::FilenameMapProducer(const ParameterSet& iConfig)
 : currentProcessingFilename_(iConfig.getParameter<string>("filename")),
   outputFilename_(iConfig.getParameter<string>("outputFile")),
-  numFilename_(iConfig.getParameter<string>("numFile")),
-  outputDir_(iConfig.getParameter<string>("outputDir"))
+  numFilename_(iConfig.getParameter<string>("numFile"))
 {
   fileOutput_.open(outputFilename_.c_str(), std::fstream::out | std::fstream::app);
-     
-  statsFilename_ = outputDir_ + "/" + outputFilename_ + ".stats";
-     
-     
-  map<string, int> lumiNumEvents; 
-  map<string, float> lumiDelData; 
-  map<string, float> lumiRecData; 
-  map<string, string> lumiToRun; 
-  map<string, string> lumiToLumi; 
-       
-  
-   
-
-  int line_number = 1;
-
-  string line;
-  while (getline(lumiByLs, line)) {
-      
-      istringstream iss(line);
-      string lumiId; 
-      float lumiDel, lumiRec;
-      iss >> lumiId >> lumiDel >> lumiRec;     
-      lumiDelData[lumiId]=lumiDel;
-      lumiRecData[lumiId]=lumiRec;    
-      line_number++;
-   }
-
-     
-
-
 }
+
+
 
 
 FilenameMapProducer::~FilenameMapProducer() {
@@ -104,31 +68,7 @@ void FilenameMapProducer::produce(Event& iEvent, const EventSetup& iSetup) {
    
    int runNum = iEvent.id().run();
    int eventNum = iEvent.id().event();
-   int lumiBlock = iEvent.luminosityBlock();
-   
-   lumiToRun[std::to_string(runNum)+"_"+std::to_string(lumiBlock)] = std::to_string(runNum);
-   lumiToLumi[std::to_string(runNum)+"_"+std::to_string(lumiBlock)] = std::to_string(lumiBlock);
-   
-   if (lumiInfo.count(std::to_string(runNum)+"_"+std::to_string(lumiBlock)) == 1) {
-      ++lumiInfo[std::to_string(runNum)+"_"+std::to_string(lumiBlock)];     
-      }
-   else {
-      lumiInfo[std::to_string(runNum)+"_"+std::to_string(lumiBlock)] = 1;
-      }
-   
-   
-   
    counts = counts + 1;  
-   if (lumiDelData.count(std::to_string(runNum)+"_"+std::to_string(lumiBlock))==1) {
-      ++validEvents;
-      intLumiTotDel = intLumiTotDel + lumiDelData[std::to_string(runNum)+"_"+std::to_string(lumiBlock)];
-      intLumiTotRec = intLumiTotRec + lumiRecData[std::to_string(runNum)+"_"+std::to_string(lumiBlock)];
-   }
-   
-   
-   
-   
-   ++totEvents;
    fileOutput_ << eventNum << " " << runNum  << " " << currentProcessingFilename_ << endl;
 }
 
@@ -137,63 +77,11 @@ void FilenameMapProducer::beginJob() {
 }
 
 void FilenameMapProducer::endJob() {
-   
-   
-   
-   statsOutput_.open(statsFilename_.c_str(), ios::out | ios::app );
-   statsOutput_ << "BeginFile Version 6 CMS Dataset" << endl;
-   statsOutput_ << "#   File                                Filename    TotalEvents    ValidEvents     IntLumiDel     IntLumiRec" << endl;
-      
-   statsOutput_ << "    File"
-	   	<< setw(40) << currentProcessingFilename_
-		<< setw(15) << totEvents
-	   	<< setw(15) << validEvents
-		<< setw(15) << intLumiTotDel
-		<< setw(15) << intLumiTotDel
-	 	<< endl;   
-   
-    
-      
-   statsOutput_ << "#LumiBlock         RunNum      Lumi    Events    Valid?     IntLumiDel     IntLumiRec" << end;
-   
-   for(std::map<Key,Val>::iterator iter = lumiNumEvents.begin(); iter != lumiNumEvents.end(); ++iter)
-            {
-            Key k =  iter->first;  
-	    if (lumiDelData.count(std::to_string(runNum)+"_"+std::to_string(lumiBlock))==1) {
-		        statsOutput_ << " LumiBlock"
-	   		   	     << setw(15) << lumiToRun[k]
-		                     << setw(10) << lumiToLumi[k]
-	   	      		     << setw(10) << lumiNumEvents[k]
-		         	     << setw(10) << "1"
-		         	     << setw(15) << lumiDelData[k]
-				     << setw(15) << lumiRecData[k]
-	 	          	     << endl;   
-		    
-	    }
-     		else
-		{
-			statsOutput_ << " LumiBlock"
-	   		   	     << setw(15) << lumiToRun[k]
-		                     << setw(10) << lumiToLumi[k]
-	   	      		     << setw(10) << lumiNumEvents[k]
-		         	     << setw(10) << "0"
-		         	     << setw(15) << "0.0"
-				     << setw(15) << "0.0"
-	 	          	     << endl;   
-		}
- 
-           
-            }
-   
-
-  
-  
+ 	
    numOutput_.open(numFilename_.c_str(), std::fstream::out | std::fstream::app);
    numOutput_ << currentProcessingFilename_ << " " << counts << endl;
-   statsOutput_ << "EndFile";
    numOutput_.close();
    fileOutput_.close();
-   statsOutput_.close();
 
 }
 
