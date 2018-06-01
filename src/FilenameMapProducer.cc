@@ -62,9 +62,33 @@ FilenameMapProducer::FilenameMapProducer(const ParameterSet& iConfig)
   outputDir_(iConfig.getParameter<string>("outputDir"))
 {
   fileOutput_.open(outputFilename_.c_str(), std::fstream::out | std::fstream::app);
-  lumiLumin_.open("skimmed.txt");
+  
      
   statsFilename_ = outputDir_ + "/" + outputFilename_ + ".stats";
+     
+     
+  map<string, int> lumiNumEvents; 
+  map<string, float> lumiDelData; 
+  map<string, float> lumiRecData; 
+  map<string, string> lumiToRun; 
+  map<string, string> lumiToLumiB; 
+   
+  lumiLumin_.open("skimmed.txt");
+  int line_number = 1;
+
+  string line;
+  while (getline(lumiLumin_, line)) {
+      
+      istringstream iss(line);
+      string lumiId; 
+      float lumiDel, lumiRec;
+      iss >> lumiId >> lumiDel >> lumiRec;     
+      lumiDelData[lumiId]=lumiDel;
+      lumiRecData[lumiId]=lumiRec;   
+      cout << lumiId << " " << lumiDel << " " << lumiRec << endl;
+      line_number++;
+   }
+
 
      
     
