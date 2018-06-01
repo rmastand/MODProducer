@@ -46,16 +46,18 @@ for i in xrange(len(mod_lines)):
 	if ("#" in mod_lines[i].split()) and ("Cond" in mod_lines[i].split()):
 		run = mod_lines[i+1].split()[1]
 		lumiBlock = mod_lines[i+1].split()[6]
-		valid = mod_lines[i+1].split()[7]
+		
 		if (run,lumiBlock) not in lumi_info.keys():
-			lumi_info[(run,lumiBlock)] = {"events":1,"valid":valid}
+			lumi_info[(run,lumiBlock)] = {"events":1,"valid":0}
 		else:
 			lumi_info[(run,lumiBlock)]["events"] += 1
 		total_events += 1
-		valid_events += int(valid)
+		
 		try:
 			total_lum_del += run_lumi_dict[(run,lumiBlock)][0]
 			total_lum_rec += run_lumi_dict[(run,lumiBlock)][1]
+			lumi_info[(run,lumiBlock)] = {"events":1,"valid":1}
+			valid_events += 1
 		except KeyError:
 			pass
 
