@@ -51,12 +51,13 @@ private:
    string outputFilename_;
    string statsFilename_;
    ifstream lumiLumin_;
-   string outputDir_;
    string outputLsFile_;
+   string outputDir_;
    string dataType_;
-   string dataYear_;
    string version_;
    string triggerCat_;
+   string dataYear_;
+   
    
    map<string, int> lumiNumEvents; 
    map<string, float> lumiDelData; 
