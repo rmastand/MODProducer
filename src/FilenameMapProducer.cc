@@ -166,7 +166,7 @@ void FilenameMapProducer::endJob() {
    
    statsOutput_ << "#   File                                Filename    TotalEvents    ValidEvents     IntLumiDel     IntLumiRec" << endl;
       
-   statsOutput_ << "    File"
+   statsOutput_ <<fixed<< "    File"
 	   	<< setw(40) << currentProcessingFilename_.substr(0,currentProcessingFilename_.length()-5)
 		<< setw(15) << totEvents
 	   	<< setw(15) << validEvents
@@ -183,7 +183,7 @@ void FilenameMapProducer::endJob() {
             string k =  it->first;  
 	
 	    if (lumiDelData.count(k)==1) {
-		        statsOutput_ << " LumiBlock"
+		        statsOutput_ <<fixed<< " LumiBlock"
 	   		   	     << setw(15) << lumiToRun[k]
 		                     << setw(10) << lumiToLumiB[k]
 	   	      		     << setw(10) << lumiNumEvents[k]
@@ -195,7 +195,7 @@ void FilenameMapProducer::endJob() {
 	    }
      		else
 		{
-			statsOutput_ << " LumiBlock"
+			statsOutput_ <<fixed<< " LumiBlock"
 	   		   	     << setw(15) << lumiToRun[k]
 		                     << setw(10) << lumiToLumiB[k]
 	   	      		     << setw(10) << lumiNumEvents[k]
