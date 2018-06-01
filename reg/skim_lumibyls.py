@@ -1,6 +1,5 @@
 import sys
-runbyls_file = sys.argv[1]
-output_file = sys.argv[2]
+
 
 def runs_to_lumi(input,output):
     """makes nicer file linking runs to lumi from file"""
@@ -28,4 +27,4 @@ def runs_to_lumi(input,output):
     return run_lumi_dict
 
 
-runs_to_lumi(runbyls_file,output_file)
+
