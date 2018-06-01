@@ -60,7 +60,7 @@ FilenameMapProducer::FilenameMapProducer(const ParameterSet& iConfig)
   numFilename_(iConfig.getParameter<string>("numFile"))
 {
   fileOutput_.open(outputFilename_.c_str(), std::fstream::out | std::fstream::app);
-  lumiLumin_.open("skimmed.txt")
+  lumiLumin_.open("skimmed.txt");
 }
 
 
