@@ -9,7 +9,7 @@ lumibyls = sys.argv[2]
 version = "6"
 data_year = "2011A"
 data_type = "Data"
-triger_ cat = "Jet"
+triger_cat = "Jet"
 
 def format2_6(string,num):
 	return " "*(num-len(string))+ string
