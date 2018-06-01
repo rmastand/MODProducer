@@ -75,6 +75,7 @@ FilenameMapProducer::FilenameMapProducer(const ParameterSet& iConfig)
   
      
   statsFilename_ = outputDir_ + "/" + outputFilename_ + ".stats";
+  cout << statsFilename_ << endl;
      
      
   
@@ -133,6 +134,7 @@ void FilenameMapProducer::produce(Event& iEvent, const EventSetup& iSetup) {
       intLumiTotDel = intLumiTotDel + lumiDelData[std::to_string(runNum)+"_"+std::to_string(lumiBlock)];
       intLumiTotRec = intLumiTotRec + lumiRecData[std::to_string(runNum)+"_"+std::to_string(lumiBlock)];
    }
+   cout << "event"" << endl;
    
    
    
@@ -147,6 +149,7 @@ void FilenameMapProducer::endJob() {
 
 
    statsOutput_.open(statsFilename_.c_str(), ios::out | ios::app );
+   cout << "reached" << end;
    statsOutput_ << "BeginFile Version 6 CMS Dataset" << endl;
    statsOutput_ << "#   File                                Filename    TotalEvents    ValidEvents     IntLumiDel     IntLumiRec" << endl;
       
