@@ -48,8 +48,7 @@ private:
    string outputFilename_;
    string numFilename_;
    string statsFilename_;
-   ifstream lumiByLs("11lumibyls.txt".c_str());
-
+   ifstream lumiLumin_;
     
 };
 
@@ -61,6 +60,7 @@ FilenameMapProducer::FilenameMapProducer(const ParameterSet& iConfig)
   numFilename_(iConfig.getParameter<string>("numFile"))
 {
   fileOutput_.open(outputFilename_.c_str(), std::fstream::out | std::fstream::app);
+  lumiLumin_.open("skimmed.txt")
 }
 
 
@@ -88,6 +88,7 @@ void FilenameMapProducer::endJob() {
    numOutput_ << currentProcessingFilename_ << " " << counts << endl;
    numOutput_.close();
    fileOutput_.close();
+   lumiLumin_.close();
 
 }
 
