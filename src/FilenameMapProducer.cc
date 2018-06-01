@@ -122,7 +122,7 @@ void FilenameMapProducer::produce(Event& iEvent, const EventSetup& iSetup) {
    else {
       lumiNumEvents[std::to_string(runNum)+"_"+std::to_string(lumiBlock)] = 1;
       }
-   
+   ++totEvents;
    
    if (lumiDelData.count(std::to_string(runNum)+"_"+std::to_string(lumiBlock))==1) {
       ++validEvents;
@@ -140,12 +140,52 @@ void FilenameMapProducer::beginJob() {
 }
 
 void FilenameMapProducer::endJob() {
+   
+   
+   vents
+		<< setw(15) << intLumiTotDel
+		<< setw(15) << intLumiTotDel
+	 	<< endl;   
+   
+    
+      
+   statsOutput_ << "#LumiBlock         RunNum      Lumi    Events    Valid?     IntLumiDel     IntLumiRec" << end;
+   
+   for(std::map<Key,Val>::iterator iter = lumiNumEvents.begin(); iter != lumiNumEvents.end(); ++iter)
+            {
+            Key k =  iter->first;  
+	    if (lumiDelData.count(std::to_string(runNum)+"_"+std::to_string(lumiBlock))==1) {
+		        statsOutput_ << " LumiBlock"
+	   		   	     << setw(15) << lumiToRun[k]
+		                     << setw(10) << lumiToLumi[k]
+	   	      		     << setw(10) << lumiNumEvents[k]
+		         	     << setw(10) << "1"
+		         	     << setw(15) << lumiDelData[k]
+				     << setw(15) << lumiRecData[k]
+	 	          	     << endl;   
+		    
+	    }
+     		else
+		{
+			statsOutput_ << " LumiBlock"
+	   		   	     << setw(15) << lumiToRun[k]
+		                     << setw(10) << lumiToLumi[k]
+	   	      		     << setw(10) << lumiNumEvents[k]
+		         	     << setw(10) << "0"
+		         	     << setw(15) << "0.0"
+				     << setw(15) << "0.0"
+	 	          	     << endl;   
+		}
+ 
+           
+            }
  	
    numOutput_.open(numFilename_.c_str(), std::fstream::out | std::fstream::app);
    numOutput_ << currentProcessingFilename_ << " " << counts << endl;
    numOutput_.close();
    fileOutput_.close();
    lumiLumin_.close();
+   statsOutput_.close();
 
 }
 
