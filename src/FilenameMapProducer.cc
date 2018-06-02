@@ -200,8 +200,8 @@ void FilenameMapProducer::endJob() {
 		                     << setw(10) << lumiToLumiB[k]
 	   	      		     << setw(10) << lumiNumEvents[k]
 		         	     << setw(10) << "0"
-		         	     << setw(15) << "0.0"
-				     << setw(15) << "0.0"
+		         	     << setw(15) << "0.000"
+				     << setw(15) << "0.000"
 	 	          	     << endl;   
 		}
 	      ++it;
