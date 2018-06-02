@@ -88,6 +88,6 @@ for mod_orig in os.listdir(input_dir):
 		try:
 			w.write(" LumiBlock"+format2_6(str(lumi[0]),15)+format2_6(str(lumi[1]),10)+format2_6(str(lumi_info[lumi]["events"]),10)+format2_6(str(lumi_info[lumi]["valid"]),10)+format2_6(str(run_lumi_dict[lumi][0]),15)+format2_6(str(run_lumi_dict[lumi][1]),15)+"\n")
 		except KeyError:
-			w.write(" LumiBlock"+format2_6(str(lumi[0]),15)+format2_6(str(lumi[1]),10)+format2_6(str(lumi_info[lumi]["events"]),10)+format2_6(str(lumi_info[lumi]["valid"]),10)+format2_6("0.0",15)+format2_6("0.0",15)+"\n")
+			w.write(" LumiBlock"+format2_6(str(lumi[0]),15)+format2_6(str(lumi[1]),10)+format2_6(str(lumi_info[lumi]["events"]),10)+format2_6(str(lumi_info[lumi]["valid"]),10)+format2_6("0.000",15)+format2_6("0.000",15)+"\n")
 	w.write("EndFile")
 	w.close()
