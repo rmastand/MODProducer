@@ -183,7 +183,7 @@ void FilenameMapProducer::endJob() {
             string k =  it->first;  
 	    cout.setf(0, ios::floatfield);
 	    if (lumiDelData.count(k)==1) {
-		        statsOutput_ <<default<<" LumiBlock"
+		        statsOutput_ <<" LumiBlock"
 	   		   	     << setw(15) << lumiToRun[k]
 		                     << setw(10) << lumiToLumiB[k]
 	   	      		     << setw(10) << lumiNumEvents[k]
@@ -195,7 +195,7 @@ void FilenameMapProducer::endJob() {
 	    }
      		else
 		{
-			statsOutput_ <<default<< " LumiBlock"
+			statsOutput_ << " LumiBlock"
 	   		   	     << setw(15) << lumiToRun[k]
 		                     << setw(10) << lumiToLumiB[k]
 	   	      		     << setw(10) << lumiNumEvents[k]
