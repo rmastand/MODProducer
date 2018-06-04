@@ -34,6 +34,7 @@ assure_path_exists(mod_file_dir.replace("MOD","trig")+"/")
 
 for file in os.listdir(mod_file_dir):
 	trig_dict = {}
+
 	with open(mod_file_dir+"/"+file, "rb") as mod_file:
 		for line in mod_file: 
 			# keeps track of the run, lumiBlock
