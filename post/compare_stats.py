@@ -40,7 +40,7 @@ for file in overlap:
     difference.discard('\n')
     
     if not len(difference) == 0:
-        print file
+        errorlog.write(file+"\n")
         for line in difference:
             errorlog.write(line)
        
