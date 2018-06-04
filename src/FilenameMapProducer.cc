@@ -183,7 +183,7 @@ void FilenameMapProducer::endJob() {
             string k =  it->first;  
 	
 	    if (lumiDelData.count(k)==1) {
-		        statsOutput_ <<fixed<< std::setprecision(3)<<" LumiBlock"
+		        statsOutput_ <<default<<" LumiBlock"
 	   		   	     << setw(15) << lumiToRun[k]
 		                     << setw(10) << lumiToLumiB[k]
 	   	      		     << setw(10) << lumiNumEvents[k]
@@ -195,7 +195,7 @@ void FilenameMapProducer::endJob() {
 	    }
      		else
 		{
-			statsOutput_ <<fixed<<std::setprecision(3)<< " LumiBlock"
+			statsOutput_ <<default<< " LumiBlock"
 	   		   	     << setw(15) << lumiToRun[k]
 		                     << setw(10) << lumiToLumiB[k]
 	   	      		     << setw(10) << lumiNumEvents[k]
