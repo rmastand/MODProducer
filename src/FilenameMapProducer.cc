@@ -60,8 +60,8 @@ private:
    
    
    map<string, int> lumiNumEvents; 
-   map<string, float> lumiDelData; 
-   map<string, float> lumiRecData; 
+   map<string, long double> lumiDelData; 
+   map<string, long double> lumiRecData; 
    map<string, string> lumiToRun; 
    map<string, string> lumiToLumiB; 
     
