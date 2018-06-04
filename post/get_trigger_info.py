@@ -65,10 +65,10 @@ for file in os.listdir(mod_file_dir):
 						trig_dict[line.split()[1]]["eff_lumin_del"].append(lumiId_to_lumin_dict[(run,lumiBlock)][0]/(float(line.split()[2])*float(line.split()[3])))
 						trig_dict[line.split()[1]]["eff_lumin_rec"].append(lumiId_to_lumin_dict[(run,lumiBlock)][1]/(float(line.split()[2])*float(line.split()[3])))
 
-	w = open(mod_file_dir.replace("MOD","trig")+"/"+str(mod_orig[-40:-4])+".trig","w")
+	w = open(mod_file_dir.replace("MOD","trig")+"/"+str(file[-40:-4])+".trig","w")
 	w.write("BeginFile Version " + "\n")
 	w.write("#   File"+format2_6("Filename",40)+"\n")
-	w.write("    File"+format2_6(str(mod_orig[-40:-4]),40)+"\n")
+	w.write("    File"+format2_6(str(file[-40:-4]),40)+"\n")
 
 
 	w.write("#   Trig"+format2_6("Name",40)+format2_6("Present",10)+format2_6("Present+Valid",15)+format2_6("Present+Valid+Fired",20)+format2_6("AvePrescale",15)+format2_6("EffLuminDel",15)+format2_6("EffLuminRec",15)+"\n")
