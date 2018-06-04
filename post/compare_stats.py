@@ -4,6 +4,7 @@ import subprocess
 
 stats_dir = sys.argv[1]
 stats2_dir = sys.argv[2]
+error_log = sys.argv[3]
 
 in_stats = []
 in_stats2 = []
@@ -28,11 +29,16 @@ for i in no_matches[1]: print i
 print
 
 
+errorlog = open(error_log,"w")
+
 overlap = [x for x in in_stats if x in in_stats2]
 for file in overlap:
+    print file
     stdoutdata, stderrdata = subprocess.Popen(
             ["diff", stats_dir+"/"+file+".stats",stats2_dir+"/"+file+".stats2"]).communicate()
+    print "out"
     print stdoutdata
+    print "err"
     print stderrdata
 
     
