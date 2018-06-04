@@ -11,7 +11,8 @@ def get_lumiId_to_lumin(skim_filename):
 	with open(skim_filename,"r") as skim_file:
 		for line in skim_file:
 			lumi_id,lumi_del,lumi_rec = line.split()
-			print lumi_id,lumi_del,lumi_rec
+			lumiId_to_lumin[(lumi_id.split("_")[0],lumi_id.split("_")[1])] = lumi_del,lumi_rec
+	return lumiId_to_lumin
 		
 		
 	
