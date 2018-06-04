@@ -35,12 +35,6 @@ print "files that have different stats and stats2 contents:"
 overlap = [x for x in in_stats if x in in_stats2]
 
 for file in overlap:
-    errorlog = open(error_log,"w")
-    errorlog.write(file+"\n")
-    cmd = "diff " + stats_dir+"/"+file+".stats" + " " + stats2_dir+"/"+file+".stats2 " + " >> " + error_log
-    output,error = subprocess.Popen(cmd, shell=True, executable="/bin/bash", stdout=subprocess.PIPE, stderr=subprocess.PIPE).communicate()
-    errorlog.write("\n")
-    errorlog.close()
     with open(stats_dir+"/"+file+".stats", 'r') as file1:
         with open(stats2_dir+"/"+file+".stats2", 'r') as file2:
             difference = set(file1).difference(file2)
@@ -48,6 +42,13 @@ for file in overlap:
     
     if not len(difference) == 0:
         print file
+        errorlog = open(error_log,"w")
+        errorlog.write(file+"\n")
+        cmd = "diff " + stats_dir+"/"+file+".stats" + " " + stats2_dir+"/"+file+".stats2 " + " >> " + error_log
+        output,error = subprocess.Popen(cmd, shell=True, executable="/bin/bash", stdout=subprocess.PIPE, stderr=subprocess.PIPE).communicate()
+        errorlog.write("\n")
+        errorlog.close()
+    
         
         
 
