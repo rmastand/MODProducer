@@ -102,7 +102,7 @@ FilenameMapProducer::FilenameMapProducer(const ParameterSet& iConfig)
       iss >> lumiId >> lumiDel >> lumiRec;     
       lumiDelData[lumiId]=lumiDel;
       lumiRecData[lumiId]=lumiRec;   
-      cout << setprecision(10)<< lumiDel << endl;
+
       
       line_number++;
    }
@@ -167,13 +167,16 @@ void FilenameMapProducer::endJob() {
 
    
    statsOutput_ << "#   File                                Filename    TotalEvents    ValidEvents          IntLumiDel          IntLumiRec" << endl;
-      
+   string LumiTotDel = std::to_string(intLumiTotDel);
+   LumiTotDel.erase(LumiTotDel.find_last_not_of("0")+1,std::string::npos);
+   string LumiTotRec = std::to_string(intLumiTotRec);
+   LumiTotRec.erase(LumiTotRec.find_last_not_of("0")+1,std::string::npos);
    statsOutput_ <<fixed<< "    File"
 	   	<< setw(40) << currentProcessingFilename_.substr(0,currentProcessingFilename_.length()-5)
 		<< setw(15) << totEvents
 	   	<< setw(15) << validEvents
-		<< setw(20) << intLumiTotDel
-		<< setw(20) << intLumiTotRec
+		<< setw(20) << LumiTotDel 
+		<< setw(20) << LumiTotRec
 	 	<< endl;   
 	
    statsOutput_ << "#LumiBlock         RunNum      Lumi    Events    Valid?     IntLumiDel     IntLumiRec" << endl;
