@@ -105,17 +105,15 @@ Once you've downloaded the AOD files (these are ROOT files), you need to create 
 	
    1. a path to the ROOT files that you want to process. Note that this is the same as the second argument in the previous command. 
    2. a path to the registry file.
-   3. a path to the output directory
+   3. a path to the output directory for the stats files
    4. a path to the lumibyls csv file
-   5. a path to the output for the skimmed lumibyls file
+   5. a path to the output for the skimmed lumibyls file (will not be used again)
    6. data type, Data or Sim
    7. data year, 2010B, 2011A, or 2011
-   8. trigger category
-   9. version number
+   8. trigger category (ex Jet, Muon)
+   9. version number (6 for now)
    
  
-
-
    ```
    cmsenv
    ```
@@ -127,22 +125,6 @@ Once you've downloaded the AOD files (these are ROOT files), you need to create 
    ```
    python ./reg/create_registry_online.py ./file_paths/samples/Jet_21.txt ~/MITOpenDataProject/registry.txt  ~/MITOpenDataProject/eos/opendata/cms/Run2011A/Jet/stats/12Oct2013-v1/20000/ ./reg/2011lumibyls.csv ./reg/11skimlumi.txt Data 2011A 6 Jet 
    ```
-   
-### (Optional) Count the total number of events 
-
-You may want to run this step as a cross check to ensure that your VM can actually access all of the events that CERN cites to be in the dataset.
-   
-   In the virtual machine environment, type ```root```. Then in the root environment, type:
-   ```
-   .x reg/check_total_counts_fast.cxx("file_paths/samples/Jet_21.txt","Jet21counts.txt")
-   ```    
-   Replace the arguments of the function as necessary. Note that running this script will initially produce a lot of warnings; you can ignore them all.
-   
-   When the script stops running, exit the root environment and type:
-   ```
-   tail -1 Jet21counts.txt
-   ```
-   The number you see should be the number of events in the ```Jet11/100000.txt``` file.
    
 
    
@@ -216,15 +198,31 @@ If using 2010 or 2011 (real or simulated) data, all these corrections are in the
 
 ### Other commands that might be useful
 
-#### Create a global statistics file
+#### Create some statistics files
 
-   After running the PFCCandidate Producer script, run:
-   ```
-   python post/stats_to_mod.py post2011lumibyls.csv ~/MITOpenDataProject/eos/opendata/cms/Run2011A/Jet/MOD/12Oct2013-v1/20000/
-   ```
-   This will create two text files: ```reg_by_file.txt``` and ```reg_by_lumi.txt```. They contain statistics about how many events there are per file (or luminosity block), which triggers were present / fired, and what the average prescale values were. It also notes which luminosity blocks were in which files and vice versa.
+   After running the PFCCandidate Producer script, run the following script with the arguments:
+   1. the lumibyls file of the correct year
+   2. the folder containing all of your MOD files
    
-   ** This currrently does not work for the simulated data
+   ```
+   python post/mod_to_stats.py post/2011lumibyls.csv ~/MITOpenDataProject/eos/opendata/cms/Run2011A/Jet/MOD/12Oct2013-v1/20000/
+   ```
+   This will create a set of statistics files (.stats2) corresponding to the MOD files in the input directory. They contain statistics about how many events there are per file (or luminosity block), which triggers were present / fired, and what the average prescale values were. It also notes which luminosity blocks were in which files and vice versa.
+   
+   ** This currently does not work for the simulated data
+   
+#### Check that you've downloaded all the files properly.
+
+   Runthe following scipt with the arguments:
+   1. the directory containing all of your stats files (created in the create_registry step)
+   2. the directory containing all of your stats2 files (created in the mod_to_stats step)
+   3. a file containing any differences between stats files
+   ```
+   python post/compare_stats ~/MITOpenDataProject/eos/opendata/cms/Run2011A/Jet/MOD/12Oct2013-v1/20000/ ~/MITOpenDataProject/eos/opendata/cms/Run2011A/Jet/MOD/12Oct2013-v1/20000/ diff.txt
+   ```
+   This will compare your two stats directories and let you know if the script didn't download any files, or if it downloaded any files incompletely.
+   
+   ** This currently does not work for the simulated data
    
 #### Make a graph of the integrated luminosity
 
