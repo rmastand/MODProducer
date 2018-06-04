@@ -136,7 +136,7 @@ private:
 
    ofstream completedEventsFileOutput_;
    ofstream logFileOutput_; 
-   ofstream statsFileOutput_;
+  
 
    string outputDir_;
    ofstream fileOutput_;
@@ -179,7 +179,7 @@ PFCandidateProducer::PFCandidateProducer(const ParameterSet& iConfig)
   lastOutputFilename_ = "";
 
   logFileOutput_.open("log.log", ios::out | ios::app );
-  statsFileOutput_.open("stats.txt", ios::out | ios::app );
+
 
   skipNextEvent_ = false;
 }
@@ -401,26 +401,7 @@ void PFCandidateProducer::produce(Event& iEvent, const EventSetup& iSetup) {
 	    //RunLumiSelector runLumiSel( lumis_ );
 	     
 	     
-	  if (dataType_=="Data") {
-		  statsFileOutput_ //<< BoolToString(runLumiSel(iEvent)) << " "
-					   << iEvent.id().run() << " "
-					   << iEvent.id().event() << " "			
-					   << iEvent.id().luminosityBlock() << " "
-					   << registry_info_[to_string(runNum) + "_" + to_string(eventNum)] << " "
-					   << trigger_list
-					   << endl;
-	  }
-	     
-	   if (dataType_=="Sim") {
-		  statsFileOutput_ //<< BoolToString(runLumiSel(iEvent)) << " "
-					   << iEvent.id().run() << " "
-					   << iEvent.id().event() << " "			
-					   << "0" << " "
-					   << registry_info_[to_string(runNum) + "_" + to_string(eventNum)] << " "
-					   << trigger_list
-					   << endl;
-	  }
-
+	  
 	   
 	  // Get AK5 Jets.
 	  
