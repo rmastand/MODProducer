@@ -29,7 +29,7 @@ def is_lumi_valid(lumi_id,lumiId_to_lumin_dict):
 		return 0
 
 lumiId_to_lumin_dict = get_lumiId_to_lumin(skimmed_lumibyls)
-assure_path_exists(input_dir.replace("MOD","trig")+"/")
+assure_path_exists(mod_file_dir.replace("MOD","trig")+"/")
 
 
 for file in os.listdir(mod_file_dir):
@@ -62,7 +62,7 @@ for file in os.listdir(mod_file_dir):
 						trig_dict[line.split()[1]]["avg_prescale"].append(float(line.split()[2])*float(line.split()[3]))
 						trig_dict[line.split()[1]]["eff_lumin"].append(lumiId_to_lumin_dict[(run,lumiBlock)]/(float(line.split()[2])*float(line.split()[3])))
 	
-	w = open(input_dir.replace("MOD","trig")+"/"+str(mod_orig[-40:-4])+".trig","w")
+	w = open(mod_file_dir.replace("MOD","trig")+"/"+str(mod_orig[-40:-4])+".trig","w")
 	w.write("BeginFile Version " + "\n")
 	w.write("#   File"+format2_6("Filename",40)+"\n")
 	w.write("    File"+format2_6(str(mod_orig[-40:-4]),40)+"\n")
