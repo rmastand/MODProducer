@@ -29,22 +29,27 @@ for i in no_matches[1]: print i
 print
 
 
-errorlog = open(error_log,"w")
+print "files that have different stats and stats2 contents:"
+    
 
 overlap = [x for x in in_stats if x in in_stats2]
 
 for file in overlap:
+    errorlog = open(error_log,"w")
+    errorlog.write(file+"\n")
+    stdoutdata, stderrdata = subprocess.Popen(
+            ["diff",stats_dir+"/"+file+".stats",stats2_dir+"/"+file+".stats2",">>",error_log]).communicate()
+    errorlog.write("\n")
+    errorlog.close()
     with open(stats_dir+"/"+file+".stats", 'r') as file1:
         with open(stats2_dir+"/"+file+".stats2", 'r') as file2:
             difference = set(file1).difference(file2)
     difference.discard('\n')
     
     if not len(difference) == 0:
-        errorlog.write(file+"\n")
-        for line in difference:
-            errorlog.write(line)
-       
-errorlog.close()
+        print file
+        
+        
 
 
     
