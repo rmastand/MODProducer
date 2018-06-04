@@ -98,10 +98,11 @@ FilenameMapProducer::FilenameMapProducer(const ParameterSet& iConfig)
       istringstream iss(line);
       string lumiId; 
       long double lumiDel, lumiRec;
+
       iss >> lumiId >> lumiDel >> lumiRec;     
       lumiDelData[lumiId]=lumiDel;
       lumiRecData[lumiId]=lumiRec;   
-      cout << lumiDel << endl;
+      cout << setprecision(10)<< lumiDel << endl;
       
       line_number++;
    }
