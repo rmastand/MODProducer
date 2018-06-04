@@ -71,9 +71,9 @@ for file in os.listdir(mod_file_dir):
 	w.write("    File"+format2_6(str(file[-40:-4]),40)+"\n")
 
 
-	w.write("#   Trig"+format2_6("Name",40)+format2_6("Present",10)+format2_6("Present+Valid",15)+format2_6("Present+Valid+Fired",20)+format2_6("AvePrescale",15)+format2_6("EffLuminDel",25)+format2_6("EffLuminRec",25)+"\n")
+	w.write("#   Trig"+format2_6("Name",40)+format2_6("Present",10)+format2_6("Valid",10)+format2_6("Fired",10)+format2_6("AvePrescale",15)+format2_6("EffLuminDel",25)+format2_6("EffLuminRec",25)+"\n")
 	for trig in trig_dict.keys():
-		w.write("#   Trig"+format2_6(trig,40)+format2_6(str(trig_dict[trig]["present"]),10)+format2_6(str(trig_dict[trig]["present_valid"]),15)+format2_6(str(trig_dict[trig]["present_valid_fired"]),20)+format2_6(str(np.mean(trig_dict[trig]["avg_prescale"])),15)+format2_6(str(np.mean(trig_dict[trig]["eff_lumin_del"])),25)+format2_6(str(np.mean(trig_dict[trig]["eff_lumin_rec"])),25)+"\n")	
+		w.write("    Trig"+format2_6(trig,40)+format2_6(str(trig_dict[trig]["present"]),10)+format2_6(str(trig_dict[trig]["present_valid"]),10)+format2_6(str(trig_dict[trig]["present_valid_fired"]),10)+format2_6(str(np.mean(trig_dict[trig]["avg_prescale"])),15)+format2_6(str(np.mean(trig_dict[trig]["eff_lumin_del"])),25)+format2_6(str(np.mean(trig_dict[trig]["eff_lumin_rec"])),25)+"\n")	
 	w.write("EndFile\n")
 	w.close()
 
