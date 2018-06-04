@@ -24,10 +24,19 @@ def is_lumi_valid(lumi_id,lumiId_to_lumin_dict):
 lumiId_to_lumin_dict = get_lumiId_to_lumin(skimmed_lumibyls)
 	
 
+
 for file in os.listdir(mod_file_dir):
 	with open(mod_file_dir+"/"+file, "rb") as mod_file:
 		for line in mod_file: 
+			# keeps track of the run, lumiBlock
+			if ("Cond" in line.split()) and ("#" not in line.split()):
+				run,lumiBlock = line.split()[1],line.split()[6]
+				print run,lumiBlock
+			'''
 			if ("Trig" in line.split()) and ("#" not in line.split()):
-				print line.split()
-      
+				# given line: [Trig identifier, trig name, prescale1, prescale2, fired?]
+				if line.split()[1] not in trig_dict.keys():
+					trig_dict[line.split()[1]] = {"present":1,"present_valid":0,"present_fired":0,"present_valid_fired":0}
+					
+      			'''
 
