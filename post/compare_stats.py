@@ -6,5 +6,5 @@ stats2_dir = sys.argv[2]
 
 
 for file in os.listdir(stats_dir):
-  print file
+  print file[:-6]
   
