@@ -171,7 +171,7 @@ void FilenameMapProducer::endJob() {
 		<< setw(15) << totEvents
 	   	<< setw(15) << validEvents
 		<< setw(20) <<fixed<< std::setprecision(3)<< intLumiTotDel
-		<< setw(20) << intLumiTotRec
+		<< setw(20) <<fixed<< std::setprecision(3)<< intLumiTotRec
 	 	<< endl;   
 	
    statsOutput_ << "#LumiBlock         RunNum      Lumi    Events    Valid?     IntLumiDel     IntLumiRec" << endl;
