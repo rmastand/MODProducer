@@ -39,13 +39,12 @@ for file in overlap:
             difference = set(file1).difference(file2)
     difference.discard('\n')
     
-    print file
-    print difference
-    
-    for line in difference:
-        errorlog.write(line)
+    if not len(difference) == 0:
+        print file
+        for line in difference:
+            errorlog.write(line)
        
-
+errorlog.close()
 
 
     
