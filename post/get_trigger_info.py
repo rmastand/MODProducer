@@ -48,29 +48,32 @@ for file in os.listdir(mod_file_dir):
 								      "present_valid":is_lumi_valid((run,lumiBlock),lumiId_to_lumin_dict),	    
 								      "present_valid_fired":is_lumi_valid((run,lumiBlock),lumiId_to_lumin_dict) and int(line.split()[4]),
 								      "avg_prescale":[],
-								      "eff_lumin":[]
+								      "eff_lumin_del":[],
+								      "eff_lumin_rec":[]
 								     }
 					if trig_dict[line.split()[1]]["present_valid_fired"]==1:
 						trig_dict[line.split()[1]]["avg_prescale"].append(float(line.split()[2])*float(line.split()[3]))
-						trig_dict[line.split()[1]]["eff_lumin"].append(lumiId_to_lumin_dict[(run,lumiBlock)]/(float(line.split()[2])*float(line.split()[3])))
-					
+						trig_dict[line.split()[1]]["eff_lumin_del"].append(lumiId_to_lumin_dict[(run,lumiBlock)][0]/(float(line.split()[2])*float(line.split()[3])))
+						trig_dict[line.split()[1]]["eff_lumin_rec"].append(lumiId_to_lumin_dict[(run,lumiBlock)][1]/(float(line.split()[2])*float(line.split()[3])))
+
 				else:
 					trig_dict[line.split()[1]]["present"] += 1
 					trig_dict[line.split()[1]]["present_valid"] += is_lumi_valid((run,lumiBlock),lumiId_to_lumin_dict)
 					trig_dict[line.split()[1]]["present_valid_fired"] += is_lumi_valid((run,lumiBlock),lumiId_to_lumin_dict) and int(line.split()[4])
 					if (is_lumi_valid((run,lumiBlock),lumiId_to_lumin_dict) and int(line.split()[4]))==1:
 						trig_dict[line.split()[1]]["avg_prescale"].append(float(line.split()[2])*float(line.split()[3]))
-						trig_dict[line.split()[1]]["eff_lumin"].append(lumiId_to_lumin_dict[(run,lumiBlock)]/(float(line.split()[2])*float(line.split()[3])))
-	
+						trig_dict[line.split()[1]]["eff_lumin_del"].append(lumiId_to_lumin_dict[(run,lumiBlock)][0]/(float(line.split()[2])*float(line.split()[3])))
+						trig_dict[line.split()[1]]["eff_lumin_rec"].append(lumiId_to_lumin_dict[(run,lumiBlock)][1]/(float(line.split()[2])*float(line.split()[3])))
+
 	w = open(mod_file_dir.replace("MOD","trig")+"/"+str(mod_orig[-40:-4])+".trig","w")
 	w.write("BeginFile Version " + "\n")
 	w.write("#   File"+format2_6("Filename",40)+"\n")
 	w.write("    File"+format2_6(str(mod_orig[-40:-4]),40)+"\n")
 
 
-	w.write("#   Trig"+format2_6("Name",40)+format2_6("Present",10)+format2_6("Present+Valid",15)+format2_6("Present+Valid+Fired",20)+format2_6("AvePrescale",15)+format2_6("EffLumin",15)+"\n")
+	w.write("#   Trig"+format2_6("Name",40)+format2_6("Present",10)+format2_6("Present+Valid",15)+format2_6("Present+Valid+Fired",20)+format2_6("AvePrescale",15)+format2_6("EffLuminDel",15)+format2_6("EffLuminRec",15)+"\n")
 	for trig in trig_dict.keys():
-		w.write("#   Trig"+format2_6(trig,40)+format2_6(str(trig_dict[trig]["present"]),10)+format2_6(str(trig_dict[trig]["present_valid"]),15)+format2_6(str(trig_dict[trig]["present_valid_fired"]),20)+format2_6(str(np.mean(trig_dict[trig]["avg_prescale"])),15)+format2_6(str(np.mean(trig_dict[trig]["eff_lumin"])),15)+"\n")	
+		w.write("#   Trig"+format2_6(trig,40)+format2_6(str(trig_dict[trig]["present"]),10)+format2_6(str(trig_dict[trig]["present_valid"]),15)+format2_6(str(trig_dict[trig]["present_valid_fired"]),20)+format2_6(str(np.mean(trig_dict[trig]["avg_prescale"])),15)+format2_6(str(np.mean(trig_dict[trig]["eff_lumin_del"])),15)+format2_6(str(np.mean(trig_dict[trig]["eff_lumin_rec"])),15)+"\n")	
 	w.write("EndFile\n")
 	w.close()
 
