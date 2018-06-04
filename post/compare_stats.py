@@ -32,14 +32,18 @@ print
 errorlog = open(error_log,"w")
 
 overlap = [x for x in in_stats if x in in_stats2]
+
 for file in overlap:
-    print file
-    stdoutdata, stderrdata = subprocess.Popen(
-            ["diff", stats_dir+"/"+file+".stats",stats2_dir+"/"+file+".stats2"]).communicate()
-    print "out"
-    print stdoutdata
-    print "err"
-    print stderrdata
+    with open(stats_dir+"/"+file+".stats", 'r') as file1:
+        with open(stats2_dir+"/"+file+".stats2", 'r') as file2:
+            difference = set(file1).difference(file2)
+    difference.discard('\n')
+    
+    for line in difference:
+        errorlog.write(line)
+       
+
+
 
     
     
