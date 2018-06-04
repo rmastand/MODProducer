@@ -80,7 +80,7 @@ for mod_orig in os.listdir(input_dir):
 	w = open(input_dir.replace("MOD","stats2")+"/"+str(mod_orig[-40:-4])+".stats2","w")
 	w.write("BeginFile Version " + version + " CMS_" + data_year + " " + data_type + " " + trigger_cat + "\n")
 	w.write("#   File"+format2_6("Filename",40)+format2_6("TotalEvents",15)+format2_6("ValidEvents",15)+format2_6("IntLumiDel",20)+format2_6("IntLumiRec",20)+"\n")
-	w.write("    File"+format2_6(str(mod_orig[-40:-4]),40)+format2_6(str(total_events),15)+format2_6(str(valid_events),15)+format2_6("{0:.3f}".format(total_lum_del),20)+format2_6("{0:.3f}".format(total_lum_rec),20)+"\n")
+	w.write("    File"+format2_6(str(mod_orig[-40:-4]),40)+format2_6(str(total_events),15)+format2_6(str(valid_events),15)+format2_6(total_lum_del,20)+format2_6(total_lum_rec,20)+"\n")
 
 
 	w.write("#LumiBlock"+format2_6("RunNum",15)+format2_6("Lumi",10)+format2_6("Events",10)+format2_6("Valid?",10)+format2_6("IntLumiDel",15)+format2_6("IntLumiRec",15)+"\n")
