@@ -186,6 +186,11 @@ void FilenameMapProducer::endJob() {
   
             {
             string k =  it->first;  
+	   
+	    string LumiDel = std::to_string(lumiDelData[k]);
+   	    LumiDel.erase(LumiDel.find_last_not_of("0")+1,std::string::npos);
+   	    string LumiRec = std::to_string(lumiRecData[k]);
+   	    LumiRec.erase(LumiRec.find_last_not_of("0")+1,std::string::npos);
 	
 	    if (lumiDelData.count(k)==1) {
 		        statsOutput_ <<" LumiBlock"
@@ -193,8 +198,8 @@ void FilenameMapProducer::endJob() {
 		                     << setw(10) << lumiToLumiB[k]
 	   	      		     << setw(10) << lumiNumEvents[k]
 		         	     << setw(10) << "1"
-		         	     << setw(15) << lumiDelData[k]
-				     << setw(15) << lumiRecData[k]
+		         	     << setw(15) << LumiDel
+				     << setw(15) << LumiRec
 	 	          	     << endl;   
 		    
 	    }
