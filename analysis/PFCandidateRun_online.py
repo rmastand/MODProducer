@@ -47,7 +47,7 @@ process.load("FWCore.MessageLogger.MessageLogger_cfi")
 process.MessageLogger.cerr.FwkReport.reportEvery = 1000
 
 process.source = cms.Source("PoolSource", fileNames=readFiles)
-process.maxEvents = cms.untracked.PSet(input = cms.untracked.int32(200))
+process.maxEvents = cms.untracked.PSet(input = cms.untracked.int32(-1))
 
 
 
