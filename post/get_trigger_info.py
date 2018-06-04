@@ -36,6 +36,6 @@ for file in os.listdir(mod_file_dir):
 			if ("Trig" in line.split()) and ("#" not in line.split()):
 				# given line: [Trig identifier, trig name, prescale1, prescale2, fired?]
 				if line.split()[1] not in trig_dict.keys():
-					trig_dict[line.split()[1]] = {"present":1,"present_valid":is_lumi_valid((run,lumiBlock),lumiId_to_lumin_dict),"present_fired":int(line.split()[4]),"present_valid_fired":(is_lumi_valid((run,lumiBlock) and int(line.split()[4]))}
+					trig_dict[line.split()[1]] = {"present":1,"present_valid":is_lumi_valid((run,lumiBlock),lumiId_to_lumin_dict),"present_fired":int(line.split()[4]),"present_valid_fired":is_lumi_valid((run,lumiBlock),lumiId_to_lumin_dict) and int(line.split()[4])}
 					print trig_dict[line.split()[1]]
 
