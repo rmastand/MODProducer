@@ -101,6 +101,7 @@ FilenameMapProducer::FilenameMapProducer(const ParameterSet& iConfig)
       iss >> lumiId >> lumiDel >> lumiRec;     
       lumiDelData[lumiId]=lumiDel;
       lumiRecData[lumiId]=lumiRec;   
+      cout << lumiDel << endl;
       
       line_number++;
    }
