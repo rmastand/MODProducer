@@ -70,7 +70,7 @@ for file in os.listdir(mod_file_dir):
 
 	w.write("#   Trig"+format2_6("Name",40)+format2_6("Present",10)+format2_6("Present+Valid",15)+format2_6("Present+Valid+Fired",20)+format2_6("AvePrescale",15)+format2_6("EffLumin",15)+"\n")
 	for trig in trig_dict.keys():
-	w.write("#   Trig"+format2_6(trig,40)+format2_6(str(trig_dict[trig]["present"]),10)+format2_6(str(trig_dict[trig]["present_valid"]),15)+format2_6(str(trig_dict[trig]["present_valid_fired"]),20)+format2_6(str(np.mean(trig_dict[trig]["avg_prescale"])),15)+format2_6(str(np.mean(trig_dict[trig]["eff_lumin"])),15)+"\n")	
+		w.write("#   Trig"+format2_6(trig,40)+format2_6(str(trig_dict[trig]["present"]),10)+format2_6(str(trig_dict[trig]["present_valid"]),15)+format2_6(str(trig_dict[trig]["present_valid_fired"]),20)+format2_6(str(np.mean(trig_dict[trig]["avg_prescale"])),15)+format2_6(str(np.mean(trig_dict[trig]["eff_lumin"])),15)+"\n")	
 	w.write("EndFile\n")
 	w.close()
 
