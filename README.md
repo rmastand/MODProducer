@@ -218,9 +218,23 @@ If using 2010 or 2011 (real or simulated) data, all these corrections are in the
    2. the directory containing all of your stats2 files (created in the mod_to_stats step)
    3. a file containing any differences between stats files
    ```
-   python post/compare_stats ~/MITOpenDataProject/eos/opendata/cms/Run2011A/Jet/stats/12Oct2013-v1/20000/ ~/MITOpenDataProject/eos/opendata/cms/Run2011A/Jet/stats2/12Oct2013-v1/20000/ diff.txt
+   python post/compare_stats.py ~/MITOpenDataProject/eos/opendata/cms/Run2011A/Jet/stats/12Oct2013-v1/20000/ ~/MITOpenDataProject/eos/opendata/cms/Run2011A/Jet/stats2/12Oct2013-v1/20000/ diff.txt
    ```
    This will compare your two stats directories and let you know if the script didn't download any files, or if it downloaded any files incompletely.
+   
+   ** This currently does not work for the simulated data
+   
+   
+#### Get trigger information
+
+   Runthe following scipt with the arguments:
+   1. the directory containing all of your mod files 
+   2. the skimmed lumibyls file created in the create_registry step
+   
+   ```
+   python post/get_trigger_info.py ~/MITOpenDataProject/eos/opendata/cms/Run2011A/Jet/MOD/12Oct2013-v1/20000/ ./reg/11skimlumi.txt
+   ```
+   
    
    ** This currently does not work for the simulated data
    
