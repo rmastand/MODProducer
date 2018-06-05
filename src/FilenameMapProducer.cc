@@ -152,7 +152,7 @@ void FilenameMapProducer::produce(Event& iEvent, const EventSetup& iSetup) {
    
       }
 	   else {
-		   usedLumis.push_front(std::to_string(runNum)+"_"+std::to_string(lumiBlock))
+		   usedLumis.push_front(std::to_string(runNum)+"_"+std::to_string(lumiBlock));
 		   intLumiTotDel = intLumiTotDel + lumiDelData[std::to_string(runNum)+"_"+std::to_string(lumiBlock)];
       		   intLumiTotRec = intLumiTotRec + lumiRecData[std::to_string(runNum)+"_"+std::to_string(lumiBlock)];
 	   }
