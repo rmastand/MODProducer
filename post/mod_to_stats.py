@@ -54,12 +54,18 @@ for mod_orig in os.listdir(input_dir):
 	lumi_info = {}
 	total_events = 0
 	valid_events = 0
+	good_lumis = []
 # counters for what to write to stats2
 	with open(input_dir+"/"+mod_orig, "rb") as mod_file:
 	    for line in mod_file: 
 		if ("#" not in line.split()) and ("Cond" in line.split()):
 			run = line.split()[1]
 			lumiBlock = line.split()[6]
+			
+			if (run,lumiBlock) not in good_lumis:
+				good_lumis.append((run,lumiBlock))
+				total_lum_del += run_lumi_dict[(run,lumiBlock)][0]
+				total_lum_rec += run_lumi_dict[(run,lumiBlock)][1]
 
 			if (run,lumiBlock) not in lumi_info.keys():
 				lumi_info[(run,lumiBlock)] = {"events":1,"valid":0}
@@ -68,8 +74,7 @@ for mod_orig in os.listdir(input_dir):
 			total_events += 1
 
 			try:
-				total_lum_del += run_lumi_dict[(run,lumiBlock)][0]
-				total_lum_rec += run_lumi_dict[(run,lumiBlock)][1]
+				
 				lumi_info[(run,lumiBlock)]["valid"] = 1
 				valid_events += 1
 			except KeyError:
