@@ -41,7 +41,7 @@ for file in os.listdir(mod_file_dir):
 
 	with open(mod_file_dir+"/"+file, "rb") as mod_file:
 		for line in mod_file: 
-			if tot_present < 2:
+			if tot_present < 6:
 				# keeps track of the run, lumiBlock
 				# this should signal each separate event
 				if ("Cond" in line.split()) and ("#" not in line.split()):
