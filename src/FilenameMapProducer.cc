@@ -7,6 +7,7 @@
 #include <limits>
 #include <cmath>
 #include <map>
+#include <algorithm>
 
 
 
@@ -22,6 +23,7 @@
 
 
 
+
 using namespace std;
 using namespace edm;
 
@@ -30,6 +32,7 @@ int totEvents = 0;
 int validEvents = 0;
 long double intLumiTotDel = 0.;
 long double intLumiTotRec = 0.;
+list<string> usedLumis;
 
 class FilenameMapProducer : public EDProducer 
 {
@@ -142,8 +145,17 @@ void FilenameMapProducer::produce(Event& iEvent, const EventSetup& iSetup) {
    
    if (lumiDelData.count(std::to_string(runNum)+"_"+std::to_string(lumiBlock))==1) {
       ++validEvents;
-      intLumiTotDel = intLumiTotDel + lumiDelData[std::to_string(runNum)+"_"+std::to_string(lumiBlock)];
-      intLumiTotRec = intLumiTotRec + lumiRecData[std::to_string(runNum)+"_"+std::to_string(lumiBlock)];
+	   
+      if (std::find(std::begin(usedLumis), std::end(usedLumis), std::to_string(runNum)+"_"+std::to_string(lumiBlock)) != std::end(usedLumis))
+      {
+    	// my_list has my_var
+   
+      }
+	   else {
+		   usedLumis.push_front(std::to_string(runNum)+"_"+std::to_string(lumiBlock))
+		   intLumiTotDel = intLumiTotDel + lumiDelData[std::to_string(runNum)+"_"+std::to_string(lumiBlock)];
+      		   intLumiTotRec = intLumiTotRec + lumiRecData[std::to_string(runNum)+"_"+std::to_string(lumiBlock)];
+	   }
    }
 
    
