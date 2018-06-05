@@ -38,9 +38,10 @@ for file in os.listdir(mod_file_dir):
 	tot_valid = 0
 	# we'll ue this later for calculate the total delivered and recorded luminosities
 	good_lumis = []
-	while tot_present < 5:
-		with open(mod_file_dir+"/"+file, "rb") as mod_file:
-			for line in mod_file: 
+
+	with open(mod_file_dir+"/"+file, "rb") as mod_file:
+		for line in mod_file: 
+			while tot_present < 5:
 				# keeps track of the run, lumiBlock
 				# this should signal each separate event
 				if ("Cond" in line.split()) and ("#" not in line.split()):
