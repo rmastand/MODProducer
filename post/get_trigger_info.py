@@ -38,51 +38,51 @@ for file in os.listdir(mod_file_dir):
 	tot_valid = 0
 	# we'll ue this later for calculate the total delivered and recorded luminosities
 	good_lumis = []
-	
-	with open(mod_file_dir+"/"+file, "rb") as mod_file:
-		for line in mod_file: 
-			# keeps track of the run, lumiBlock
-			# this should signal each separate event
-			if ("Cond" in line.split()) and ("#" not in line.split()):
-				run,lumiBlock = line.split()[1],line.split()[6]
-				tot_present += 1
-				if is_lumi_valid((run,lumiBlock),lumiId_to_lumin_dict):
-					tot_valid += 1		
-					if (run,lumiBlock) not in good_lumis:
-						good_lumis.append((run,lumiBlock))
-		
-			if ("Trig" in line.split()) and ("#" not in line.split()):
-				# all within 1 event
-				# given line: [Trig identifier, trig name, prescale1, prescale2, fired?]
-				if line.split()[1] not in trig_dict.keys():
-					trig_dict[line.split()[1]] = {"present":1,
-								      "present_valid":is_lumi_valid((run,lumiBlock),lumiId_to_lumin_dict),	    
-								      "present_valid_fired":is_lumi_valid((run,lumiBlock),lumiId_to_lumin_dict) and int(line.split()[4]),
-								      # calc average over all VALID and FIRED EVENTS
-								      "avg_prescale":[],
-								      # no repetitions
-								      "good_lumis":[],
-								      # corresponds to the prescale for a given GOOD LUMI BLOCK
-								      "good_prescales":[]
-								     }
-					if trig_dict[line.split()[1]]["present_valid_fired"]==1:
-						trig_dict[line.split()[1]]["avg_prescale"].append(float(line.split()[2])*float(line.split()[3]))
-					if is_lumi_valid((run,lumiBlock),lumiId_to_lumin_dict) and ((run,lumiBlock) not in trig_dict[line.split()[1]]["good_lumis"]):
-						trig_dict[line.split()[1]]["good_lumis"].append((run,lumiBlock))
-						trig_dict[line.split()[1]]["good_prescales"].append(float(line.split()[2])*float(line.split()[3]))
-						
+	while tot_present < 5:
+		with open(mod_file_dir+"/"+file, "rb") as mod_file:
+			for line in mod_file: 
+				# keeps track of the run, lumiBlock
+				# this should signal each separate event
+				if ("Cond" in line.split()) and ("#" not in line.split()):
+					run,lumiBlock = line.split()[1],line.split()[6]
+					tot_present += 1
+					if is_lumi_valid((run,lumiBlock),lumiId_to_lumin_dict):
+						tot_valid += 1		
+						if (run,lumiBlock) not in good_lumis:
+							good_lumis.append((run,lumiBlock))
 
-				else:
-					trig_dict[line.split()[1]]["present"] += 1
-					trig_dict[line.split()[1]]["present_valid"] += is_lumi_valid((run,lumiBlock),lumiId_to_lumin_dict)
-					trig_dict[line.split()[1]]["present_valid_fired"] += is_lumi_valid((run,lumiBlock),lumiId_to_lumin_dict) and int(line.split()[4])
-					if (is_lumi_valid((run,lumiBlock),lumiId_to_lumin_dict) and int(line.split()[4]))==1:
-						trig_dict[line.split()[1]]["avg_prescale"].append(float(line.split()[2])*float(line.split()[3]))
-					if is_lumi_valid((run,lumiBlock),lumiId_to_lumin_dict) and ((run,lumiBlock) not in trig_dict[line.split()[1]]["good_lumis"]):
-						trig_dict[line.split()[1]]["good_lumis"].append((run,lumiBlock))
-						trig_dict[line.split()[1]]["good_prescales"].append(float(line.split()[2])*float(line.split()[3]))
-						
-						
+				if ("Trig" in line.split()) and ("#" not in line.split()):
+					# all within 1 event
+					# given line: [Trig identifier, trig name, prescale1, prescale2, fired?]
+					if line.split()[1] not in trig_dict.keys():
+						trig_dict[line.split()[1]] = {"present":1,
+									      "present_valid":is_lumi_valid((run,lumiBlock),lumiId_to_lumin_dict),	    
+									      "present_valid_fired":is_lumi_valid((run,lumiBlock),lumiId_to_lumin_dict) and int(line.split()[4]),
+									      # calc average over all VALID and FIRED EVENTS
+									      "avg_prescale":[],
+									      # no repetitions
+									      "good_lumis":[],
+									      # corresponds to the prescale for a given GOOD LUMI BLOCK
+									      "good_prescales":[]
+									     }
+						if trig_dict[line.split()[1]]["present_valid_fired"]==1:
+							trig_dict[line.split()[1]]["avg_prescale"].append(float(line.split()[2])*float(line.split()[3]))
+						if is_lumi_valid((run,lumiBlock),lumiId_to_lumin_dict) and ((run,lumiBlock) not in trig_dict[line.split()[1]]["good_lumis"]):
+							trig_dict[line.split()[1]]["good_lumis"].append((run,lumiBlock))
+							trig_dict[line.split()[1]]["good_prescales"].append(float(line.split()[2])*float(line.split()[3]))
+
+
+					else:
+						trig_dict[line.split()[1]]["present"] += 1
+						trig_dict[line.split()[1]]["present_valid"] += is_lumi_valid((run,lumiBlock),lumiId_to_lumin_dict)
+						trig_dict[line.split()[1]]["present_valid_fired"] += is_lumi_valid((run,lumiBlock),lumiId_to_lumin_dict) and int(line.split()[4])
+						if (is_lumi_valid((run,lumiBlock),lumiId_to_lumin_dict) and int(line.split()[4]))==1:
+							trig_dict[line.split()[1]]["avg_prescale"].append(float(line.split()[2])*float(line.split()[3]))
+						if is_lumi_valid((run,lumiBlock),lumiId_to_lumin_dict) and ((run,lumiBlock) not in trig_dict[line.split()[1]]["good_lumis"]):
+							trig_dict[line.split()[1]]["good_lumis"].append((run,lumiBlock))
+							trig_dict[line.split()[1]]["good_prescales"].append(float(line.split()[2])*float(line.split()[3]))
+
+
 	w = open(mod_file_dir.replace("MOD","trig")+"/"+str(file[-40:-4])+".trig","w")
 	w.write("BeginFile Version " + "\n")
 	tot_lumi_del = 0.
@@ -108,4 +108,5 @@ for file in os.listdir(mod_file_dir):
 		w.write("    Trig"+format2_6(trig,40)+format2_6(str(trig_dict[trig]["present"]),10)+format2_6(str(trig_dict[trig]["present_valid"]),10)+format2_6(str(trig_dict[trig]["present_valid_fired"]),10)+format2_6(str(np.mean(trig_dict[trig]["avg_prescale"])),15)+format2_6(str(round(np.sum(eff_lum_del),3)),15)+format2_6(str(round(np.sum(eff_lum_rec),3)),15)+"\n")	
 	w.write("EndFile\n")
 	w.close()
+print tot_present
 
