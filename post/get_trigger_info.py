@@ -89,7 +89,7 @@ for file in os.listdir(mod_file_dir):
 	tot_lumi_rec = 0.
 	for lumi in good_lumis:
 		tot_lumi_del += lumiId_to_lumin_dict[lumi][0]
-		tot_lumi_rec += lumiId_to_lumin_dict[lumi][0]
+		tot_lumi_rec += lumiId_to_lumin_dict[lumi][1]
 		
 	
 		
