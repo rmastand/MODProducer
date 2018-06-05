@@ -63,9 +63,13 @@ for mod_orig in os.listdir(input_dir):
 			lumiBlock = line.split()[6]
 			
 			if (run,lumiBlock) not in good_lumis:
-				good_lumis.append((run,lumiBlock))
-				total_lum_del += run_lumi_dict[(run,lumiBlock)][0]
-				total_lum_rec += run_lumi_dict[(run,lumiBlock)][1]
+				try:
+					total_lum_del += run_lumi_dict[(run,lumiBlock)][0]
+					total_lum_rec += run_lumi_dict[(run,lumiBlock)][1]
+					good_lumis.append((run,lumiBlock))
+				except:
+					pass
+					
 
 			if (run,lumiBlock) not in lumi_info.keys():
 				lumi_info[(run,lumiBlock)] = {"events":1,"valid":0}
