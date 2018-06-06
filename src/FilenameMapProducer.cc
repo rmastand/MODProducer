@@ -195,6 +195,9 @@ void FilenameMapProducer::beginJob() {
 }
 
 void FilenameMapProducer::endJob() {
+	
+   cout.setf(ios::fixed,ios::floatfield);
+   cout.precision(3);
 
 
    statsOutput_.open(statsFilename_.c_str(), ios::out | ios::app );
