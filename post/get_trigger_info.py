@@ -52,10 +52,12 @@ for file in os.listdir(mod_file_dir):
 				run,lumiBlock = line.split()[1],line.split()[6]
 				tot_present += 1
 
-				if is_lumi_valid((run,lumiBlock),lumiId_to_lumin_dict):
+				if (is_lumi_valid((run,lumiBlock),lumiId_to_lumin_dict)) and (data_type == "Data"):
 					tot_valid += 1		
 					if (run,lumiBlock) not in good_lumis:
 						good_lumis.append((run,lumiBlock))
+				if data_type == "Sim":
+					tot_valid += 1
 
 			if ("Trig" in line.split()) and ("#" not in line.split()):
 				# all within 1 event
