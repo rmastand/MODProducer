@@ -196,8 +196,8 @@ void FilenameMapProducer::beginJob() {
 
 void FilenameMapProducer::endJob() {
 	
-   cout.setf(ios::fixed,ios::floatfield);
-   cout.precision(3);
+    << fixed << setprecision(3)
+ 
 
 
    statsOutput_.open(statsFilename_.c_str(), ios::out | ios::app );
@@ -214,7 +214,7 @@ void FilenameMapProducer::endJob() {
    string LumiTotRec = std::to_string(intLumiTotRec);
    LumiTotRec.erase(LumiTotRec.find_last_not_of("0")+1,std::string::npos);
    statsOutput_ <<fixed<< "    File"
-	   	<< setw(40) << currentProcessingFilename_.substr(0,currentProcessingFilename_.length()-5)
+	   	<< setw(40)  << fixed << setprecision(3)<< currentProcessingFilename_.substr(0,currentProcessingFilename_.length()-5)
 		<< setw(15) << totEvents
 	   	<< setw(15) << validEvents
 		<< setw(20) << LumiTotDel 
@@ -231,7 +231,7 @@ void FilenameMapProducer::endJob() {
    	    string crossSec = std::to_string(crossSection);
    	    crossSec.erase(crossSec.find_last_not_of("0")+1,std::string::npos);
 	   statsOutput_ <<fixed<< "    File"
-			<< setw(40) << currentProcessingFilename_.substr(0,currentProcessingFilename_.length()-5)
+			<< setw(40)  << fixed << setprecision(3)<< currentProcessingFilename_.substr(0,currentProcessingFilename_.length()-5)
 			<< setw(15) << totEvents
 		   	// all events for simulated data are valid
 			<< setw(15) << totEvents
@@ -260,7 +260,7 @@ void FilenameMapProducer::endJob() {
    	    		LumiRec.erase(LumiRec.find_last_not_of("0")+1,std::string::npos);
 	
 		        statsOutput_ <<" LumiBlock"
-	   		   	     << setw(15) << lumiToRun[k]
+	   		   	     << setw(15)  << fixed << setprecision(3)<< lumiToRun[k]
 		                     << setw(10) << lumiToLumiB[k]
 	   	      		     << setw(10) << lumiNumEvents[k]
 		         	     << setw(10) << "1"
@@ -272,7 +272,7 @@ void FilenameMapProducer::endJob() {
      		else
 		{
 			statsOutput_ << " LumiBlock"
-	   		   	     << setw(15) << lumiToRun[k]
+	   		   	     << setw(15)  << fixed << setprecision(3)<< lumiToRun[k]
 		                     << setw(10) << lumiToLumiB[k]
 	   	      		     << setw(10) << lumiNumEvents[k]
 		         	     << setw(10) << "0"
@@ -303,7 +303,7 @@ void FilenameMapProducer::endJob() {
 	        string crossSec = std::to_string(crossSection);
    	    	crossSec.erase(crossSec.find_last_not_of("0")+1,std::string::npos);
 		statsOutput_ <<" LumiBlock"
-			     << setw(15) << lumiToRun[k]
+			     << setw(15)  << fixed << setprecision(3)<< lumiToRun[k]
 			     << setw(10) << lumiToLumiB[k]
 			     << setw(10) << lumiNumEvents[k]
 			     << setw(10) << "1"
