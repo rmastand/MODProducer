@@ -20,8 +20,8 @@
 #include "FWCore/ParameterSet/interface/ParameterSet.h"
 #include "FWCore/Utilities/interface/InputTag.h"
 
-#include "DataFormats/ParticleFlowCandidate/interface/PFCandidate.h"
-#include "DataFormats/ParticleFlowCandidate/interface/PFCandidateFwd.h"
+//#include "DataFormats/ParticleFlowCandidate/interface/PFCandidate.h"
+//#include "DataFormats/ParticleFlowCandidate/interface/PFCandidateFwd.h"
 
 #include "DataFormats/Common/interface/TriggerResults.h"
 #include "FWCore/ServiceRegistry/interface/Service.h"
@@ -29,8 +29,8 @@
 #include "FWCore/Common/interface/TriggerResultsByName.h"
 #include "HLTrigger/HLTcore/interface/HLTConfigProvider.h"
 
-#include "DataFormats/JetReco/interface/PFJet.h"
-#include "DataFormats/JetReco/interface/PFJetCollection.h"
+//#include "DataFormats/JetReco/interface/PFJet.h"
+//#include "DataFormats/JetReco/interface/PFJetCollection.h"
 
 #include "CondFormats/JetMETObjects/interface/JetCorrectorParameters.h"
 #include "CondFormats/JetMETObjects/interface/FactorizedJetCorrector.h"
@@ -38,8 +38,8 @@
 
 #include "RecoJets/JetProducers/interface/BackgroundEstimator.h"
 
-#include "FWCore/Framework/interface/LuminosityBlock.h"
-#include "DataFormats/Luminosity/interface/LumiSummary.h"
+//#include "FWCore/Framework/interface/LuminosityBlock.h"
+//#include "DataFormats/Luminosity/interface/LumiSummary.h"
 
 #include "HLTrigger/HLTcore/interface/HLTConfigData.h"
 
