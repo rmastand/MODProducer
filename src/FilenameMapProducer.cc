@@ -303,7 +303,7 @@ void FilenameMapProducer::endJob() {
 			     << setw(10) << lumiToLumiB[k]
 			     << setw(10) << lumiNumEvents[k]
 			     << setw(10) << "-1"
-			     << setw(20) << crossSection
+			     << setw(20) << crossSec
 			     << endl;   
 		    
 	   
