@@ -277,17 +277,15 @@ void PFCandidateProducer::produce(Event& iEvent, const EventSetup& iSetup) {
 	   iEvent.getByLabel( edm::InputTag("offlinePrimaryVertices"), primaryVerticesHandle);   
 	   
 	   // Luminosity Block Begins
-	   
-	   if (dataType_=="Data"){
-		   Handle<LumiSummary> lumi;
-		   LuminosityBlock const& iLumi = iEvent.getLuminosityBlock();
-		   
-		   iLumi.getByLabel(lumiSummaryLabel_, lumi);
-	   }
+	
 	      
 	   // Luminosity Block Ends
 	   output_ << "#   Cond          RunNum        EventNum             NPV       timestamp        msOffset       LumiBlock       validLumi     intgDelLumi     intgRecLumi     AvgInstLumi    CrossSection" << endl;
 	   if (dataType_=="Data"){
+		  Handle<LumiSummary> lumi;
+		   LuminosityBlock const& iLumi = iEvent.getLuminosityBlock();
+		   
+		   iLumi.getByLabel(lumiSummaryLabel_, lumi);
 	   	output_ << "    Cond"
 	   		<< setw(16) << runNum
 		        << setw(16) << eventNum
