@@ -4,6 +4,7 @@ import numpy as np
 
 mod_file_dir = sys.argv[1]
 skimmed_lumibyls = sys.argv[2]
+data_type = sys.argv[3]
 
 def format2_6(string,num):
 	return " "*(num-len(string))+ string
@@ -61,8 +62,8 @@ for file in os.listdir(mod_file_dir):
 				# given line: [Trig identifier, trig name, prescale1, prescale2, fired?]
 				if line.split()[1] not in trig_dict.keys():
 					trig_dict[line.split()[1]] = {"present":1,
-								      "present_valid":is_lumi_valid((run,lumiBlock),lumiId_to_lumin_dict),	    
-								      "present_valid_fired":is_lumi_valid((run,lumiBlock),lumiId_to_lumin_dict) and int(line.split()[4]),
+								      "present_valid":0,	    
+								      "present_valid_fired":0,
 								      # calc average over all VALID and FIRED EVENTS
 								      "avg_prescale":[],
 								      # no repetitions
@@ -70,22 +71,43 @@ for file in os.listdir(mod_file_dir):
 								      # corresponds to the prescale for a given GOOD LUMI BLOCK
 								      "good_prescales":[]
 								     }
-					if trig_dict[line.split()[1]]["present_valid_fired"]==1:
-						trig_dict[line.split()[1]]["avg_prescale"].append(float(line.split()[2])*float(line.split()[3]))
-					if is_lumi_valid((run,lumiBlock),lumiId_to_lumin_dict) and ((run,lumiBlock) not in trig_dict[line.split()[1]]["good_lumis"]):
-						trig_dict[line.split()[1]]["good_lumis"].append((run,lumiBlock))
-						trig_dict[line.split()[1]]["good_prescales"].append(float(line.split()[2])*float(line.split()[3]))
+					if data_type == "Data":
+						trig_dict[line.split()[1]]["present_valid"] = is_lumi_valid((run,lumiBlock),lumiId_to_lumin_dict)
+						trig_dict[line.split()[1]]["present_valid_fired"] = is_lumi_valid((run,lumiBlock),lumiId_to_lumin_dict) and int(line.split()[4])
+						if trig_dict[line.split()[1]]["present_valid_fired"]==1:
+							trig_dict[line.split()[1]]["avg_prescale"].append(float(line.split()[2])*float(line.split()[3]))
+						if is_lumi_valid((run,lumiBlock),lumiId_to_lumin_dict) and ((run,lumiBlock) not in trig_dict[line.split()[1]]["good_lumis"]):
+							trig_dict[line.split()[1]]["good_lumis"].append((run,lumiBlock))
+							trig_dict[line.split()[1]]["good_prescales"].append(float(line.split()[2])*float(line.split()[3]))
 
+					if data_type == "Sim":
+						trig_dict[line.split()[1]]["present_valid"] = 1
+						trig_dict[line.split()[1]]["present_valid_fired"] = int(line.split()[4])
+						if trig_dict[line.split()[1]]["present_valid_fired"]==1:
+							trig_dict[line.split()[1]]["avg_prescale"].append(float(line.split()[2])*float(line.split()[3]))
+						if (run,lumiBlock) not in trig_dict[line.split()[1]]["good_lumis"]:
+							trig_dict[line.split()[1]]["good_lumis"].append((run,lumiBlock))
+							trig_dict[line.split()[1]]["good_prescales"].append(float(line.split()[2])*float(line.split()[3]))
 
 				else:
-					trig_dict[line.split()[1]]["present"] += 1
-					trig_dict[line.split()[1]]["present_valid"] += is_lumi_valid((run,lumiBlock),lumiId_to_lumin_dict)
-					trig_dict[line.split()[1]]["present_valid_fired"] += is_lumi_valid((run,lumiBlock),lumiId_to_lumin_dict) and int(line.split()[4])
-					if (is_lumi_valid((run,lumiBlock),lumiId_to_lumin_dict) and int(line.split()[4]))==1:
-						trig_dict[line.split()[1]]["avg_prescale"].append(float(line.split()[2])*float(line.split()[3]))
-					if is_lumi_valid((run,lumiBlock),lumiId_to_lumin_dict) and ((run,lumiBlock) not in trig_dict[line.split()[1]]["good_lumis"]):
-						trig_dict[line.split()[1]]["good_lumis"].append((run,lumiBlock))
-						trig_dict[line.split()[1]]["good_prescales"].append(float(line.split()[2])*float(line.split()[3]))
+					if data_type == "Data":
+						trig_dict[line.split()[1]]["present"] += 1
+						trig_dict[line.split()[1]]["present_valid"] += is_lumi_valid((run,lumiBlock),lumiId_to_lumin_dict)
+						trig_dict[line.split()[1]]["present_valid_fired"] += is_lumi_valid((run,lumiBlock),lumiId_to_lumin_dict) and int(line.split()[4])
+						if (is_lumi_valid((run,lumiBlock),lumiId_to_lumin_dict) and int(line.split()[4]))==1:
+							trig_dict[line.split()[1]]["avg_prescale"].append(float(line.split()[2])*float(line.split()[3]))
+						if is_lumi_valid((run,lumiBlock),lumiId_to_lumin_dict) and ((run,lumiBlock) not in trig_dict[line.split()[1]]["good_lumis"]):
+							trig_dict[line.split()[1]]["good_lumis"].append((run,lumiBlock))
+							trig_dict[line.split()[1]]["good_prescales"].append(float(line.split()[2])*float(line.split()[3]))
+					if data_type == "Sim":
+						trig_dict[line.split()[1]]["present"] += 1
+						trig_dict[line.split()[1]]["present_valid"] += 1
+						trig_dict[line.split()[1]]["present_valid_fired"] += int(line.split()[4])
+						if int(line.split()[4]))==1:
+							trig_dict[line.split()[1]]["avg_prescale"].append(float(line.split()[2])*float(line.split()[3]))
+						if (run,lumiBlock) not in trig_dict[line.split()[1]]["good_lumis"]:
+							trig_dict[line.split()[1]]["good_lumis"].append((run,lumiBlock))
+							trig_dict[line.split()[1]]["good_prescales"].append(float(line.split()[2])*float(line.split()[3]))
 
 
 	w = open(mod_file_dir.replace("MOD","trig")+"/"+str(file[-40:-4])+".trig","w")
