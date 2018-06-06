@@ -8,10 +8,10 @@ gc.collect()
 
 lumibyls = sys.argv[1]
 input_dir = sys.argv[2]
+data_type = sys.argv[3]
+data_year = sys.argv[4]
+trigger_cat = sys.argv[5]
 version = "6"
-data_year = "2011A"
-data_type = "Data"
-trigger_cat = "Jet"
 
 def format2_6(string,num):
 	return " "*(num-len(string))+ string
