@@ -66,11 +66,6 @@ using namespace trigger;
 using namespace reco;
 using namespace fastjet;
 
-inline const char * const BoolToString(bool b)
-{
-  return b ? "true" : "false";
-}
-
 
 class PFCandidateProducer : public EDProducer 
 {
@@ -140,7 +135,6 @@ private:
 
    ofstream completedEventsFileOutput_;
    ofstream logFileOutput_; 
-  
 
    string outputDir_;
    ofstream fileOutput_;
@@ -184,7 +178,6 @@ PFCandidateProducer::PFCandidateProducer(const ParameterSet& iConfig)
 
   logFileOutput_.open("log.log", ios::out | ios::app );
 
-
   skipNextEvent_ = false;
 }
 
@@ -216,7 +209,7 @@ void PFCandidateProducer::produce(Event& iEvent, const EventSetup& iSetup) {
 
    runNum = iEvent.id().run();
    eventNum = iEvent.id().event();
-   lumiBlockNumber_ = iEvent.luminosityBlock();
+   if (dataType_=="Data") {lumiBlockNumber_ = iEvent.luminosityBlock();}
    
    // Check if we've already processed this event.
    // Proceed only if we haven't.
@@ -277,15 +270,16 @@ void PFCandidateProducer::produce(Event& iEvent, const EventSetup& iSetup) {
 	   iEvent.getByLabel( edm::InputTag("offlinePrimaryVertices"), primaryVerticesHandle);   
 	   
 	   // Luminosity Block Begins
-	
+	   Handle<LumiSummary> lumi;
+	   if (dataType_=="Data"){
+		   LuminosityBlock const& iLumi = iEvent.getLuminosityBlock();
+		   
+		   iLumi.getByLabel(lumiSummaryLabel_, lumi);
+	   }
 	      
 	   // Luminosity Block Ends
 	   output_ << "#   Cond          RunNum        EventNum             NPV       timestamp        msOffset       LumiBlock       validLumi     intgDelLumi     intgRecLumi     AvgInstLumi    CrossSection" << endl;
 	   if (dataType_=="Data"){
-		  Handle<LumiSummary> lumi;
-		   LuminosityBlock const& iLumi = iEvent.getLuminosityBlock();
-		   
-		   iLumi.getByLabel(lumiSummaryLabel_, lumi);
 	   	output_ << "    Cond"
 	   		<< setw(16) << runNum
 		        << setw(16) << eventNum
@@ -302,20 +296,18 @@ void PFCandidateProducer::produce(Event& iEvent, const EventSetup& iSetup) {
 	   }
 	     
 	   if (dataType_=="Sim"){
-		string crossSec = std::to_string(crossSection);
-   	    	crossSec.erase(crossSec.find_last_not_of("0")+1,std::string::npos);
 	   	output_ << "    Cond"
 	   		<< setw(16) << runNum
 		        << setw(16) << eventNum
 	   	        << setw(16) << primaryVerticesHandle->size()
 		        << setw(16) << iEvent.time().unixTime()
 		        << setw(16) << iEvent.time().microsecondOffset()
-			<< setw(16) << lumiBlockNumber_
 			<< setw(16) << "-1"
 			<< setw(16) << "-1"
 			<< setw(16) << "-1"
 			<< setw(16) << "-1"
-			<< setw(16) << crossSec
+			<< setw(16) << "-1"
+			<< setw(16) << fixed << setprecision(3) << crossSection
 	 	        << endl;   
 	   }
 	     
@@ -372,19 +364,16 @@ void PFCandidateProducer::produce(Event& iEvent, const EventSetup& iSetup) {
 	   
 	   // Get all trigger names associated with the "Jet" dataset.
 	   const vector<string> triggerNames = hltConfig_.datasetContent(triggerCat_);
-	   string trigger_list = "";
 	   
 	   for (unsigned i = 0; i < triggerNames.size(); i++) {
 	      if (i == 0)
-	         output_ << "#   Trig                                    Name      Prescale_1      Prescale_2          Fired?" << endl;
+	         output_ << "#                                           Trig            Name      Prescale_1      Prescale_2          Fired?" << endl;
 	      
 	      string name = triggerNames[i];
 	      
 	      pair<int, int> prescale = hltConfig_.prescaleValues(iEvent, iSetup, name);
 	
 	      bool fired = triggerFired(name, ( * trigResults));
-	      bool present = true;
-
 	
 	      output_ << "    Trig"
 	       	          << setw(40) << name
@@ -392,23 +381,7 @@ void PFCandidateProducer::produce(Event& iEvent, const EventSetup& iSetup) {
 		          << setw(16) << prescale.second
 	                  << setw(16) << fired
 	                  << endl;
-		   
-		   
-              stringstream ss1;
-              ss1 << prescale.first;
-              string str1 = ss1.str();
-
-              stringstream ss2;
-              ss2 << prescale.second;
-              string str2 = ss2.str();
-              trigger_list = trigger_list+name+" "+BoolToString(present)+" "+str1+" "+str2+" "+BoolToString(fired)+" n ";
-
 	   }
-	     
-	    //RunLumiSelector runLumiSel( lumis_ );
-	     
-	     
-	  
 	   
 	  // Get AK5 Jets.
 	  
@@ -532,7 +505,7 @@ void PFCandidateProducer::produce(Event& iEvent, const EventSetup& iSetup) {
      }
    }
    else {
-	cout << "Skipping event " << eventNum << " since it was already processed." << endl;
+	//cout << "Skipping event " << eventNum << " since it was already processed." << endl;
    }
    
 }
@@ -636,9 +609,11 @@ void PFCandidateProducer::beginRun(edm::Run & iRun, edm::EventSetup const & iSet
       // if init returns TRUE, initialisation has succeeded!
       edm::LogInfo("TopPairElectronPlusJetsSelectionFilter") << "HLT config with process name "
         << hltInputTag_.process() << " successfully extracted";
-	if (dataType_=="Sim") {
+ 	if (dataType_=="Sim") {
         edm::Handle<GenRunInfoProduct> genRunInfo;
         iRun.getByLabel("generator", genRunInfo );
+
+
         crossSection = genRunInfo->crossSection();
 
 	}
