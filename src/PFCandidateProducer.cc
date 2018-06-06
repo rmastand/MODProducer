@@ -54,6 +54,10 @@
 
 #include "DataFormats/Provenance/interface/Timestamp.h"
 
+#include "SimDataFormats/GeneratorProducts/interface/GenEventInfoProduct.h"
+#include "SimDataFormats/GeneratorProducts/interface/GenRunInfoProduct.h"
+#include "SimDataFormats/PileupSummaryInfo/interface/PileupSummaryInfo.h"
+
 #include "FWCore/Utilities/interface/Exception.h"
 
 using namespace std;
@@ -149,7 +153,7 @@ private:
    string outputFilename_;
    string lastOutputFilename_;
    
-   
+   double crossSection;
    InputTag primaryVertices_;
    string dataVersion_;
 
@@ -281,7 +285,7 @@ void PFCandidateProducer::produce(Event& iEvent, const EventSetup& iSetup) {
 	   }
 	      
 	   // Luminosity Block Ends
-	   output_ << "#   Cond          RunNum        EventNum             NPV       timestamp        msOffset       LumiBlock       validLumi     intgDelLumi     intgRecLumi     AvgInstLumi" << endl;
+	   output_ << "#   Cond          RunNum        EventNum             NPV       timestamp        msOffset       LumiBlock       validLumi     intgDelLumi     intgRecLumi     AvgInstLumi    CrossSection" << endl;
 	   if (dataType_=="Data"){
 	   	output_ << "    Cond"
 	   		<< setw(16) << runNum
@@ -294,10 +298,13 @@ void PFCandidateProducer::produce(Event& iEvent, const EventSetup& iSetup) {
 			<< setw(16) << lumi->intgDelLumi()
 			<< setw(16) << lumi->intgRecLumi()
 			<< setw(16) << lumi->avgInsDelLumi()
+			<< setw(16) << "0.000"
 	 	        << endl;   
 	   }
 	     
 	   if (dataType_=="Sim"){
+		string crossSec = std::to_string(crossSection);
+   	    	crossSec.erase(crossSec.find_last_not_of("0")+1,std::string::npos);
 	   	output_ << "    Cond"
 	   		<< setw(16) << runNum
 		        << setw(16) << eventNum
@@ -309,6 +316,7 @@ void PFCandidateProducer::produce(Event& iEvent, const EventSetup& iSetup) {
 			<< setw(16) << "-1"
 			<< setw(16) << "-1"
 			<< setw(16) << "-1"
+			<< setw(16) << crossSec
 	 	        << endl;   
 	   }
 	     
@@ -629,6 +637,12 @@ void PFCandidateProducer::beginRun(edm::Run & iRun, edm::EventSetup const & iSet
       // if init returns TRUE, initialisation has succeeded!
       edm::LogInfo("TopPairElectronPlusJetsSelectionFilter") << "HLT config with process name "
         << hltInputTag_.process() << " successfully extracted";
+	if (dataType_=="Sim") {
+        edm::Handle<GenRunInfoProduct> genRunInfo;
+        iRun.getByLabel("generator", genRunInfo );
+        crossSection = genRunInfo->crossSection();
+
+	}
    }
    else {
       edm::LogError("TopPairElectronPlusJetsSelectionFilter_Error")
