@@ -230,7 +230,7 @@ void FilenameMapProducer::endJob() {
 	   statsOutput_ <<fixed<< "    File"
 			<< setw(40) << currentProcessingFilename_.substr(0,currentProcessingFilename_.length()-5)
 			<< setw(15) << totEvents
-			<< setw(15) << validEvents
+			<< setw(15) << "-1"
 			<< setw(20) << crossSec 
 			<< endl;   
 	   
