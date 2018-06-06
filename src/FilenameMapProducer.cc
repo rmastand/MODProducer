@@ -22,9 +22,9 @@
 
 
 #include "FWCore/ServiceRegistry/interface/Service.h"
-//#include "HLTrigger/HLTcore/interface/HLTConfigProvider.h"
+#include "HLTrigger/HLTcore/interface/HLTConfigProvider.h"
 
-//#include "HLTrigger/HLTcore/interface/HLTConfigData.h"
+#include "HLTrigger/HLTcore/interface/HLTConfigData.h"
 
 
 #include "SimDataFormats/GeneratorProducts/interface/GenEventInfoProduct.h"
