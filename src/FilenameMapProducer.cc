@@ -81,7 +81,9 @@ private:
 
 
 FilenameMapProducer::FilenameMapProducer(const ParameterSet& iConfig)
-: currentProcessingFilename_(iConfig.getParameter<string>("filename")),
+: hltConfig_(),
+  hltInputTag_("TriggerResults","","HLT"),
+  currentProcessingFilename_(iConfig.getParameter<string>("filename")),
   outputFilename_(iConfig.getParameter<string>("outputFile")),
   outputLsFile_(iConfig.getParameter<string>("outputLsFile")),
   outputDir_(iConfig.getParameter<string>("outputDir")),
