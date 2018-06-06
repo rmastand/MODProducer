@@ -33,8 +33,8 @@ runbyls_file = sys.argv[4]
 output_ls_file = sys.argv[5]
 data_type = sys.argv[6]
 data_year = sys.argv[7]
-version = sys.argv[8]
-trigger_cat = sys.argv[9]
+trigger_cat = sys.argv[8]
+version = "6"
 
 
 
