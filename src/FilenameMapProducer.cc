@@ -160,6 +160,7 @@ void FilenameMapProducer::produce(Event& iEvent, const EventSetup& iSetup) {
 
 
         crossSection = genRunInfo->crossSection();
+	cout << crossSection << endl;
 
 	}
    
