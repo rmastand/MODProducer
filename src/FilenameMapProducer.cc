@@ -94,7 +94,7 @@ FilenameMapProducer::FilenameMapProducer(const ParameterSet& iConfig)
   statsFilename_ = outputDir_ + "/" + currentProcessingFilename_.substr(0,currentProcessingFilename_.length()-5) + ".stats";
 
      
-  if (dataType_ == "Data) 
+  if (dataType_ == "Data") 
       {
 	  lumiLumin_.open(outputLsFile_.c_str());
 	  int line_number = 1;
