@@ -129,8 +129,12 @@ for file in os.listdir(mod_file_dir):
 		eff_lum_del = []
 		eff_lum_rec = []
 		for i in range(len(trig_dict[trig]["good_lumis"])):
-			eff_lum_del.append(lumiId_to_lumin_dict[trig_dict[trig]["good_lumis"][i]][0]/trig_dict[trig]["good_prescales"][i])
-			eff_lum_rec.append(lumiId_to_lumin_dict[trig_dict[trig]["good_lumis"][i]][1]/trig_dict[trig]["good_prescales"][i])
+			try:
+				eff_lum_del.append(lumiId_to_lumin_dict[trig_dict[trig]["good_lumis"][i]][0]/trig_dict[trig]["good_prescales"][i])
+				eff_lum_rec.append(lumiId_to_lumin_dict[trig_dict[trig]["good_lumis"][i]][1]/trig_dict[trig]["good_prescales"][i])
+			except KeyError:
+				eff_lum_del.append(0.000)
+				eff_lum_rec.append(0.000)
 
 		w.write("    Trig"+format2_6(trig,40)+format2_6(str(trig_dict[trig]["present"]),10)+format2_6(str(trig_dict[trig]["present_valid"]),10)+format2_6(str(trig_dict[trig]["present_valid_fired"]),10)+format2_6(str(np.mean(trig_dict[trig]["avg_prescale"])),15)+format2_6(str(round(np.sum(eff_lum_del),3)),15)+format2_6(str(round(np.sum(eff_lum_rec),3)),15)+"\n")	
 	w.write("EndFile\n")
