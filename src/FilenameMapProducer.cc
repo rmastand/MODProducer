@@ -209,10 +209,10 @@ void FilenameMapProducer::endJob() {
    if (dataType_ == "Data") {
 	   
 	   statsOutput_ << "#   File                                Filename    TotalEvents    ValidEvents          IntLumiDel          IntLumiRec" << endl;
-   string LumiTotDel = std::to_string(intLumiTotDel);
-   LumiTotDel.erase(LumiTotDel.find_last_not_of("0")+1,std::string::npos);
-   string LumiTotRec = std::to_string(intLumiTotRec);
-   LumiTotRec.erase(LumiTotRec.find_last_not_of("0")+1,std::string::npos);
+   //string LumiTotDel = std::to_string(intLumiTotDel);
+   //LumiTotDel.erase(LumiTotDel.find_last_not_of("0")+1,std::string::npos);
+   //string LumiTotRec = std::to_string(intLumiTotRec);
+   //LumiTotRec.erase(LumiTotRec.find_last_not_of("0")+1,std::string::npos);
    statsOutput_  << fixed << setprecision(3)<< "    File"
 	   	<< setw(40) << currentProcessingFilename_.substr(0,currentProcessingFilename_.length()-5)
 		<< setw(15) << totEvents
@@ -228,8 +228,8 @@ void FilenameMapProducer::endJob() {
    if (dataType_ == "Sim") {
 	   
 	   statsOutput_ << "#   File                                Filename    TotalEvents    ValidEvents        CrossSection" << endl;
-   	    string crossSec = std::to_string(crossSection);
-   	    crossSec.erase(crossSec.find_last_not_of("0")+1,std::string::npos);
+   	    //string crossSec = std::to_string(crossSection);
+   	    //crossSec.erase(crossSec.find_last_not_of("0")+1,std::string::npos);
 	   statsOutput_ << fixed << setprecision(3) << "    File"
 			<< setw(40)  << currentProcessingFilename_.substr(0,currentProcessingFilename_.length()-5)
 			<< setw(15) << totEvents
@@ -254,10 +254,10 @@ void FilenameMapProducer::endJob() {
 	   
 	    
 	    if (lumiDelData.count(k)==1) {
-		        string LumiDel = std::to_string(lumiDelData[k]);
-   	    		LumiDel.erase(LumiDel.find_last_not_of("0")+1,std::string::npos);
-   	    		string LumiRec = std::to_string(lumiRecData[k]);
-   	    		LumiRec.erase(LumiRec.find_last_not_of("0")+1,std::string::npos);
+		        //string LumiDel = std::to_string(lumiDelData[k]);
+   	    		//LumiDel.erase(LumiDel.find_last_not_of("0")+1,std::string::npos);
+   	    		//string LumiRec = std::to_string(lumiRecData[k]);
+   	    		//LumiRec.erase(LumiRec.find_last_not_of("0")+1,std::string::npos);
 	
 		        statsOutput_ << fixed << setprecision(3)<<" LumiBlock"
 	   		   	     << setw(15)  << lumiToRun[k]
@@ -300,8 +300,8 @@ void FilenameMapProducer::endJob() {
             string k =  it->first;  
 	   
 	    
-	        string crossSec = std::to_string(crossSection);
-   	    	crossSec.erase(crossSec.find_last_not_of("0")+1,std::string::npos);
+	        //string crossSec = std::to_string(crossSection);
+   	    	//crossSec.erase(crossSec.find_last_not_of("0")+1,std::string::npos);
 		statsOutput_ <<" LumiBlock"
 			     << setw(15)  << fixed << setprecision(3)<< lumiToRun[k]
 			     << setw(10) << lumiToLumiB[k]
