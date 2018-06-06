@@ -351,8 +351,14 @@ void FilenameMapProducer::endJob() {
 
 void FilenameMapProducer::beginRun(edm::Run & iRun, edm::EventSetup const & iSetup){
 	
-	cout << iRun.id().run() << endl;
+	if (dataType_=="Sim") {
+        edm::Handle<GenRunInfoProduct> genRunInfo;
+        iRun.getByLabel("generator", genRunInfo );
 
+
+        crossSection = genRunInfo->crossSection();
+
+	}
 
 }
 
