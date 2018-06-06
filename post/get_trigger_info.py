@@ -38,9 +38,12 @@ for file in os.listdir(mod_file_dir):
 	tot_valid = 0
 	# we'll use this later for calculate the total delivered and recorded luminosities
 	good_lumis = []
-
+	i = 0
 	with open(mod_file_dir+"/"+file, "rb") as mod_file:
 		for line in mod_file: 
+			if i == 0:
+				first_line = line
+			i += 1
 
 			# keeps track of the run, lumiBlock
 			# this should signal each separate event
@@ -86,7 +89,7 @@ for file in os.listdir(mod_file_dir):
 
 
 	w = open(mod_file_dir.replace("MOD","trig")+"/"+str(file[-40:-4])+".trig","w")
-	w.write("BeginFile Version " + "\n")
+	w.write(first_line + "\n")
 	tot_lumi_del = 0.
 	tot_lumi_rec = 0.
 	for lumi in good_lumis:
