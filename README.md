@@ -58,24 +58,18 @@ This section is for 2011 and simulated data. If analyzing 2010 data, replace all
   ```
   scram b
   ```
-  
-- Prepare a directory:
 
-  ```
-  mkdir -p ~/MITOpenDataProject
-  ```
-  
 
 
 ### Workflow
 
 We adopt the following workflow for extracting MOD files out of the given AOD files.
 
-1.  Download all the ROOT files into the VM environment and arrange them in the same directory structure as they live on the CMS server.
+1. Create a registry that maps each event and run number to a certain ROOT file. This is done so that analysis can be performed on one file at a time (the alternative is performaning the analysis on multiple TeraBytes of data at one time, which could take several weeks). Also create a global statistics file (one for each AOD file) that will be used to check later whether all the events in a given dataset have been processed and downloaded fully. 
 
-2. Create a registry that maps each event and run number to a certain ROOT file. This is done so that analysis can be performed on one file at a time (the alternative is performaning the analysis on multiple TeraBytes of data at one time, which could take several weeks). 
+2. Run the Producer on those AOD files. This reads the download directory and processes only the files in there, as well as [validates](http://opendata.cern.ch/record/1000) the data. This produces N MOD files. 
 
-3. Run the Producer on those AOD files. This reads the download directory and processes only the files in there, as well as [validates](http://opendata.cern.ch/record/1000) the data. This produces N MOD files. 
+3. Check that all files .  events have been fully downloaded and processed. This involves analyzing the MOD files to produce a second version of the stats files, which will then be compared wth the versions generated in step 1. Also gather some global trigger information.
 
 4. Filter those N MOD files to get only those files for which the correct trigger fired. This process is called Skimming in this workflow. This will produce M <= N MOD files. For a certain AOD file, if none of the events in there have the correct trigger fired, a corresponding skimmed MOD file will not be written. That's why M might be less than N.
 
@@ -87,21 +81,9 @@ Note that this repository is concerned with steps (1) to (3) only. Steps (4) to 
 
 ## Workflow Instructions
 
-- The first step is to download ROOT files from the CMS server. You can start the download process using the Python script `download.py`. This script takes two arguments:
-	
-    1. a path to a file which contains a list of links to ROOT files to download from the CERN server (one link per line). You will probably need to manually create this and place it in the ```file_paths``` folder. There are many examples in ```file_paths/samples```; the number at the end of each sample is the record number and going to http://opendata.cern.ch/record/# will tell you what year this dataset is from. This example will use a 2011 sample: ```Jet_21.txt```.  
-    2. a destination path to write the files to. Note that the ROOT files are each ~1 GB, so make sure that the destination has enough storage to hold all of the files you're trying to download. 
+### Create the registry and .stats files
 
-    ```
-    python download.py ./file_paths/samples/Jet_21.txt ~/MITOpenDataProject/
-    ```
-    The download script will skip any ROOT file that you have already downloaded and will resume any broken downloads. So you don't have to download all the files at once as long as you are downloading all of them to the same directory. Note that each file may take 5-10 minutes to download, depending on the quality of your internet connection.
-    
-    ** Note: you may skip this step if desired and access all the root files from online. This will save lots of hard drive space, as these root files are huge and there are lots of them.**
-
-### Create the registry
-
-Once you've downloaded the AOD files (these are ROOT files), you need to create what's called a "registry". A registry creates a map between event and run number, and the corresponding ROOT file. The registry creator is just an [EDProducer](https://twiki.cern.ch/twiki/bin/view/CMSPublic/WorkBookEDMTutorialProducer "EDProducer") that you run N times for N files, each time simply recording which events and runs are there in a certain ROOT file, in a human readable format. Because this is an [EDProducer](https://twiki.cern.ch/twiki/bin/view/CMSPublic/WorkBookEDMTutorialProducer "EDProducer"), you need to initialize CMSSW environment variables first with `cmsenv`. You then create the registry using the Python script ```create_registry.py```. This script takes three arguments: 
+First, you need to create what's called a "registry". A registry creates a map between event and run number, and the corresponding ROOT file. The registry creator is just an [EDProducer](https://twiki.cern.ch/twiki/bin/view/CMSPublic/WorkBookEDMTutorialProducer "EDProducer") that you run N times for N files, each time simply recording which events and runs are there in a certain ROOT file, in a human readable format. Because this is an [EDProducer](https://twiki.cern.ch/twiki/bin/view/CMSPublic/WorkBookEDMTutorialProducer "EDProducer"), you need to initialize CMSSW environment variables first with `cmsenv`. You then create the registry using the Python script ```create_registry.py```. This script takes three arguments: 
 	
    1. a path to the ROOT files that you want to process. Note that this is the same as the second argument in the previous command. 
    2. a path to the registry file.
@@ -111,30 +93,27 @@ Once you've downloaded the AOD files (these are ROOT files), you need to create 
    6. data type, Data or Sim
    7. data year, 2010B, 2011A, or 2011
    8. trigger category (ex Jet, Muon)
-   9. version number (6 for now)
    
  
    ```
    cmsenv
    ```
-   If you downloaded the root files beforehand, use:
-   ```
-   python ./reg/create_registry.py ~/MITOpenDataProject/eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20000/ ~/MITOpenDataProject/registry.txt ~/MITOpenDataProject/valid_events.txt Data 2011A
-   ```
-   Or, use:
+ 
+   Run:
    ```
    python ./reg/create_registry_online.py ./file_paths/samples/Jet_21.txt ~/MITOpenDataProject/registry.txt  ~/MITOpenDataProject/eos/opendata/cms/Run2011A/Jet/stats/12Oct2013-v1/20000/ ./reg/2011lumibyls.csv ./reg/11skimlumi.txt Data 2011A Jet 
    ```
-   You should provide the lumibyls files when using the simulated data too, but they won't be used.
+   The code will output a number of .stats files in the designated output directory as well as a registry file in the designated path.
+   
+   You should provide the lumibyls files when using the simulated data too, but they won't be used. Note that for the simulated data, all events are treated as valid.
    
 
-   
 
 ### Convert CERN AOD files to MOD files
 
 Now that you have created a registry for all the AOD files that you want to process, you are ready to run another [EDProducer](https://twiki.cern.ch/twiki/bin/view/CMSPublic/WorkBookEDMTutorialProducer "EDProducer") called PFCandidateProducer to convert them into MOD (MIT Open Data) files. You can run PFCandidateProducer with the Python script `PFCandidateRun.py`. This script takes three arguments: 
 
-   1. input directory (path to the directory which contains all the AOD files). This is the same as the second argument that you supplied in the previous step.
+   1. input directory (path to the index file which contains all the AOD files). This is the same as the second argument that you supplied in the previous step.
    2. output directory (path to the directory where you'd like to store all the MOD files). If this directory is not already present, it will create the directory.
    3. path to the registry file, including the filename. 
    4. The trigger category you want to use (Jet, Photon, Mu, etc)
@@ -146,7 +125,7 @@ Now that you have created a registry for all the AOD files that you want to proc
  
    As mentioned earlier, the "download" step above maintains the directory structure of CMS servers. This includes a directory named "AOD". 
 
-   Note that to get trigger prescales, PFCandidateProducer needs to load GlobalTags and so, it takes a long time before anything happens (it takes ~10 minutes on my computer).
+   Note that to get trigger prescales, PFCandidateProducer may need to load GlobalTags and so, it takes a long time before anything happens (it takes ~10 minutes on my computer).
    
    
 #### Check that you have the correct global tags 
@@ -172,20 +151,12 @@ If using simulated data, the opendata page for that record will tell you which g
   ln -sf /cvmfs/cms-opendata-conddb.cern.ch/START53_LV6A1.db START53_LV6A1.db
    ```
 
-  
-  
 #### Check that you have the correct Jet energy correction factors (for Jet analysis)
 
 If using 2010 or 2011 (real or simulated) data, all these corrections are in the ```data/JEC``` folder and are properly implemented in the EDProducer source files. Otherwise, see the "Notes about JEC" section before proceding.
 
+  Now analyze the files! Run:
 
-  Now analyze the files! If you've downloaded all the AOD files, run:
-    
-    
-   ```
-   cmsRun ./analysis/PFCandidateRun.py ~/MITOpenDataProject/eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20000/ ~/MITOpenDataProject/eos/opendata/cms/Run2011A/Jet/MOD/12Oct2013-v1/20000/ ~/MITOpenDataProject/registry.txt Jet FT_53/FT_53_LV5_AN1 Data 2011A 1
-   ```
-   Or, use:
    ```
    cmsRun ./analysis/PFCandidateRun_online.py file_paths/samples/Jet_21.txt ~/MITOpenDataProject/eos/opendata/cms/Run2011A/Jet/MOD/12Oct2013-v1/20000/ ~/MITOpenDataProject/registry.txt Jet FT_53/FT_53_LV5_AN1 Data 2011A 1
    ```
@@ -197,9 +168,10 @@ If using 2010 or 2011 (real or simulated) data, all these corrections are in the
    
    If you're getting odd outputs (i.e. "File already processed" where you think there shouldn't be), try deleting the files 0 and / or 1 and try again.
 
-### Other commands that might be useful
 
-#### Create some statistics files
+### Check that you've downloaded all the files properly
+
+#### Creates more global statistics files
 
    After running the PFCCandidate Producer script, run the following script with the arguments:
    1. the lumibyls file of the correct year
@@ -213,9 +185,7 @@ If using 2010 or 2011 (real or simulated) data, all these corrections are in the
    ```
    This will create a set of statistics files (.stats2) corresponding to the MOD files in the input directory. They contain statistics about how many events there are per file (or luminosity block), which triggers were present / fired, and what the average prescale values were. It also notes which luminosity blocks were in which files and vice versa.
    
-   ** This currently does not work for the simulated data
-   
-#### Check that you've downloaded all the files properly.
+#### Compare the two sets of statistics files
 
    Runthe following scipt with the arguments:
    1. the directory containing all of your stats files (created in the create_registry step)
@@ -224,9 +194,7 @@ If using 2010 or 2011 (real or simulated) data, all these corrections are in the
    ```
    python post/compare_stats.py ~/MITOpenDataProject/eos/opendata/cms/Run2011A/Jet/stats/12Oct2013-v1/20000/ ~/MITOpenDataProject/eos/opendata/cms/Run2011A/Jet/stats2/12Oct2013-v1/20000/ diff.txt
    ```
-   This will compare your two stats directories and let you know if the script didn't download any files, or if it downloaded any files incompletely.
-   
-   ** This currently does not work for the simulated data
+   This will compare your two stats directories and let you know if the script didn't download any files, or if it downloaded any files incompletely. A log is given in ```diff.txt```.
    
    
 #### Get trigger information
@@ -234,21 +202,10 @@ If using 2010 or 2011 (real or simulated) data, all these corrections are in the
    Runthe following scipt with the arguments:
    1. the directory containing all of your mod files 
    2. the skimmed lumibyls file created in the create_registry step
+   3. data type
    
    ```
-   python post/get_trigger_info.py ~/MITOpenDataProject/eos/opendata/cms/Run2011A/Jet/MOD/12Oct2013-v1/20000/ ./reg/11skimlumi.txt
-   ```
-   
-   
-   ** This currently does not work for the simulated data
-   
-#### Make a graph of the integrated luminosity
-
-   Works for the 2011 data at the moment
-   This should probably be run on the home machine, not on a vm (problems with installing pandas, matplotlib, etc)
-   ```
-   python post/integrated_lumi_graph.py post/2011lumibyls.csv post/2011RunAlumi.txt
-
+   python post/get_trigger_info.py ~/MITOpenDataProject/eos/opendata/cms/Run2011A/Jet/MOD/12Oct2013-v1/20000/ ./reg/11skimlumi.txt Data
    ```
 
 
@@ -275,6 +232,7 @@ Finally, we need to transfer all of the MOD files from the CernVM to a host comp
 	```
 	sudo mount -t vboxsf -o uid=<value>,gid=<value> ProducedMOD ~/MITOpenDataProject
 	``` 	
+	The root password is "password".
 
 - You should see all of the MOD files on your host machine in the shared folder.
 
