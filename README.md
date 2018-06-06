@@ -225,7 +225,6 @@ If using 2010 or 2011 (real or simulated) data, all these corrections are in the
    This should probably be run on the home machine, not on a vm (problems with installing pandas, matplotlib, etc)
    ```
    python post/integrated_lumi_graph.py post/2011lumibyls.csv post/2011RunAlumi.txt
-
    ```
 
 
