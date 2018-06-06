@@ -196,7 +196,7 @@ void FilenameMapProducer::beginJob() {
 
 void FilenameMapProducer::endJob() {
 	
-    << fixed << setprecision(3)
+
  
 
 
