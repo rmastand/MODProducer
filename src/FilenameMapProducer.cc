@@ -21,30 +21,15 @@
 #include "FWCore/Utilities/interface/InputTag.h"
 
 
-#include "DataFormats/Common/interface/TriggerResults.h"
+//#include "DataFormats/Common/interface/TriggerResults.h"
 #include "FWCore/ServiceRegistry/interface/Service.h"
-#include "FWCore/Common/interface/TriggerNames.h"
-#include "FWCore/Common/interface/TriggerResultsByName.h"
+//#include "FWCore/Common/interface/TriggerNames.h"
+//#include "FWCore/Common/interface/TriggerResultsByName.h"
 #include "HLTrigger/HLTcore/interface/HLTConfigProvider.h"
-
-
-//#include "CondFormats/JetMETObjects/interface/JetCorrectorParameters.h"
-//#include "CondFormats/JetMETObjects/interface/FactorizedJetCorrector.h"
-
-
-//#include "RecoJets/JetProducers/interface/BackgroundEstimator.h"
-
 
 
 #include "HLTrigger/HLTcore/interface/HLTConfigData.h"
 
-//#include "DataFormats/TrackReco/interface/Track.h"
-//#include "DataFormats/TrackReco/interface/TrackFwd.h"
-//#include "DataFormats/VertexReco/interface/Vertex.h"
-//#include "DataFormats/VertexReco/interface/VertexFwd.h"
-//#include "DataFormats/HepMCCandidate/interface/GenParticle.h"
-
-//#include "DataFormats/Provenance/interface/Timestamp.h"
 
 #include "SimDataFormats/GeneratorProducts/interface/GenEventInfoProduct.h"
 #include "SimDataFormats/GeneratorProducts/interface/GenRunInfoProduct.h"
