@@ -171,7 +171,7 @@ If using 2010 or 2011 (real or simulated) data, all these corrections are in the
 
 ### Check that you've downloaded all the files properly
 
-#### Creates more global statistics files
+#### Create more global statistics files
 
    After running the PFCCandidate Producer script, run the following script with the arguments:
    1. the lumibyls file of the correct year
