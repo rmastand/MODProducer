@@ -230,7 +230,8 @@ void FilenameMapProducer::endJob() {
 	   statsOutput_ <<fixed<< "    File"
 			<< setw(40) << currentProcessingFilename_.substr(0,currentProcessingFilename_.length()-5)
 			<< setw(15) << totEvents
-			<< setw(15) << "-1"
+		   	// all events for simulated data are valid
+			<< setw(15) << totEvents
 			<< setw(20) << crossSec 
 			<< endl;   
 	   
@@ -302,7 +303,7 @@ void FilenameMapProducer::endJob() {
 			     << setw(15) << lumiToRun[k]
 			     << setw(10) << lumiToLumiB[k]
 			     << setw(10) << lumiNumEvents[k]
-			     << setw(10) << "-1"
+			     << setw(10) << "1"
 			     << setw(20) << crossSec
 			     << endl;   
 		    
