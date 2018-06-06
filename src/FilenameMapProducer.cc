@@ -158,7 +158,7 @@ void FilenameMapProducer::produce(Event& iEvent, const EventSetup& iSetup) {
   
  	if (dataType_=="Sim") {
         edm::Handle<GenRunInfoProduct> genRunInfo;
-        iRun.getByLabel("generator", genRunInfo );
+        iEvent.getByLabel("generator", genRunInfo );
 
 
         crossSection = genRunInfo->crossSection();
