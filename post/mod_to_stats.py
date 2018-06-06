@@ -85,7 +85,7 @@ for mod_orig in os.listdir(input_dir):
 				if is_valid: lumi_info[(run,lumiBlock)]["valid"] = 1
 			else:
 				lumi_info[(run,lumiBlock)]["events"] += 1
-				if is_valid: lumi_info[(run,lumiBlock)]["valid"] += 1
+				
 
 			
 	mod_file.close()
