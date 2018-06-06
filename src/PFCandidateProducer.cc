@@ -277,8 +277,9 @@ void PFCandidateProducer::produce(Event& iEvent, const EventSetup& iSetup) {
 	   iEvent.getByLabel( edm::InputTag("offlinePrimaryVertices"), primaryVerticesHandle);   
 	   
 	   // Luminosity Block Begins
-	   Handle<LumiSummary> lumi;
+	   
 	   if (dataType_=="Data"){
+		   Handle<LumiSummary> lumi;
 		   LuminosityBlock const& iLumi = iEvent.getLuminosityBlock();
 		   
 		   iLumi.getByLabel(lumiSummaryLabel_, lumi);
