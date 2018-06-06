@@ -24,8 +24,6 @@
 #include "SimDataFormats/PileupSummaryInfo/interface/PileupSummaryInfo.h"
 #include "FWCore/Utilities/interface/Exception.h"
 
-#include "HLTrigger/HLTcore/interface/HLTConfigProvider.h"
-#include "HLTrigger/HLTcore/interface/HLTConfigData.h"
 
 
 
@@ -33,8 +31,7 @@
 using namespace std;
 using namespace edm;
 
-HLTConfigProvider hltConfig_;
-InputTag hltInputTag_;
+
 int totEvents = 0;
 int validEvents = 0;
 long double intLumiTotDel = 0.;
@@ -155,6 +152,19 @@ void FilenameMapProducer::produce(Event& iEvent, const EventSetup& iSetup) {
       lumiNumEvents[std::to_string(runNum)+"_"+std::to_string(lumiBlock)] = 1;
       }
    ++totEvents;
+	
+	
+   // on the sim data: checks for cross section
+  
+ 	if (dataType_=="Sim") {
+        edm::Handle<GenRunInfoProduct> genRunInfo;
+        iRun.getByLabel("generator", genRunInfo );
+
+
+        crossSection = genRunInfo->crossSection();
+
+	}
+   
    
    // on the real data: checks for valid events, keeps counter of integrated luminosity
    if (dataType_ == "Data"){
@@ -319,19 +329,7 @@ void FilenameMapProducer::endJob() {
 
 void FilenameMapProducer::beginRun(edm::Run & iRun, edm::EventSetup const & iSetup){
 	
-	bool changed = true;
-   if ( hltConfig_.init(iRun, iSetup, hltInputTag_.process(), changed) ) {
-      // if init returns TRUE, initialisation has succeeded!
-      
- 	if (dataType_=="Sim") {
-        edm::Handle<GenRunInfoProduct> genRunInfo;
-        iRun.getByLabel("generator", genRunInfo );
 
-
-        crossSection = genRunInfo->crossSection();
-
-	}
-   }
 
 
 }
