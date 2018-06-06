@@ -103,7 +103,7 @@ for file in os.listdir(mod_file_dir):
 						trig_dict[line.split()[1]]["present"] += 1
 						trig_dict[line.split()[1]]["present_valid"] += 1
 						trig_dict[line.split()[1]]["present_valid_fired"] += int(line.split()[4])
-						if int(line.split()[4]))==1:
+						if int(line.split()[4])==1:
 							trig_dict[line.split()[1]]["avg_prescale"].append(float(line.split()[2])*float(line.split()[3]))
 						if (run,lumiBlock) not in trig_dict[line.split()[1]]["good_lumis"]:
 							trig_dict[line.split()[1]]["good_lumis"].append((run,lumiBlock))
