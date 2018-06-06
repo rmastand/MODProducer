@@ -24,13 +24,17 @@
 #include "SimDataFormats/PileupSummaryInfo/interface/PileupSummaryInfo.h"
 #include "FWCore/Utilities/interface/Exception.h"
 
+#include "HLTrigger/HLTcore/interface/HLTConfigProvider.h"
+#include "HLTrigger/HLTcore/interface/HLTConfigData.h"
+
 
 
 
 using namespace std;
 using namespace edm;
 
-
+HLTConfigProvider hltConfig_;
+InputTag hltInputTag_;
 int totEvents = 0;
 int validEvents = 0;
 long double intLumiTotDel = 0.;
@@ -313,7 +317,11 @@ void FilenameMapProducer::endJob() {
 
 void FilenameMapProducer::beginRun(edm::Run & iRun, edm::EventSetup const & iSetup){
 	
-	if (dataType_=="Sim") {
+	bool changed = true;
+   if ( hltConfig_.init(iRun, iSetup, hltInputTag_.process(), changed) ) {
+      // if init returns TRUE, initialisation has succeeded!
+      
+ 	if (dataType_=="Sim") {
         edm::Handle<GenRunInfoProduct> genRunInfo;
         iRun.getByLabel("generator", genRunInfo );
 
@@ -321,6 +329,8 @@ void FilenameMapProducer::beginRun(edm::Run & iRun, edm::EventSetup const & iSet
         crossSection = genRunInfo->crossSection();
 
 	}
+   }
+
 
 }
 
