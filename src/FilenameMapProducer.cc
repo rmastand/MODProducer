@@ -19,11 +19,43 @@
 #include "FWCore/Framework/interface/EventSetup.h"
 #include "FWCore/ParameterSet/interface/ParameterSet.h"
 #include "FWCore/Utilities/interface/InputTag.h"
+
+#include "DataFormats/ParticleFlowCandidate/interface/PFCandidate.h"
+#include "DataFormats/ParticleFlowCandidate/interface/PFCandidateFwd.h"
+
+#include "DataFormats/Common/interface/TriggerResults.h"
+#include "FWCore/ServiceRegistry/interface/Service.h"
+#include "FWCore/Common/interface/TriggerNames.h"
+#include "FWCore/Common/interface/TriggerResultsByName.h"
+#include "HLTrigger/HLTcore/interface/HLTConfigProvider.h"
+
+#include "DataFormats/JetReco/interface/PFJet.h"
+#include "DataFormats/JetReco/interface/PFJetCollection.h"
+
+#include "CondFormats/JetMETObjects/interface/JetCorrectorParameters.h"
+#include "CondFormats/JetMETObjects/interface/FactorizedJetCorrector.h"
+
+
+#include "RecoJets/JetProducers/interface/BackgroundEstimator.h"
+
+#include "FWCore/Framework/interface/LuminosityBlock.h"
+#include "DataFormats/Luminosity/interface/LumiSummary.h"
+
+#include "HLTrigger/HLTcore/interface/HLTConfigData.h"
+
+#include "DataFormats/TrackReco/interface/Track.h"
+#include "DataFormats/TrackReco/interface/TrackFwd.h"
+#include "DataFormats/VertexReco/interface/Vertex.h"
+#include "DataFormats/VertexReco/interface/VertexFwd.h"
+#include "DataFormats/HepMCCandidate/interface/GenParticle.h"
+
+#include "DataFormats/Provenance/interface/Timestamp.h"
+
 #include "SimDataFormats/GeneratorProducts/interface/GenEventInfoProduct.h"
 #include "SimDataFormats/GeneratorProducts/interface/GenRunInfoProduct.h"
 #include "SimDataFormats/PileupSummaryInfo/interface/PileupSummaryInfo.h"
-#include "FWCore/Utilities/interface/Exception.h"
 
+#include "FWCore/Utilities/interface/Exception.h"
 
 
 
