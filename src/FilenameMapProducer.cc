@@ -154,15 +154,6 @@ void FilenameMapProducer::produce(Event& iEvent, const EventSetup& iSetup) {
 	
    // on the sim data: checks for cross section
   
- 	if (dataType_=="Sim") {
-        edm::Handle<GenRunInfoProduct> genRunInfo;
-        iEvent.getByLabel("generator", genRunInfo );
-
-
-        crossSection = genRunInfo->crossSection();
-	cout << crossSection << endl;
-
-	}
    
    
    // on the real data: checks for valid events, keeps counter of integrated luminosity
@@ -328,7 +319,7 @@ void FilenameMapProducer::endJob() {
 
 void FilenameMapProducer::beginRun(edm::Run & iRun, edm::EventSetup const & iSetup){
 	
-
+	cout << iRun.id().run() << endl;
 
 
 }
