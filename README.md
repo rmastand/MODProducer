@@ -123,8 +123,9 @@ Once you've downloaded the AOD files (these are ROOT files), you need to create 
    ```
    Or, use:
    ```
-   python ./reg/create_registry_online.py ./file_paths/samples/Jet_21.txt ~/MITOpenDataProject/registry.txt  ~/MITOpenDataProject/eos/opendata/cms/Run2011A/Jet/stats/12Oct2013-v1/20000/ ./reg/2011lumibyls.csv ./reg/11skimlumi.txt Data 2011A 6 Jet 
+   python ./reg/create_registry_online.py ./file_paths/samples/Jet_21.txt ~/MITOpenDataProject/registry.txt  ~/MITOpenDataProject/eos/opendata/cms/Run2011A/Jet/stats/12Oct2013-v1/20000/ ./reg/2011lumibyls.csv ./reg/11skimlumi.txt Data 2011A Jet 
    ```
+   You should provide the lumibyls files when using the simulated data too, but they won't be used.
    
 
    
@@ -203,9 +204,12 @@ If using 2010 or 2011 (real or simulated) data, all these corrections are in the
    After running the PFCCandidate Producer script, run the following script with the arguments:
    1. the lumibyls file of the correct year
    2. the folder containing all of your MOD files
+   3. data type
+   4. data year
+   5. trigger category
    
    ```
-   python post/mod_to_stats.py post/2011lumibyls.csv ~/MITOpenDataProject/eos/opendata/cms/Run2011A/Jet/MOD/12Oct2013-v1/20000/
+   python post/mod_to_stats.py post/2011lumibyls.csv ~/MITOpenDataProject/eos/opendata/cms/Run2011A/Jet/MOD/12Oct2013-v1/20000/ Data 2011A Jet 
    ```
    This will create a set of statistics files (.stats2) corresponding to the MOD files in the input directory. They contain statistics about how many events there are per file (or luminosity block), which triggers were present / fired, and what the average prescale values were. It also notes which luminosity blocks were in which files and vice versa.
    
