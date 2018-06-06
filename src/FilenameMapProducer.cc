@@ -21,14 +21,10 @@
 #include "FWCore/Utilities/interface/InputTag.h"
 
 
-//#include "DataFormats/Common/interface/TriggerResults.h"
 #include "FWCore/ServiceRegistry/interface/Service.h"
-//#include "FWCore/Common/interface/TriggerNames.h"
-//#include "FWCore/Common/interface/TriggerResultsByName.h"
-#include "HLTrigger/HLTcore/interface/HLTConfigProvider.h"
+//#include "HLTrigger/HLTcore/interface/HLTConfigProvider.h"
 
-
-#include "HLTrigger/HLTcore/interface/HLTConfigData.h"
+//#include "HLTrigger/HLTcore/interface/HLTConfigData.h"
 
 
 #include "SimDataFormats/GeneratorProducts/interface/GenEventInfoProduct.h"
