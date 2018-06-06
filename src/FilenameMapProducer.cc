@@ -217,8 +217,8 @@ void FilenameMapProducer::endJob() {
 	   	<< setw(40) << currentProcessingFilename_.substr(0,currentProcessingFilename_.length()-5)
 		<< setw(15) << totEvents
 	   	<< setw(15) << validEvents
-		<< setw(20) << LumiTotDel 
-		<< setw(20) << LumiTotRec
+		<< setw(20) << intLumiTotDel 
+		<< setw(20) << intLumiTotRec
 	 	<< endl;   
 	   
 	   
@@ -235,7 +235,7 @@ void FilenameMapProducer::endJob() {
 			<< setw(15) << totEvents
 		   	// all events for simulated data are valid
 			<< setw(15) << totEvents
-			<< setw(20) << crossSec 
+			<< setw(20) << crossSection 
 			<< endl;   
 	   
 	   
@@ -264,8 +264,8 @@ void FilenameMapProducer::endJob() {
 		                     << setw(10) << lumiToLumiB[k]
 	   	      		     << setw(10) << lumiNumEvents[k]
 		         	     << setw(10) << "1"
-		         	     << setw(15) << LumiDel
-				     << setw(15) << LumiRec
+		         	     << setw(15) << lumiDelData[k]
+				     << setw(15) << lumiRecData[k]
 	 	          	     << endl;   
 		    
 	    }
@@ -307,7 +307,7 @@ void FilenameMapProducer::endJob() {
 			     << setw(10) << lumiToLumiB[k]
 			     << setw(10) << lumiNumEvents[k]
 			     << setw(10) << "1"
-			     << setw(20) << crossSec
+			     << setw(20) << crossSection
 			     << endl;   
 		    
 	   
