@@ -123,7 +123,7 @@ for file in os.listdir(mod_file_dir):
 	
 		
 	w.write("#   File"+format2_6("Filename",40)+format2_6("Present",10)+format2_6("Valid",10)+format2_6("LuminDel",15)+format2_6("LuminRec",15)+"\n")
-	w.write("    File"+format2_6(str(file[-40:-4]),40)+format2_6(str(tot_present),10)+format2_6(str(tot_valid),10)+format2_6(str(tot_lumi_del),15)+format2_6(str(tot_lumi_rec),15)+"\n")
+	w.write("    File"+format2_6(str(file[-40:-4]),40)+format2_6(str(tot_present),10)+format2_6(str(tot_valid),10)+format2_6("{0:.3f}".format(tot_lumi_del),15)+format2_6("{0:.3f}".format(tot_lumi_rec),15)+"\n")
 
 
 	w.write("#   Trig"+format2_6("Name",40)+format2_6("Present",10)+format2_6("Valid",10)+format2_6("Fired",10)+format2_6("AvePrescale",15)+format2_6("EffLuminDel",15)+format2_6("EffLuminRec",15)+"\n")
@@ -138,7 +138,7 @@ for file in os.listdir(mod_file_dir):
 				eff_lum_del.append(0.000)
 				eff_lum_rec.append(0.000)
 
-		w.write("    Trig"+format2_6(trig,40)+format2_6(str(trig_dict[trig]["present"]),10)+format2_6(str(trig_dict[trig]["present_valid"]),10)+format2_6(str(trig_dict[trig]["present_valid_fired"]),10)+format2_6(str(np.mean(trig_dict[trig]["avg_prescale"])),15)+format2_6(str(round(np.sum(eff_lum_del),3)),15)+format2_6(str(round(np.sum(eff_lum_rec),3)),15)+"\n")	
+		w.write("    Trig"+format2_6(trig,40)+format2_6(str(trig_dict[trig]["present"]),10)+format2_6(str(trig_dict[trig]["present_valid"]),10)+format2_6(str(trig_dict[trig]["present_valid_fired"]),10)+format2_6(str("{0:.3f}".format(np.mean(trig_dict[trig]["avg_prescale"]))),15)+format2_6(str("{0:.3f}".format(np.sum(eff_lum_del))),15)+format2_6(str("{0:.3f}".format(np.sum(eff_lum_rec))),15)+"\n")	
 	w.write("EndFile\n")
 	w.close()
 
