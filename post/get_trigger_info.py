@@ -113,7 +113,7 @@ for file in os.listdir(mod_file_dir):
 
 
 	w = open(mod_file_dir.replace("MOD","trig")+"/"+str(file[-40:-4])+".trig","w")
-	w.write(first_line + "\n")
+	w.write(first_line.replace("Event","File"))
 	tot_lumi_del = 0.
 	tot_lumi_rec = 0.
 	for lumi in good_lumis:
