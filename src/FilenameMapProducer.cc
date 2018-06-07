@@ -208,7 +208,7 @@ void FilenameMapProducer::endJob() {
 
    if (dataType_ == "Data") {
 	   
-	   statsOutput_ << "#   File                                Filename    TotalEvents    ValidEvents          IntLumiDel          IntLumiRec" << endl;
+	   statsOutput_ << "#   File                                Filename    TotalEvents    ValidEvents     IntLumiDel     IntLumiRec" << endl;
    //string LumiTotDel = std::to_string(intLumiTotDel);
    //LumiTotDel.erase(LumiTotDel.find_last_not_of("0")+1,std::string::npos);
    //string LumiTotRec = std::to_string(intLumiTotRec);
@@ -217,8 +217,8 @@ void FilenameMapProducer::endJob() {
 	   	<< setw(40) << currentProcessingFilename_.substr(0,currentProcessingFilename_.length()-5)
 		<< setw(15) << totEvents
 	   	<< setw(15) << validEvents
-		<< setw(20) << intLumiTotDel 
-		<< setw(20) << intLumiTotRec
+		<< setw(15) << intLumiTotDel 
+		<< setw(15) << intLumiTotRec
 	 	<< endl;   
 	   
 	   
@@ -227,7 +227,7 @@ void FilenameMapProducer::endJob() {
 	
    if (dataType_ == "Sim") {
 	   
-	   statsOutput_ << "#   File                                Filename    TotalEvents    ValidEvents        CrossSection" << endl;
+	   statsOutput_ << "#   File                                Filename    TotalEvents    ValidEvents   CrossSection" << endl;
    	    //string crossSec = std::to_string(crossSection);
    	    //crossSec.erase(crossSec.find_last_not_of("0")+1,std::string::npos);
 	   statsOutput_ << fixed << setprecision(3) << "    File"
@@ -235,7 +235,7 @@ void FilenameMapProducer::endJob() {
 			<< setw(15) << totEvents
 		   	// all events for simulated data are valid
 			<< setw(15) << totEvents
-			<< setw(20) << crossSection 
+			<< setw(15) << crossSection 
 			<< endl;   
 	   
 	   
@@ -244,7 +244,7 @@ void FilenameMapProducer::endJob() {
    
    if (dataType_ == "Data") {
 	   
-	   statsOutput_ << "#LumiBlock         RunNum      Lumi    Events    Valid?     IntLumiDel     IntLumiRec" << endl;
+	   statsOutput_ << "#    Block         RunNum  LumiBlock    Events    Valid?     IntLumiDel     IntLumiRec" << endl;
 	
    std::map<std::string, int>::iterator it = lumiNumEvents.begin();
    while (it != lumiNumEvents.end())
@@ -259,7 +259,7 @@ void FilenameMapProducer::endJob() {
    	    		//string LumiRec = std::to_string(lumiRecData[k]);
    	    		//LumiRec.erase(LumiRec.find_last_not_of("0")+1,std::string::npos);
 	
-		        statsOutput_ << fixed << setprecision(3)<<" LumiBlock"
+		        statsOutput_ << fixed << setprecision(3)<<"     Block"
 	   		   	     << setw(15)  << lumiToRun[k]
 		                     << setw(10) << lumiToLumiB[k]
 	   	      		     << setw(10) << lumiNumEvents[k]
@@ -271,7 +271,7 @@ void FilenameMapProducer::endJob() {
 	    }
      		else
 		{
-			statsOutput_ << fixed << setprecision(3) << " LumiBlock"
+			statsOutput_ << fixed << setprecision(3) << "     Block"
 	   		   	     << setw(15)  << lumiToRun[k]
 		                     << setw(10) << lumiToLumiB[k]
 	   	      		     << setw(10) << lumiNumEvents[k]
@@ -291,7 +291,7 @@ void FilenameMapProducer::endJob() {
 	
       if (dataType_ == "Sim") {
 	   
-	   statsOutput_ << "#LumiBlock         RunNum      Lumi    Events    Valid?        CrossSection" << endl;
+	   statsOutput_ << "#    Block         RunNum  LumiBlock    Events    Valid?        CrossSection" << endl;
 	
    std::map<std::string, int>::iterator it = lumiNumEvents.begin();
    while (it != lumiNumEvents.end())
@@ -302,7 +302,7 @@ void FilenameMapProducer::endJob() {
 	    
 	        //string crossSec = std::to_string(crossSection);
    	    	//crossSec.erase(crossSec.find_last_not_of("0")+1,std::string::npos);
-		statsOutput_ <<" LumiBlock"
+		statsOutput_ <<"     Block"
 			     << setw(15)  << fixed << setprecision(3)<< lumiToRun[k]
 			     << setw(10) << lumiToLumiB[k]
 			     << setw(10) << lumiNumEvents[k]
