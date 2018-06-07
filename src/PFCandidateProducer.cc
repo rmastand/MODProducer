@@ -209,7 +209,7 @@ void PFCandidateProducer::produce(Event& iEvent, const EventSetup& iSetup) {
 
    runNum = iEvent.id().run();
    eventNum = iEvent.id().event();
-   if (dataType_=="Data") {lumiBlockNumber_ = iEvent.luminosityBlock();}
+   lumiBlockNumber_ = iEvent.luminosityBlock();
    
    // Check if we've already processed this event.
    // Proceed only if we haven't.
@@ -302,7 +302,7 @@ void PFCandidateProducer::produce(Event& iEvent, const EventSetup& iSetup) {
 	   	        << setw(16) << primaryVerticesHandle->size()
 		        << setw(16) << iEvent.time().unixTime()
 		        << setw(16) << iEvent.time().microsecondOffset()
-			<< setw(16) << "-1"
+			<< setw(16) << lumiBlockNumber_
 			<< setw(16) << "-1"
 			<< setw(16) << "-1"
 			<< setw(16) << "-1"
