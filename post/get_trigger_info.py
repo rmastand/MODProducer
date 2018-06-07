@@ -121,24 +121,34 @@ for file in os.listdir(mod_file_dir):
 		tot_lumi_rec += lumiId_to_lumin_dict[lumi][1]
 		
 	
-		
-	w.write("#   File"+format2_6("Filename",40)+format2_6("TotalEvents",15)+format2_6("ValidEvents",15)+format2_6("IntLumiDel",15)+format2_6("IntLumiRec",15)+"\n")
-	w.write("    File"+format2_6(str(file[-40:-4]),40)+format2_6(str(tot_present),15)+format2_6(str(tot_valid),15)+format2_6("{0:.3f}".format(tot_lumi_del),15)+format2_6("{0:.3f}".format(tot_lumi_rec),15)+"\n")
+	if data_type == "Data":
+		w.write("#   File"+format2_6("Filename",40)+format2_6("TotalEvents",15)+format2_6("ValidEvents",15)+format2_6("IntLumiDel",15)+format2_6("IntLumiRec",15)+"\n")
+		w.write("    File"+format2_6(str(file[-40:-4]),40)+format2_6(str(tot_present),15)+format2_6(str(tot_valid),15)+format2_6("{0:.3f}".format(tot_lumi_del),15)+format2_6("{0:.3f}".format(tot_lumi_rec),15)+"\n")
 
 
-	w.write("#   Trig"+format2_6("Name",40)+format2_6("Present",10)+format2_6("Valid",10)+format2_6("Fired",10)+format2_6("AvePrescale",15)+format2_6("EffLumiDel",15)+format2_6("EffLumiRec",15)+"\n")
-	for trig in trig_dict.keys():
-		eff_lum_del = []
-		eff_lum_rec = []
-		for i in range(len(trig_dict[trig]["good_lumis"])):
-			try:
-				eff_lum_del.append(lumiId_to_lumin_dict[trig_dict[trig]["good_lumis"][i]][0]/trig_dict[trig]["good_prescales"][i])
-				eff_lum_rec.append(lumiId_to_lumin_dict[trig_dict[trig]["good_lumis"][i]][1]/trig_dict[trig]["good_prescales"][i])
-			except KeyError:
-				eff_lum_del.append(0.000)
-				eff_lum_rec.append(0.000)
+		w.write("#   Trig"+format2_6("Name",40)+format2_6("Present",10)+format2_6("Valid",10)+format2_6("Fired",10)+format2_6("AvePrescale",15)+format2_6("EffLumiDel",15)+format2_6("EffLumiRec",15)+"\n")
+		for trig in trig_dict.keys():
+			eff_lum_del = []
+			eff_lum_rec = []
+			for i in range(len(trig_dict[trig]["good_lumis"])):
+				try:
+					eff_lum_del.append(lumiId_to_lumin_dict[trig_dict[trig]["good_lumis"][i]][0]/trig_dict[trig]["good_prescales"][i])
+					eff_lum_rec.append(lumiId_to_lumin_dict[trig_dict[trig]["good_lumis"][i]][1]/trig_dict[trig]["good_prescales"][i])
+				except KeyError:
+					eff_lum_del.append(0.000)
+					eff_lum_rec.append(0.000)
 
-		w.write("    Trig"+format2_6(trig,40)+format2_6(str(trig_dict[trig]["present"]),10)+format2_6(str(trig_dict[trig]["present_valid"]),10)+format2_6(str(trig_dict[trig]["present_valid_fired"]),10)+format2_6(str("{0:.3f}".format(np.mean(trig_dict[trig]["avg_prescale"]))),15)+format2_6(str("{0:.3f}".format(np.sum(eff_lum_del))),15)+format2_6(str("{0:.3f}".format(np.sum(eff_lum_rec))),15)+"\n")	
+			w.write("    Trig"+format2_6(trig,40)+format2_6(str(trig_dict[trig]["present"]),10)+format2_6(str(trig_dict[trig]["present_valid"]),10)+format2_6(str(trig_dict[trig]["present_valid_fired"]),10)+format2_6(str("{0:.3f}".format(np.mean(trig_dict[trig]["avg_prescale"]))),15)+format2_6(str("{0:.3f}".format(np.sum(eff_lum_del))),15)+format2_6(str("{0:.3f}".format(np.sum(eff_lum_rec))),15)+"\n")	
+	
+	if data_type == "Sim":
+		w.write("#   File"+format2_6("Filename",40)+format2_6("TotalEvents",15)+format2_6("ValidEvents",15)+"\n")
+		w.write("    File"+format2_6(str(file[-40:-4]),40)+format2_6(str(tot_present),15)+format2_6(str(tot_valid),15)+"\n")
+
+
+		w.write("#   Trig"+format2_6("Name",40)+format2_6("Present",10)+format2_6("Valid",10)+format2_6("Fired",10)+"\n")
+		for trig in trig_dict.keys():
+			w.write("    Trig"+format2_6(trig,40)+format2_6(str(trig_dict[trig]["present"]),10)+format2_6(str(trig_dict[trig]["present_valid"]),10)+format2_6(str(trig_dict[trig]["present_valid_fired"]),10)+"\n")	
+	
 	w.write("EndFile\n")
 	w.close()
 
