@@ -64,28 +64,41 @@ for mod_orig in os.listdir(input_dir):
 			run = line.split()[1]
 			lumiBlock = line.split()[6]
 			cross_section = line.split()[11]
-			try: 
-				luminosity = run_lumi_dict[(run,lumiBlock)]
+			if data_type == "Data":
+				try: 
+					luminosity = run_lumi_dict[(run,lumiBlock)]
+					is_valid = True
+				except KeyError:
+					is_valid = False 
+			if data_type == "Sim":
 				is_valid = True
-			except KeyError:
-				is_valid = False 
 			if is_valid: valid_events += 1
 			# summing up integrated lumi if the block has not already been counted
-			if (run,lumiBlock) not in good_lumis:
-				try:
-					total_lum_del += run_lumi_dict[(run,lumiBlock)][0]
-					total_lum_rec += run_lumi_dict[(run,lumiBlock)][1]
+			if data_type == "Data":
+				if (run,lumiBlock) not in good_lumis:
+					try:
+						total_lum_del += run_lumi_dict[(run,lumiBlock)][0]
+						total_lum_rec += run_lumi_dict[(run,lumiBlock)][1]
+						good_lumis.append((run,lumiBlock))
+					except:
+						pass
+
+
+				if (run,lumiBlock) not in lumi_info.keys():
+					lumi_info[(run,lumiBlock)] = {"events":1,"valid":0}
+					if is_valid: lumi_info[(run,lumiBlock)]["valid"] = 1
+				else:
+					lumi_info[(run,lumiBlock)]["events"] += 1
+			if data_type == "Sim":
+				if (run,lumiBlock) not in good_lumis:
 					good_lumis.append((run,lumiBlock))
-				except:
-					pass
 					
-			
-			if (run,lumiBlock) not in lumi_info.keys():
-				lumi_info[(run,lumiBlock)] = {"events":1,"valid":0}
-				if is_valid: lumi_info[(run,lumiBlock)]["valid"] = 1
-			else:
-				lumi_info[(run,lumiBlock)]["events"] += 1
-				
+				if (run,lumiBlock) not in lumi_info.keys():
+					lumi_info[(run,lumiBlock)] = {"events":1,"valid":0}
+					if is_valid: lumi_info[(run,lumiBlock)]["valid"] = 1
+				else:
+					lumi_info[(run,lumiBlock)]["events"] += 1
+
 
 			
 	mod_file.close()
