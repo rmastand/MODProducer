@@ -122,11 +122,11 @@ for file in os.listdir(mod_file_dir):
 		
 	
 		
-	w.write("#   File"+format2_6("Filename",40)+format2_6("Present",10)+format2_6("Valid",10)+format2_6("LuminDel",15)+format2_6("LuminRec",15)+"\n")
-	w.write("    File"+format2_6(str(file[-40:-4]),40)+format2_6(str(tot_present),10)+format2_6(str(tot_valid),10)+format2_6("{0:.3f}".format(tot_lumi_del),15)+format2_6("{0:.3f}".format(tot_lumi_rec),15)+"\n")
+	w.write("#   File"+format2_6("Filename",40)+format2_6("TotalEvents",15)+format2_6("ValidEvents",15)+format2_6("IntLumiDel",15)+format2_6("IntLumiRec",15)+"\n")
+	w.write("    File"+format2_6(str(file[-40:-4]),40)+format2_6(str(tot_present),15)+format2_6(str(tot_valid),15)+format2_6("{0:.3f}".format(tot_lumi_del),15)+format2_6("{0:.3f}".format(tot_lumi_rec),15)+"\n")
 
 
-	w.write("#   Trig"+format2_6("Name",40)+format2_6("Present",10)+format2_6("Valid",10)+format2_6("Fired",10)+format2_6("AvePrescale",15)+format2_6("EffLuminDel",15)+format2_6("EffLuminRec",15)+"\n")
+	w.write("#   Trig"+format2_6("Name",40)+format2_6("Present",10)+format2_6("Valid",10)+format2_6("Fired",10)+format2_6("AvePrescale",15)+format2_6("EffLumiDel",15)+format2_6("EffLumiRec",15)+"\n")
 	for trig in trig_dict.keys():
 		eff_lum_del = []
 		eff_lum_rec = []
