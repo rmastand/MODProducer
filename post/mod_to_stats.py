@@ -118,9 +118,9 @@ for mod_orig in os.listdir(input_dir):
 	if data_type == "Sim":
 		w.write("#   File"+format2_6("Filename",40)+format2_6("TotalEvents",15)+format2_6("ValidEvents",15)+format2_6("CrossSection",15)+"\n")
 		w.write("    File"+format2_6(str(mod_orig[-40:-4]),40)+format2_6(str(total_events),15)+format2_6(str(total_events),15)+format2_6("{0:.3f}".format(float(cross_section)),15)+"\n")
-		w.write("#  Block"+format2_6("RunNum",15)+format2_6("LumiBlock",10)+format2_6("Events",10)+format2_6("Valid?",10)+format2_6("CrossSection",20)+"\n")
+		w.write("# SBlock"+format2_6("RunNum",15)+format2_6("LumiBlock",10)+format2_6("Events",10)+format2_6("Valid?",10)+format2_6("CrossSection",20)+"\n")
 		for lumi in sorted(sorted(lumi_info.keys(),key=lambda tup: tup[1]),key=lambda tup: tup[0]):
-			w.write("     Block"+format2_6(str(lumi[0]),15)+format2_6(str(lumi[1]),10)+format2_6(str(lumi_info[lumi]["events"]),10)+format2_6("1",10)+format2_6("{0:.3f}".format(float(cross_section)),35)+"\n")
+			w.write("  SBlock"+format2_6(str(lumi[0]),15)+format2_6(str(lumi[1]),10)+format2_6(str(lumi_info[lumi]["events"]),10)+format2_6("1",10)+format2_6("{0:.3f}".format(float(cross_section)),35)+"\n")
 	
 	
 	w.write("EndFile\n")
