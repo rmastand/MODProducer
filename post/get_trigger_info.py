@@ -1,7 +1,7 @@
 import sys
 import os
 import numpy as np
-from shutil import copyfile
+
 
 mod_file_dir = sys.argv[1]
 skimmed_lumibyls = sys.argv[2]
@@ -40,12 +40,10 @@ for file in os.listdir(mod_file_dir):
 	tot_valid = 0
 	# we'll use this later for calculate the total delivered and recorded luminosities
 	good_lumis = []
-	i = 0
+
 	with open(mod_file_dir+"/"+file, "rb") as mod_file:
 		for line in mod_file: 
-			if i == 0:
-				first_line = line
-			i += 1
+	
 
 			# keeps track of the run, lumiBlock
 			# this should signal each separate event
@@ -112,12 +110,17 @@ for file in os.listdir(mod_file_dir):
 							trig_dict[line.split()[1]]["good_lumis"].append((run,lumiBlock))
 							trig_dict[line.split()[1]]["good_prescales"].append(float(line.split()[2])*float(line.split()[3]))
 
-	copyfile(mod_file_dir.replace("MOD","stats")+"/"+str(file[-40:-4])+".stats", mod_file_dir.replace("MOD","trig")+"/"+str(file[-40:-4])+".trig")
+	
+	
+	
+	statsFile = open(mod_file_dir.replace("MOD","stats")+"/"+str(file[-40:-4])+".stats")
+	lines = statsFile.readlines()
+	statsFile.close()
+	
 	w = open(mod_file_dir.replace("MOD","trig")+"/"+str(file[-40:-4])+".trig","a")
-	#w.write(first_line.replace("Event","File"))
+	w.writelines([item for item in lines[:-1]])
 	
 	if data_type == "Data":
-		
 		w.write("#   Trig"+format2_6("Name",40)+format2_6("Present",10)+format2_6("Valid",10)+format2_6("Fired",10)+format2_6("AvePrescale",15)+format2_6("EffLumiDel",15)+format2_6("EffLumiRec",15)+"\n")
 		for trig in trig_dict.keys():
 			eff_lum_del = []
@@ -133,8 +136,6 @@ for file in os.listdir(mod_file_dir):
 			w.write("    Trig"+format2_6(trig,40)+format2_6(str(trig_dict[trig]["present"]),10)+format2_6(str(trig_dict[trig]["present_valid"]),10)+format2_6(str(trig_dict[trig]["present_valid_fired"]),10)+format2_6(str("{0:.3f}".format(np.mean(trig_dict[trig]["avg_prescale"]))),15)+format2_6(str("{0:.3f}".format(np.sum(eff_lum_del))),15)+format2_6(str("{0:.3f}".format(np.sum(eff_lum_rec))),15)+"\n")	
 	
 	if data_type == "Sim":
-		
-
 		w.write("#   Trig"+format2_6("Name",40)+format2_6("Present",10)+format2_6("Valid",10)+format2_6("Fired",10)+"\n")
 		for trig in trig_dict.keys():
 			w.write("    Trig"+format2_6(trig,40)+format2_6(str(trig_dict[trig]["present"]),10)+format2_6(str(trig_dict[trig]["present_valid"]),10)+format2_6(str(trig_dict[trig]["present_valid_fired"]),10)+"\n")	
