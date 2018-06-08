@@ -59,12 +59,13 @@ for mod_orig in os.listdir(input_dir):
 # counters for what to write to stats2
 	with open(input_dir+"/"+mod_orig, "rb") as mod_file:
 	    for line in mod_file: 
+		
 		if ("#" not in line.split()) and ("Cond" in line.split()):
 			# corresponds to 1 event
 			total_events += 1
 			run = line.split()[1]
 			lumiBlock = line.split()[6]
-			print line.split()
+			print line
 			if data_type == "Data":
 				try: 
 					luminosity = run_lumi_dict[(run,lumiBlock)]
