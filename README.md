@@ -106,7 +106,7 @@ First, you need to create what's called a "registry". A registry creates a map b
    Or for simulated data:
     ```
    python ./reg/create_registry_online.py ./file_paths/samples/sim_1369.txt ~/MITOpenDataProject/registry_sim.txt  ~/MITOpenDataProject/eos/opendata/cms/MonteCarlo2011/Summer11LegDR/QCD_Pt-170to300_TuneZ2_7TeV_pythia6/MOD/PU_S13_START53_LV6-v1/00000/ ./reg/2011lumibyls.csv ./reg/11skimlumi.txt Sim 2011 Jet 
-   ```
+    ```
  
    The code will output a number of .stats files in the designated output directory as well as a registry file in the designated path.
    
