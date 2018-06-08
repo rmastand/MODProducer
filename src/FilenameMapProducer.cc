@@ -291,7 +291,7 @@ void FilenameMapProducer::endJob() {
 	
       if (dataType_ == "Sim") {
 	   
-	   statsOutput_ << "#  Block         RunNum  LumiBlock    Events    Valid?                           CrossSection" << endl;
+	   statsOutput_ << "# SBlock         RunNum  LumiBlock    Events    Valid?                           CrossSection" << endl;
 	
    std::map<std::string, int>::iterator it = lumiNumEvents.begin();
    while (it != lumiNumEvents.end())
@@ -302,7 +302,7 @@ void FilenameMapProducer::endJob() {
 	    
 	        //string crossSec = std::to_string(crossSection);
    	    	//crossSec.erase(crossSec.find_last_not_of("0")+1,std::string::npos);
-		statsOutput_ <<"   Block"
+		statsOutput_ <<"  SBlock"
 			     << setw(15)  << fixed << setprecision(3)<< lumiToRun[k]
 			     << setw(10) << lumiToLumiB[k]
 			     << setw(10) << lumiNumEvents[k]
