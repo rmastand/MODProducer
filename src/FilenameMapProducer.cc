@@ -202,11 +202,12 @@ void FilenameMapProducer::endJob() {
 
    statsOutput_.open(statsFilename_.c_str(), ios::out | ios::app );
 	
-   statsOutput_ << "BeginFile Version " << version_ << " CMS_" << dataYear_ << " " << dataType_ << " " << triggerCat_ << endl;
+   
    
 
 
    if (dataType_ == "Data") {
+	   statsOutput_ << "BeginFile Version " << version_ << " CMS_" << dataYear_ << " " << dataType_ << " " << triggerCat_ << endl;
 	   
 	   statsOutput_ << "#        File                                Filename    TotalEvents    ValidEvents          IntLumiDel          IntLumiRec" << endl;
    //string LumiTotDel = std::to_string(intLumiTotDel);
@@ -226,6 +227,7 @@ void FilenameMapProducer::endJob() {
    }
 	
    if (dataType_ == "Sim") {
+	   statsOutput_ << "BeginSFile Version " << version_ << " CMS_" << dataYear_ << " " << dataType_ << " " << triggerCat_ << endl;
 	   
 	   statsOutput_ << "#        File                                Filename    TotalEvents    ValidEvents        CrossSection" << endl;
    	    //string crossSec = std::to_string(crossSection);
@@ -322,9 +324,15 @@ void FilenameMapProducer::endJob() {
 	
    
 
- 
- 	
+   if (dataType_ == "Data") {
    statsOutput_ << "EndFile" << endl;
+   }
+	
+   if (dataType_ == "Sim") {
+   statsOutput_ << "EndSFile" << endl;
+   }
+ 	
+   
    fileOutput_.close();
    lumiLumin_.close();
    statsOutput_.close();
