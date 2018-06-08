@@ -123,6 +123,13 @@ for mod_orig in os.listdir(input_dir):
 				w.write("        Block"+format2_6(str(lumi[0]),22)+format2_6(str(lumi[1]),18)+format2_6(str(lumi_info[lumi]["events"]),15)+format2_6(str(lumi_info[lumi]["valid"]),15)+format2_6("0.000",20)+format2_6("0.000",20)+"\n")
 		
 	if data_type == "Sim":
+		i = 0
+		with open(input_dir.replace("MOD","stats")+"/"+str(mod_orig[-40:-4])+".stats","r") as mod_file:
+	    		for line in mod_file: 
+				if i == 2:
+					cross_section = line.split()[-1]
+					break
+				i += 1
 		w.write("#       SFile"+format2_6("Filename",40)+format2_6("TotalEvents",15)+format2_6("ValidEvents",15)+format2_6("CrossSection",20)+"\n")
 		w.write("        SFile"+format2_6(str(mod_orig[-40:-4]),40)+format2_6(str(total_events),15)+format2_6(str(total_events),15)+format2_6("{0:.3f}".format(float(cross_section)),20)+"\n")
 		w.write("#      SBlock"+format2_6("RunNum",22)+format2_6("LumiBlock",18)+format2_6("Events",15)+format2_6("Valid?",15)+format2_6("CrossSection",20)+"\n")
