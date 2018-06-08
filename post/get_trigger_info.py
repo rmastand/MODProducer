@@ -113,14 +113,11 @@ for file in os.listdir(mod_file_dir):
 							trig_dict[line.split()[1]]["good_prescales"].append(float(line.split()[2])*float(line.split()[3]))
 
 	copyfile(mod_file_dir.replace("MOD","stats")+"/"+str(file[-40:-4])+".stats", mod_file_dir.replace("MOD","trig")+"/"+str(file[-40:-4])+".trig")
-	w = open(mod_file_dir.replace("MOD","trig")+"/"+str(file[-40:-4])+".trig","w")
-	w.write(first_line.replace("Event","File"))
-	
-		
+	w = open(mod_file_dir.replace("MOD","trig")+"/"+str(file[-40:-4])+".trig","a")
+	#w.write(first_line.replace("Event","File"))
 	
 	if data_type == "Data":
 		
-
 		w.write("#   Trig"+format2_6("Name",40)+format2_6("Present",10)+format2_6("Valid",10)+format2_6("Fired",10)+format2_6("AvePrescale",15)+format2_6("EffLumiDel",15)+format2_6("EffLumiRec",15)+"\n")
 		for trig in trig_dict.keys():
 			eff_lum_del = []
