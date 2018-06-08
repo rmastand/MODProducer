@@ -205,9 +205,9 @@ void FilenameMapProducer::endJob() {
    
    
 
+   statsOutput_ << "BeginFile Version " << version_ << " CMS_" << dataYear_ << " " << dataType_ << " " << triggerCat_ << endl;
 
    if (dataType_ == "Data") {
-	   statsOutput_ << "BeginFile Version " << version_ << " CMS_" << dataYear_ << " " << dataType_ << " " << triggerCat_ << endl;
 	   
 	   statsOutput_ << "#        File                                Filename    TotalEvents    ValidEvents          IntLumiDel          IntLumiRec" << endl;
    //string LumiTotDel = std::to_string(intLumiTotDel);
@@ -227,12 +227,11 @@ void FilenameMapProducer::endJob() {
    }
 	
    if (dataType_ == "Sim") {
-	   statsOutput_ << "BeginSFile Version " << version_ << " CMS_" << dataYear_ << " " << dataType_ << " " << triggerCat_ << endl;
 	   
-	   statsOutput_ << "#        File                                Filename    TotalEvents    ValidEvents        CrossSection" << endl;
+	   statsOutput_ << "#       SFile                                Filename    TotalEvents    ValidEvents        CrossSection" << endl;
    	    //string crossSec = std::to_string(crossSection);
    	    //crossSec.erase(crossSec.find_last_not_of("0")+1,std::string::npos);
-	   statsOutput_ << fixed << setprecision(3) << "         File"
+	   statsOutput_ << fixed << setprecision(3) << "        SFile"
 			<< setw(40)  << currentProcessingFilename_.substr(0,currentProcessingFilename_.length()-5)
 			<< setw(15) << totEvents
 		   	// all events for simulated data are valid
@@ -323,14 +322,8 @@ void FilenameMapProducer::endJob() {
    }
 	
    
-
-   if (dataType_ == "Data") {
    statsOutput_ << "EndFile" << endl;
-   }
-	
-   if (dataType_ == "Sim") {
-   statsOutput_ << "EndSFile" << endl;
-   }
+  
  	
    
    fileOutput_.close();
