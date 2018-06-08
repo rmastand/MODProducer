@@ -227,7 +227,7 @@ void FilenameMapProducer::endJob() {
 	
    if (dataType_ == "Sim") {
 	   
-	   statsOutput_ << "#   File                                Filename    TotalEvents    ValidEvents   CrossSection" << endl;
+	   statsOutput_ << "#   File                                Filename    TotalEvents    ValidEvents                      CrossSection" << endl;
    	    //string crossSec = std::to_string(crossSection);
    	    //crossSec.erase(crossSec.find_last_not_of("0")+1,std::string::npos);
 	   statsOutput_ << fixed << setprecision(3) << "    File"
@@ -235,7 +235,7 @@ void FilenameMapProducer::endJob() {
 			<< setw(15) << totEvents
 		   	// all events for simulated data are valid
 			<< setw(15) << totEvents
-			<< setw(15) << crossSection 
+			<< setw(34) << crossSection 
 			<< endl;   
 	   
 	   
