@@ -74,7 +74,7 @@ for mod_orig in os.listdir(input_dir):
 					is_valid = False 
 			if data_type == "Sim":
 				is_valid = True
-				cross_section = line.split()[8]
+				
 				
 			if is_valid: valid_events += 1
 			# summing up integrated lumi if the block has not already been counted
