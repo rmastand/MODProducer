@@ -367,13 +367,22 @@ void PFCandidateProducer::produce(Event& iEvent, const EventSetup& iSetup) {
 	      pair<int, int> prescale = hltConfig_.prescaleValues(iEvent, iSetup, name);
 	
 	      bool fired = triggerFired(name, ( * trigResults));
-	
-	      output_ << "    Trig"
-	       	          << setw(40) << name
-		          << setw(16) << prescale.first
-		          << setw(16) << prescale.second
-	                  << setw(16) << fired
-	                  << endl;
+	      if (data_type == "Data") {
+		      output_ << "    Trig"
+				  << setw(40) << name
+				  << setw(16) << prescale.first
+				  << setw(16) << prescale.second
+				  << setw(16) << fired
+				  << endl;
+	      }
+             if (data_type == "Sim") {
+		      output_ << "   STrig"
+				  << setw(40) << name
+				  << setw(16) << prescale.first
+				  << setw(16) << prescale.second
+				  << setw(16) << fired
+				  << endl;
+	      }
 	   }
 	   
 	  // Get AK5 Jets.
