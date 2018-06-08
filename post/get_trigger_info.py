@@ -134,13 +134,13 @@ for file in os.listdir(mod_file_dir):
 					eff_lum_rec.append(0.000)
 
 			w.write("         Trig"+format2_6(trig,40)+format2_6(str(trig_dict[trig]["present"]),13)+format2_6(str(trig_dict[trig]["present_valid"]),12)+format2_6(str(trig_dict[trig]["present_valid_fired"]),12)+format2_6(str("{0:.3f}".format(np.sum(eff_lum_del))),13)+format2_6(str("{0:.3f}".format(np.sum(eff_lum_rec))),20)+format2_6(str("{0:.3f}".format(np.mean(trig_dict[trig]["avg_prescale"]))),14)+"\n")	
-	
+		w.write("EndFile\n")
 	if data_type == "Sim":
 		w.write("#       STrig"+format2_6("Name",40)+format2_6("Present",15)+format2_6("Valid",15)+format2_6("Fired",20)+"\n")
 		for trig in trig_dict.keys():
 			w.write("        STrig"+format2_6(trig,40)+format2_6(str(trig_dict[trig]["present"]),15)+format2_6(str(trig_dict[trig]["present_valid"]),15)+format2_6(str(trig_dict[trig]["present_valid_fired"]),20)+"\n")	
+		w.write("EndSFile\n")
 	
-	w.write("EndFile\n")
 	w.close()
 
 
