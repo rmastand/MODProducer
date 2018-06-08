@@ -55,7 +55,7 @@ for mod_orig in os.listdir(input_dir):
 	total_events = 0
 	valid_events = 0
 	good_lumis = []
-	print data_type
+
 # counters for what to write to stats2
 	with open(input_dir+"/"+mod_orig, "rb") as mod_file:
 	    for line in mod_file: 
@@ -124,7 +124,7 @@ for mod_orig in os.listdir(input_dir):
 		w.write("         File"+format2_6(str(mod_orig[-40:-4]),40)+format2_6(str(total_events),15)+format2_6(str(total_events),15)+format2_6("{0:.3f}".format(float(cross_section)),20)+"\n")
 		w.write("#      SBlock"+format2_6("RunNum",22)+format2_6("LumiBlock",18)+format2_6("Events",15)+format2_6("Valid?",15)+format2_6("CrossSection",20)+"\n")
 		for lumi in sorted(sorted(lumi_info.keys(),key=lambda tup: tup[1]),key=lambda tup: tup[0]):
-			w.write("  SBlock"+format2_6(str(lumi[0]),22)+format2_6(str(lumi[1]),18)+format2_6(str(lumi_info[lumi]["events"]),15)+format2_6("1",15)+format2_6("{0:.3f}".format(float(cross_section)),20)+"\n")
+			w.write("       SBlock"+format2_6(str(lumi[0]),22)+format2_6(str(lumi[1]),18)+format2_6(str(lumi_info[lumi]["events"]),15)+format2_6("1",15)+format2_6("{0:.3f}".format(float(cross_section)),20)+"\n")
 	
 	
 	w.write("EndFile\n")
