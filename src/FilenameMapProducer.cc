@@ -244,7 +244,7 @@ void FilenameMapProducer::endJob() {
    
    if (dataType_ == "Data") {
 	   
-	   statsOutput_ << "#  Block         RunNum  LumiBlock    Events    Valid?                             IntLumiDel     IntLumiRec" << endl;
+	   statsOutput_ << "#  Block                RunNum      LumiBlock            Events         Valid?     IntLumiDel     IntLumiRec" << endl;
 	
    std::map<std::string, int>::iterator it = lumiNumEvents.begin();
    while (it != lumiNumEvents.end())
@@ -260,11 +260,11 @@ void FilenameMapProducer::endJob() {
    	    		//LumiRec.erase(LumiRec.find_last_not_of("0")+1,std::string::npos);
 	
 		        statsOutput_ << fixed << setprecision(3)<<"   Block"
-	   		   	     << setw(15)  << lumiToRun[k]
-		                     << setw(10) << lumiToLumiB[k]
-	   	      		     << setw(10) << lumiNumEvents[k]
-		         	     << setw(10) << "1"
-		         	     << setw(40) << lumiDelData[k]
+	   		   	     << setw(22)  << lumiToRun[k]
+		                     << setw(15) << lumiToLumiB[k]
+	   	      		     << setw(18) << lumiNumEvents[k]
+		         	     << setw(15) << "1"
+		         	     << setw(15) << lumiDelData[k]
 				     << setw(15) << lumiRecData[k]
 	 	          	     << endl;   
 		    
@@ -272,11 +272,11 @@ void FilenameMapProducer::endJob() {
      		else
 		{
 			statsOutput_ << fixed << setprecision(3) << "   Block"
-	   		   	     << setw(15)  << lumiToRun[k]
-		                     << setw(10) << lumiToLumiB[k]
-	   	      		     << setw(10) << lumiNumEvents[k]
-		         	     << setw(10) << "0"
-		         	     << setw(40) << "0.000"
+	   		   	     << setw(22)  << lumiToRun[k]
+		                     << setw(15) << lumiToLumiB[k]
+	   	      		     << setw(18) << lumiNumEvents[k]
+		         	     << setw(15) << "0"
+		         	     << setw(15) << "0.000"
 				     << setw(15) << "0.000"
 	 	          	     << endl;   
 		}
