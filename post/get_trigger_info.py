@@ -1,6 +1,7 @@
 import sys
 import os
 import numpy as np
+from shutil import copyfile
 
 mod_file_dir = sys.argv[1]
 skimmed_lumibyls = sys.argv[2]
@@ -113,18 +114,13 @@ for file in os.listdir(mod_file_dir):
 
 
 	w = open(mod_file_dir.replace("MOD","trig")+"/"+str(file[-40:-4])+".trig","w")
+	copyfile(mod_file_dir.replace("MOD","stats")+"/"+str(file[-40:-4])+".trig", mod_file_dir.replace("MOD","trig")+"/"+str(file[-40:-4])+".trig")
 	w.write(first_line.replace("Event","File"))
-	tot_lumi_del = 0.
-	tot_lumi_rec = 0.
-	for lumi in good_lumis:
-		tot_lumi_del += lumiId_to_lumin_dict[lumi][0]
-		tot_lumi_rec += lumiId_to_lumin_dict[lumi][1]
+	
 		
 	
 	if data_type == "Data":
-		w.write("#   File"+format2_6("Filename",40)+format2_6("TotalEvents",15)+format2_6("ValidEvents",15)+format2_6("IntLumiDel",15)+format2_6("IntLumiRec",15)+"\n")
-		w.write("    File"+format2_6(str(file[-40:-4]),40)+format2_6(str(tot_present),15)+format2_6(str(tot_valid),15)+format2_6("{0:.3f}".format(tot_lumi_del),15)+format2_6("{0:.3f}".format(tot_lumi_rec),15)+"\n")
-
+		
 
 		w.write("#   Trig"+format2_6("Name",40)+format2_6("Present",10)+format2_6("Valid",10)+format2_6("Fired",10)+format2_6("AvePrescale",15)+format2_6("EffLumiDel",15)+format2_6("EffLumiRec",15)+"\n")
 		for trig in trig_dict.keys():
@@ -141,9 +137,7 @@ for file in os.listdir(mod_file_dir):
 			w.write("    Trig"+format2_6(trig,40)+format2_6(str(trig_dict[trig]["present"]),10)+format2_6(str(trig_dict[trig]["present_valid"]),10)+format2_6(str(trig_dict[trig]["present_valid_fired"]),10)+format2_6(str("{0:.3f}".format(np.mean(trig_dict[trig]["avg_prescale"]))),15)+format2_6(str("{0:.3f}".format(np.sum(eff_lum_del))),15)+format2_6(str("{0:.3f}".format(np.sum(eff_lum_rec))),15)+"\n")	
 	
 	if data_type == "Sim":
-		w.write("#   File"+format2_6("Filename",40)+format2_6("TotalEvents",15)+format2_6("ValidEvents",15)+"\n")
-		w.write("    File"+format2_6(str(file[-40:-4]),40)+format2_6(str(tot_present),15)+format2_6(str(tot_valid),15)+"\n")
-
+		
 
 		w.write("#   Trig"+format2_6("Name",40)+format2_6("Present",10)+format2_6("Valid",10)+format2_6("Fired",10)+"\n")
 		for trig in trig_dict.keys():
