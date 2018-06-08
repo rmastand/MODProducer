@@ -121,7 +121,7 @@ for file in os.listdir(mod_file_dir):
 	w.writelines([item for item in lines[:-1]])
 	
 	if data_type == "Data":
-		w.write("#        Trig"+format2_6("Name",40)+format2_6("Present",9)+format2_6("Valid",7)+format2_6("Fired",7)+format2_6("AvePrescale",14)+format2_6("EffLumiDel",13)+format2_6("EffLumiRec",20)+"\n")
+		w.write("#        Trig"+format2_6("Name",40)+format2_6("Present",13)+format2_6("Valid",12)+format2_6("Fired",12)+format2_6("EffLumiDel",13)+format2_6("EffLumiRec",20)+format2_6("AvePrescale",14)+"\n")
 		for trig in trig_dict.keys():
 			eff_lum_del = []
 			eff_lum_rec = []
@@ -133,7 +133,7 @@ for file in os.listdir(mod_file_dir):
 					eff_lum_del.append(0.000)
 					eff_lum_rec.append(0.000)
 
-			w.write("         Trig"+format2_6(trig,40)+format2_6(str(trig_dict[trig]["present"]),9)+format2_6(str(trig_dict[trig]["present_valid"]),7)+format2_6(str(trig_dict[trig]["present_valid_fired"]),7)+format2_6(str("{0:.3f}".format(np.mean(trig_dict[trig]["avg_prescale"]))),14)+format2_6(str("{0:.3f}".format(np.sum(eff_lum_del))),13)+format2_6(str("{0:.3f}".format(np.sum(eff_lum_rec))),20)+"\n")	
+			w.write("         Trig"+format2_6(trig,40)+format2_6(str(trig_dict[trig]["present"]),13)+format2_6(str(trig_dict[trig]["present_valid"]),12)+format2_6(str(trig_dict[trig]["present_valid_fired"]),12)+format2_6(str("{0:.3f}".format(np.sum(eff_lum_del))),13)+format2_6(str("{0:.3f}".format(np.sum(eff_lum_rec))),20)+format2_6(str("{0:.3f}".format(np.mean(trig_dict[trig]["avg_prescale"]))),14)+"\n")	
 	
 	if data_type == "Sim":
 		w.write("#       STrig"+format2_6("Name",40)+format2_6("Present",15)+format2_6("Valid",15)+format2_6("Fired",20)+"\n")
