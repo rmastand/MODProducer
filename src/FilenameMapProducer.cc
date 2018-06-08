@@ -227,15 +227,15 @@ void FilenameMapProducer::endJob() {
 	
    if (dataType_ == "Sim") {
 	   
-	   statsOutput_ << "#   File                                Filename    TotalEvents    ValidEvents   CrossSection" << endl;
+	   statsOutput_ << "#        File                                Filename    TotalEvents    ValidEvents        CrossSection" << endl;
    	    //string crossSec = std::to_string(crossSection);
    	    //crossSec.erase(crossSec.find_last_not_of("0")+1,std::string::npos);
-	   statsOutput_ << fixed << setprecision(3) << "    File"
+	   statsOutput_ << fixed << setprecision(3) << "         File"
 			<< setw(40)  << currentProcessingFilename_.substr(0,currentProcessingFilename_.length()-5)
 			<< setw(15) << totEvents
 		   	// all events for simulated data are valid
 			<< setw(15) << totEvents
-			<< setw(15) << crossSection 
+			<< setw(20) << crossSection 
 			<< endl;   
 	   
 	   
@@ -291,7 +291,7 @@ void FilenameMapProducer::endJob() {
 	
       if (dataType_ == "Sim") {
 	   
-	   statsOutput_ << "# SBlock         RunNum  LumiBlock    Events    Valid?                           CrossSection" << endl;
+	   statsOutput_ << "#      SBlock                RunNum         LumiBlock         Events         Valid?        CrossSection" << endl;
 	
    std::map<std::string, int>::iterator it = lumiNumEvents.begin();
    while (it != lumiNumEvents.end())
@@ -302,12 +302,12 @@ void FilenameMapProducer::endJob() {
 	    
 	        //string crossSec = std::to_string(crossSection);
    	    	//crossSec.erase(crossSec.find_last_not_of("0")+1,std::string::npos);
-		statsOutput_ <<"  SBlock"
-			     << setw(15)  << fixed << setprecision(3)<< lumiToRun[k]
-			     << setw(10) << lumiToLumiB[k]
-			     << setw(10) << lumiNumEvents[k]
-			     << setw(10) << "1"
-			     << setw(40) << crossSection
+		statsOutput_ <<"       SBlock"
+			     << setw(22)  << fixed << setprecision(3)<< lumiToRun[k]
+			     << setw(18) << lumiToLumiB[k]
+			     << setw(15) << lumiNumEvents[k]
+			     << setw(15) << "1"
+			     << setw(20) << crossSection
 			     << endl;   
 		    
 	   
