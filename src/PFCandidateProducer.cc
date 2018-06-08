@@ -278,7 +278,7 @@ void PFCandidateProducer::produce(Event& iEvent, const EventSetup& iSetup) {
 	   }
 	      
 	   // Luminosity Block Ends
-	    output_ << "#   Cond          RunNum        EventNum       LumiBlock             NPV       timestamp        msOffset       validLumi" << endl;
+	    output_ << "#   Cond          RunNum        EventNum       LumiBlock             NPV       Timestamp        msOffset       ValidLumi" << endl;
 	   
 	   if (dataType_=="Data"){
 	   	output_ << "    Cond"
