@@ -114,7 +114,7 @@ for file in os.listdir(mod_file_dir):
 
 
 	w = open(mod_file_dir.replace("MOD","trig")+"/"+str(file[-40:-4])+".trig","w")
-	copyfile(mod_file_dir.replace("MOD","stats")+"/"+str(file[-40:-4])+".trig", mod_file_dir.replace("MOD","trig")+"/"+str(file[-40:-4])+".trig")
+	copyfile(mod_file_dir.replace("MOD","stats")+"/"+str(file[-40:-4])+".stats", mod_file_dir.replace("MOD","trig")+"/"+str(file[-40:-4])+".trig")
 	w.write(first_line.replace("Event","File"))
 	
 		
