@@ -293,8 +293,8 @@ void PFCandidateProducer::produce(Event& iEvent, const EventSetup& iSetup) {
 	   }
 	     
 	   if (dataType_=="Sim"){
-		output_ << "#   Cond          RunNum        EventNum             NPV       timestamp        msOffset       LumiBlock       validLumi    CrossSection" << endl;
-	   	output_ << "    Cond"
+		output_ << "#  SCond          RunNum        EventNum             NPV       timestamp        msOffset       LumiBlock       validLumi    CrossSection" << endl;
+	   	output_ << "   SCond"
 	   		<< setw(16) << runNum
 		        << setw(16) << eventNum
 	   	        << setw(16) << primaryVerticesHandle->size()
