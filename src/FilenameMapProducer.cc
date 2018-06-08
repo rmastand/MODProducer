@@ -244,7 +244,7 @@ void FilenameMapProducer::endJob() {
    
    if (dataType_ == "Data") {
 	   
-	   statsOutput_ << "#  Block         RunNum  LumiBlock    Events    Valid?                           IntLumiDel     IntLumiRec" << endl;
+	   statsOutput_ << "#  Block         RunNum  LumiBlock    Events    Valid?                             IntLumiDel     IntLumiRec" << endl;
 	
    std::map<std::string, int>::iterator it = lumiNumEvents.begin();
    while (it != lumiNumEvents.end())
@@ -264,7 +264,7 @@ void FilenameMapProducer::endJob() {
 		                     << setw(10) << lumiToLumiB[k]
 	   	      		     << setw(10) << lumiNumEvents[k]
 		         	     << setw(10) << "1"
-		         	     << setw(39) << lumiDelData[k]
+		         	     << setw(40) << lumiDelData[k]
 				     << setw(15) << lumiRecData[k]
 	 	          	     << endl;   
 		    
