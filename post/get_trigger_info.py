@@ -117,7 +117,7 @@ for file in os.listdir(mod_file_dir):
 	lines = statsFile.readlines()
 	statsFile.close()
 	
-	w = open(mod_file_dir.replace("MOD","trig")+"/"+str(file[-40:-4])+".trig","a")
+	w = open(mod_file_dir.replace("MOD","trig")+"/"+str(file[-40:-4])+".trig","w")
 	w.writelines([item for item in lines[:-1]])
 	
 	if data_type == "Data":
