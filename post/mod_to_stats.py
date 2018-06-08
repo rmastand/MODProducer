@@ -60,12 +60,12 @@ for mod_orig in os.listdir(input_dir):
 	with open(input_dir+"/"+mod_orig, "rb") as mod_file:
 	    for line in mod_file: 
 		
-		if ("#" not in line.split()) and ("Cond" in line.split()):
+		if ("#" not in line.split()) and (("Cond" in line.split()) or ("SCond" in line.split())):
 			# corresponds to 1 event
 			total_events += 1
 			run = line.split()[1]
 			lumiBlock = line.split()[6]
-			print line
+			
 			if data_type == "Data":
 				try: 
 					luminosity = run_lumi_dict[(run,lumiBlock)]
@@ -75,7 +75,6 @@ for mod_orig in os.listdir(input_dir):
 			if data_type == "Sim":
 				is_valid = True
 				cross_section = line.split()[8]
-				print cross_section
 				
 			if is_valid: valid_events += 1
 			# summing up integrated lumi if the block has not already been counted
