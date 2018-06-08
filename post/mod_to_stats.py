@@ -64,7 +64,7 @@ for mod_orig in os.listdir(input_dir):
 			# corresponds to 1 event
 			total_events += 1
 			run = line.split()[1]
-			lumiBlock = line.split()[6]
+			lumiBlock = line.split()[3]
 			
 			if data_type == "Data":
 				try: 
