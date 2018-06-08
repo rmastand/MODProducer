@@ -47,7 +47,7 @@ for file in os.listdir(mod_file_dir):
 
 			# keeps track of the run, lumiBlock
 			# this should signal each separate event
-			if ("Cond" in line.split()) and ("#" not in line.split()):
+			if (("Cond" in line.split()) or ("SCond" in line.split())) and ("#" not in line.split()):
 				run,lumiBlock = line.split()[1],line.split()[6]
 				tot_present += 1
 
