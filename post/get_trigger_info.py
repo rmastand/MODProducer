@@ -112,9 +112,8 @@ for file in os.listdir(mod_file_dir):
 							trig_dict[line.split()[1]]["good_lumis"].append((run,lumiBlock))
 							trig_dict[line.split()[1]]["good_prescales"].append(float(line.split()[2])*float(line.split()[3]))
 
-
-	w = open(mod_file_dir.replace("MOD","trig")+"/"+str(file[-40:-4])+".trig","w")
 	copyfile(mod_file_dir.replace("MOD","stats")+"/"+str(file[-40:-4])+".stats", mod_file_dir.replace("MOD","trig")+"/"+str(file[-40:-4])+".trig")
+	w = open(mod_file_dir.replace("MOD","trig")+"/"+str(file[-40:-4])+".trig","w")
 	w.write(first_line.replace("Event","File"))
 	
 		
