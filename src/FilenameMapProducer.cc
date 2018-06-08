@@ -208,17 +208,17 @@ void FilenameMapProducer::endJob() {
 
    if (dataType_ == "Data") {
 	   
-	   statsOutput_ << "#   File                                Filename    TotalEvents    ValidEvents     IntLumiDel     IntLumiRec" << endl;
+	   statsOutput_ << "#        File                                Filename    TotalEvents    ValidEvents          IntLumiDel          IntLumiRec" << endl;
    //string LumiTotDel = std::to_string(intLumiTotDel);
    //LumiTotDel.erase(LumiTotDel.find_last_not_of("0")+1,std::string::npos);
    //string LumiTotRec = std::to_string(intLumiTotRec);
    //LumiTotRec.erase(LumiTotRec.find_last_not_of("0")+1,std::string::npos);
-   statsOutput_  << fixed << setprecision(3)<< "    File"
+   statsOutput_  << fixed << setprecision(3)<< "         File"
 	   	<< setw(40) << currentProcessingFilename_.substr(0,currentProcessingFilename_.length()-5)
 		<< setw(15) << totEvents
 	   	<< setw(15) << validEvents
-		<< setw(15) << intLumiTotDel 
-		<< setw(15) << intLumiTotRec
+		<< setw(20) << intLumiTotDel 
+		<< setw(20) << intLumiTotRec
 	 	<< endl;   
 	   
 	   
@@ -244,7 +244,7 @@ void FilenameMapProducer::endJob() {
    
    if (dataType_ == "Data") {
 	   
-	   statsOutput_ << "#  Block                RunNum         LumiBlock         Events         Valid?     IntLumiDel     IntLumiRec" << endl;
+	   statsOutput_ << "#       Block                RunNum         LumiBlock         Events         Valid?          IntLumiDel          IntLumiRec" << endl;
 	
    std::map<std::string, int>::iterator it = lumiNumEvents.begin();
    while (it != lumiNumEvents.end())
@@ -259,25 +259,25 @@ void FilenameMapProducer::endJob() {
    	    		//string LumiRec = std::to_string(lumiRecData[k]);
    	    		//LumiRec.erase(LumiRec.find_last_not_of("0")+1,std::string::npos);
 	
-		        statsOutput_ << fixed << setprecision(3)<<"   Block"
+		        statsOutput_ << fixed << setprecision(3)<<"        Block"
 	   		   	     << setw(22)  << lumiToRun[k]
 		                     << setw(18) << lumiToLumiB[k]
 	   	      		     << setw(15) << lumiNumEvents[k]
 		         	     << setw(15) << "1"
-		         	     << setw(15) << lumiDelData[k]
-				     << setw(15) << lumiRecData[k]
+		         	     << setw(20) << lumiDelData[k]
+				     << setw(20) << lumiRecData[k]
 	 	          	     << endl;   
 		    
 	    }
      		else
 		{
-			statsOutput_ << fixed << setprecision(3) << "   Block"
+			statsOutput_ << fixed << setprecision(3) << "        Block"
 	   		   	     << setw(22)  << lumiToRun[k]
 		                     << setw(18) << lumiToLumiB[k]
 	   	      		     << setw(15) << lumiNumEvents[k]
 		         	     << setw(15) << "0"
-		         	     << setw(15) << "0.000"
-				     << setw(15) << "0.000"
+		         	     << setw(20) << "0.000"
+				     << setw(20) << "0.000"
 	 	          	     << endl;   
 		}
 	      ++it;
