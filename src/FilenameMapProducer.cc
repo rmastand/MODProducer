@@ -264,7 +264,7 @@ void FilenameMapProducer::endJob() {
 		                     << setw(10) << lumiToLumiB[k]
 	   	      		     << setw(10) << lumiNumEvents[k]
 		         	     << setw(10) << "1"
-		         	     << setw(37) << lumiDelData[k]
+		         	     << setw(39) << lumiDelData[k]
 				     << setw(15) << lumiRecData[k]
 	 	          	     << endl;   
 		    
