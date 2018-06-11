@@ -281,14 +281,14 @@ void PFCandidateProducer::produce(Event& iEvent, const EventSetup& iSetup) {
 	    output_ << "#   Cond          RunNum        EventNum       LumiBlock             NPV       Timestamp        msOffset" << endl;
 	   
 
-	output_ << "    Cond"
-		<< setw(16) << runNum
-		<< setw(16) << eventNum
-		<< setw(16) << lumiBlockNumber_
-		<< setw(16) << primaryVerticesHandle->size()
-		<< setw(16) << iEvent.time().unixTime()
-		<< setw(16) << iEvent.time().microsecondOffset()
-		<< endl;   
+		output_ << "    Cond"
+			<< setw(16) << runNum
+			<< setw(16) << eventNum
+			<< setw(16) << lumiBlockNumber_
+			<< setw(16) << primaryVerticesHandle->size()
+			<< setw(16) << iEvent.time().unixTime()
+			<< setw(16) << iEvent.time().microsecondOffset()
+			<< endl;   
 
 	     
 
@@ -354,7 +354,7 @@ void PFCandidateProducer::produce(Event& iEvent, const EventSetup& iSetup) {
 	      pair<int, int> prescale = hltConfig_.prescaleValues(iEvent, iSetup, name);
 	
 	      bool fired = triggerFired(name, ( * trigResults));
-	      if (data_type == "Data") {
+	      if (dataType_ == "Data") {
 		      output_ << "    Trig"
 				  << setw(40) << name
 				  << setw(16) << prescale.first
@@ -362,7 +362,7 @@ void PFCandidateProducer::produce(Event& iEvent, const EventSetup& iSetup) {
 				  << setw(16) << fired
 				  << endl;
 	      }
-             if (data_type == "Sim") {
+             if (dataType_ == "Sim") {
 		      output_ << "   STrig"
 				  << setw(40) << name
 				  << setw(16) << prescale.first
