@@ -125,8 +125,6 @@ for file in os.listdir(mod_file_inpur_dir):
 	file_trig_dict = read_mod_file(mod_file_inpur_dir+"/"+file)
 
 	for trig in file_trig_dict.keys():
-		print trig
-		print cut_trigger_name(trig)
 		if cut_trigger_name(trig) in master_trig_dict.keys():
 			master_trig_dict[cut_trigger_name(trig)]["good_lumis"] = master_trig_dict[cut_trigger_name(trig)]["good_lumis"]+file_trig_dict[trig]["good_lumis"]
 			master_trig_dict[cut_trigger_name(trig)]["good_prescales"] = master_trig_dict[cut_trigger_name(trig)]["good_prescales"]+file_trig_dict[trig]["good_prescales"]
@@ -137,14 +135,6 @@ for file in os.listdir(mod_file_inpur_dir):
 					master_trig_dict[cut_trigger_name(trig)]["fired"][lumi_id] = file_trig_dict[trig]["fired"][lumi_id]
 
 
-
-
-
-for key in master_trig_dict.keys():
-	print "good lumis"
-	print len(master_trig_dict[key]["good_lumis"])
-	print len(set(master_trig_dict[key]["good_lumis"]))
-	print
 
 
 def plot_eff_lumin():
@@ -169,9 +159,10 @@ def plot_eff_lumin():
 	plt.figure()
 	#master_times,master_lumin_rec = (list(t) for t in zip(*sorted(zip(master_times,master_lumin_rec))))
 	#plt.plot(master_times,np.cumsum(master_lumin_rec),label = "recorded")
-	print times
-	print eff_lumin
+	
 	for trig in trigger_time_v_lumin_rec.keys():
+		print times
+		print eff_lumin
 		times,eff_lumin = (list(t) for t in zip(*sorted(zip(trigger_time_v_lumin_rec[trig][0],trigger_time_v_lumin_rec[trig][1]))))
 		plt.plot(times,np.cumsum(eff_lumin),label = trig)
 
