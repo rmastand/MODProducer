@@ -161,9 +161,10 @@ def plot_eff_lumin():
 	#plt.plot(master_times,np.cumsum(master_lumin_rec),label = "recorded")
 	print trigger_time_v_lumin_rec
 	for trig in trigger_time_v_lumin_rec.keys():
-
-		times,eff_lumin = (list(t) for t in zip(*sorted(zip(trigger_time_v_lumin_rec[trig][0],trigger_time_v_lumin_rec[trig][1]))))
-		plt.plot(times,np.cumsum(eff_lumin),label = trig)
+		try:	
+			times,eff_lumin = (list(t) for t in zip(*sorted(zip(trigger_time_v_lumin_rec[trig][0],trigger_time_v_lumin_rec[trig][1]))))
+			plt.plot(times,np.cumsum(eff_lumin),label = trig)
+		except: pass
 
 	plt.xlabel("GPS time ")
 	plt.legend(loc = "upper left")
