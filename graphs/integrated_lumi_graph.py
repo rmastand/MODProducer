@@ -177,6 +177,7 @@ def plot_eff_lumin():
 	plt.xlabel("GPS time ")
 	plt.legend(loc = "upper left")
 	plt.ylabel("integrated luminosity (/ub)")
+	plt.yscale("log")
 	plt.show()
 	plt.savefig("integrated_lumi.png")
 
@@ -203,6 +204,7 @@ def plot_fired_over_eff_lumin():
 	plt.xlabel("GPS time ")
 	plt.legend(loc = "lower left")
 	plt.ylabel("times fired / eff lumin")
+	plt.yscale("log")
 	plt.show()
 	plt.savefig("fired_over_lumin.png")
 
