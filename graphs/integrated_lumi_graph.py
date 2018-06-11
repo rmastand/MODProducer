@@ -169,7 +169,8 @@ def plot_eff_lumin():
 	plt.figure()
 	#master_times,master_lumin_rec = (list(t) for t in zip(*sorted(zip(master_times,master_lumin_rec))))
 	#plt.plot(master_times,np.cumsum(master_lumin_rec),label = "recorded")
-
+	print times
+	print eff_lumin
 	for trig in trigger_time_v_lumin_rec.keys():
 		times,eff_lumin = (list(t) for t in zip(*sorted(zip(trigger_time_v_lumin_rec[trig][0],trigger_time_v_lumin_rec[trig][1]))))
 		plt.plot(times,np.cumsum(eff_lumin),label = trig)
