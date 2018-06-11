@@ -161,11 +161,8 @@ def plot_eff_lumin():
 	#plt.plot(master_times,np.cumsum(master_lumin_rec),label = "recorded")
 	print trigger_time_v_lumin_rec
 	for trig in trigger_time_v_lumin_rec.keys():
-		try:	
-			times,eff_lumin = (list(t) for t in zip(*sorted(zip(trigger_time_v_lumin_rec[trig][0],trigger_time_v_lumin_rec[trig][1]))))
-			plt.plot(times,np.cumsum(eff_lumin),label = trig)
-		except: pass
-
+		times,eff_lumin = (list(t) for t in zip(*sorted(zip(trigger_time_v_lumin_rec[trig][0],trigger_time_v_lumin_rec[trig][1]))))
+		plt.plot(times,np.cumsum(eff_lumin),label = trig)
 	plt.xlabel("GPS time ")
 	plt.legend(loc = "upper left")
 	plt.ylabel("integrated luminosity (/ub)")
@@ -186,13 +183,9 @@ def plot_fired_over_eff_lumin():
 
 	# plots
 	plt.figure()
-	#master_times,master_lumin_rec = (list(t) for t in zip(*sorted(zip(master_times,master_lumin_rec))))
-	#plt.plot(master_times,np.cumsum(master_lumin_rec),label = "recorded")
-
 	for trig in trigger_time_v_fired_lumin.keys():
 		times,fired_lumin = (list(t) for t in zip(*sorted(zip(trigger_time_v_fired_lumin[trig][0],trigger_time_v_fired_lumin[trig][1]))))
 		plt.plot(times,fired_lumin,label = trig)
-
 	plt.xlabel("GPS time ")
 	plt.legend(loc = "lower left")
 	plt.ylabel("times fired / eff lumin")
