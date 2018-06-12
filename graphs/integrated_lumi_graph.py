@@ -17,6 +17,7 @@ plt.rcParams['xtick.labelsize'] = 16
 plt.rcParams['ytick.labelsize'] = 16
 plt.rcParams['legend.fontsize'] = 16
 plt.rcParams['text.usetex'] = True
+plt.rcParams['text.latex.unicode']=True
 plt.rcParams['figure.facecolor'] = "white"
 
 
