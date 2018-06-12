@@ -219,7 +219,7 @@ def lumi_blocks_in_file():
 		lumi_ids = lumi_blocks_in_file_dict[file].keys()
 		lumi_counts = lumi_blocks_in_file_dict[file].values()
 		
-		plt.bar(centers = range(len(lumi_ids)), lumi_counts, align='center', tick_label=lumi_ids)
+		plt.bar(range(len(lumi_ids)), lumi_counts, align='center', tick_label=lumi_ids)
 		
 		plt.show()
 		
