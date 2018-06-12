@@ -169,7 +169,7 @@ def plot_eff_lumin():
 		ttimes,ordered_ids = (list(t) for t in zip(*sorted(zip(master_times,lumis_in_dispay_format))))
 
 		writer.writerow(["# Time-ordered luminosity ids"])  
-		for val in np.cumsum(ordered_ids):
+		for val in ordered_ids:
         		writer.writerow([val])   
 		# for each trigger: sorts all the represented lumiblocks by time, gets the effective luminosity BY LUMI BLOCK INDEX
 		for trig in ordered_triggers[::-1]:
