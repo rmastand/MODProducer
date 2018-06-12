@@ -23,7 +23,7 @@ plt.rc('mathtext', rm='serif')
 #plt.rcParams['text.usetex'] = True
 #plt.rcParams['text.latex.unicode']=True
 plt.rcParams['figure.facecolor'] = "white"
-
+plt.tight_layout()
 logo_location = "/Users/mod/CMSOpenData/MODProducer/graphs/mod_logo.png"
 
 logo_text = "Preliminary"
@@ -219,14 +219,14 @@ def plot_eff_lumin():
 	
 	
 		
-	plt.xticks(range(len(ordered_ids))[::5], ordered_ids[::5], rotation=45)
+	plt.xticks(range(len(ordered_ids))[::5], ordered_ids[::5], rotation=30)
 	ax = plt.gca()
-        #box = ax.get_position()
-	#ax.set_position([box.x0, box.y0, box.width * 0.8, box.height])
+        box = ax.get_position()
+	ax.set_position([box.x0, box.y0, box.width * 0.8, box.height])
 
 	# Put a legend to the right of the current axis
-	#ax.legend(loc='center left', bbox_to_anchor=(1, 0.5),frameon=False)
-	plt.legend(loc='lower right', frameon=False)
+	ax.legend(loc='center left', bbox_to_anchor=(1, 0.5),frameon=False)
+	
 	
 	ax.add_artist(logo_box())
 
@@ -246,7 +246,7 @@ def plot_fired_over_eff_lumin():
 			trigger_time.append(lumi_id_to_gps_times[lumi_id])
 			eff_lumin = lumi_id_to_lumin[lumi_id][1]/master_trig_dict[trigger]["good_prescales"][i]
 			trigger_fired_lumin.append(float(master_trig_dict[trigger]["fired"][lumi_id])/eff_lumin)
-			trigger_lumi.append(lumi_id)
+			trigger_lumi.append(lumi_id[0]+","+lumi_id[1])
 		trigger_time_v_fired_lumin[trigger] = trigger_time,trigger_fired_lumin,trigger_lumi
 
 	# plots
@@ -262,10 +262,16 @@ def plot_fired_over_eff_lumin():
 
 	plt.xlabel("Run,Lumiblock")
 	plt.legend(loc='lower right', frameon=False)
-	plt.xticks(range(len(fired_lumin))[::10], ordered_ids[::10], rotation=45)
+	plt.xticks(range(len(fired_lumin))[::50], ordered_ids[::50], rotation=30)
 	plt.ylabel("times fired / eff lumin")
 	plt.yscale("log")
 	ax = plt.gca()
+	box = ax.get_position()
+	ax.set_position([box.x0, box.y0, box.width * 0.8, box.height])
+
+	# Put a legend to the right of the current axis
+	ax.legend(loc='center left', bbox_to_anchor=(1, 0.5),frameon=False)
+	
 	ax.add_artist(logo_box())
 	plt.show()
 	plt.savefig("fired_over_lumin.png")
