@@ -203,7 +203,6 @@ def lumi_blocks_in_file():
 	
 	for file in os.listdir(mod_file_inpur_dir):
 		with open(mod_file_inpur_dir+"/"+file) as file:
-			lumi_blocks_in_file_dict[file] = []
 			for line in file:
 				if ("Cond" in line.split()) and ("#" not in line.split()):
 					run,lumiBlock = line.split()[1],line.split()[3]
