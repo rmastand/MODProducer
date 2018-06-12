@@ -177,7 +177,7 @@ def plot_eff_lumin():
 	lumis_in_dispay_format = [x[0]+"\_"+x[1] for x in lumi_id_to_gps_times.keys()]
 	ttimes,ordered_ids = (list(t) for t in zip(*sorted(zip(master_times,lumis_in_dispay_format))))
 
-	
+	print master_time_index
 	for trig in ordered_triggers[::-1]:
 		times,eff_lumin = (list(t) for t in zip(*sorted(zip(trigger_time_v_lumin_rec[trig][0],trigger_time_v_lumin_rec[trig][1]))))
 		overlap = []
@@ -185,6 +185,8 @@ def plot_eff_lumin():
 			if mytime in ttimes:
 				overlap.append(master_time_index[i])
 		print overlap
+		print len(overlap)
+		print len(eff_lumin)
 		plt.plot(overlap,np.cumsum(eff_lumin),label = trig)
 	plt.xlabel("Run,LumiBlock (time-ordered)")
 	
