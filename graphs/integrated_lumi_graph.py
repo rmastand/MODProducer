@@ -17,11 +17,6 @@ plt.rcParams['xtick.labelsize'] = 16
 plt.rcParams['ytick.labelsize'] = 16
 plt.rcParams['legend.fontsize'] = 16
 
-from matplotlib.font_manager import FontProperties
-
-fontP = FontProperties()
-fontP.set_size('small')
-legend([plot1], "title", prop=fontP)
 
 lumibyls_file = sys.argv[1]
 mod_file_inpur_dir = sys.argv[2]
@@ -133,7 +128,7 @@ master_trig_dict = {"HLT_Jet190":{"good_lumis":[],"good_prescales":[],"fired":{}
 					"HLT_Jet110":{"good_lumis":[],"good_prescales":[],"fired":{}},"HLT_Jet80":{"good_lumis":[],"good_prescales":[],"fired":{}},
 						"HLT_Jet60":{"good_lumis":[],"good_prescales":[],"fired":{}},
 						"HLT_Jet30":{"good_lumis":[],"good_prescales":[],"fired":{}},"HLT_Jet300":{"good_lumis":[],"good_prescales":[],"fired":{}}}
-
+ordered_triggers = ["HLT_Jet30","HLT_Jet60","HLT_Jet80","HLT_Jet110","HLT_Jet150","HLT_Jet190","HLT_Jet240","HLT_Jet300","HLT_Jet370"]
 
 
 for file in os.listdir(mod_file_inpur_dir):
@@ -175,7 +170,7 @@ def plot_eff_lumin():
 	plt.figure()
 	#master_times,master_lumin_rec = (list(t) for t in zip(*sorted(zip(master_times,master_lumin_rec))))
 	#plt.plot(master_times,np.cumsum(master_lumin_rec),label = "recorded")
-	for trig in trigger_time_v_lumin_rec.keys():
+	for trig in ordered_triggers:
 		times,eff_lumin = (list(t) for t in zip(*sorted(zip(trigger_time_v_lumin_rec[trig][0],trigger_time_v_lumin_rec[trig][1]))))
 		plt.plot(times,np.cumsum(eff_lumin),label = trig)
 	plt.xlabel("GPS time ")
@@ -191,12 +186,17 @@ def plot_eff_lumin():
 		   time.mktime(datetime.datetime(2011,10,16).timetuple())]
 	ax = plt.gca()
 	ax.set(xticks = x_ticks, xticklabels = x_tick_labels)
+        box = ax.get_position()
+	ax.set_position([box.x0, box.y0, box.width * 0.8, box.height])
 
-	plt.legend(loc = "upper left")
+	# Put a legend to the right of the current axis
+	ax.legend(loc='center left', bbox_to_anchor=(1, 0.5))
+	
 	plt.ylabel("integrated luminosity (/ub)")
 	plt.yscale("log")
 	plt.show()
 	plt.savefig("integrated_lumi.png")
+	
 
 def plot_fired_over_eff_lumin():
 	trigger_time_v_fired_lumin = {}
