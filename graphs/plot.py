@@ -259,7 +259,7 @@ def graph_eff_lumin():
 	ax = plt.gca()
 	
 	ax.add_artist(logo_box())
-	plt.ylabel("Effective Luminosity (/ub)")
+	plt.ylabel("Effective Luminosity +r"$ub^{-1}$")
 	plt.yscale("log")
 	plt.show()
 	plt.savefig("integrated_lumi.png")
@@ -292,7 +292,7 @@ def graph_fired_over_eff_lumin():
 	plt.xlabel("Run,Lumiblock")
 
 	plt.xticks(range(len(lines[0].split(",")))[::5],lines[0].split(",")[::5], rotation=30)
-	plt.ylabel("times fired / eff lumin")
+	plt.ylabel("Times Fired / Effective Luminosity (ub)")
 	plt.yscale("log")
 	ax = plt.gca()
 	box = ax.get_position()
