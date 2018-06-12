@@ -180,7 +180,7 @@ def plot_eff_lumin():
 	master_time_index = range(len(master_times))
 	plt.plot(master_time_index,np.cumsum(master_lumin_rec),label = "Total")
 	
-	lumis_in_dispay_format = [x[0]+"-"+x[1] for x in lumi_id_to_gps_times.keys()]
+	lumis_in_dispay_format = ["$"+x[0]+"-"+x[1]+"$" for x in lumi_id_to_gps_times.keys()]
 	ttimes,ordered_ids = (list(t) for t in zip(*sorted(zip(master_times,lumis_in_dispay_format))))
 
 	print master_time_index
