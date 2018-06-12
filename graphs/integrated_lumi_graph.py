@@ -175,6 +175,7 @@ def plot_fired_over_eff_lumin():
 	for trigger in master_trig_dict.keys():
 		trigger_time = []
 		trigger_fired_lumin = []
+		trigger_lumi = []
 		for i,lumi_id in enumerate(master_trig_dict[trigger]["good_lumis"]):
 			trigger_time.append(lumi_id_to_gps_times[lumi_id])
 			eff_lumin = lumi_id_to_lumin[lumi_id][1]/master_trig_dict[trigger]["good_prescales"][i]
@@ -186,12 +187,16 @@ def plot_fired_over_eff_lumin():
 	for trig in trigger_time_v_fired_lumin.keys():
 		times,fired_lumin = (list(t) for t in zip(*sorted(zip(trigger_time_v_fired_lumin[trig][0],trigger_time_v_fired_lumin[trig][1]))))
 		plt.plot(times,fired_lumin,label = trig)
+		#plt.plot(fired_lumin,label = trig)
 	plt.xlabel("GPS time ")
 	plt.legend(loc = "lower left")
 	plt.ylabel("times fired / eff lumin")
 	plt.yscale("log")
 	plt.show()
 	plt.savefig("fired_over_lumin.png")
+	
+def lumi_blocks_in_file():
+	pass
 
 plot_eff_lumin()
 plot_fired_over_eff_lumin()
