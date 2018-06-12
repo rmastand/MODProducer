@@ -171,9 +171,9 @@ def plot_eff_lumin():
 
 	# plots
 	plt.figure()
-	#master_times,master_lumin_rec = (list(t) for t in zip(*sorted(zip(master_times,master_lumin_rec))))
-	#plt.plot(master_times,np.cumsum(master_lumin_rec),label = "recorded")
-	for trig in ordered_triggers:
+	master_times,master_lumin_rec = (list(t) for t in zip(*sorted(zip(master_times,master_lumin_rec))))
+	plt.plot(master_times,np.cumsum(master_lumin_rec),label = "Total")
+	for trig in ordered_triggers[::-1]:
 		times,eff_lumin = (list(t) for t in zip(*sorted(zip(trigger_time_v_lumin_rec[trig][0],trigger_time_v_lumin_rec[trig][1]))))
 		times,ordered_ids = (list(t) for t in zip(*sorted(zip(trigger_time_v_lumin_rec[trig][0],trigger_time_v_lumin_rec[trig][2]))))
 
@@ -182,7 +182,7 @@ def plot_eff_lumin():
 	
 	
 		
-	plt.xticks(range(len(ordered_ids)), ordered_ids, rotation='vertical')
+	plt.xticks(range(len(ordered_ids))[::10], ordered_ids[::10], rotation='vertical')
 	ax = plt.gca()
         box = ax.get_position()
 	ax.set_position([box.x0, box.y0, box.width * 0.8, box.height])
