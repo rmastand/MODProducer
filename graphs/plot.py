@@ -278,7 +278,7 @@ def graph_fired_over_eff_lumin():
 	
 	plt.figure()
 	color_index = 0
-	for trig in ordered_triggers:	
+	for trig in rev_ordered_triggers:	
 		index = [int(x) for x in lines[color_index*3+1].split(",")]
 		yaxis = [float(x) for x in lines[color_index*3+2].split(",")]
 		plt.text(color_index,color_index,trig.replace("_"," "),color = colors[color_index])
