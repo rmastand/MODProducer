@@ -217,7 +217,6 @@ def lumi_blocks_in_file():
 			for line in file:
 				if ("Cond" in line.split()) and ("#" not in line.split()):
 					run,lumiBlock = line.split()[1],line.split()[3]
-					print str(file)
 					print run,lumiBlock
 					try:
 						lumi_blocks_in_file_dict[filename][run+"_"+lumiBlock] += 1
@@ -238,7 +237,7 @@ def lumi_blocks_in_file():
 
 	
 
-plot_eff_lumin()
+#plot_eff_lumin()
 plot_fired_over_eff_lumin()
 # currently i am NOT checking for validity for this last one
 lumi_blocks_in_file()
