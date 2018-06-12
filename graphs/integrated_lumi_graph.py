@@ -364,6 +364,7 @@ def plot_eff_lumin():
 		
 	# plots
 	plt.figure(figsize=(4,2)) 
+	ax = plt.gca()
 	ttimes,master_lumin_rec = (list(t) for t in zip(*sorted(zip(master_times,master_lumin_rec))))
 	master_time_index = range(len(master_times))
 	plt.plot(master_time_index,np.cumsum(master_lumin_rec),label = "Total")
