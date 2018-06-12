@@ -205,8 +205,8 @@ def plot_fired_over_eff_lumin():
 		new_times, ordered_ids = (list(t) for t in zip(*sorted(zip(trigger_time_v_fired_lumin[trig][0],trigger_time_v_fired_lumin[trig][2]))))
 		
 		plt.plot(range(len(fired_lumin)),fired_lumin,label = trig)
-		plt.plot(fired_lumin,label = trig)
-	plt.xlabel("GPS time ")
+
+	plt.xlabel("Run,Lumiblock")
 	plt.legend(loc = "lower left")
 	plt.xticks(range(len(fired_lumin))[::10], ordered_ids[::10], rotation='vertical')
 	plt.ylabel("times fired / eff lumin")
