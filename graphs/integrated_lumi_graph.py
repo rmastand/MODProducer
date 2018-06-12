@@ -34,7 +34,7 @@ logo_text = "Preliminary"
 def logo_box():
         
         logo_offset_image = OffsetImage(read_png(get_sample_data(logo_location, asfileobj=False)), zoom=0.25, resample=1, dpi_cor=1)
-        text_box = TextArea(logo_text, textprops=dict(color='#444444', fontsize=50, weight='bold'))
+        text_box = TextArea(logo_text, textprops=dict(color='#444444', fontsize=20, weight='bold'))
 
         logo_and_text_box = HPacker(children=[logo_offset_image, text_box], align="center", pad=0, sep=25)
 
@@ -200,12 +200,12 @@ def plot_eff_lumin():
 		master_lumin_rec.append(lumi_id_to_lumin[lumi_id][1]) 
 		
 	# plots
-	plt.figure(figsize=(8,4)) 
+	plt.figure(figsize=(4,2)) 
 	ttimes,master_lumin_rec = (list(t) for t in zip(*sorted(zip(master_times,master_lumin_rec))))
 	master_time_index = range(len(master_times))
 	plt.plot(master_time_index,np.cumsum(master_lumin_rec),label = "Total")
 	
-	lumis_in_dispay_format = [x[0]+x[1] for x in lumi_id_to_gps_times.keys()]
+	lumis_in_dispay_format = [x[0]+","+x[1] for x in lumi_id_to_gps_times.keys()]
 	ttimes,ordered_ids = (list(t) for t in zip(*sorted(zip(master_times,lumis_in_dispay_format))))
 
 	print master_time_index
@@ -303,6 +303,6 @@ def lumi_blocks_in_file():
 	
 
 plot_eff_lumin()
-#plot_fired_over_eff_lumin()
+plot_fired_over_eff_lumin()
 # currently i am NOT checking for validity for this last one
 #lumi_blocks_in_file()
