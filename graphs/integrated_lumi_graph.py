@@ -395,7 +395,7 @@ def plot_eff_lumin():
             	y = np.cumsum(eff_lumin),
 		    text=trig,#'this this is a very, very long text',
 		    va = 'bottom',
-		    axes = ax,color = colors[i] ##calls ax.add_artist in __init__
+		    axes = ax,color = colors[j] ##calls ax.add_artist in __init__
 		 )
 		j += 1
 	plt.xlabel("Run:LumiBlock")
