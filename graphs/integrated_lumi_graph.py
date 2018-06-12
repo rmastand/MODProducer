@@ -388,7 +388,9 @@ def plot_eff_lumin():
 		for i,mytime in enumerate(ttimes):
 			if mytime in times:
 				overlap.append(master_time_index[i])
-		
+		print i
+		print colors
+		print colors[i]
 		plt.plot(overlap,np.cumsum(eff_lumin),colors[i],label = trig)
 		text = CurvedText(
             	x = overlap,
