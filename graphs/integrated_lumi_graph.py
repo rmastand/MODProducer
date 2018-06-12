@@ -20,6 +20,8 @@ plt.rc('mathtext', rm='serif')
 #plt.rcParams['text.usetex'] = True
 #plt.rcParams['text.latex.unicode']=True
 plt.rcParams['figure.facecolor'] = "white"
+import matplotlib.ticker
+matplotlib.ticker._mathdefault = lambda x: '\\mathdefault{%s}'%x
 
 
 lumibyls_file = sys.argv[1]
@@ -197,7 +199,7 @@ def plot_eff_lumin():
 	
 	
 		
-	plt.xticks(range(len(ordered_ids))[::50], ordered_ids[::50], rotation='vertical')
+	plt.xticks(range(len(ordered_ids))[::5], ordered_ids[::5], rotation=45)
 	ax = plt.gca()
         box = ax.get_position()
 	ax.set_position([box.x0, box.y0, box.width * 0.8, box.height])
