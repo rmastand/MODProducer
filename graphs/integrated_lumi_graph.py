@@ -208,9 +208,7 @@ def plot_fired_over_eff_lumin():
 		plt.plot(fired_lumin,label = trig)
 	plt.xlabel("GPS time ")
 	plt.legend(loc = "lower left")
-	ax = plt.gca()
-	print ordered_ids, ordered_ids
-	ax.set(xticks = range(len(fired_lumin)), xticklabels = ordered_ids)
+	plt.xticks(range(len(fired_lumin))[::10], ordered_ids[::10], rotation='vertical')
 	plt.ylabel("times fired / eff lumin")
 	plt.yscale("log")
 	plt.show()
@@ -252,4 +250,4 @@ def lumi_blocks_in_file():
 #plot_eff_lumin()
 plot_fired_over_eff_lumin()
 # currently i am NOT checking for validity for this last one
-lumi_blocks_in_file()
+#lumi_blocks_in_file()
