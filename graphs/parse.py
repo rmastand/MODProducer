@@ -158,15 +158,12 @@ def plot_eff_lumin():
 	
 	with open("graphs/plot_eff_lumin.txt", "w") as output:
 		writer = csv.writer(output, lineterminator='\n')
-		writer.writerow("# Total Integrated Luminosity")  
         	writer.writerow(master_time_index)  
 		writer.writerow(np.cumsum(master_lumin_rec))   
 
 		# ordering the luminosity ids to be used as labels
 		lumis_in_dispay_format = [x[0]+":"+x[1] for x in lumi_id_to_gps_times.keys()]
 		ttimes,ordered_ids = (list(t) for t in zip(*sorted(zip(master_times,lumis_in_dispay_format))))
-
-		writer.writerow("# Time-ordered luminosity ids")  
 		writer.writerow(ordered_ids)   
 		# for each trigger: sorts all the represented lumiblocks by time, gets the effective luminosity BY LUMI BLOCK INDEX
 		for trig in ordered_triggers[::-1]:
@@ -174,8 +171,7 @@ def plot_eff_lumin():
 			overlap = []
 			for i,mytime in enumerate(ttimes):
 				if mytime in times:
-					overlap.append(master_time_index[i])
-			writer.writerow("#"+trig)  		
+					overlap.append(master_time_index[i]) 		
 			writer.writerow(overlap)  
 			writer.writerow(np.cumsum(eff_lumin)) 
 
@@ -194,10 +190,10 @@ def plot_fired_over_eff_lumin():
 
 	with open("graphs/plot_fired_over_lumin.txt", "w") as output:
 		writer = csv.writer(output, lineterminator='\n')
-		for trig in ordered_triggers:
+		for trig in ordered_triggers[::-1]:
 			new_times,fired_lumin = (list(t) for t in zip(*sorted(zip(trigger_time_v_fired_lumin[trig][0],trigger_time_v_fired_lumin[trig][1]))))
 			new_times, ordered_ids = (list(t) for t in zip(*sorted(zip(trigger_time_v_fired_lumin[trig][0],trigger_time_v_fired_lumin[trig][2]))))
-			writer.writerow("#"+trig)  
+			
 			writer.writerow(ordered_ids) 
 			writer.writerow(range(len(fired_lumin)))  
 			writer.writerow(fired_lumin) 
