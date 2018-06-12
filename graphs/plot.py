@@ -259,7 +259,7 @@ def graph_eff_lumin():
 	ax = plt.gca()
 	
 	ax.add_artist(logo_box())
-	plt.ylabel("Effective Luminosity +r"$ub^{-1}$")
+	plt.ylabel("Effective Luminosity " +r"$ub^{-1}$")
 	plt.yscale("log")
 	plt.show()
 	plt.savefig("integrated_lumi.png")
