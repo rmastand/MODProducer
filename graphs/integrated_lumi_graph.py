@@ -66,7 +66,7 @@ def read_mod_file(mod_file):
 			# keeps track of the run, lumiBlock
 			# this should signal each separate event
 			if ("Cond" in line.split()) and ("#" not in line.split()):
-				run,lumiBlock = line.split()[1],line.split()[6]
+				run,lumiBlock = line.split()[1],line.split()[3]
 
 			if ("Trig" in line.split()) and ("#" not in line.split()):
 				# all within 1 event
@@ -196,7 +196,28 @@ def plot_fired_over_eff_lumin():
 	plt.savefig("fired_over_lumin.png")
 	
 def lumi_blocks_in_file():
-	pass
+	import pandas as pd
+	from collections import Counter
+	# keys = mod files, values = dict
+		# keys = lumi block id, values = counts
+	lumi_blocks_in_file_dict = {}
+	
+	for file in os.listdir(mod_file_inpur_dir):
+		with open(mod_file_inpur_dir+"/"+file) as file:
+			lumi_blocks_in_file_dict[file] = []
+			for line in file:
+				if ("Cond" in line.split()) and ("#" not in line.split()):
+					run,lumiBlock = line.split()[1],line.split()[3]
+					lumi_blocks_in_file_dict[file].append(run+"_"+lumiBlock)
+					
+	
+	for file in lumi_blocks_in_file_dict.keys():
+		letter_counts = Counter(lumi_blocks_in_file_dict[file])
+		df = pandas.DataFrame.from_dict(letter_counts, orient='index')
+		df.plot(kind='bar')
+		
+	
 
 plot_eff_lumin()
 plot_fired_over_eff_lumin()
+lumi_blocks_in_file()
