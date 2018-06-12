@@ -450,11 +450,11 @@ def plot_fired_over_eff_lumin():
 		#plt.plot(fired_lumin,label = trig)
 		new_times,fired_lumin = (list(t) for t in zip(*sorted(zip(trigger_time_v_fired_lumin[trig][0],trigger_time_v_fired_lumin[trig][1]))))
 		new_times, ordered_ids = (list(t) for t in zip(*sorted(zip(trigger_time_v_fired_lumin[trig][0],trigger_time_v_fired_lumin[trig][2]))))
-		plt.text(j,j,trig.replace("_"," "))
-		plt.plot(range(len(fired_lumin)),fired_lumin)
+		plt.text(j,j,trig.replace("_"," "),color = colors[j])
+		plt.plot(range(len(fired_lumin)),fired_lumin,colors[j])
 		j += 1
 
-	plt.xlabel("Run,Lumiblock (time-ordered)")
+	plt.xlabel("Run,Lumiblock")
 
 	plt.xticks(range(len(fired_lumin))[::5], ordered_ids[::5], rotation=30)
 	plt.ylabel("times fired / eff lumin")
