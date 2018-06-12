@@ -7,6 +7,22 @@ import matplotlib.pyplot as plt
 import os
 
 
+plt.style.use('seaborn-white')
+
+plt.rcParams['font.family'] = 'serif'
+plt.rcParams['font.serif'] = 'Times'
+plt.rcParams['font.size'] = 16
+plt.rcParams['axes.labelsize'] = 16
+plt.rcParams['xtick.labelsize'] = 16
+plt.rcParams['ytick.labelsize'] = 16
+plt.rcParams['legend.fontsize'] = 16
+
+from matplotlib.font_manager import FontProperties
+
+fontP = FontProperties()
+fontP.set_size('small')
+legend([plot1], "title", prop=fontP)
+
 lumibyls_file = sys.argv[1]
 mod_file_inpur_dir = sys.argv[2]
 
@@ -247,7 +263,7 @@ def lumi_blocks_in_file():
 
 	
 
-#plot_eff_lumin()
-plot_fired_over_eff_lumin()
+plot_eff_lumin()
+#plot_fired_over_eff_lumin()
 # currently i am NOT checking for validity for this last one
 #lumi_blocks_in_file()
