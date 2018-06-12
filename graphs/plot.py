@@ -218,6 +218,7 @@ def graph_eff_lumin():
 	eff_lumi_file =  open(plot_eff_lumi_file)
 	lines = eff_lumi_file.readlines()
 	# for the total luminosity file:
+	print lines[0]
 	master_index = [int(x) for x in lines[0]]
 	master_lumin = [float(x) for x in lines[1]]
 	time_ordered_lumi_id = lines[2]
