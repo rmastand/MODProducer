@@ -277,10 +277,10 @@ def graph_fired_over_eff_lumin():
 	
 	plt.figure()
 	color_index = 0
-	x = 10
-	trig_name_positions = {"HLT_Jet30":(x,140),"HLT_Jet60":(x,15),"HLT_Jet80":(x,2),
+	x = 5
+	trig_name_positions = {"HLT_Jet30":(x,160),"HLT_Jet60":(x,12),"HLT_Jet80":(x,3),
 			      "HLT_Jet110":(x,.5),"HLT_Jet150":(x,.12),"HLT_Jet190":(x,.03),
-			      "HLT_Jet240":(x,.01),"HLT_Jet300":(x,.0025),"HLT_Jet370":(x,.001)}
+			      "HLT_Jet240":(x,.01),"HLT_Jet300":(x,.003),"HLT_Jet370":(x,.001)}
 
 	for trig in rev_ordered_triggers:	
 		index = [int(x) for x in lines[color_index*3+1].split(",")]
