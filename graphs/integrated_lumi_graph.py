@@ -176,7 +176,7 @@ def plot_eff_lumin():
 		master_lumin_rec.append(lumi_id_to_lumin[lumi_id][1]) 
 		
 	# plots
-	plt.figure() 
+	plt.figure(figsize=(9,9)) 
 	ttimes,master_lumin_rec = (list(t) for t in zip(*sorted(zip(master_times,master_lumin_rec))))
 	master_time_index = range(len(master_times))
 	plt.plot(master_time_index,np.cumsum(master_lumin_rec),label = "Total")
@@ -199,7 +199,7 @@ def plot_eff_lumin():
 	
 	
 		
-	plt.xticks(range(len(ordered_ids))[::5000], ordered_ids[::5000], rotation='vertical')
+	plt.xticks(range(len(ordered_ids))[::50], ordered_ids[::50], rotation='vertical')
 	ax = plt.gca()
         box = ax.get_position()
 	ax.set_position([box.x0, box.y0, box.width * 0.8, box.height])
