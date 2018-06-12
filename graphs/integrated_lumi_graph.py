@@ -20,8 +20,8 @@ plt.rcParams['xtick.labelsize'] = 14
 plt.rcParams['ytick.labelsize'] = 14
 plt.rcParams['legend.fontsize'] = 24
 plt.rc('mathtext', rm='serif')
-plt.rcParams['text.usetex'] = True
-plt.rcParams['text.latex.unicode']=True
+#plt.rcParams['text.usetex'] = True
+#plt.rcParams['text.latex.unicode']=True
 plt.rcParams['figure.facecolor'] = "white"
 
 logo_location = "/Users/mod/CMSOpenData/MODProducer/graphs/mod_logo.png"
