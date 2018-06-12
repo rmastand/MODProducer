@@ -367,7 +367,7 @@ def plot_eff_lumin():
 	# plots
 	plt.figure(figsize=(4,2)) 
 	ax = plt.gca()
-	i = 0
+	j = 0
 	ttimes,master_lumin_rec = (list(t) for t in zip(*sorted(zip(master_times,master_lumin_rec))))
 	master_time_index = range(len(master_times))
 	plt.plot(master_time_index,np.cumsum(master_lumin_rec),"ro",label = "Total")
@@ -388,10 +388,8 @@ def plot_eff_lumin():
 		for i,mytime in enumerate(ttimes):
 			if mytime in times:
 				overlap.append(master_time_index[i])
-		print i
-		print colors
-		print colors[i]
-		plt.plot(overlap,np.cumsum(eff_lumin),colors[i],label = trig)
+		
+		plt.plot(overlap,np.cumsum(eff_lumin),colors[j],label = trig)
 		text = CurvedText(
             	x = overlap,
             	y = np.cumsum(eff_lumin),
@@ -399,7 +397,7 @@ def plot_eff_lumin():
 		    va = 'bottom',
 		    axes = ax,color = colors[i] ##calls ax.add_artist in __init__
 		 )
-		i += 1
+		j += 1
 	plt.xlabel("Run:LumiBlock")
 	
 	
