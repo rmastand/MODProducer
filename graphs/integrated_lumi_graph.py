@@ -196,8 +196,7 @@ def plot_fired_over_eff_lumin():
 	plt.savefig("fired_over_lumin.png")
 	
 def lumi_blocks_in_file():
-	import pandas as pd
-	from collections import Counter
+	
 	# keys = mod files, values = dict
 		# keys = lumi block id, values = counts
 	lumi_blocks_in_file_dict = {}
@@ -208,16 +207,25 @@ def lumi_blocks_in_file():
 			for line in file:
 				if ("Cond" in line.split()) and ("#" not in line.split()):
 					run,lumiBlock = line.split()[1],line.split()[3]
-					lumi_blocks_in_file_dict[file].append(run+"_"+lumiBlock)
+					try:
+						lumi_blocks_in_file_dict[file][run+"_"+lumiBLock] += 1
+					except KeyError:
+						lumi_blocks_in_file_dict[file][run+"_"+lumiBLock] = 1
+						
 					
 	
 	for file in lumi_blocks_in_file_dict.keys():
-		letter_counts = Counter(lumi_blocks_in_file_dict[file])
-		df = pandas.DataFrame.from_dict(letter_counts, orient='index')
-		df.plot(kind='bar')
+		plt.figure()
+		lumi_ids = lumi_blocks_in_file_dict[file].keys()
+		lumi_counts = lumi_blocks_in_file_dict[file].values()
 		
+		plt.bar(centers = range(len(lumi_ids)), lumi_counts, align='center', tick_label=lumi_ids)
+		
+		plt.show()
+		
+
 	
 
-plot_eff_lumin()
-plot_fired_over_eff_lumin()
+#plot_eff_lumin()
+#plot_fired_over_eff_lumin()
 lumi_blocks_in_file()
