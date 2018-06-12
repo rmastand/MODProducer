@@ -11,7 +11,7 @@ from matplotlib._png import read_png
 from mpl_toolkits.axes_grid.anchored_artists import AnchoredDrawingArea
 from matplotlib.cbook import get_sample_data
 
-colors = ["b","g","r","m","c","y","k"]
+colors = ["b","g","r","m","c","y","k","b","g","r","m","c","y","k"]
 
 plt.rcParams['font.family'] = 'serif'
 plt.rcParams['font.serif'] = 'Times'
