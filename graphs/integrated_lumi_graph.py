@@ -15,18 +15,18 @@ from matplotlib.cbook import get_sample_data
 plt.rcParams['font.family'] = 'serif'
 plt.rcParams['font.serif'] = 'Times'
 plt.rcParams['font.size'] = 48
-plt.rcParams['axes.labelsize'] = 16
+plt.rcParams['axes.labelsize'] = 24
 plt.rcParams['xtick.labelsize'] = 16
 plt.rcParams['ytick.labelsize'] = 16
-plt.rcParams['legend.fontsize'] = 16
+plt.rcParams['legend.fontsize'] = 24
 plt.rc('mathtext', rm='serif')
 #plt.rcParams['text.usetex'] = True
 #plt.rcParams['text.latex.unicode']=True
 plt.rcParams['figure.facecolor'] = "white"
-plt.tight_layout()
+
 logo_location = "/Users/mod/CMSOpenData/MODProducer/graphs/mod_logo.png"
 
-logo_text = "Preliminary"
+logo_text = "Preliminary     CMS 2011 Open Data"
 
 
 def logo_box():
@@ -232,6 +232,7 @@ def plot_eff_lumin():
 
 	plt.ylabel("Effective Luminosity (/ub)")
 	plt.yscale("log")
+	plt.tight_layout()
 	plt.show()
 	plt.savefig("integrated_lumi.png")
 	
@@ -262,7 +263,7 @@ def plot_fired_over_eff_lumin():
 
 	plt.xlabel("Run,Lumiblock")
 	plt.legend(loc='lower right', frameon=False)
-	plt.xticks(range(len(fired_lumin))[::50], ordered_ids[::50], rotation=30)
+	plt.xticks(range(len(fired_lumin))[::5], ordered_ids[::5], rotation=30)
 	plt.ylabel("times fired / eff lumin")
 	plt.yscale("log")
 	ax = plt.gca()
@@ -273,6 +274,7 @@ def plot_fired_over_eff_lumin():
 	ax.legend(loc='center left', bbox_to_anchor=(1, 0.5),frameon=False)
 	
 	ax.add_artist(logo_box())
+	plt.tight_layout()
 	plt.show()
 	plt.savefig("fired_over_lumin.png")
 	
