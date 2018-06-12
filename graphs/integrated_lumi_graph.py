@@ -202,7 +202,7 @@ def logo_box():
 
         logo_and_text_box = HPacker(children=[logo_offset_image, text_box], align="center", pad=0, sep=10)
 
-        anchored_box = AnchoredOffsetbox(loc=2, child=logo_and_text_box, pad=0.2, frameon=False, borderpad=0., bbox_to_anchor=[0.104, .7], bbox_transform = plt.gcf().transFigure)
+        anchored_box = AnchoredOffsetbox(loc=2, child=logo_and_text_box, pad=0.2, frameon=False, borderpad=0., bbox_to_anchor=[0.104, .85], bbox_transform = plt.gcf().transFigure)
        
         return anchored_box
 
@@ -443,17 +443,19 @@ def plot_fired_over_eff_lumin():
 
 	# plots
 	plt.figure()
+	j = 0
 	for trig in ordered_triggers:
 		#times,fired_lumin = (list(t) for t in zip(*sorted(zip(trigger_time_v_fired_lumin[trig][0],trigger_time_v_fired_lumin[trig][1]))))
 		#plt.plot(times,fired_lumin,label = trig)
 		#plt.plot(fired_lumin,label = trig)
 		new_times,fired_lumin = (list(t) for t in zip(*sorted(zip(trigger_time_v_fired_lumin[trig][0],trigger_time_v_fired_lumin[trig][1]))))
 		new_times, ordered_ids = (list(t) for t in zip(*sorted(zip(trigger_time_v_fired_lumin[trig][0],trigger_time_v_fired_lumin[trig][2]))))
-		
-		plt.plot(range(len(fired_lumin)),fired_lumin,label = trig)
+		plt.text(j,j,trig.replace("_"," "))
+		plt.plot(range(len(fired_lumin)),fired_lumin)
+		j += 1
 
 	plt.xlabel("Run,Lumiblock (time-ordered)")
-	plt.legend(loc='lower right', frameon=False)
+
 	plt.xticks(range(len(fired_lumin))[::5], ordered_ids[::5], rotation=30)
 	plt.ylabel("times fired / eff lumin")
 	plt.yscale("log")
@@ -503,6 +505,6 @@ def lumi_blocks_in_file():
 	
 
 plot_eff_lumin()
-#plot_fired_over_eff_lumin()
+plot_fired_over_eff_lumin()
 # currently i am NOT checking for validity for this last one
 #lumi_blocks_in_file()
