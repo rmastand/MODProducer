@@ -271,7 +271,7 @@ Time ordered luminosity ids for all represented lumiblocks within the trigger
 Fired over eff lumi number index
 fired over eff lumi value
 """
-def plot_fired_over_eff_lumin():
+def graph_fired_over_eff_lumin():
 	fired_lumi_file =  open(plot_fired_over_lumi)
 	lines = fired_lumi_file.readlines()
 	
@@ -302,6 +302,6 @@ def plot_fired_over_eff_lumin():
 	
 
 
-plot_eff_lumin()
-plot_fired_over_eff_lumin()
+graph_eff_lumin()
+graph_fired_over_eff_lumin()
 
