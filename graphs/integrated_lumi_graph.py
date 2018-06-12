@@ -18,7 +18,7 @@ plt.rcParams['ytick.labelsize'] = 16
 plt.rcParams['legend.fontsize'] = 16
 #plt.rcParams['text.usetex'] = True
 plt.rcParams['figure.facecolor'] = "white"
-plt.legend(frameon=False)
+
 
 lumibyls_file = sys.argv[1]
 mod_file_inpur_dir = sys.argv[2]
@@ -166,7 +166,6 @@ def plot_eff_lumin():
 		for i,lumi_id in enumerate(master_trig_dict[trigger]["good_lumis"]):
 			trigger_time.append(lumi_id_to_gps_times[lumi_id])
 			trigger_eff_lumin.append(lumi_id_to_lumin[lumi_id][1]/master_trig_dict[trigger]["good_prescales"][i])
-			trigger_lumi_id.append(lumi_id[0]+"_"+lumi_id[1])
 		trigger_time_v_lumin_rec[trigger] = trigger_time,trigger_eff_lumin
 
 	# plots
@@ -192,8 +191,8 @@ def plot_eff_lumin():
 	ax.set_position([box.x0, box.y0, box.width * 0.8, box.height])
 
 	# Put a legend to the right of the current axis
-	ax.legend(loc='center left', bbox_to_anchor=(1, 0.5))
-	
+	ax.legend(loc='center left', bbox_to_anchor=(1, 0.5),frameon=False)
+
 	plt.ylabel("Effective Luminosity (/ub)")
 	plt.yscale("log")
 	plt.show()
