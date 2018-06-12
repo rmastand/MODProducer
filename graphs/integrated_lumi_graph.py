@@ -16,6 +16,7 @@ plt.rcParams['axes.labelsize'] = 16
 plt.rcParams['xtick.labelsize'] = 16
 plt.rcParams['ytick.labelsize'] = 16
 plt.rcParams['legend.fontsize'] = 16
+plt.rcParams['text.usetex'] = True
 
 
 lumibyls_file = sys.argv[1]
@@ -161,10 +162,12 @@ def plot_eff_lumin():
 	for trigger in master_trig_dict.keys():
 		trigger_time = []
 		trigger_eff_lumin = []
+		trigger_lumi_id = []
 		for i,lumi_id in enumerate(master_trig_dict[trigger]["good_lumis"]):
 			trigger_time.append(lumi_id_to_gps_times[lumi_id])
 			trigger_eff_lumin.append(lumi_id_to_lumin[lumi_id][1]/master_trig_dict[trigger]["good_prescales"][i])
-		trigger_time_v_lumin_rec[trigger] = trigger_time,trigger_eff_lumin
+			trigger_lumi_id.append(lumi_id[0]+"_"+lumi_id[1])
+		trigger_time_v_lumin_rec[trigger] = trigger_time,trigger_eff_lumin,trigger_lumi_id
 
 	# plots
 	plt.figure()
@@ -172,27 +175,21 @@ def plot_eff_lumin():
 	#plt.plot(master_times,np.cumsum(master_lumin_rec),label = "recorded")
 	for trig in ordered_triggers:
 		times,eff_lumin = (list(t) for t in zip(*sorted(zip(trigger_time_v_lumin_rec[trig][0],trigger_time_v_lumin_rec[trig][1]))))
-		plt.plot(times,np.cumsum(eff_lumin),label = trig)
-	plt.xlabel("GPS time ")
-	
-	x_tick_labels = ["14 Mar", "21 May", "28 Jun","7 Aug","25 Sep", "16 Oct"]
-	
+		times,ordered_ids = (list(t) for t in zip(*sorted(zip(trigger_time_v_lumin_rec[trig][0],trigger_time_v_lumin_rec[trig][2]))))
 
-	x_ticks = [time.mktime(datetime.datetime(2011,3,14).timetuple()),
-		   time.mktime(datetime.datetime(2011,5,21).timetuple()),
-		   time.mktime(datetime.datetime(2011,6,28).timetuple()),
-		   time.mktime(datetime.datetime(2011,8,7).timetuple()),
-		   time.mktime(datetime.datetime(2011,9,25).timetuple()),
-		   time.mktime(datetime.datetime(2011,10,16).timetuple())]
+		plt.plot(range(len(np.cumsum(eff_lumin))),np.cumsum(eff_lumin),label = trig)
+	plt.xlabel("LumiBlock")
+	
+	
 	ax = plt.gca()
-	ax.set(xticks = x_ticks, xticklabels = x_tick_labels)
+	ax.set(xticks = range(len(ordered_ids)), xticklabels = ordered_ids,rotation="vertical")
         box = ax.get_position()
 	ax.set_position([box.x0, box.y0, box.width * 0.8, box.height])
 
 	# Put a legend to the right of the current axis
 	ax.legend(loc='center left', bbox_to_anchor=(1, 0.5))
 	
-	plt.ylabel("integrated luminosity (/ub)")
+	plt.ylabel("Effective Luminosity (/ub)")
 	plt.yscale("log")
 	plt.show()
 	plt.savefig("integrated_lumi.png")
