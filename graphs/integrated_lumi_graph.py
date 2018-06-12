@@ -364,7 +364,7 @@ def plot_eff_lumin():
 		master_lumin_rec.append(lumi_id_to_lumin[lumi_id][1]) 
 		
 	# plots
-	plt.figure(figsize=(4,2)) 
+	plt.figure(figsize=(10,10)) 
 	ax = plt.gca()
 	j = 0
 	ttimes,master_lumin_rec = (list(t) for t in zip(*sorted(zip(master_times,master_lumin_rec))))
@@ -505,6 +505,6 @@ def lumi_blocks_in_file():
 	
 
 plot_eff_lumin()
-plot_fired_over_eff_lumin()
+#plot_fired_over_eff_lumin()
 # currently i am NOT checking for validity for this last one
 #lumi_blocks_in_file()
