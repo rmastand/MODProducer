@@ -372,9 +372,9 @@ def plot_eff_lumin():
 	master_time_index = range(len(master_times))
 	plt.plot(master_time_index,np.cumsum(master_lumin_rec),"ro",label = "Total")
 	text = CurvedText(
-            	x = overlap,
-            	y = np.cumsum(eff_lumin),
-		    text=trig,#'this this is a very, very long text',
+            	x = master_time_index,
+            	y = np.cumsum(master_lumin_rec),
+		    text="Total",#'this this is a very, very long text',
 		    va = 'bottom',
 		    axes = ax,color = "r" ##calls ax.add_artist in __init__
 		 )
