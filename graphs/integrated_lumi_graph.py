@@ -200,9 +200,9 @@ def logo_box():
         logo_offset_image = OffsetImage(read_png(get_sample_data(logo_location, asfileobj=False)), zoom=0.25, resample=1, dpi_cor=1)
         text_box = TextArea(logo_text, textprops=dict(color='#444444', fontsize=20, weight='bold'))
 
-        logo_and_text_box = HPacker(children=[logo_offset_image, text_box], align="center", pad=0, sep=25)
+        logo_and_text_box = HPacker(children=[logo_offset_image, text_box], align="center", pad=0, sep=10)
 
-        anchored_box = AnchoredOffsetbox(loc=2, child=logo_and_text_box, pad=0.8, frameon=False, borderpad=0., bbox_to_anchor=[0.104, 1.0], bbox_transform = plt.gcf().transFigure)
+        anchored_box = AnchoredOffsetbox(loc=2, child=logo_and_text_box, pad=0.2, frameon=False, borderpad=0., bbox_to_anchor=[0.104, 1.0], bbox_transform = plt.gcf().transFigure)
        
         return anchored_box
 
