@@ -164,6 +164,10 @@ def plot_eff_lumin():
 		times,eff_lumin = (list(t) for t in zip(*sorted(zip(trigger_time_v_lumin_rec[trig][0],trigger_time_v_lumin_rec[trig][1]))))
 		plt.plot(times,np.cumsum(eff_lumin),label = trig)
 	plt.xlabel("GPS time ")
+	ax = plt.gca()
+	x_tick_labels = ["24 Sep", "1 Oct", "8 Oct", "22 Oct", "29 Oct"]
+	x_ticks = [datetime.datetime(2011,9,24),datetime.datetime(2011,10,1),datetime.datetime(2011,10,8),datetime.datetime(2011,10,22),datetime.datetime(2011,10,29)]
+	ax.set(xticks = x_ticks, xticklabels = x_tick_labels)
 	plt.legend(loc = "upper left")
 	plt.ylabel("integrated luminosity (/ub)")
 	plt.yscale("log")
@@ -227,6 +231,6 @@ def lumi_blocks_in_file():
 
 	
 
-#plot_eff_lumin()
+plot_eff_lumin()
 #plot_fired_over_eff_lumin()
-lumi_blocks_in_file()
+#lumi_blocks_in_file()
