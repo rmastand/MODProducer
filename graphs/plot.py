@@ -218,7 +218,6 @@ def graph_eff_lumin():
 	eff_lumi_file =  open(plot_eff_lumi_file)
 	lines = eff_lumi_file.readlines()
 	# for the total luminosity file:
-	print lines[0]
 	master_index = [int(x) for x in lines[0].split(",")]
 	master_lumin = [float(x) for x in lines[1].split(",")]
 	time_ordered_lumi_id = lines[2].split(",")
@@ -278,10 +277,14 @@ def graph_fired_over_eff_lumin():
 	
 	plt.figure()
 	color_index = 0
+	trig_name_positions = {"HLT_Jet30":(50,120),"HLT_Jet60":(50,100),"HLT_Jet80":(50,20),
+			      "HLT_Jet110":(50,.5),"HLT_Jet150":(50,.15),"HLT_Jet190":(50,.04),
+			      "HLT_Jet240":(50,.01),"HLT_Jet300":(50,.002),"HLT_Jet370":(50,.001)}
+
 	for trig in rev_ordered_triggers:	
 		index = [int(x) for x in lines[color_index*3+1].split(",")]
 		yaxis = [float(x) for x in lines[color_index*3+2].split(",")]
-		plt.text(color_index,color_index,trig.replace("_"," "),color = colors[color_index])
+		plt.text(trig_name_positions[trig][0],trig_name_positions[trig][1],trig.replace("_"," "),color = colors[color_index])
 		plt.plot(index,yaxis,colors[color_index])
 		color_index += 1
 
