@@ -239,5 +239,5 @@ def lumi_blocks_in_file():
 	
 
 plot_eff_lumin()
-#plot_fired_over_eff_lumin()
+plot_fired_over_eff_lumin()
 lumi_blocks_in_file()
