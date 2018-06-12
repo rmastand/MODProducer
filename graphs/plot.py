@@ -1,17 +1,22 @@
 import numpy as np
-import datetime
-import time
 import sys
-import ast
 import matplotlib.pyplot as plt
-import os
-
 from matplotlib.offsetbox import TextArea, DrawingArea, OffsetImage, AnnotationBbox, AnchoredOffsetbox, HPacker
 from matplotlib._png import read_png
 from mpl_toolkits.axes_grid.anchored_artists import AnchoredDrawingArea
 from matplotlib.cbook import get_sample_data
+from matplotlib import patches
+from matplotlib import text as mtext
+import math
+
+plot_eff_lumi_file = sys.argv[1]
+plot_fired_over_lumi = sys.argv[2]
+logo_location = "/Users/mod/CMSOpenData/MODProducer/graphs/mod_logo.png"
 
 colors = ["b","g","orange","purple","c","maroon","limegreen","deeppink","orangered"]
+logo_text = "Preliminary     CMS 2011 Open Data"
+rev_ordered_triggers = ["HLT_Jet30","HLT_Jet60","HLT_Jet80","HLT_Jet110","HLT_Jet150","HLT_Jet190","HLT_Jet240","HLT_Jet300","HLT_Jet370"][::-1]
+
 
 plt.rcParams['font.family'] = 'serif'
 plt.rcParams['font.size'] = 16
@@ -21,20 +26,10 @@ plt.rcParams['xtick.labelsize'] = 14
 plt.rcParams['ytick.labelsize'] = 14
 plt.rcParams['legend.fontsize'] = 24
 plt.rc('mathtext', rm='serif')
-#plt.rcParams['text.usetex'] = True
-#plt.rcParams['text.latex.unicode']=True
 plt.rcParams['figure.facecolor'] = "white"
 
-logo_location = "/Users/mod/CMSOpenData/MODProducer/graphs/mod_logo.png"
 
-logo_text = "Preliminary     CMS 2011 Open Data"
-
-from matplotlib import pyplot as plt
-from matplotlib import patches
-from matplotlib import text as mtext
-import numpy as np
-import math
-
+# https://stackoverflow.com/questions/19353576/curved-text-rendering-in-matplotlib
 class CurvedText(mtext.Text):
     """
     A text object that follows an arbitrary curve.
@@ -199,227 +194,69 @@ def logo_box():
         
         logo_offset_image = OffsetImage(read_png(get_sample_data(logo_location, asfileobj=False)), zoom=0.25, resample=1, dpi_cor=1)
         text_box = TextArea(logo_text, textprops=dict(color='#444444', fontsize=20, weight='bold'))
-
         logo_and_text_box = HPacker(children=[logo_offset_image, text_box], align="center", pad=0, sep=10)
-
         anchored_box = AnchoredOffsetbox(loc=2, child=logo_and_text_box, pad=0.2, frameon=False, borderpad=0., bbox_to_anchor=[0.114, .93], bbox_transform = plt.gcf().transFigure)
-       
         return anchored_box
 
 
+"""
+plot_eff_luminosity.txt:
+Total Integrated Luminosity, number index
+Total Integrated Luminosity, cumsum value
+Time ordered luminosity ids for all represented lumiblocks (use for x axis labels)
+For each trigger, going from BIGGEST TO SMALLEST:
+Effective Luminosity, number index
+Effective Luminosity, cumsum value
+"""
 
-
-
-lumibyls_file = sys.argv[1]
-mod_file_inpur_dir = sys.argv[2]
-
-def read_lumi_by_ls(lumibyls_file):
-	"""
-	returns two dicts with keys = (run,lumiBlock)
-	1st values: gps times
-	2nd values: (lumi_delivered, lumi_recorded)
-	"""
-	lumibyls = open(lumibyls_file)
-	lines =  lumibyls.readlines()
-	split_lines = [line.split(",") for line in lines][2:]
-	char = ""
-	lumi_id_to_gps_times = {}
-	lumi_id_to_lumin = {}
-	i = 0
-	while char !="#":
-		run = split_lines[i][0].split(":")[0]
-		lumi = split_lines[i][1].split(":")[0]
-		date = split_lines[i][2].split(" ")[0]
-		tim = split_lines[i][2].split(" ")[1]
-		mdy = [int(x) for x in date.split("/")]
-		hms = [int(x) for x in tim.split(":")]
-		dt = datetime.datetime(mdy[2], mdy[0], mdy[1], hms[0], hms[1],hms[2])
-		lumi_id_to_gps_times[(run,lumi)] = time.mktime(dt.timetuple())
-		lumi_id_to_lumin[(run,lumi)] = (float(split_lines[i][5]),float(split_lines[i][6]))
-		i += 1
-		try:
-			char = split_lines[i][0][0]
-		except: pass
-	return lumi_id_to_gps_times,lumi_id_to_lumin
-
-def is_lumi_valid(lumi_id, lumi_id_to_lumin):
-	"""
-	lumi_id = (run,lumiBlock)
-	"""
-	try:
-		luminosity = lumi_id_to_lumin[lumi_id]
-		return 1
-	except KeyError:
-		pass
-
-lumi_id_to_gps_times,lumi_id_to_lumin = read_lumi_by_ls(lumibyls_file)
-
-
-def read_mod_file(mod_file):
-	"""
-	returns a dict of triggers FOR EACH MOD file
-	keys are triggers names (with versions)
-	subdicts are lists of good lumis the trigger was present for and the corresponding good prescale values
-	"""
-	trig_dict = {}
-
-	with open(mod_file) as file:
-		for line in file:
-			# MOST CODE TAKEN FROM GET_TRIGGER_INFO.py
-			# keeps track of the run, lumiBlock
-			# this should signal each separate event
-			if ("Cond" in line.split()) and ("#" not in line.split()):
-				run,lumiBlock = line.split()[1],line.split()[3]
-
-			if ("Trig" in line.split()) and ("#" not in line.split()):
-				# all within 1 event
-				# given line: [Trig identifier, trig name, prescale1, prescale2, fired?]
-				if line.split()[1] not in trig_dict.keys():
-					trig_dict[line.split()[1]] = {
-								      "good_lumis":[],
-								      # corresponds to the prescale for a given GOOD LUMI BLOCK
-								      "good_prescales":[],
-									  "fired":{}
-
-								     }
-
-					# if the lumi block is valid and if not alredy been analyzed (so present by definition)
-					if is_lumi_valid((run,lumiBlock),lumi_id_to_lumin):
-						if (run,lumiBlock) not in trig_dict[line.split()[1]]["good_lumis"]:
-							trig_dict[line.split()[1]]["good_lumis"].append((run,lumiBlock))
-							trig_dict[line.split()[1]]["good_prescales"].append(float(line.split()[2])*float(line.split()[3]))
-						try:
-							trig_dict[line.split()[1]]["fired"][(run,lumiBlock)]+= int(line.split()[4])
-						except KeyError:
-							trig_dict[line.split()[1]]["fired"][(run,lumiBlock)] = int(line.split()[4])
-
-
-
-				else:
-
-					if is_lumi_valid((run,lumiBlock),lumi_id_to_lumin):
-						if (run,lumiBlock) not in trig_dict[line.split()[1]]["good_lumis"]:
-							trig_dict[line.split()[1]]["good_lumis"].append((run,lumiBlock))
-							trig_dict[line.split()[1]]["good_prescales"].append(float(line.split()[2])*float(line.split()[3]))
-						try:
-							trig_dict[line.split()[1]]["fired"][(run,lumiBlock)]+= int(line.split()[4])
-						except KeyError:
-							trig_dict[line.split()[1]]["fired"][(run,lumiBlock)] = int(line.split()[4])
-
-		return trig_dict
-
-def cut_trigger_name(name):
-	return name.rsplit("_", 1)[0]
-
-
-
-
-# good_lumis,good_prescales
-master_trig_dict = {"HLT_Jet190":{"good_lumis":[],"good_prescales":[],"fired":{}},"HLT_Jet370":{"good_lumis":[],"good_prescales":[],"fired":{}},
-					"HLT_Jet150":{"good_lumis":[],"good_prescales":[],"fired":{}},"HLT_Jet240":{"good_lumis":[],"good_prescales":[],"fired":{}},
-					"HLT_Jet110":{"good_lumis":[],"good_prescales":[],"fired":{}},"HLT_Jet80":{"good_lumis":[],"good_prescales":[],"fired":{}},
-						"HLT_Jet60":{"good_lumis":[],"good_prescales":[],"fired":{}},
-						"HLT_Jet30":{"good_lumis":[],"good_prescales":[],"fired":{}},"HLT_Jet300":{"good_lumis":[],"good_prescales":[],"fired":{}}}
-ordered_triggers = ["HLT_Jet30","HLT_Jet60","HLT_Jet80","HLT_Jet110","HLT_Jet150","HLT_Jet190","HLT_Jet240","HLT_Jet300","HLT_Jet370"]
-
-
-for file in os.listdir(mod_file_inpur_dir):
-
-	file_trig_dict = read_mod_file(mod_file_inpur_dir+"/"+file)
-
-	for trig in file_trig_dict.keys():
-		if cut_trigger_name(trig) in master_trig_dict.keys():
-			master_trig_dict[cut_trigger_name(trig)]["good_lumis"] = master_trig_dict[cut_trigger_name(trig)]["good_lumis"]+file_trig_dict[trig]["good_lumis"]
-			master_trig_dict[cut_trigger_name(trig)]["good_prescales"] = master_trig_dict[cut_trigger_name(trig)]["good_prescales"]+file_trig_dict[trig]["good_prescales"]
-			for lumi_id in file_trig_dict[trig]["fired"].keys():
-				try:
-					master_trig_dict[cut_trigger_name(trig)]["fired"][lumi_id] += file_trig_dict[trig]["fired"][lumi_id]
-				except KeyError:
-					master_trig_dict[cut_trigger_name(trig)]["fired"][lumi_id] = file_trig_dict[trig]["fired"][lumi_id]
-
-
-
-
-def plot_eff_lumin():
-	# total luminosity, independent of trigger or # of MOD files used
-	
-
-	# finds time vs effective luminosity curves for all triggers while counting a total
-	trigger_time_v_lumin_rec = {}
-	master_lumin_ids = []
-	for trigger in master_trig_dict.keys():
-		trigger_time = []
-		trigger_eff_lumin = []
-		for i,lumi_id in enumerate(master_trig_dict[trigger]["good_lumis"]):
-			if lumi_id not in master_lumin_ids:
-				master_lumin_ids.append(lumi_id)
-			trigger_time.append(lumi_id_to_gps_times[lumi_id])
-			trigger_eff_lumin.append(lumi_id_to_lumin[lumi_id][1]/master_trig_dict[trigger]["good_prescales"][i])
-		trigger_time_v_lumin_rec[trigger] = trigger_time,trigger_eff_lumin
-
-	master_times = []
-	master_lumin_rec = []
-	for lumi_id in master_lumin_ids:
-		master_times.append(lumi_id_to_gps_times[lumi_id])
-		master_lumin_rec.append(lumi_id_to_lumin[lumi_id][1]) 
-		
-	# plots
-	plt.figure(figsize=(10,10)) 
+def graph_eff_lumin():
+	plt.figure() 
 	ax = plt.gca()
-	j = 0
-	ttimes,master_lumin_rec = (list(t) for t in zip(*sorted(zip(master_times,master_lumin_rec))))
-	master_time_index = range(len(master_times))
-	plt.plot(master_time_index,np.cumsum(master_lumin_rec),"ro",label = "Total")
+	color_index = 0
+	
+	
+	eff_lumi_file =  open(plot_eff_lumi_file)
+	lines = eff_lumi_file.readlines()
+	# for the total luminosity file:
+	master_index = [int(x) for x in lines[0]]
+	master_lumin = [float(x) for x in lines[1]]
+	time_ordered_lumi_id = lines[2]
+	plt.plot(master_index,master_lumin,"ro")
 	text = CurvedText(
-            	x = master_time_index[int(len(master_time_index)*(.4)):int(len(master_time_index)*(.6))],
-            	y = np.cumsum(master_lumin_rec)[int(len(master_time_index)*(.4)):int(len(master_time_index)*(.6))],
+            	x = master_index[int(len(master_index)*(.4)):int(len(master_index)*(.6))],
+            	y = np.cumsum(master_lumin)[int(len(master_lumin)*(.4)):int(len(master_lumin)*(.6))],
 		    text="Total Luminosity",#'this this is a very, very long text',
 		    va = 'bottom',
 		    axes = ax,color = "r" ##calls ax.add_artist in __init__
 		 )
 	
-	lumis_in_dispay_format = [x[0]+":"+x[1] for x in lumi_id_to_gps_times.keys()]
-	ttimes,ordered_ids = (list(t) for t in zip(*sorted(zip(master_times,lumis_in_dispay_format))))
-
-	for trig in ordered_triggers[::-1]:
-		times,eff_lumin = (list(t) for t in zip(*sorted(zip(trigger_time_v_lumin_rec[trig][0],trigger_time_v_lumin_rec[trig][1]))))
-		overlap = []
-		for i,mytime in enumerate(ttimes):
-			if mytime in times:
-				overlap.append(master_time_index[i])
-		
-		plt.plot(overlap,np.cumsum(eff_lumin),colors[j],label = trig)
-		if j == 0:
+	for trig_index,trig in enumerate(rev_ordered_triggers):
+		index = [int(x) for x in lines[2*trig_index+3]]
+		eff_lumin = [float(x) for x in lines[2*trig_index+4]]
+		plt.plot(index,eff_lumin,colors[color_index])
+		if color_index == 0: # hacky way to look for the firs trigger -- need to fix!!
 			text = CurvedText(
-			x = overlap[int(len(overlap)*(.6)):int(len(overlap)*(.8))],
-			y = np.cumsum(eff_lumin)[int(len(overlap)*(.6)):int(len(overlap)*(.8))],
+			x = index[int(len(index)*(.6)):int(len(index)*(.8))],
+			y = np.cumsum(eff_lumin)[int(len(eff_lumin)*(.6)):int(len(eff_lumin)*(.8))],
 			    text=trig.replace("_"," "),#'this this is a very, very long text',
 			    va = 'bottom',
-			    axes = ax,color = colors[j] ##calls ax.add_artist in __init__
+			    axes = ax,color = colors[color_index] ##calls ax.add_artist in __init__
 				
 			 )
 		else:
 			text = CurvedText(
-			x = overlap[int(len(overlap)*(.8)):],
-			y = np.cumsum(eff_lumin)[int(len(overlap)*(.8)):],
+			x = overlap[int(len(index)*(.8)):],
+			y = np.cumsum(eff_lumin)[int(len(eff_lumin)*(.8)):],
 			    text=trig.replace("_"," "),#'this this is a very, very long text',
 			    va = 'bottom',
-			    axes = ax,color = colors[j] ##calls ax.add_artist in __init__
+			    axes = ax,color = colors[color_index] ##calls ax.add_artist in __init__
 				
 			 )
-		j += 1
+		color_index += 1
 	plt.xlabel("Run:LumiBlock")
 	
-	
-		
-	plt.xticks(range(len(ordered_ids))[::5], ordered_ids[::5], rotation=30)
+	plt.xticks(range(len(time_ordered_lumi_id))[::5], time_ordered_lumi_id[::5], rotation=30)
 	ax = plt.gca()
-        #box = ax.get_position()
-	#ax.set_position([box.x0, box.y0, box.width * 0.8, box.height])
-
-	# Put a legend to the right of the current axis
-	#ax.legend(loc='center left', bbox_to_anchor=(1, 0.5),frameon=False)
-	
 	
 	ax.add_artist(logo_box())
 	plt.ylabel("Effective Luminosity (/ub)")
@@ -427,36 +264,29 @@ def plot_eff_lumin():
 	plt.show()
 	plt.savefig("integrated_lumi.png")
 	
-
+"""
+plot_fired_over_lumin.txt:
+For each trigger, going from BIGGEST TO SMALLEST:
+Time ordered luminosity ids for all represented lumiblocks within the trigger
+Fired over eff lumi number index
+fired over eff lumi value
+"""
 def plot_fired_over_eff_lumin():
-	trigger_time_v_fired_lumin = {}
-	for trigger in master_trig_dict.keys():
-		trigger_time = []
-		trigger_fired_lumin = []
-		trigger_lumi = []
-		for i,lumi_id in enumerate(master_trig_dict[trigger]["good_lumis"]):
-			trigger_time.append(lumi_id_to_gps_times[lumi_id])
-			eff_lumin = lumi_id_to_lumin[lumi_id][1]/master_trig_dict[trigger]["good_prescales"][i]
-			trigger_fired_lumin.append(float(master_trig_dict[trigger]["fired"][lumi_id])/eff_lumin)
-			trigger_lumi.append(lumi_id[0]+","+lumi_id[1])
-		trigger_time_v_fired_lumin[trigger] = trigger_time,trigger_fired_lumin,trigger_lumi
-
-	# plots
+	fired_lumi_file =  open(plot_fired_over_lumi)
+	lines = fired_lumi_file.readlines()
+	
 	plt.figure()
-	j = 0
-	for trig in ordered_triggers:
-		#times,fired_lumin = (list(t) for t in zip(*sorted(zip(trigger_time_v_fired_lumin[trig][0],trigger_time_v_fired_lumin[trig][1]))))
-		#plt.plot(times,fired_lumin,label = trig)
-		#plt.plot(fired_lumin,label = trig)
-		new_times,fired_lumin = (list(t) for t in zip(*sorted(zip(trigger_time_v_fired_lumin[trig][0],trigger_time_v_fired_lumin[trig][1]))))
-		new_times, ordered_ids = (list(t) for t in zip(*sorted(zip(trigger_time_v_fired_lumin[trig][0],trigger_time_v_fired_lumin[trig][2]))))
-		plt.text(j,j,trig.replace("_"," "),color = colors[j])
-		plt.plot(range(len(fired_lumin)),fired_lumin,colors[j])
-		j += 1
+	color_index = 0
+	for trig in ordered_triggers:	
+		index = [int(x) for x in lines[color_index*3+1]]
+		yaxis = [float(x) for x in lines[color_index*3+2]]
+		plt.text(color_index,color_index,trig.replace("_"," "),color = colors[color_index])
+		plt.plot(index,yaxis,colors[color_index])
+		color_index += 1
 
 	plt.xlabel("Run,Lumiblock")
 
-	plt.xticks(range(len(fired_lumin))[::5], ordered_ids[::5], rotation=30)
+	plt.xticks(range(len(lines[0]))[::5],lines[0], rotation=30)
 	plt.ylabel("times fired / eff lumin")
 	plt.yscale("log")
 	ax = plt.gca()
@@ -470,41 +300,8 @@ def plot_fired_over_eff_lumin():
 	plt.show()
 	plt.savefig("fired_over_lumin.png")
 	
-def lumi_blocks_in_file():
-	
-	# keys = mod files, values = dict
-		# keys = lumi block id, values = counts
-	lumi_blocks_in_file_dict = {}
-	
-	for filename in os.listdir(mod_file_inpur_dir):
-		lumi_blocks_in_file_dict[filename] = {}
-		with open(mod_file_inpur_dir+"/"+filename) as file:
-			
-			for line in file:
-				if ("Cond" in line.split()) and ("#" not in line.split()):
-					run,lumiBlock = line.split()[1],line.split()[3]
-					try:
-						lumi_blocks_in_file_dict[filename][run+"_"+lumiBlock] += 1
-					except KeyError:
-						lumi_blocks_in_file_dict[filename][run+"_"+lumiBlock] = 1
-						
-					
-	
-	for file in lumi_blocks_in_file_dict.keys():
-		plt.figure()
-		lumi_ids = lumi_blocks_in_file_dict[file].keys()
-		lumi_counts = lumi_blocks_in_file_dict[file].values()
-		lumi_ids,lumi_counts = (list(t) for t in zip(*sorted(zip(lumi_ids,lumi_counts))))
-		print lumi_ids
-		mybar = plt.bar(range(len(lumi_ids)), lumi_counts, align='center', tick_label=lumi_ids)
-		for label in mybar.ax.xaxis.get_ticklabels()[::20]:
-   			label.set_visible(False)
-		plt.show()
-		
 
-	
 
 plot_eff_lumin()
-#plot_fired_over_eff_lumin()
-# currently i am NOT checking for validity for this last one
-#lumi_blocks_in_file()
+plot_fired_over_eff_lumin()
+
