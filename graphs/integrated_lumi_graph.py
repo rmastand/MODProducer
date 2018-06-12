@@ -26,7 +26,7 @@ plt.rc('mathtext', rm='serif')
 #plt.rcParams['text.latex.unicode']=True
 plt.rcParams['figure.facecolor'] = "white"
 
-logo_location = "graphs/mod_logo.png"
+logo_location = "/Users/mod/CMSOpenData/MODProducer/graphs/mod_logo.png"
 
 logo_text = "Preliminary"
 
