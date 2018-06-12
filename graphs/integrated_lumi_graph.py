@@ -202,7 +202,7 @@ def logo_box():
 
         logo_and_text_box = HPacker(children=[logo_offset_image, text_box], align="center", pad=0, sep=10)
 
-        anchored_box = AnchoredOffsetbox(loc=2, child=logo_and_text_box, pad=0.2, frameon=False, borderpad=0., bbox_to_anchor=[0.104, 1.0], bbox_transform = plt.gcf().transFigure)
+        anchored_box = AnchoredOffsetbox(loc=0, child=logo_and_text_box, pad=0.2, frameon=False, borderpad=0., bbox_to_anchor=[0.104, 1.0], bbox_transform = plt.gcf().transFigure)
        
         return anchored_box
 
