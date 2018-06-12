@@ -181,8 +181,8 @@ def plot_eff_lumin():
 	for trig in ordered_triggers[::-1]:
 		times,eff_lumin = (list(t) for t in zip(*sorted(zip(trigger_time_v_lumin_rec[trig][0],trigger_time_v_lumin_rec[trig][1]))))
 		overlap = []
-		for i,mytime in enumerate(times):
-			if mytime in ttimes:
+		for i,mytime in enumerate(ttimes):
+			if mytime in times:
 				overlap.append(master_time_index[i])
 		print overlap
 		print len(overlap)
@@ -192,7 +192,7 @@ def plot_eff_lumin():
 	
 	
 		
-	plt.xticks(range(len(ordered_ids))[::500], ordered_ids[::500], rotation='vertical')
+	plt.xticks(range(len(ordered_ids))[::5000], ordered_ids[::5000], rotation='vertical')
 	ax = plt.gca()
         box = ax.get_position()
 	ax.set_position([box.x0, box.y0, box.width * 0.8, box.height])
