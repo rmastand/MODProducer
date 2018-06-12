@@ -219,9 +219,9 @@ def graph_eff_lumin():
 	lines = eff_lumi_file.readlines()
 	# for the total luminosity file:
 	print lines[0]
-	master_index = [int(x) for x in lines[0]]
-	master_lumin = [float(x) for x in lines[1]]
-	time_ordered_lumi_id = lines[2]
+	master_index = [int(x) for x in lines[0].split(",")]
+	master_lumin = [float(x) for x in lines[1].split(",")]
+	time_ordered_lumi_id = lines[2].split(",")
 	plt.plot(master_index,master_lumin,"ro")
 	text = CurvedText(
             	x = master_index[int(len(master_index)*(.4)):int(len(master_index)*(.6))],
@@ -232,8 +232,8 @@ def graph_eff_lumin():
 		 )
 	
 	for trig_index,trig in enumerate(rev_ordered_triggers):
-		index = [int(x) for x in lines[2*trig_index+3]]
-		eff_lumin = [float(x) for x in lines[2*trig_index+4]]
+		index = [int(x) for x in lines[2*trig_index+3].split(",")]
+		eff_lumin = [float(x) for x in lines[2*trig_index+4].split(",")]
 		plt.plot(index,eff_lumin,colors[color_index])
 		if color_index == 0: # hacky way to look for the firs trigger -- need to fix!!
 			text = CurvedText(
@@ -279,15 +279,15 @@ def graph_fired_over_eff_lumin():
 	plt.figure()
 	color_index = 0
 	for trig in ordered_triggers:	
-		index = [int(x) for x in lines[color_index*3+1]]
-		yaxis = [float(x) for x in lines[color_index*3+2]]
+		index = [int(x) for x in lines[color_index*3+1].split(",")]
+		yaxis = [float(x) for x in lines[color_index*3+2].split(",")]
 		plt.text(color_index,color_index,trig.replace("_"," "),color = colors[color_index])
 		plt.plot(index,yaxis,colors[color_index])
 		color_index += 1
 
 	plt.xlabel("Run,Lumiblock")
 
-	plt.xticks(range(len(lines[0]))[::5],lines[0], rotation=30)
+	plt.xticks(range(len(lines[0].split(",")))[::5],lines[0].split(",")[::5], rotation=30)
 	plt.ylabel("times fired / eff lumin")
 	plt.yscale("log")
 	ax = plt.gca()
