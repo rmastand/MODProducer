@@ -163,7 +163,7 @@ def plot_eff_lumin():
 		times,eff_lumin = (list(t) for t in zip(*sorted(zip(trigger_time_v_lumin_rec[trig][0],trigger_time_v_lumin_rec[trig][1]))))
 		plt.plot(times,np.cumsum(eff_lumin),label = trig)
 	plt.xlabel("GPS time ")
-	ax = plt.gca()
+	
 	x_tick_labels = ["14 Mar", "21 May", "28 Jun","7 Aug","25 Sep", "16 Oct"]
 	
 
@@ -173,6 +173,7 @@ def plot_eff_lumin():
 		   time.mktime(datetime.datetime(2011,8,7).timetuple()),
 		   time.mktime(datetime.datetime(2011,9,25).timetuple()),
 		   time.mktime(datetime.datetime(2011,10,16).timetuple())]
+	ax = plt.gca()
 	ax.set(xticks = x_ticks, xticklabels = x_tick_labels)
 
 	plt.legend(loc = "upper left")
@@ -191,16 +192,24 @@ def plot_fired_over_eff_lumin():
 			trigger_time.append(lumi_id_to_gps_times[lumi_id])
 			eff_lumin = lumi_id_to_lumin[lumi_id][1]/master_trig_dict[trigger]["good_prescales"][i]
 			trigger_fired_lumin.append(float(master_trig_dict[trigger]["fired"][lumi_id])/eff_lumin)
-		trigger_time_v_fired_lumin[trigger] = trigger_time,trigger_fired_lumin
+			trigger_lumi.append(lumi_id)
+		trigger_time_v_fired_lumin[trigger] = trigger_time,trigger_fired_lumin,trigger_lumi
 
 	# plots
 	plt.figure()
 	for trig in trigger_time_v_fired_lumin.keys():
-		times,fired_lumin = (list(t) for t in zip(*sorted(zip(trigger_time_v_fired_lumin[trig][0],trigger_time_v_fired_lumin[trig][1]))))
-		plt.plot(times,fired_lumin,label = trig)
+		#times,fired_lumin = (list(t) for t in zip(*sorted(zip(trigger_time_v_fired_lumin[trig][0],trigger_time_v_fired_lumin[trig][1]))))
+		#plt.plot(times,fired_lumin,label = trig)
 		#plt.plot(fired_lumin,label = trig)
+		new_times,fired_lumin = (list(t) for t in zip(*sorted(zip(trigger_time_v_fired_lumin[trig][0],trigger_time_v_fired_lumin[trig][1]))))
+		new_times, ordered_ids = (list(t) for t in zip(*sorted(zip(trigger_time_v_fired_lumin[trig][0],trigger_time_v_fired_lumin[trig][2]))))
+		
+		plt.plot(range(len(fired_lumin)),fired_lumin,label = trig)
+		plt.plot(fired_lumin,label = trig)
 	plt.xlabel("GPS time ")
 	plt.legend(loc = "lower left")
+	ax = plt.gca()
+	ax.set(xticks = ordered_ids, xticklabels = ordered_ids)
 	plt.ylabel("times fired / eff lumin")
 	plt.yscale("log")
 	plt.show()
@@ -213,7 +222,9 @@ def lumi_blocks_in_file():
 	lumi_blocks_in_file_dict = {}
 	
 	for filename in os.listdir(mod_file_inpur_dir):
+		lumi_blocks_in_file_dict[filename] = {}
 		with open(mod_file_inpur_dir+"/"+filename) as file:
+			
 			for line in file:
 				if ("Cond" in line.split()) and ("#" not in line.split()):
 					run,lumiBlock = line.split()[1],line.split()[3]
