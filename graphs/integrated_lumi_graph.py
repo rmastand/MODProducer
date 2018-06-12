@@ -379,7 +379,7 @@ def plot_eff_lumin():
 				overlap.append(master_time_index[i])
 		
 		plt.plot(overlap,np.cumsum(eff_lumin),label = trig)
-		 text = CurvedText(
+		text = CurvedText(
             	x = overlap,
             	y = np.cumsum(eff_lumin),
 		    text=trig,#'this this is a very, very long text',
