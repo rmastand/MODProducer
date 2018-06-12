@@ -14,7 +14,8 @@ from matplotlib.cbook import get_sample_data
 
 plt.rcParams['font.family'] = 'serif'
 plt.rcParams['font.serif'] = 'Times'
-plt.rcParams['font.size'] = 48
+plt.rcParams['font.size'] = 16
+plt.rcParams['font.weight'] = "bold"
 plt.rcParams['axes.labelsize'] = 24
 plt.rcParams['xtick.labelsize'] = 14
 plt.rcParams['ytick.labelsize'] = 14
@@ -393,11 +394,11 @@ def plot_eff_lumin():
 		
 	plt.xticks(range(len(ordered_ids))[::5], ordered_ids[::5], rotation=30)
 	ax = plt.gca()
-        box = ax.get_position()
-	ax.set_position([box.x0, box.y0, box.width * 0.8, box.height])
+        #box = ax.get_position()
+	#ax.set_position([box.x0, box.y0, box.width * 0.8, box.height])
 
 	# Put a legend to the right of the current axis
-	ax.legend(loc='center left', bbox_to_anchor=(1, 0.5),frameon=False)
+	#ax.legend(loc='center left', bbox_to_anchor=(1, 0.5),frameon=False)
 	
 	
 	ax.add_artist(logo_box())
