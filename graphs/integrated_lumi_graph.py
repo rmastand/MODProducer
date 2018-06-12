@@ -18,6 +18,7 @@ plt.rcParams['ytick.labelsize'] = 16
 plt.rcParams['legend.fontsize'] = 16
 #plt.rcParams['text.usetex'] = True
 plt.rcParams['figure.facecolor'] = "white"
+plt.legend(frameon=False)
 
 lumibyls_file = sys.argv[1]
 mod_file_inpur_dir = sys.argv[2]
