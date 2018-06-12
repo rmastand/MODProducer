@@ -164,14 +164,15 @@ def plot_eff_lumin():
 		plt.plot(times,np.cumsum(eff_lumin),label = trig)
 	plt.xlabel("GPS time ")
 	ax = plt.gca()
-	x_tick_labels = ["24 Sep", "1 Oct", "8 Oct", "22 Oct", "29 Oct"]
+	x_tick_labels = ["14 Mar", "21 May", "28 Jun","7 Aug","25 Sep", "16 Oct"]
 	
 
-	x_ticks = [time.mktime(datetime.datetime(2011,9,24).timetuple()),
-		   time.mktime(datetime.datetime(2011,10,1).timetuple()),
-		   time.mktime(datetime.datetime(2011,10,8).timetuple()),
-		   time.mktime(datetime.datetime(2011,10,22).timetuple()),
-		   time.mktime(datetime.datetime(2011,10,29).timetuple())]
+	x_ticks = [time.mktime(datetime.datetime(2011,3,14).timetuple()),
+		   time.mktime(datetime.datetime(2011,5,21).timetuple()),
+		   time.mktime(datetime.datetime(2011,6,28).timetuple()),
+		   time.mktime(datetime.datetime(2011,8,7).timetuple()),
+		   time.mktime(datetime.datetime(2011,9,25).timetuple()),
+		   time.mktime(datetime.datetime(2011,10,16).timetuple())]
 	ax.set(xticks = x_ticks, xticklabels = x_tick_labels)
 
 	plt.legend(loc = "upper left")
