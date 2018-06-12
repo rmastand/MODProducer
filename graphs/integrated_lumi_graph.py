@@ -163,20 +163,23 @@ def plot_eff_lumin():
 	for trigger in master_trig_dict.keys():
 		trigger_time = []
 		trigger_eff_lumin = []
-		trigger_lumi_id = []
 		for i,lumi_id in enumerate(master_trig_dict[trigger]["good_lumis"]):
 			trigger_time.append(lumi_id_to_gps_times[lumi_id])
 			trigger_eff_lumin.append(lumi_id_to_lumin[lumi_id][1]/master_trig_dict[trigger]["good_prescales"][i])
 			trigger_lumi_id.append(lumi_id[0]+"_"+lumi_id[1])
-		trigger_time_v_lumin_rec[trigger] = trigger_time,trigger_eff_lumin,trigger_lumi_id
+		trigger_time_v_lumin_rec[trigger] = trigger_time,trigger_eff_lumin
 
 	# plots
-	plt.figure()
-	master_times,master_lumin_rec = (list(t) for t in zip(*sorted(zip(master_times,master_lumin_rec))))
+	plt.figure() 
+	ttimes,master_lumin_rec = (list(t) for t in zip(*sorted(zip(master_times,master_lumin_rec))))
 	plt.plot(master_times,np.cumsum(master_lumin_rec),label = "Total")
+	
+	lumis_in_dispay_format = [x[0]+"_"+x[1] for x in lumi_id_to_gps_times.keys()]
+	ttimes,ordered_ids = (list(t) for t in zip(*sorted(zip(master_times,lumis_in_dispay_format))))
+	
+	lumi_id_to_gps_times.keys()
 	for trig in ordered_triggers[::-1]:
 		times,eff_lumin = (list(t) for t in zip(*sorted(zip(trigger_time_v_lumin_rec[trig][0],trigger_time_v_lumin_rec[trig][1]))))
-		times,ordered_ids = (list(t) for t in zip(*sorted(zip(trigger_time_v_lumin_rec[trig][0],trigger_time_v_lumin_rec[trig][2]))))
 
 		plt.plot(range(len(np.cumsum(eff_lumin))),np.cumsum(eff_lumin),label = trig)
 	plt.xlabel("LumiBlock")
