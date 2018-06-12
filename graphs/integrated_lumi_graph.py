@@ -16,7 +16,7 @@ plt.rcParams['axes.labelsize'] = 16
 plt.rcParams['xtick.labelsize'] = 16
 plt.rcParams['ytick.labelsize'] = 16
 plt.rcParams['legend.fontsize'] = 16
-#plt.rcParams['text.usetex'] = True
+plt.rcParams['text.usetex'] = True
 plt.rcParams['figure.facecolor'] = "white"
 
 
@@ -152,29 +152,34 @@ for file in os.listdir(mod_file_inpur_dir):
 
 def plot_eff_lumin():
 	# total luminosity, independent of trigger or # of MOD files used
-	master_times = []
-	master_lumin_rec = []
-	for lumi_id in lumi_id_to_gps_times.keys():
-		master_times.append(lumi_id_to_gps_times[lumi_id])
-		master_lumin_rec.append(lumi_id_to_lumin[lumi_id][1])
+	
 
-	# finds time vs effective luminosity curves for all triggers
+	# finds time vs effective luminosity curves for all triggers while counting a total
 	trigger_time_v_lumin_rec = {}
+	master_lumin_ids = []
 	for trigger in master_trig_dict.keys():
 		trigger_time = []
 		trigger_eff_lumin = []
 		for i,lumi_id in enumerate(master_trig_dict[trigger]["good_lumis"]):
+			if lumi_id not in master_lumin_ids:
+				master_lumin_ids.append(lumi_id)
 			trigger_time.append(lumi_id_to_gps_times[lumi_id])
 			trigger_eff_lumin.append(lumi_id_to_lumin[lumi_id][1]/master_trig_dict[trigger]["good_prescales"][i])
 		trigger_time_v_lumin_rec[trigger] = trigger_time,trigger_eff_lumin
 
+	master_times = []
+	master_lumin_rec = []
+	for lumi_id in master_lumin_ids:
+		master_times.append(lumi_id_to_gps_times[lumi_id])
+		master_lumin_rec.append(lumi_id_to_lumin[lumi_id][1]) 
+		
 	# plots
 	plt.figure() 
 	ttimes,master_lumin_rec = (list(t) for t in zip(*sorted(zip(master_times,master_lumin_rec))))
 	master_time_index = range(len(master_times))
 	plt.plot(master_time_index,np.cumsum(master_lumin_rec),label = "Total")
 	
-	lumis_in_dispay_format = [x[0]+"\_"+x[1] for x in lumi_id_to_gps_times.keys()]
+	lumis_in_dispay_format = [x[0]+","+x[1] for x in lumi_id_to_gps_times.keys()]
 	ttimes,ordered_ids = (list(t) for t in zip(*sorted(zip(master_times,lumis_in_dispay_format))))
 
 	print master_time_index
