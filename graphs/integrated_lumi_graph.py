@@ -16,8 +16,8 @@ plt.rcParams['font.family'] = 'serif'
 plt.rcParams['font.serif'] = 'Times'
 plt.rcParams['font.size'] = 48
 plt.rcParams['axes.labelsize'] = 24
-plt.rcParams['xtick.labelsize'] = 16
-plt.rcParams['ytick.labelsize'] = 16
+plt.rcParams['xtick.labelsize'] = 14
+plt.rcParams['ytick.labelsize'] = 14
 plt.rcParams['legend.fontsize'] = 24
 plt.rc('mathtext', rm='serif')
 #plt.rcParams['text.usetex'] = True
@@ -232,7 +232,6 @@ def plot_eff_lumin():
 
 	plt.ylabel("Effective Luminosity (/ub)")
 	plt.yscale("log")
-	plt.tight_layout()
 	plt.show()
 	plt.savefig("integrated_lumi.png")
 	
@@ -261,7 +260,7 @@ def plot_fired_over_eff_lumin():
 		
 		plt.plot(range(len(fired_lumin)),fired_lumin,label = trig)
 
-	plt.xlabel("Run,Lumiblock")
+	plt.xlabel("Run,Lumiblock (time-ordered)")
 	plt.legend(loc='lower right', frameon=False)
 	plt.xticks(range(len(fired_lumin))[::5], ordered_ids[::5], rotation=30)
 	plt.ylabel("times fired / eff lumin")
@@ -274,7 +273,6 @@ def plot_fired_over_eff_lumin():
 	ax.legend(loc='center left', bbox_to_anchor=(1, 0.5),frameon=False)
 	
 	ax.add_artist(logo_box())
-	plt.tight_layout()
 	plt.show()
 	plt.savefig("fired_over_lumin.png")
 	
