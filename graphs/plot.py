@@ -225,7 +225,7 @@ def graph_eff_lumin():
 	plt.plot(master_index,master_lumin,"ro")
 	text = CurvedText(
             	x = master_index[int(len(master_index)*(.4)):int(len(master_index)*(.6))],
-            	y = np.cumsum(master_lumin)[int(len(master_lumin)*(.4)):int(len(master_lumin)*(.6))],
+            	y = master_lumin[int(len(master_lumin)*(.4)):int(len(master_lumin)*(.6))],
 		    text="Total Luminosity",#'this this is a very, very long text',
 		    va = 'bottom',
 		    axes = ax,color = "r" ##calls ax.add_artist in __init__
@@ -238,7 +238,7 @@ def graph_eff_lumin():
 		if color_index == 0: # hacky way to look for the firs trigger -- need to fix!!
 			text = CurvedText(
 			x = index[int(len(index)*(.6)):int(len(index)*(.8))],
-			y = np.cumsum(eff_lumin)[int(len(eff_lumin)*(.6)):int(len(eff_lumin)*(.8))],
+			y = eff_lumin[int(len(eff_lumin)*(.6)):int(len(eff_lumin)*(.8))],
 			    text=trig.replace("_"," "),#'this this is a very, very long text',
 			    va = 'bottom',
 			    axes = ax,color = colors[color_index] ##calls ax.add_artist in __init__
@@ -246,8 +246,8 @@ def graph_eff_lumin():
 			 )
 		else:
 			text = CurvedText(
-			x = overlap[int(len(index)*(.8)):],
-			y = np.cumsum(eff_lumin)[int(len(eff_lumin)*(.8)):],
+			x = index[int(len(index)*(.8)):],
+			y = eff_lumin[int(len(eff_lumin)*(.8)):],
 			    text=trig.replace("_"," "),#'this this is a very, very long text',
 			    va = 'bottom',
 			    axes = ax,color = colors[color_index] ##calls ax.add_artist in __init__
