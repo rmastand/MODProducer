@@ -208,9 +208,9 @@ def lumi_blocks_in_file():
 				if ("Cond" in line.split()) and ("#" not in line.split()):
 					run,lumiBlock = line.split()[1],line.split()[3]
 					try:
-						lumi_blocks_in_file_dict[file][run+"_"+lumiBLock] += 1
+						lumi_blocks_in_file_dict[file][run+"_"+lumiBlock] += 1
 					except KeyError:
-						lumi_blocks_in_file_dict[file][run+"_"+lumiBLock] = 1
+						lumi_blocks_in_file_dict[file][run+"_"+lumiBlock] = 1
 						
 					
 	
