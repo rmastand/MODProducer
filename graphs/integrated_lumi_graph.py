@@ -209,7 +209,8 @@ def plot_fired_over_eff_lumin():
 	plt.xlabel("GPS time ")
 	plt.legend(loc = "lower left")
 	ax = plt.gca()
-	ax.set(xticks = ordered_ids, xticklabels = ordered_ids)
+	print ordered_ids, ordered_ids
+	ax.set(xticks = range(len(fired_lumin)), xticklabels = ordered_ids)
 	plt.ylabel("times fired / eff lumin")
 	plt.yscale("log")
 	plt.show()
