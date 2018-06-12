@@ -183,7 +183,7 @@ def plot_eff_lumin():
 	
 		
 	plt.xticks(range(len(ordered_ids)), ordered_ids, rotation='vertical')
-
+	ax = plt.gca()
         box = ax.get_position()
 	ax.set_position([box.x0, box.y0, box.width * 0.8, box.height])
 
