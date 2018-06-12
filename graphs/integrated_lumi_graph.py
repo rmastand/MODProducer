@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 import os
 
 
-plt.style.use('seaborn-white')
+
 
 plt.rcParams['font.family'] = 'serif'
 plt.rcParams['font.serif'] = 'Times'
