@@ -181,8 +181,9 @@ def plot_eff_lumin():
 	plt.xlabel("LumiBlock")
 	
 	
-	ax = plt.gca()
-	ax.set(xticks = range(len(ordered_ids)), xticklabels = ordered_ids,rotation="vertical")
+		
+	plt.xticks(range(len(ordered_ids)), ordered_ids, rotation='vertical')
+
         box = ax.get_position()
 	ax.set_position([box.x0, box.y0, box.width * 0.8, box.height])
 
