@@ -184,13 +184,13 @@ def plot_eff_lumin():
 		for i,mytime in enumerate(times):
 			if mytime in ttimes:
 				overlap.append(master_time_index[i])
-		
+		print overlap
 		plt.plot(overlap,np.cumsum(eff_lumin),label = trig)
 	plt.xlabel("Run,LumiBlock (time-ordered)")
 	
 	
 		
-	plt.xticks(range(len(ordered_ids))[::10], ordered_ids[::10], rotation='vertical')
+	plt.xticks(range(len(ordered_ids))[::500], ordered_ids[::500], rotation='vertical')
 	ax = plt.gca()
         box = ax.get_position()
 	ax.set_position([box.x0, box.y0, box.width * 0.8, box.height])
