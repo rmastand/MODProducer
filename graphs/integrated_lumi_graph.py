@@ -12,8 +12,6 @@ from mpl_toolkits.axes_grid.anchored_artists import AnchoredDrawingArea
 from matplotlib.cbook import get_sample_data
 
 
-
-
 plt.rcParams['font.family'] = 'serif'
 plt.rcParams['font.serif'] = 'Times'
 plt.rcParams['font.size'] = 48
@@ -223,11 +221,12 @@ def plot_eff_lumin():
 		
 	plt.xticks(range(len(ordered_ids))[::5], ordered_ids[::5], rotation=45)
 	ax = plt.gca()
-        box = ax.get_position()
-	ax.set_position([box.x0, box.y0, box.width * 0.8, box.height])
+        #box = ax.get_position()
+	#ax.set_position([box.x0, box.y0, box.width * 0.8, box.height])
 
 	# Put a legend to the right of the current axis
-	ax.legend(loc='center left', bbox_to_anchor=(1, 0.5),frameon=False)
+	#ax.legend(loc='center left', bbox_to_anchor=(1, 0.5),frameon=False)
+	plt.legend(loc='lower right', frameon=False)
 	
 	ax.add_artist(logo_box())
 
@@ -252,7 +251,7 @@ def plot_fired_over_eff_lumin():
 
 	# plots
 	plt.figure()
-	for trig in trigger_time_v_fired_lumin.keys():
+	for trig in ordered_triggers:
 		#times,fired_lumin = (list(t) for t in zip(*sorted(zip(trigger_time_v_fired_lumin[trig][0],trigger_time_v_fired_lumin[trig][1]))))
 		#plt.plot(times,fired_lumin,label = trig)
 		#plt.plot(fired_lumin,label = trig)
@@ -262,10 +261,12 @@ def plot_fired_over_eff_lumin():
 		plt.plot(range(len(fired_lumin)),fired_lumin,label = trig)
 
 	plt.xlabel("Run,Lumiblock")
-	plt.legend(loc = "lower left")
-	plt.xticks(range(len(fired_lumin))[::10], ordered_ids[::10], rotation='vertical')
+	plt.legend(loc='lower right', frameon=False)
+	plt.xticks(range(len(fired_lumin))[::10], ordered_ids[::10], rotation=45)
 	plt.ylabel("times fired / eff lumin")
 	plt.yscale("log")
+	ax = plt.gca()
+	ax.add_artist(logo_box())
 	plt.show()
 	plt.savefig("fired_over_lumin.png")
 	
