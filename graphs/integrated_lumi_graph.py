@@ -6,6 +6,11 @@ import ast
 import matplotlib.pyplot as plt
 import os
 
+from matplotlib.offsetbox import TextArea, DrawingArea, OffsetImage, AnnotationBbox, AnchoredOffsetbox, HPacker
+from matplotlib._png import read_png
+from mpl_toolkits.axes_grid.anchored_artists import AnchoredDrawingArea
+from matplotlib.cbook import get_sample_data
+
 
 
 
@@ -17,15 +22,29 @@ plt.rcParams['xtick.labelsize'] = 16
 plt.rcParams['ytick.labelsize'] = 16
 plt.rcParams['legend.fontsize'] = 16
 plt.rc('mathtext', rm='serif')
-plt.rcParams['text.usetex'] = True
-plt.rcParams['text.latex.unicode']=True
+#plt.rcParams['text.usetex'] = True
+#plt.rcParams['text.latex.unicode']=True
 plt.rcParams['figure.facecolor'] = "white"
 
+logo_location = "graphs/mod_logo.png"
 
-import matplotlib.image as image
+logo_text = "Preliminary"
 
 
-im = image.imread('graphs/mod_logo.png')
+def logo_box():
+        
+        logo_offset_image = OffsetImage(read_png(get_sample_data(logo_location, asfileobj=False)), zoom=0.25, resample=1, dpi_cor=1)
+        text_box = TextArea(logo_text, textprops=dict(color='#444444', fontsize=50, weight='bold'))
+
+        logo_and_text_box = HPacker(children=[logo_offset_image, text_box], align="center", pad=0, sep=25)
+
+        if "Area" in self._x_label or "JEC" in self._x_label:
+            anchored_box = AnchoredOffsetbox(loc=2, child=logo_and_text_box, pad=0.8, frameon=False, borderpad=0., bbox_to_anchor=[0.104, 1.0], bbox_transform = plt.gcf().transFigure)
+        else:
+            anchored_box = AnchoredOffsetbox(loc=2, child=logo_and_text_box, pad=0.8, frameon=False, borderpad=0., bbox_to_anchor=[0.159, 1.0], bbox_transform = plt.gcf().transFigure)
+
+        return anchored_box
+
 
 
 
@@ -212,6 +231,8 @@ def plot_eff_lumin():
 
 	# Put a legend to the right of the current axis
 	ax.legend(loc='center left', bbox_to_anchor=(1, 0.5),frameon=False)
+	
+	ax.add_artist(logo_box())
 
 	plt.ylabel("Effective Luminosity (/ub)")
 	plt.yscale("log")
