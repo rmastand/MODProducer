@@ -288,7 +288,6 @@ def lumi_blocks_in_file():
 			for line in file:
 				if ("Cond" in line.split()) and ("#" not in line.split()):
 					run,lumiBlock = line.split()[1],line.split()[3]
-					print run,lumiBlock
 					try:
 						lumi_blocks_in_file_dict[filename][run+"_"+lumiBlock] += 1
 					except KeyError:
@@ -301,6 +300,7 @@ def lumi_blocks_in_file():
 		lumi_ids = lumi_blocks_in_file_dict[file].keys()
 		lumi_counts = lumi_blocks_in_file_dict[file].values()
 		lumi_ids,lumi_counts = (list(t) for t in zip(*sorted(zip(lumi_ids,lumi_counts))))
+		print lumi_ids
 		plt.bar(range(len(lumi_ids)), lumi_counts, align='center', tick_label=lumi_ids)
 		
 		plt.show()
