@@ -38,11 +38,8 @@ def logo_box():
 
         logo_and_text_box = HPacker(children=[logo_offset_image, text_box], align="center", pad=0, sep=25)
 
-        if "Area" in self._x_label or "JEC" in self._x_label:
-            anchored_box = AnchoredOffsetbox(loc=2, child=logo_and_text_box, pad=0.8, frameon=False, borderpad=0., bbox_to_anchor=[0.104, 1.0], bbox_transform = plt.gcf().transFigure)
-        else:
-            anchored_box = AnchoredOffsetbox(loc=2, child=logo_and_text_box, pad=0.8, frameon=False, borderpad=0., bbox_to_anchor=[0.159, 1.0], bbox_transform = plt.gcf().transFigure)
-
+        anchored_box = AnchoredOffsetbox(loc=2, child=logo_and_text_box, pad=0.8, frameon=False, borderpad=0., bbox_to_anchor=[0.104, 1.0], bbox_transform = plt.gcf().transFigure)
+       
         return anchored_box
 
 
