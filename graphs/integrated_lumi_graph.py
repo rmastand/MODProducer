@@ -11,12 +11,12 @@ import os
 
 plt.rcParams['font.family'] = 'serif'
 plt.rcParams['font.serif'] = 'Times'
-plt.rcParams['font.size'] = 16
+plt.rcParams['font.size'] = 48
 plt.rcParams['axes.labelsize'] = 16
 plt.rcParams['xtick.labelsize'] = 16
 plt.rcParams['ytick.labelsize'] = 16
 plt.rcParams['legend.fontsize'] = 16
-plt.rc('mathtext', default='regular')
+plt.rc('mathtext', rm='serif')
 #plt.rcParams['text.usetex'] = True
 #plt.rcParams['text.latex.unicode']=True
 plt.rcParams['figure.facecolor'] = "white"
@@ -176,7 +176,7 @@ def plot_eff_lumin():
 		master_lumin_rec.append(lumi_id_to_lumin[lumi_id][1]) 
 		
 	# plots
-	plt.figure(figsize=(9,9)) 
+	plt.figure(figsize=(8,4)) 
 	ttimes,master_lumin_rec = (list(t) for t in zip(*sorted(zip(master_times,master_lumin_rec))))
 	master_time_index = range(len(master_times))
 	plt.plot(master_time_index,np.cumsum(master_lumin_rec),label = "Total")
@@ -191,9 +191,7 @@ def plot_eff_lumin():
 		for i,mytime in enumerate(ttimes):
 			if mytime in times:
 				overlap.append(master_time_index[i])
-		print overlap
-		print len(overlap)
-		print len(eff_lumin)
+		
 		plt.plot(overlap,np.cumsum(eff_lumin),label = trig)
 	plt.xlabel("Run,LumiBlock (time-ordered)")
 	
