@@ -11,6 +11,7 @@ from matplotlib._png import read_png
 from mpl_toolkits.axes_grid.anchored_artists import AnchoredDrawingArea
 from matplotlib.cbook import get_sample_data
 
+colors = ["b","g","r","m","c","y","k"]
 
 plt.rcParams['font.family'] = 'serif'
 plt.rcParams['font.serif'] = 'Times'
@@ -39,7 +40,7 @@ class CurvedText(mtext.Text):
     """
     A text object that follows an arbitrary curve.
     """
-    def __init__(self, x, y, text, axes, **kwargs):
+    def __init__(self, x, y, text, axes, color, **kwargs):
         super(CurvedText, self).__init__(x[0],y[0],' ', axes, **kwargs)
 
         axes.add_artist(self)
@@ -57,7 +58,7 @@ class CurvedText(mtext.Text):
                 t = mtext.Text(0,0,'a')
                 t.set_alpha(0.0)
             else:
-                t = mtext.Text(0,0,c, **kwargs)
+                t = mtext.Text(0,0,c,color, **kwargs)
 
             #resetting unnecessary arguments
             t.set_ha('center')
@@ -366,11 +367,19 @@ def plot_eff_lumin():
 	# plots
 	plt.figure(figsize=(4,2)) 
 	ax = plt.gca()
+	i = 0
 	ttimes,master_lumin_rec = (list(t) for t in zip(*sorted(zip(master_times,master_lumin_rec))))
 	master_time_index = range(len(master_times))
-	plt.plot(master_time_index,np.cumsum(master_lumin_rec),label = "Total")
+	plt.plot(master_time_index,np.cumsum(master_lumin_rec),"ro",label = "Total")
+	text = CurvedText(
+            	x = overlap,
+            	y = np.cumsum(eff_lumin),
+		    text=trig,#'this this is a very, very long text',
+		    va = 'bottom',
+		    axes = ax,color = "r" ##calls ax.add_artist in __init__
+		 )
 	
-	lumis_in_dispay_format = [x[0]+","+x[1] for x in lumi_id_to_gps_times.keys()]
+	lumis_in_dispay_format = [x[0]+":"+x[1] for x in lumi_id_to_gps_times.keys()]
 	ttimes,ordered_ids = (list(t) for t in zip(*sorted(zip(master_times,lumis_in_dispay_format))))
 
 	for trig in ordered_triggers[::-1]:
@@ -380,15 +389,16 @@ def plot_eff_lumin():
 			if mytime in times:
 				overlap.append(master_time_index[i])
 		
-		plt.plot(overlap,np.cumsum(eff_lumin),label = trig)
+		plt.plot(overlap,np.cumsum(eff_lumin),colors[i],label = trig)
 		text = CurvedText(
             	x = overlap,
             	y = np.cumsum(eff_lumin),
 		    text=trig,#'this this is a very, very long text',
 		    va = 'bottom',
-		    axes = ax, ##calls ax.add_artist in __init__
+		    axes = ax,color = colors[i] ##calls ax.add_artist in __init__
 		 )
-	plt.xlabel("Run,LumiBlock (time-ordered)")
+		i += 1
+	plt.xlabel("Run:LumiBlock")
 	
 	
 		
@@ -402,7 +412,7 @@ def plot_eff_lumin():
 	
 	
 	ax.add_artist(logo_box())
-
+	plt.tight_layout()
 	plt.ylabel("Effective Luminosity (/ub)")
 	plt.yscale("log")
 	plt.show()
