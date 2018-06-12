@@ -403,7 +403,7 @@ def plot_eff_lumin():
 			text = CurvedText(
 			x = overlap[int(len(overlap)*(.75)):],
 			y = np.cumsum(eff_lumin)[int(len(overlap)*(.75)):],
-			    text=trig,#'this this is a very, very long text',
+			    text=trig.replace("_"," "),#'this this is a very, very long text',
 			    va = 'bottom',
 			    axes = ax,color = colors[j] ##calls ax.add_artist in __init__
 				
