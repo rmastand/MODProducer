@@ -11,7 +11,7 @@ from matplotlib._png import read_png
 from mpl_toolkits.axes_grid.anchored_artists import AnchoredDrawingArea
 from matplotlib.cbook import get_sample_data
 
-colors = ["b","g","r","m","c","y","k","b","g","r","m","c","y","k"]
+colors = ["b","g","orange","purple","c","maroon","limegreen","deeppink","orangered"]
 
 plt.rcParams['font.family'] = 'serif'
 plt.rcParams['font.size'] = 16
@@ -373,7 +373,7 @@ def plot_eff_lumin():
 	text = CurvedText(
             	x = master_time_index[int(len(master_time_index)*(.4)):int(len(master_time_index)*(.6))],
             	y = np.cumsum(master_lumin_rec)[int(len(master_time_index)*(.4)):int(len(master_time_index)*(.6))],
-		    text="Total",#'this this is a very, very long text',
+		    text="Total Luminosity",#'this this is a very, very long text',
 		    va = 'bottom',
 		    axes = ax,color = "r" ##calls ax.add_artist in __init__
 		 )
