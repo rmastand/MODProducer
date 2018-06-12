@@ -14,7 +14,6 @@ from matplotlib.cbook import get_sample_data
 colors = ["b","g","r","m","c","y","k","b","g","r","m","c","y","k"]
 
 plt.rcParams['font.family'] = 'serif'
-plt.rcParams['font.serif'] = 'Times'
 plt.rcParams['font.size'] = 16
 plt.rcParams['font.weight'] = "bold"
 plt.rcParams['axes.labelsize'] = 24
@@ -372,8 +371,8 @@ def plot_eff_lumin():
 	master_time_index = range(len(master_times))
 	plt.plot(master_time_index,np.cumsum(master_lumin_rec),"ro",label = "Total")
 	text = CurvedText(
-            	x = master_time_index[int(len(master_time_index)*(.25)):int(len(master_time_index)*(.5))],
-            	y = np.cumsum(master_lumin_rec)[int(len(master_time_index)*(.25)):int(len(master_time_index)*(.5))],
+            	x = master_time_index[int(len(master_time_index)*(.4)):int(len(master_time_index)*(.6))],
+            	y = np.cumsum(master_lumin_rec)[int(len(master_time_index)*(.4)):int(len(master_time_index)*(.6))],
 		    text="Total",#'this this is a very, very long text',
 		    va = 'bottom',
 		    axes = ax,color = "r" ##calls ax.add_artist in __init__
@@ -392,17 +391,17 @@ def plot_eff_lumin():
 		plt.plot(overlap,np.cumsum(eff_lumin),colors[j],label = trig)
 		if j == 0:
 			text = CurvedText(
-			x = overlap[int(len(overlap)*(.5)):int(len(overlap)*(.75))],
-			y = np.cumsum(eff_lumin)[int(len(overlap)*(.75)):],
-			    text=trig,#'this this is a very, very long text',
+			x = overlap[int(len(overlap)*(.6)):int(len(overlap)*(.8))],
+			y = np.cumsum(eff_lumin)[int(len(overlap)*(.6)):int(len(overlap)*(.8))],
+			    text=trig.replace("_"," "),#'this this is a very, very long text',
 			    va = 'bottom',
 			    axes = ax,color = colors[j] ##calls ax.add_artist in __init__
 				
 			 )
 		else:
 			text = CurvedText(
-			x = overlap[int(len(overlap)*(.75)):],
-			y = np.cumsum(eff_lumin)[int(len(overlap)*(.75)):],
+			x = overlap[int(len(overlap)*(.8)):],
+			y = np.cumsum(eff_lumin)[int(len(overlap)*(.8)):],
 			    text=trig.replace("_"," "),#'this this is a very, very long text',
 			    va = 'bottom',
 			    axes = ax,color = colors[j] ##calls ax.add_artist in __init__
