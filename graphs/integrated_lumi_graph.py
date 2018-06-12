@@ -412,7 +412,6 @@ def plot_eff_lumin():
 	
 	
 	ax.add_artist(logo_box())
-	plt.tight_layout()
 	plt.ylabel("Effective Luminosity (/ub)")
 	plt.yscale("log")
 	plt.show()
