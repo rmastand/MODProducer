@@ -16,7 +16,7 @@ plt.rcParams['axes.labelsize'] = 16
 plt.rcParams['xtick.labelsize'] = 16
 plt.rcParams['ytick.labelsize'] = 16
 plt.rcParams['legend.fontsize'] = 16
-#plt.rcParams['text.usetex'] = True
+plt.rcParams['text.usetex'] = True
 plt.rcParams['figure.facecolor'] = "white"
 
 
@@ -171,17 +171,22 @@ def plot_eff_lumin():
 	# plots
 	plt.figure() 
 	ttimes,master_lumin_rec = (list(t) for t in zip(*sorted(zip(master_times,master_lumin_rec))))
-	plt.plot(master_times,np.cumsum(master_lumin_rec),label = "Total")
+	master_time_index = range(len(master_times))
+	plt.plot(master_time_index,np.cumsum(master_lumin_rec),label = "Total")
 	
-	lumis_in_dispay_format = [x[0]+"_"+x[1] for x in lumi_id_to_gps_times.keys()]
+	lumis_in_dispay_format = [x[0]+"\_"+x[1] for x in lumi_id_to_gps_times.keys()]
 	ttimes,ordered_ids = (list(t) for t in zip(*sorted(zip(master_times,lumis_in_dispay_format))))
+
 	
-	lumi_id_to_gps_times.keys()
 	for trig in ordered_triggers[::-1]:
 		times,eff_lumin = (list(t) for t in zip(*sorted(zip(trigger_time_v_lumin_rec[trig][0],trigger_time_v_lumin_rec[trig][1]))))
-
-		plt.plot(range(len(np.cumsum(eff_lumin))),np.cumsum(eff_lumin),label = trig)
-	plt.xlabel("LumiBlock")
+		overlap = []
+		for i,mytime in enumerate(times):
+			if mytime in ttimes:
+				overlap.append(master_time_index[i])
+		
+		plt.plot(overlap,np.cumsum(eff_lumin),label = trig)
+	plt.xlabel("Run,LumiBlock (time-ordered)")
 	
 	
 		
