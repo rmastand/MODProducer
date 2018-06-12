@@ -206,7 +206,6 @@ def plot_eff_lumin():
 	lumis_in_dispay_format = [x[0]+","+x[1] for x in lumi_id_to_gps_times.keys()]
 	ttimes,ordered_ids = (list(t) for t in zip(*sorted(zip(master_times,lumis_in_dispay_format))))
 
-	print master_time_index
 	for trig in ordered_triggers[::-1]:
 		times,eff_lumin = (list(t) for t in zip(*sorted(zip(trigger_time_v_lumin_rec[trig][0],trigger_time_v_lumin_rec[trig][1]))))
 		overlap = []
@@ -309,7 +308,7 @@ def lumi_blocks_in_file():
 
 	
 
-plot_eff_lumin()
-plot_fired_over_eff_lumin()
+#plot_eff_lumin()
+#plot_fired_over_eff_lumin()
 # currently i am NOT checking for validity for this last one
-#lumi_blocks_in_file()
+lumi_blocks_in_file()
