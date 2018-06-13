@@ -287,7 +287,7 @@ def graph_fired_over_eff_lumin():
 	for trig in rev_ordered_triggers:	
 		index = [int(x) for x in lines[color_index*3+1].split(",")]
 		yaxis = [float(x) for x in lines[color_index*3+2].split(",")]
-		print np.where(yaxis!= 0)
+		print np.where(yaxis!= 0)[0]
 		plt.text(trig_name_positions[trig][0],trig_name_positions[trig][1],trig[4:],color = colors[color_index])
 		plt.plot(index[np.where(yaxis!= 0)[0]],yaxis[np.where(yaxis!= 0)[0]],colors[color_index])
 		color_index += 1
