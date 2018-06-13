@@ -92,7 +92,6 @@ def graph_eff_lumin():
 	ax.set_xlim(left = .3)
 
 	plt.xlabel("# of Luminosity Blocks (time-ordered)")
-	plt.axis('scaled')
 	ax.add_artist(logo_box())
 	plt.ylabel("Effective Luminosity " +"ub^{-1}")
 	plt.yscale("log")
