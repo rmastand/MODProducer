@@ -110,7 +110,7 @@ def graph_fired_over_eff_lumin():
 	fired_lumi_file =  open(plot_fired_over_lumi)
 	lines = fired_lumi_file.readlines()
 	
-	plt.figure()
+	plt.figure(figsize=(12,10))
 	color_index = 0
 	x = 5
 	trig_name_positions = {"HLT_Jet30":(x,300),"HLT_Jet60":(x,12),"HLT_Jet80":(x,3),
@@ -145,6 +145,6 @@ def graph_fired_over_eff_lumin():
 	
 
 
-graph_eff_lumin()
-#graph_fired_over_eff_lumin()
+#graph_eff_lumin()
+graph_fired_over_eff_lumin()
 
