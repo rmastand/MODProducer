@@ -292,7 +292,6 @@ def graph_fired_over_eff_lumin():
 		yaxis = [float(x) for x in lines[color_index*3+2].split(",")]
 		
 
-print(zero_to_nan(values))
 		plt.text(trig_name_positions[trig][0],trig_name_positions[trig][1],trig[4:],color = colors[color_index])
 		plt.plot(index,zero_to_nan(yaxis),colors[color_index])
 		color_index += 1
