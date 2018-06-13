@@ -14,7 +14,7 @@ plot_fired_over_lumi = sys.argv[2]
 logo_location = "/Users/mod/CMSOpenData/MODProducer/graphs/mod_logo.png"
 
 colors = ["b","g","orange","purple","c","maroon","limegreen","deeppink","orangered"]
-logo_text = "Preliminary        CMS 2011 Open Data"
+logo_text = "Preliminary          CMS 2011 Open Data"
 rev_ordered_triggers = ["HLT_Jet30","HLT_Jet60","HLT_Jet80","HLT_Jet110","HLT_Jet150","HLT_Jet190","HLT_Jet240","HLT_Jet300","HLT_Jet370"][::-1]
 
 
