@@ -241,8 +241,8 @@ def graph_eff_lumin():
 		plt.plot(index,eff_lumin,colors[color_index])
 		if color_index == 0: # hacky way to look for the firs trigger -- need to fix!!
 			text = CurvedText(
-			x = index[int(len(index)*(.6)):int(len(index)*(.8))],
-			y = eff_lumin[int(len(eff_lumin)*(.6)):int(len(eff_lumin)*(.8))],
+			x = index[int(len(index)*(.7)):int(len(index)*(.8))],
+			y = eff_lumin[int(len(eff_lumin)*(.7)):int(len(eff_lumin)*(.8))],
 			    text=trig[4:],#'this this is a very, very long text',
 			    va = 'bottom',
 			    axes = ax,color = colors[color_index] ##calls ax.add_artist in __init__
