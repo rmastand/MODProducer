@@ -68,8 +68,11 @@ def graph_eff_lumin():
 	master_lumin = [float(x) for x in lines[1].split(",")]
 	time_ordered_lumi_id = lines[2].split(",")
 	plt.plot(np.array(master_index)+1,master_lumin,"ro")
+
 	
-	x = .2
+	x = .4
+	plt.text(x,20000,"Total Luminosity",color = "r")
+
 	trig_name_positions = {"HLT_Jet30":(x,.1),"HLT_Jet60":(x,1),"HLT_Jet80":(x,10),
 			      "HLT_Jet110":(x,100),"HLT_Jet150":(x,300),"HLT_Jet190":(x,1000),
 			      "HLT_Jet240":(x,3000),"HLT_Jet300":(x,5000),"HLT_Jet370":(x,10000)}
@@ -85,7 +88,7 @@ def graph_eff_lumin():
 	#plt.xlabel("Run:LumiBlock")
 	#plt.xticks(range(len(time_ordered_lumi_id))[::id_spacing], time_ordered_lumi_id[::id_spacing], rotation=30)
 	ax = plt.gca()
-	ax.set_xlim(left = .1)
+	ax.set_xlim(left = .3)
 	plt.xlabel("Number of lumiblocks")
 	
 	ax.add_artist(logo_box())
