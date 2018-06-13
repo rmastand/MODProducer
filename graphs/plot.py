@@ -67,20 +67,20 @@ def graph_eff_lumin():
 	master_index = [int(x) for x in lines[0].split(",")]
 	master_lumin = [float(x) for x in lines[1].split(",")]
 	time_ordered_lumi_id = lines[2].split(",")
-	plt.plot(master_index,master_lumin,"ro")
+	plt.plot(master_index+1,master_lumin,"ro")
 	
 	
 	for trig_index,trig in enumerate(rev_ordered_triggers):
 		index = [int(x) for x in lines[2*trig_index+3].split(",")]
 		eff_lumin = [float(x) for x in lines[2*trig_index+4].split(",")]
-		plt.plot(index,eff_lumin,colors[color_index])
+		plt.plot(index+1,eff_lumin,colors[color_index])
 		
 			
 		color_index += 1
 	#plt.xlabel("Run:LumiBlock")
 	#plt.xticks(range(len(time_ordered_lumi_id))[::id_spacing], time_ordered_lumi_id[::id_spacing], rotation=30)
 	ax = plt.gca()
-	ax.set_xlim(left = .01)
+	ax.set_xlim(left = .1)
 	plt.xlabel("Number of lumiblocks")
 	
 	ax.add_artist(logo_box())
