@@ -67,13 +67,13 @@ def graph_eff_lumin():
 	master_index = [int(x) for x in lines[0].split(",")]
 	master_lumin = [float(x) for x in lines[1].split(",")]
 	time_ordered_lumi_id = lines[2].split(",")
-	plt.plot(master_index+1,master_lumin,"ro")
+	plt.plot(np.array(master_index)+1,master_lumin,"ro")
 	
 	
 	for trig_index,trig in enumerate(rev_ordered_triggers):
 		index = [int(x) for x in lines[2*trig_index+3].split(",")]
 		eff_lumin = [float(x) for x in lines[2*trig_index+4].split(",")]
-		plt.plot(index+1,eff_lumin,colors[color_index])
+		plt.plot(np.array(index)+1,eff_lumin,colors[color_index])
 		
 			
 		color_index += 1
