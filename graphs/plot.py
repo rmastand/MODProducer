@@ -123,15 +123,17 @@ def graph_fired_over_eff_lumin():
 		
 
 		plt.text(trig_name_positions[trig][0],trig_name_positions[trig][1],trig[4:],color = colors[color_index])
-		plt.plot(index,zero_to_nan(yaxis),colors[color_index])
+		plt.plot(np.array(index)+1,zero_to_nan(yaxis),colors[color_index])
 		color_index += 1
 
-	plt.xlabel("Run:Lumiblock")
+	#plt.xlabel("Run:Lumiblock")
+	plt.xlabel("# pf Luminosity Blocks (time-ordered)")
 
-	plt.xticks(range(len(lines[0].split(",")))[::id_spacing],lines[0].split(",")[::id_spacing], rotation=30)
+	#plt.xticks(range(len(lines[0].split(",")))[::id_spacing],lines[0].split(",")[::id_spacing], rotation=30)
 	plt.ylabel("Times Fired / Effective Luminosity (ub)")
 	plt.yscale("log")
 	ax = plt.gca()
+	ax.set_xlim(left = .3)
 	box = ax.get_position()
 	ax.set_position([box.x0, box.y0, box.width * 0.8, box.height])
 
