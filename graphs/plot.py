@@ -71,8 +71,8 @@ def graph_eff_lumin():
 	
 	x = .2
 	trig_name_positions = {"HLT_Jet30":(x,.1),"HLT_Jet60":(x,1),"HLT_Jet80":(x,10),
-			      "HLT_Jet110":(x,.100),"HLT_Jet150":(x,300),"HLT_Jet190":(x,1000),
-			      "HLT_Jet240":(x,3000),"HLT_Jet300":(x,3000),"HLT_Jet370":(x,3000)}
+			      "HLT_Jet110":(x,100),"HLT_Jet150":(x,300),"HLT_Jet190":(x,1000),
+			      "HLT_Jet240":(x,3000),"HLT_Jet300":(x,5000),"HLT_Jet370":(x,10000)}
 	
 	for trig_index,trig in enumerate(rev_ordered_triggers):
 		index = [int(x) for x in lines[2*trig_index+3].split(",")]
