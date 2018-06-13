@@ -22,7 +22,7 @@ plt.rcParams['font.family'] = 'serif'
 plt.rcParams['font.size'] = 16
 plt.rcParams['font.weight'] = "bold"
 plt.rcParams['axes.labelsize'] = 24
-plt.rcParams['xtick.labelsize'] = 10
+plt.rcParams['xtick.labelsize'] = 18
 plt.rcParams['ytick.labelsize'] = 18
 plt.rcParams['legend.fontsize'] = 24
 plt.rc('mathtext', rm='serif')
@@ -71,11 +71,11 @@ def graph_eff_lumin():
 
 	
 	x = .4
-	plt.text(x,20000,"Total Luminosity",color = "r")
+	plt.text(x,40000,"Total Luminosity",color = "r")
 
-	trig_name_positions = {"HLT_Jet30":(x,.1),"HLT_Jet60":(x,1),"HLT_Jet80":(x,10),
-			      "HLT_Jet110":(x,100),"HLT_Jet150":(x,300),"HLT_Jet190":(x,1000),
-			      "HLT_Jet240":(x,3000),"HLT_Jet300":(x,5000),"HLT_Jet370":(x,10000)}
+	trig_name_positions = {"HLT_Jet30":(x,.2),"HLT_Jet60":(x,2),"HLT_Jet80":(x,10.5),
+			      "HLT_Jet110":(x,100),"HLT_Jet150":(x,400),"HLT_Jet190":(x,1000),
+			      "HLT_Jet240":(x,3000),"HLT_Jet300":(x,8000),"HLT_Jet370":(x,11000)}
 	
 	for trig_index,trig in enumerate(rev_ordered_triggers):
 		index = [int(x) for x in lines[2*trig_index+3].split(",")]
@@ -114,7 +114,7 @@ def graph_fired_over_eff_lumin():
 	
 	plt.figure(figsize=(12,10))
 	color_index = 0
-	x = -130
+	x = -180
 	trig_name_positions = {"HLT_Jet30":(x,150),"HLT_Jet60":(x,10),"HLT_Jet80":(x,2),
 			      "HLT_Jet110":(x,.4),"HLT_Jet150":(x,.1),"HLT_Jet190":(x,.03),
 			      "HLT_Jet240":(x,.01),"HLT_Jet300":(x,.002),"HLT_Jet370":(x,.001)}
@@ -135,7 +135,7 @@ def graph_fired_over_eff_lumin():
 	plt.ylabel("Times Fired / Effective Luminosity (ub)")
 	plt.yscale("log")
 	ax = plt.gca()
-	ax.set_xlim(left = -150)
+	ax.set_xlim(left = -200)
 	box = ax.get_position()
 	ax.set_position([box.x0, box.y0, box.width * 0.8, box.height])
 
