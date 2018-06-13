@@ -56,7 +56,7 @@ Effective Luminosity, cumsum value
 """
 
 def graph_eff_lumin():
-	plt.figure(figsize= (12,10)) 
+	plt.figure(figsize= (10,10)) 
 	ax = plt.gca()
 	color_index = 0
 	
@@ -90,9 +90,9 @@ def graph_eff_lumin():
 	ax = plt.gca()
 	
 	ax.set_xlim(left = .3)
-	plt.axis('scaled')
+
 	plt.xlabel("# of Luminosity Blocks (time-ordered)")
-	
+	p.axis('equal')
 	ax.add_artist(logo_box())
 	plt.ylabel("Effective Luminosity " +"ub^{-1}")
 	plt.yscale("log")
