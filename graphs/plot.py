@@ -97,7 +97,7 @@ def graph_eff_lumin():
 	plt.yscale("log")
 	plt.xscale("log")
 
-	plt.savefig("eff_lumi.pdf")
+	#plt.savefig("eff_lumi.pdf")
 	plt.show()
 	
 	
