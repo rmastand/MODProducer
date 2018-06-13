@@ -30,6 +30,9 @@ plt.rcParams['figure.facecolor'] = "white"
 
 id_spacing = 25
 
+def zero_to_nan(values):
+    """Replace every 0 with 'nan' and return a copy."""
+    return [float('nan') if x==0 else x for x in values]
 
 # https://stackoverflow.com/questions/19353576/curved-text-rendering-in-matplotlib
 class CurvedText(mtext.Text):
@@ -283,13 +286,15 @@ def graph_fired_over_eff_lumin():
 	trig_name_positions = {"HLT_Jet30":(x,160),"HLT_Jet60":(x,12),"HLT_Jet80":(x,3),
 			      "HLT_Jet110":(x,.5),"HLT_Jet150":(x,.12),"HLT_Jet190":(x,.03),
 			      "HLT_Jet240":(x,.01),"HLT_Jet300":(x,.003),"HLT_Jet370":(x,.001)}
-
+	
 	for trig in rev_ordered_triggers:	
 		index = [int(x) for x in lines[color_index*3+1].split(",")]
 		yaxis = [float(x) for x in lines[color_index*3+2].split(",")]
-		print np.where(yaxis!= 0)[0]
+		
+
+print(zero_to_nan(values))
 		plt.text(trig_name_positions[trig][0],trig_name_positions[trig][1],trig[4:],color = colors[color_index])
-		plt.plot(index[np.where(yaxis!= 0)[0]],yaxis[np.where(yaxis!= 0)[0]],colors[color_index])
+		plt.plot(index,zero_to_nan(yaxis),colors[color_index])
 		color_index += 1
 
 	plt.xlabel("Run,Lumiblock")
