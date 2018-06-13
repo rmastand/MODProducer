@@ -71,11 +71,11 @@ def graph_eff_lumin():
 
 	
 	x = .4
-	plt.text(x,60000,"Total Luminosity",color = "r")
+	plt.text(x,70000,"Total Luminosity",color = "r")
 
 	trig_name_positions = {"HLT_Jet30":(x,.2),"HLT_Jet60":(x,2),"HLT_Jet80":(x,10.5),
 			      "HLT_Jet110":(x,100),"HLT_Jet150":(x,400),"HLT_Jet190":(x,1000),
-			      "HLT_Jet240":(x,3000),"HLT_Jet300":(x,8000),"HLT_Jet370":(x,2000)}
+			      "HLT_Jet240":(x,3000),"HLT_Jet300":(x,8000),"HLT_Jet370":(x,20000)}
 	
 	for trig_index,trig in enumerate(rev_ordered_triggers):
 		index = [int(x) for x in lines[2*trig_index+3].split(",")]
