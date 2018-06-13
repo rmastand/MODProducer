@@ -238,7 +238,7 @@ def graph_eff_lumin():
 			text = CurvedText(
 			x = index[int(len(index)*(.6)):int(len(index)*(.8))],
 			y = eff_lumin[int(len(eff_lumin)*(.6)):int(len(eff_lumin)*(.8))],
-			    text=trig.replace("_"," "),#'this this is a very, very long text',
+			    text=trig[4:],#'this this is a very, very long text',
 			    va = 'bottom',
 			    axes = ax,color = colors[color_index] ##calls ax.add_artist in __init__
 				
@@ -247,7 +247,7 @@ def graph_eff_lumin():
 			text = CurvedText(
 			x = index[int(len(index)*(.8)):],
 			y = eff_lumin[int(len(eff_lumin)*(.8)):],
-			    text=trig.replace("_"," "),#'this this is a very, very long text',
+			    text=trig[4:],#'this this is a very, very long text',
 			    va = 'bottom',
 			    axes = ax,color = colors[color_index] ##calls ax.add_artist in __init__
 				
@@ -285,7 +285,7 @@ def graph_fired_over_eff_lumin():
 	for trig in rev_ordered_triggers:	
 		index = [int(x) for x in lines[color_index*3+1].split(",")]
 		yaxis = [float(x) for x in lines[color_index*3+2].split(",")]
-		plt.text(trig_name_positions[trig][0],trig_name_positions[trig][1],trig.replace("_"," "),color = colors[color_index])
+		plt.text(trig_name_positions[trig][0],trig_name_positions[trig][1],trig[4:],color = colors[color_index])
 		plt.plot(index,yaxis,colors[color_index])
 		color_index += 1
 
