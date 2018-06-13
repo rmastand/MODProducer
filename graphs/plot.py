@@ -28,6 +28,8 @@ plt.rcParams['legend.fontsize'] = 24
 plt.rc('mathtext', rm='serif')
 plt.rcParams['figure.facecolor'] = "white"
 
+id_spacing = 25
+
 
 # https://stackoverflow.com/questions/19353576/curved-text-rendering-in-matplotlib
 class CurvedText(mtext.Text):
@@ -255,7 +257,7 @@ def graph_eff_lumin():
 		color_index += 1
 	plt.xlabel("Run:LumiBlock")
 	
-	plt.xticks(range(len(time_ordered_lumi_id))[::5], time_ordered_lumi_id[::5], rotation=30)
+	plt.xticks(range(len(time_ordered_lumi_id))[::id_spacing], time_ordered_lumi_id[::id_spacing], rotation=30)
 	ax = plt.gca()
 	
 	ax.add_artist(logo_box())
@@ -286,12 +288,12 @@ def graph_fired_over_eff_lumin():
 		index = [int(x) for x in lines[color_index*3+1].split(",")]
 		yaxis = [float(x) for x in lines[color_index*3+2].split(",")]
 		plt.text(trig_name_positions[trig][0],trig_name_positions[trig][1],trig[4:],color = colors[color_index])
-		plt.plot(index,yaxis,colors[color_index])
+		plt.plot(index[np.where(yaxis!= 0)],yaxis[np.where(yaxis!= 0)],colors[color_index])
 		color_index += 1
 
 	plt.xlabel("Run,Lumiblock")
 
-	plt.xticks(range(len(lines[0].split(",")))[::5],lines[0].split(",")[::5], rotation=30)
+	plt.xticks(range(len(lines[0].split(",")))[::id_spacing],lines[0].split(",")[::id_spacing], rotation=30)
 	plt.ylabel("Times Fired / Effective Luminosity (ub)")
 	plt.yscale("log")
 	ax = plt.gca()
