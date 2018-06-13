@@ -266,8 +266,9 @@ def graph_eff_lumin():
 	ax.add_artist(logo_box())
 	plt.ylabel("Effective Luminosity " +"ub^{-1}")
 	plt.yscale("log")
+	plt.savefig("eff_lumi.pdf")
 	plt.show()
-	plt.savefig("integrated_lumi.pdf")
+	
 	
 """
 plot_fired_over_lumin.txt:
@@ -309,8 +310,9 @@ def graph_fired_over_eff_lumin():
 	ax.legend(loc='center left', bbox_to_anchor=(1, 0.5),frameon=False)
 	
 	ax.add_artist(logo_box())
-	plt.show()
 	plt.savefig("fired_over_lumin.pdf")
+	plt.show()
+	
 	
 
 
