@@ -22,8 +22,8 @@ plt.rcParams['font.family'] = 'serif'
 plt.rcParams['font.size'] = 16
 plt.rcParams['font.weight'] = "bold"
 plt.rcParams['axes.labelsize'] = 24
-plt.rcParams['xtick.labelsize'] = 14
-plt.rcParams['ytick.labelsize'] = 14
+plt.rcParams['xtick.labelsize'] = 10
+plt.rcParams['ytick.labelsize'] = 10
 plt.rcParams['legend.fontsize'] = 24
 plt.rc('mathtext', rm='serif')
 plt.rcParams['figure.facecolor'] = "white"
@@ -296,7 +296,7 @@ def graph_fired_over_eff_lumin():
 		plt.plot(index,zero_to_nan(yaxis),colors[color_index])
 		color_index += 1
 
-	plt.xlabel("Run,Lumiblock")
+	plt.xlabel("Run:Lumiblock")
 
 	plt.xticks(range(len(lines[0].split(",")))[::id_spacing],lines[0].split(",")[::id_spacing], rotation=30)
 	plt.ylabel("Times Fired / Effective Luminosity (ub)")
