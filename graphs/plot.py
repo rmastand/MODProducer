@@ -23,7 +23,7 @@ plt.rcParams['font.size'] = 16
 plt.rcParams['font.weight'] = "bold"
 plt.rcParams['axes.labelsize'] = 24
 plt.rcParams['xtick.labelsize'] = 10
-plt.rcParams['ytick.labelsize'] = 10
+plt.rcParams['ytick.labelsize'] = 18
 plt.rcParams['legend.fontsize'] = 24
 plt.rc('mathtext', rm='serif')
 plt.rcParams['figure.facecolor'] = "white"
@@ -264,7 +264,7 @@ def graph_eff_lumin():
 	ax = plt.gca()
 	
 	ax.add_artist(logo_box())
-	plt.ylabel("Effective Luminosity " +"$ub^{-1}$")
+	plt.ylabel("Effective Luminosity " +"ub^{-1}")
 	plt.yscale("log")
 	plt.show()
 	plt.savefig("integrated_lumi.pdf")
