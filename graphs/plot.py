@@ -228,8 +228,8 @@ def graph_eff_lumin():
 	time_ordered_lumi_id = lines[2].split(",")
 	plt.plot(master_index,master_lumin,"ro")
 	text = CurvedText(
-            	x = master_index[int(len(master_index)*(.4)):int(len(master_index)*(.6))],
-            	y = master_lumin[int(len(master_lumin)*(.4)):int(len(master_lumin)*(.6))],
+            	x = master_index[int(len(master_index)*(.6)):int(len(master_index)*(.8))],
+            	y = master_lumin[int(len(master_lumin)*(.6)):int(len(master_lumin)*(.8))],
 		    text="Total Luminosity",#'this this is a very, very long text',
 		    va = 'bottom',
 		    axes = ax,color = "r" ##calls ax.add_artist in __init__
@@ -241,8 +241,8 @@ def graph_eff_lumin():
 		plt.plot(index,eff_lumin,colors[color_index])
 		if color_index == 0: # hacky way to look for the firs trigger -- need to fix!!
 			text = CurvedText(
-			x = index[int(len(index)*(.7)):int(len(index)*(.8))],
-			y = eff_lumin[int(len(eff_lumin)*(.7)):int(len(eff_lumin)*(.8))],
+			x = index[int(len(index)*(.8)):int(len(index)*(.9))],
+			y = eff_lumin[int(len(eff_lumin)*(.8)):int(len(eff_lumin)*(.9))],
 			    text=trig[4:],#'this this is a very, very long text',
 			    va = 'bottom',
 			    axes = ax,color = colors[color_index] ##calls ax.add_artist in __init__
@@ -250,8 +250,8 @@ def graph_eff_lumin():
 			 )
 		else:
 			text = CurvedText(
-			x = index[int(len(index)*(.8)):],
-			y = eff_lumin[int(len(eff_lumin)*(.8)):],
+			x = index[int(len(index)*(.9)):],
+			y = eff_lumin[int(len(eff_lumin)*(.9)):],
 			    text=trig[4:],#'this this is a very, very long text',
 			    va = 'bottom',
 			    axes = ax,color = colors[color_index] ##calls ax.add_artist in __init__
@@ -315,5 +315,5 @@ def graph_fired_over_eff_lumin():
 
 
 graph_eff_lumin()
-graph_fired_over_eff_lumin()
+#graph_fired_over_eff_lumin()
 
