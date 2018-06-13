@@ -41,7 +41,7 @@ def logo_box():
         logo_offset_image = OffsetImage(read_png(get_sample_data(logo_location, asfileobj=False)), zoom=0.25, resample=1, dpi_cor=1)
         text_box = TextArea(logo_text, textprops=dict(color='#444444', fontsize=20, weight='bold'))
         logo_and_text_box = HPacker(children=[logo_offset_image, text_box], align="center", pad=0, sep=10)
-        anchored_box = AnchoredOffsetbox(loc=2, child=logo_and_text_box, pad=0.2, frameon=False, borderpad=0., bbox_to_anchor=[0.114, .93], bbox_transform = plt.gcf().transFigure)
+        anchored_box = AnchoredOffsetbox(loc=2, child=logo_and_text_box, pad=0.2, frameon=False, borderpad=0., bbox_to_anchor=[0.114, .95], bbox_transform = plt.gcf().transFigure)
         return anchored_box
 
 
@@ -69,12 +69,17 @@ def graph_eff_lumin():
 	time_ordered_lumi_id = lines[2].split(",")
 	plt.plot(np.array(master_index)+1,master_lumin,"ro")
 	
+	x = .2
+	trig_name_positions = {"HLT_Jet30":(x,.1),"HLT_Jet60":(x,1),"HLT_Jet80":(x,10),
+			      "HLT_Jet110":(x,.100),"HLT_Jet150":(x,300),"HLT_Jet190":(x,1000),
+			      "HLT_Jet240":(x,3000),"HLT_Jet300":(x,3000),"HLT_Jet370":(x,3000)}
 	
 	for trig_index,trig in enumerate(rev_ordered_triggers):
 		index = [int(x) for x in lines[2*trig_index+3].split(",")]
 		eff_lumin = [float(x) for x in lines[2*trig_index+4].split(",")]
 		plt.plot(np.array(index)+1,eff_lumin,colors[color_index])
-		
+		plt.text(trig_name_positions[trig][0],trig_name_positions[trig][1],trig[4:],color = colors[color_index])
+
 			
 		color_index += 1
 	#plt.xlabel("Run:LumiBlock")
