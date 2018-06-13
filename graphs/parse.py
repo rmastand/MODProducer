@@ -60,6 +60,7 @@ def read_mod_file(mod_file):
 	trig_dict = {}
 
 	with open(mod_file) as file:
+		print "Processing file " + mod_file
 		for line in file:
 			# MOST CODE TAKEN FROM GET_TRIGGER_INFO.py
 			# keeps track of the run, lumiBlock
