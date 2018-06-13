@@ -88,8 +88,9 @@ def graph_eff_lumin():
 	#plt.xlabel("Run:LumiBlock")
 	#plt.xticks(range(len(time_ordered_lumi_id))[::id_spacing], time_ordered_lumi_id[::id_spacing], rotation=30)
 	ax = plt.gca()
-	plt.axis('scaled')
+	
 	ax.set_xlim(left = .3)
+	plt.axis('scaled')
 	plt.xlabel("# of Luminosity Blocks (time-ordered)")
 	
 	ax.add_artist(logo_box())
@@ -97,7 +98,7 @@ def graph_eff_lumin():
 	plt.yscale("log")
 	plt.xscale("log")
 
-	#plt.savefig("eff_lumi.pdf")
+	plt.savefig("eff_lumi.pdf")
 	plt.show()
 	
 	
