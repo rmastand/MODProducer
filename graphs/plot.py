@@ -95,6 +95,7 @@ def graph_eff_lumin():
 	plt.ylabel("Effective Luminosity " +"ub^{-1}")
 	plt.yscale("log")
 	plt.xscale("log")
+	ax.set_aspect('equal', 'box')
 	plt.savefig("eff_lumi.pdf")
 	plt.show()
 	
