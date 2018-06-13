@@ -215,7 +215,7 @@ Effective Luminosity, cumsum value
 """
 
 def graph_eff_lumin():
-	plt.figure() 
+	plt.figure(figsize= (20,10)) 
 	ax = plt.gca()
 	color_index = 0
 	
