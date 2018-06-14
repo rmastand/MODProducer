@@ -59,6 +59,7 @@ def get_file_trig_dict_from_txt(filepath):
 				fired_dict = {}
 				fired_info = line.split(",")
 				for j in range(len(fired_info)):
+					print len(fired_info[j])
 					if fired_info[j] != "\n":	
 						print fired_info[j]
 						print fired_info[j].split(":")
