@@ -18,6 +18,41 @@ master_trig_dict = {"HLT_Jet190":{"good_lumis":[],"good_prescales":[],"fired":{}
 						"HLT_Jet30":{"good_lumis":[],"good_prescales":[],"fired":{}},"HLT_Jet300":{"good_lumis":[],"good_prescales":[],"fired":{}}}
 ordered_triggers = ["HLT_Jet30","HLT_Jet60","HLT_Jet80","HLT_Jet110","HLT_Jet150","HLT_Jet190","HLT_Jet240","HLT_Jet300","HLT_Jet370"]
 
+
+
+def read_lumi_by_ls(lumibyls_file):
+	"""
+	returns two dicts with keys = (run,lumiBlock)
+	1st values: gps times
+	2nd values: (lumi_delivered, lumi_recorded)
+	"""
+	lumibyls = open(lumibyls_file)
+	lines =  lumibyls.readlines()
+	split_lines = [line.split(",") for line in lines][2:]
+	char = ""
+	lumi_id_to_gps_times = {}
+	lumi_id_to_lumin = {}
+	i = 0
+	while char !="#":
+		run = split_lines[i][0].split(":")[0]
+		lumi = split_lines[i][1].split(":")[0]
+		date = split_lines[i][2].split(" ")[0]
+		tim = split_lines[i][2].split(" ")[1]
+		mdy = [int(x) for x in date.split("/")]
+		hms = [int(x) for x in tim.split(":")]
+		dt = datetime.datetime(mdy[2], mdy[0], mdy[1], hms[0], hms[1],hms[2])
+		lumi_id_to_gps_times[(run,lumi)] = time.mktime(dt.timetuple())
+		lumi_id_to_lumin[(run,lumi)] = (float(split_lines[i][5]),float(split_lines[i][6]))
+		i += 1
+		try:
+			char = split_lines[i][0][0]
+		except: pass
+	return lumi_id_to_gps_times,lumi_id_to_lumin
+
+
+
+lumi_id_to_gps_times,lumi_id_to_lumin = read_lumi_by_ls(lumibyls_file)
+
 def get_file_trig_dict_from_txt(filepath):
 	"""
 	each n correponds to a different trigger name
