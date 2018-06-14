@@ -32,7 +32,6 @@ def get_file_trig_dict_from_txt(filepath):
 	with open(filepath) as trig_info_file:
 		for line in trig_info_file:
 			line = line.strip()
-			print line
 			if i % 4 == 0: # if we have a trigger name
 				trigger_name = line.split()[-1] # holds for the rest of that trigger's information
 				trig_dict[trigger_name] =  {
@@ -44,9 +43,10 @@ def get_file_trig_dict_from_txt(filepath):
 				
 			elif i % 4 == 1: # if we have a list of good lumis:
 				good_lumis = []
-				for lumi in line.split(","):
-					print lumi
-					good_lumis.append((lumi.split(":")[0],lumi.split(":")[1]))
+				try:
+					for lumi in line.split(","):
+						good_lumis.append((lumi.split(":")[0],lumi.split(":")[1]))
+				except: pass
 				trig_dict[trigger_name]["good_lumis"] = good_lumis
 			elif i % 4 == 2: # if we have a list of prescales:
 				trig_dict[trigger_name]["good_prescales"] = [float(x) for x in line.split(",")]
