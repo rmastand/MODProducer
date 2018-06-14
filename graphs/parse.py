@@ -123,9 +123,9 @@ def read_mod_file(mod_file,file_trig_dict_output_dir,file_name,i,num_files):
 		return trig_dict
 
 
-i = 0
+i = 1
 num_files = len(os.listdir(mod_file_inpur_dir))
 for file in os.listdir(mod_file_inpur_dir):
 	file_trig_dict = read_mod_file(mod_file_inpur_dir+"/"+file,file_trig_dict_output_dir,file,i,num_files)
-	i += 0
+	i += 1
 	
