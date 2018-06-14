@@ -118,11 +118,8 @@ def read_mod_file(mod_file,file_trig_dict_output_dir,file_name,i,num_files):
 				writer.writerow(trig_dict[trigger]["good_prescales"])
 				fired = []
 				for lumi_id in trig_dict[trigger]["fired"].keys():
-					print type(lumi_id)
-					print type(trig_dict[trigger]["fired"][lumi_id])
-					print lumi_id,trig_dict[trigger]["fired"][lumi_id]
-					print lumi_id+":"+str(trig_dict[trigger]["fired"][lumi_id])
-					fired.append(lumi_id+":"+str(trig_dict[trigger]["fired"][lumi_id]))
+				
+					fired.append(lumi_id[0]+"_"+lumi_id[1]+":"+str(trig_dict[trigger]["fired"][lumi_id]))
 				writer.writerow(fired)
 		return trig_dict
 
