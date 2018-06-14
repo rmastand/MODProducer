@@ -116,7 +116,7 @@ ordered_triggers = ["HLT_Jet30","HLT_Jet60","HLT_Jet80","HLT_Jet110","HLT_Jet150
 
 # for each mod file, for each trigger, get the good luminosity blocks, good prescales,
 #and how many times it fired per lumi block
-for file in os.listdir(mod_file_inpur_dir)[2:10]:
+for file in os.listdir(mod_file_inpur_dir)[10:25]:
 	file_trig_dict = read_mod_file(mod_file_inpur_dir+"/"+file)
 	for trig in file_trig_dict.keys():
 		if cut_trigger_name(trig) in master_trig_dict.keys():
