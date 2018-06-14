@@ -48,7 +48,7 @@ def get_file_trig_dict_from_txt(filepath):
 				fired_dict = {}
 				fired_info = line.split(",")
 				for j in range(len(fired_info)):
-					print fired_info[j].split(":")
+					print fired_info[j]
 					
 					run_lumi_id = fired_info[j].split(":")[0]
 					times_fired = int(fired_info[j].split(":")[1].replace("\n",""))
