@@ -65,9 +65,12 @@ def get_file_trig_dict_from_txt(filepath):
 
 # for each mod file, for each trigger, get the good luminosity blocks, good prescales,
 #and how many times it fired per lumi block
-for file in os.listdir(parsed_file_inpur_dir)[0]:
-	file_trig_dict = get_file_trig_dict_from_txt(parsed_file_inpur_dir+"/"+file)
-	print file_trig_dict
+l = 0
+for file in os.listdir(parsed_file_inpur_dir):
+	if l == 0:
+		file_trig_dict = get_file_trig_dict_from_txt(parsed_file_inpur_dir+"/"+file)
+		print file_trig_dict
+	l += 1
 	"""
 	for trig in file_trig_dict.keys():
 		if cut_trigger_name(trig) in master_trig_dict.keys():
