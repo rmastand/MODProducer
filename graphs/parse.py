@@ -114,7 +114,10 @@ def read_mod_file(mod_file,file_trig_dict_output_dir,file_name,i,num_files):
 			writer = csv.writer(output, lineterminator='\n')
 			for trigger in trig_dict:
 				writer.writerow(["# "+trigger]) 
-				writer.writerow(trig_dict[trigger]["good_lumis"])
+				good_lumis = []
+				for lumi in trig_dict[trigger]["good_lumis"]:
+					good_lumis.append(lumi[0]+":"+lumi[1])
+				writer.writerow(good_lumis)
 				writer.writerow(trig_dict[trigger]["good_prescales"])
 				fired = []
 				for lumi_id in trig_dict[trigger]["fired"].keys():
