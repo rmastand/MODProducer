@@ -43,8 +43,11 @@ def get_file_trig_dict_from_txt(filepath):
 								     }
 				
 			elif i % 4 == 1: # if we have a list of good lumis:
-			
-				trig_dict[trigger_name]["good_lumis"] = [(x.split(":")[0],x.split(":")[1]) for x in line.split(",")]
+				good_lumis = []
+				for lumi in line.split(","):
+					print lumi
+					good_lumis.append((lumi.split(":")[0],lumi.split(":")[1]))
+				trig_dict[trigger_name]["good_lumis"] = good_lumis
 			elif i % 4 == 2: # if we have a list of prescales:
 				trig_dict[trigger_name]["good_prescales"] = [float(x) for x in line.split(",")]
 			elif i % 4 == 3:
