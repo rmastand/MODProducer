@@ -70,7 +70,7 @@ def read_mod_file(mod_file,file_trig_dict_output_dir,file_name,i,num_files):
 
 	with open(mod_file) as file:
 		print "Processing file " + file_name
-		print "File "
+		print "File "+str(i)+" of " + str(num_files)
 		for line in file:
 			# MOST CODE TAKEN FROM GET_TRIGGER_INFO.py
 			# keeps track of the run, lumiBlock
