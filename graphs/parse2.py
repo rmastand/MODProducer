@@ -4,6 +4,7 @@ import os
 import csv
 
 parsed_file_inpur_dir = sys.argv[1]
+lumibyls_file = sys.argv[2]
 
 
 def cut_trigger_name(name):
