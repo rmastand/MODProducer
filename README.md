@@ -106,7 +106,7 @@ First, you need to create what's called a "registry". A registry creates a map b
    Or for simulated data:
    
    ```
-   python ./reg/create_registry_online.py ./file_paths/samples/sim_1369.txt ~/MITOpenDataProject/registry_sim.txt ~/MITOpenDataProject/eos/opendata/cms/MonteCarlo2011/Summer11LegDR/QCD_Pt-170to300_TuneZ2_7TeV_pythia6/MOD/PU_S13_START53_LV6-v1/00000/ ./reg/2011lumibyls.csv ./reg/11skimlumi.txt Sim 2011 Jet 
+   python ./reg/create_registry_online.py ./file_paths/samples/sim_1369.txt ~/MITOpenDataProject/registry_sim.txt ~/MITOpenDataProject/eos/opendata/cms/MonteCarlo2011/Summer11LegDR/QCD_Pt-170to300_TuneZ2_7TeV_pythia6/stats/PU_S13_START53_LV6-v1/00000/ ./reg/2011lumibyls.csv ./reg/11skimlumi.txt Sim 2011 Jet 
    ```
  
    The code will output a number of .stats files in the designated output directory as well as a registry file in the designated path.
@@ -169,7 +169,7 @@ If using 2010 or 2011 (real or simulated) data, all these corrections are in the
    
    Or for simulated data, use:
    ```
-   cmsRun ./analysis/PFCandidateRun_online.py file_paths/samples/sim_1369.txt ~/MITOpenDataProject/eos/opendata/cms/MonteCarlo2011/Summer11LegDR/QCD_Pt-170to300_TuneZ2_7TeV_pythia6/stats/PU_S13_START53_LV6-v1/00000 ~/MITOpenDataProject/registry_sim.txt Jet S53/START53_LV6A1 Sim 2011 1
+   cmsRun ./analysis/PFCandidateRun_online.py file_paths/samples/sim_1369.txt ~/MITOpenDataProject/eos/opendata/cms/MonteCarlo2011/Summer11LegDR/QCD_Pt-170to300_TuneZ2_7TeV_pythia6/MOD/PU_S13_START53_LV6-v1/00000 ~/MITOpenDataProject/registry_sim.txt Jet S53/START53_LV6A1 Sim 2011 1
    ```
    
    If you're getting odd outputs (i.e. "File already processed" where you think there shouldn't be), try deleting the files 0 and / or 1 and try again.
