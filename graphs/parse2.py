@@ -61,7 +61,8 @@ def get_file_trig_dict_from_txt(filepath):
 				for j in range(len(fired_info)):
 					print fired_info[j]
 					run_lumi_id = fired_info[j].split(":")[0]
-					times_fired = int(fired_info[j].split(":")[1].replace("\n",""))
+					times_fired = int(fired_info[j].split(":")[1])
+					print run_lumi_id,times_fired
 					fired_dict[(run_lumi_id.split("_")[0],run_lumi_id.split("_")[1])] = times_fired
 				
 				trig_dict[trigger_name]["fired"] = fired_dict
