@@ -88,10 +88,7 @@ for trig in file_trig_dict.keys():
 	print trig
 	print
 	print
-	print file_trig_dict[trig]["good_lumis"]
-	print
-	print
-	print file_trig_dict[trig]["good_prescales"]
+	print file_trig_dict[trig]["fired"]
 	print
 	print
 	
