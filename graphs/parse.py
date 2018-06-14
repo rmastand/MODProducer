@@ -54,7 +54,7 @@ def is_lumi_valid(lumi_id, lumi_id_to_lumin):
 lumi_id_to_gps_times,lumi_id_to_lumin = read_lumi_by_ls(lumibyls_file)
 
 
-def read_mod_file(mod_file,file_trig_dict_output_dir,file_name):
+def read_mod_file(mod_file,file_trig_dict_output_dir,file_name,i,num_files):
 	"""
 	prints a dict of triggers FOR EACH MOD file
 	keys are triggers names (with versions)
@@ -69,7 +69,8 @@ def read_mod_file(mod_file,file_trig_dict_output_dir,file_name):
 	trig_dict = {}
 
 	with open(mod_file) as file:
-		print "Processing file " + mod_file
+		print "Processing file " + file_name
+		print "File "
 		for line in file:
 			# MOST CODE TAKEN FROM GET_TRIGGER_INFO.py
 			# keeps track of the run, lumiBlock
@@ -122,7 +123,9 @@ def read_mod_file(mod_file,file_trig_dict_output_dir,file_name):
 		return trig_dict
 
 
-
+i = 0
+num_files = len(os.listdir(mod_file_inpur_dir))
 for file in os.listdir(mod_file_inpur_dir):
-	file_trig_dict = read_mod_file(mod_file_inpur_dir+"/"+file,file_trig_dict_output_dir,file)
+	file_trig_dict = read_mod_file(mod_file_inpur_dir+"/"+file,file_trig_dict_output_dir,file,i,num_files)
+	i += 0
 	
