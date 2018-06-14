@@ -77,22 +77,9 @@ def get_file_trig_dict_from_txt(filepath):
 
 # for each mod file, for each trigger, get the good luminosity blocks, good prescales,
 #and how many times it fired per lumi block
-l = 0
-for file in os.listdir(parsed_file_inpur_dir):
-	if l == 0:
-		file_trig_dict = get_file_trig_dict_from_txt(parsed_file_inpur_dir+"/"+file)
-		
-	l += 1
 
-for trig in file_trig_dict.keys():
-	print trig
-	print
-	print
-	print file_trig_dict[trig]["fired"]
-	print
-	print
-	
-	"""
+for file in os.listdir(parsed_file_inpur_dir):
+	file_trig_dict = get_file_trig_dict_from_txt(parsed_file_inpur_dir+"/"+file)
 	for trig in file_trig_dict.keys():
 		if cut_trigger_name(trig) in master_trig_dict.keys():
 			master_trig_dict[cut_trigger_name(trig)]["good_lumis"] = master_trig_dict[cut_trigger_name(trig)]["good_lumis"]+file_trig_dict[trig]["good_lumis"]
@@ -102,9 +89,8 @@ for trig in file_trig_dict.keys():
 					master_trig_dict[cut_trigger_name(trig)]["fired"][lumi_id] += file_trig_dict[trig]["fired"][lumi_id]
 				except KeyError:
 					master_trig_dict[cut_trigger_name(trig)]["fired"][lumi_id] = file_trig_dict[trig]["fired"][lumi_id]
-	"""
 
-"""
+
 def plot_eff_lumin():
 	# finds time vs effective luminosity curves for all triggers
 	trigger_time_v_lumin_rec = {}
@@ -217,4 +203,4 @@ plot_eff_lumin()
 plot_fired_over_eff_lumin()
 # currently i am NOT checking for validity for this last one
 #lumi_blocks_in_file()
-"""
+
