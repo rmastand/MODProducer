@@ -23,7 +23,6 @@ def read_lumi_by_ls(lumibyls_file):
 	lumi_id_to_lumin = {}
 	i = 0
 	while char !="#":
-		print split_lines[i]
 		run = split_lines[i][0].split(":")[0]
 		lumi = split_lines[i][1].split(":")[0]
 		date = split_lines[i][2].split(" ")[0]
@@ -117,7 +116,7 @@ ordered_triggers = ["HLT_Jet30","HLT_Jet60","HLT_Jet80","HLT_Jet110","HLT_Jet150
 
 # for each mod file, for each trigger, get the good luminosity blocks, good prescales,
 #and how many times it fired per lumi block
-for file in os.listdir(mod_file_inpur_dir):
+for file in os.listdir(mod_file_inpur_dir)[:3]:
 	file_trig_dict = read_mod_file(mod_file_inpur_dir+"/"+file)
 	for trig in file_trig_dict.keys():
 		if cut_trigger_name(trig) in master_trig_dict.keys():
