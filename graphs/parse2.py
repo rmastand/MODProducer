@@ -69,8 +69,20 @@ l = 0
 for file in os.listdir(parsed_file_inpur_dir):
 	if l == 0:
 		file_trig_dict = get_file_trig_dict_from_txt(parsed_file_inpur_dir+"/"+file)
-		print file_trig_dict
+		
 	l += 1
+
+for trig in file_trig_dict.keys():
+	print trig
+	print
+	print
+	print file_trig_dict[trig]["good_lumis"]
+	print
+	print
+	print file_trig_dict[trig]["good_prescales"]
+	print
+	print
+	
 	"""
 	for trig in file_trig_dict.keys():
 		if cut_trigger_name(trig) in master_trig_dict.keys():
