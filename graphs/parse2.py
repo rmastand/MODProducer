@@ -47,10 +47,10 @@ def get_file_trig_dict_from_txt(filepath):
 			elif i % 4 == 3:
 				fired_dict = {}
 				fired_info = line.split(",")
-				print fired_info
-				print range(len(fired_info))[::2]
-				for j in range(len(fired_info))[::2][::-1]:
-					fired_dict[(fired_info[j].split(":")[0],fired_info[j].split(":")[1])] = fired_info[j+1]
+				for j in range(len(fired_info)):
+					run_lumi_id = line.split().split(":")[0]
+					times_fired = int(line.split().split(":")[1])
+					fired_dict[(run_lumi_id.split("_")[0],run_lumi_id.split("_")[1])] = times_fired
 				trig_dict[trigger_name]["fired"] = fired_dict
 						
 			i += 1
