@@ -23,7 +23,7 @@ def read_lumi_by_ls(lumibyls_file):
 	lumi_id_to_lumin = {}
 	i = 0
 	while char !="#":
-		print run = split_lines[i]
+		print split_lines[i]
 		run = split_lines[i][0].split(":")[0]
 		lumi = split_lines[i][1].split(":")[0]
 		date = split_lines[i][2].split(" ")[0]
