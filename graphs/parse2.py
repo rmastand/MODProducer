@@ -18,10 +18,53 @@ master_trig_dict = {"HLT_Jet190":{"good_lumis":[],"good_prescales":[],"fired":{}
 						"HLT_Jet30":{"good_lumis":[],"good_prescales":[],"fired":{}},"HLT_Jet300":{"good_lumis":[],"good_prescales":[],"fired":{}}}
 ordered_triggers = ["HLT_Jet30","HLT_Jet60","HLT_Jet80","HLT_Jet110","HLT_Jet150","HLT_Jet190","HLT_Jet240","HLT_Jet300","HLT_Jet370"]
 
+def get_file_trig_dict_from_txt(filepath):
+	"""
+	each n correponds to a different trigger name
+	line n = uncut trigger name (with version)
+	line n+1 = list of good lumins ids trig_dict["good_lumis"]
+	line n+2 = list of good prescales trig_dict["good_prescales"]
+	line n+3 = list of lumi: # times fired paired. Comes from a dict where lumi id is the key and # times fired is the value trig_dict["fired"]
+				line 3 only: lumid in form run_event:#fired TAKE CARE WITH THIS+
+	"""
+	i = 0
+	trig_dict = {}
+	with open(filepath) as trig_info_file:
+		for line in trig_info_file:
+			if i % 4 == 0: # if we have a trigger name
+				trigger_name = line.split()[-1] # holds for the rest of that trigger's information
+				trig_dict[trigger_name] =  {
+								      "good_lumis":[],
+								      # corresponds to the prescale for a given GOOD LUMI BLOCK
+								      "good_prescales":[],
+									  "fired":{}
+								     }
+				
+			elif i % 4 == 1: # if we have a list of good lumis:
+				trig_dict[trigger_name]["good_lumis"] = line.split('","')
+			ellif i % 4 == 2: # if we have a list of prescales:
+				trig_dict[trigger_name]["good_prescales"] = line.split(",")
+			elif i % 4 == 3:
+				fired_dict = {}
+				fired_info = line.split(",")
+				for j in range(len(fired_info))[::2]:
+					fired_dict[(fired_info[j].split(":")[0],fired_info[j].split(":")[1])] = fired_info[j+1]
+				trig_dict[trigger_name]["fired"] = fired_dict
+						
+			i += 1
+			
+	return trig_dict
+	
+
+
+
+
 # for each mod file, for each trigger, get the good luminosity blocks, good prescales,
 #and how many times it fired per lumi block
-for file in os.listdir(mod_file_inpur_dir)[10:25]:
+for file in os.listdir(parsed_file_inpur_dir):
 	file_trig_dict = read_mod_file(mod_file_inpur_dir+"/"+file)
+	print file_trig_dict
+	"""
 	for trig in file_trig_dict.keys():
 		if cut_trigger_name(trig) in master_trig_dict.keys():
 			master_trig_dict[cut_trigger_name(trig)]["good_lumis"] = master_trig_dict[cut_trigger_name(trig)]["good_lumis"]+file_trig_dict[trig]["good_lumis"]
@@ -31,8 +74,9 @@ for file in os.listdir(mod_file_inpur_dir)[10:25]:
 					master_trig_dict[cut_trigger_name(trig)]["fired"][lumi_id] += file_trig_dict[trig]["fired"][lumi_id]
 				except KeyError:
 					master_trig_dict[cut_trigger_name(trig)]["fired"][lumi_id] = file_trig_dict[trig]["fired"][lumi_id]
+	"""
 
-
+"""
 def plot_eff_lumin():
 	# finds time vs effective luminosity curves for all triggers
 	trigger_time_v_lumin_rec = {}
@@ -145,3 +189,4 @@ plot_eff_lumin()
 plot_fired_over_eff_lumin()
 # currently i am NOT checking for validity for this last one
 #lumi_blocks_in_file()
+"""
