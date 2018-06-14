@@ -31,7 +31,7 @@ def get_file_trig_dict_from_txt(filepath):
 	trig_dict = {}
 	with open(filepath) as trig_info_file:
 		for line in trig_info_file:
-			line = line.rstrip()
+			line = line.splitlines()[0]
 			if i % 4 == 0: # if we have a trigger name
 				trigger_name = line.split()[-1] # holds for the rest of that trigger's information
 				trig_dict[trigger_name] =  {
