@@ -185,10 +185,10 @@ def plot_fired_over_eff_lumin():
 		for i,lumi_id in enumerate(master_trig_dict[trigger]["good_lumis"]):
 			trigger_time.append(lumi_id_to_gps_times[lumi_id])
 			eff_lumin = lumi_id_to_lumin[lumi_id][1]/master_trig_dict[trigger]["good_prescales"][i]
-			print lumi_id
-			print lumi_id_to_lumin[lumi_id][1]
-			
-			trigger_fired_lumin.append(float(master_trig_dict[trigger]["fired"][lumi_id])/eff_lumin)
+			try:
+				trigger_fired_lumin.append(float(master_trig_dict[trigger]["fired"][lumi_id])/eff_lumin)
+			except ZeroDivisionError:
+				trigger_fired_lumin.append(float(master_trig_dict[trigger]["fired"][lumi_id])/(lumi_id_to_lumin[lumi_id][0]/master_trig_dict[trigger]["good_prescales"][i]))
 			trigger_lumi.append(lumi_id[0]+":"+lumi_id[1])
 		trigger_time_v_fired_lumin[trigger] = trigger_time,trigger_fired_lumin,trigger_lumi
 
