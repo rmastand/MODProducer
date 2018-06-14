@@ -1,0 +1,5 @@
+root://eospublic.cern.ch//eos/opendata/cms/MonteCarlo2011/Summer11LegDR/QCD_Pt-1800_TuneZ2_7TeV_pythia6/AODSIM/PU_S13_START53_LV6-v1/00000/003EC29A-7DDE-E311-9E4C-848F69FD4EDD.root
+root://eospublic.cern.ch//eos/opendata/cms/MonteCarlo2011/Summer11LegDR/QCD_Pt-1800_TuneZ2_7TeV_pythia6/AODSIM/PU_S13_START53_LV6-v1/00000/02699C7B-1DDE-E311-B74A-7845C4FC35E1.root
+root://eospublic.cern.ch//eos/opendata/cms/MonteCarlo2011/Summer11LegDR/QCD_Pt-1800_TuneZ2_7TeV_pythia6/AODSIM/PU_S13_START53_LV6-v1/00000/08D8BD9D-7DDE-E311-A0F7-008CFA052194.root
+root://eospublic.cern.ch//eos/opendata/cms/MonteCarlo2011/Summer11LegDR/QCD_Pt-1800_TuneZ2_7TeV_pythia6/AODSIM/PU_S13_START53_LV6-v1/00000/10757CAE-5EDE-E311-B81C-008CFA0021D4.root
+root://eospublic.cern.ch//eos/opendata/cms/MonteCarlo2011/Summer11LegDR/QCD_Pt-1800_TuneZ2_7TeV_pythia6/AODSIM/PU_S13_START53_LV6-v1/00000/12F13495-7DDE-E311-96DB-7845C4FC35F3.root
