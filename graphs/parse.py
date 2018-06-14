@@ -116,7 +116,7 @@ ordered_triggers = ["HLT_Jet30","HLT_Jet60","HLT_Jet80","HLT_Jet110","HLT_Jet150
 
 # for each mod file, for each trigger, get the good luminosity blocks, good prescales,
 #and how many times it fired per lumi block
-for file in os.listdir(mod_file_inpur_dir)[:2]:
+for file in os.listdir(mod_file_inpur_dir)[2:10]:
 	file_trig_dict = read_mod_file(mod_file_inpur_dir+"/"+file)
 	for trig in file_trig_dict.keys():
 		if cut_trigger_name(trig) in master_trig_dict.keys():
@@ -187,11 +187,7 @@ def plot_fired_over_eff_lumin():
 			eff_lumin = lumi_id_to_lumin[lumi_id][1]/master_trig_dict[trigger]["good_prescales"][i]
 			print eff_lumin
 			print lumi_id_to_lumin[lumi_id][1]
-			try:
-				trigger_fired_lumin.append(float(master_trig_dict[trigger]["fired"][lumi_id])/eff_lumin)
-			except ZeroDivisionError:
-				print eff_lumin
-				print lumi_id_to_lumin[lumi_id][1],master_trig_dict[trigger]["good_prescales"][i]
+			trigger_fired_lumin.append(float(master_trig_dict[trigger]["fired"][lumi_id])/eff_lumin)
 			trigger_lumi.append(lumi_id[0]+":"+lumi_id[1])
 		trigger_time_v_fired_lumin[trigger] = trigger_time,trigger_fired_lumin,trigger_lumi
 
