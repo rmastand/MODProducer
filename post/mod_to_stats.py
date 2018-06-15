@@ -50,7 +50,7 @@ run_lumi_dict = runs_to_lumi(lumibyls)
 num_files = len(os.listdir(input_dir))
 i = 1
 for mod_orig in os.listdir(input_dir):
-	print "Processing File " + str(i) " of "+str(num_files)
+	print "Processing File " + str(i) + " of "+str(num_files)
 	total_lum_del = 0.0
 	total_lum_rec = 0.0
 	lumi_info = {}
