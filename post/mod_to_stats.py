@@ -141,4 +141,4 @@ for mod_orig in os.listdir(input_dir):
 	
 	w.write("EndFile\n")
 	w.close()
-	i += j
+	j += 1
