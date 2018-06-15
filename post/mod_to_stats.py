@@ -48,9 +48,9 @@ assure_path_exists(input_dir.replace("MOD","stats2")+"/")
 run_lumi_dict = runs_to_lumi(lumibyls)
 
 num_files = len(os.listdir(input_dir))
-i = 1
+j = 1
 for mod_orig in os.listdir(input_dir):
-	print "Processing File " + str(i) + " of "+str(num_files)
+	print "Processing File " + str(j) + " of "+str(num_files)
 	total_lum_del = 0.0
 	total_lum_rec = 0.0
 	lumi_info = {}
@@ -141,4 +141,4 @@ for mod_orig in os.listdir(input_dir):
 	
 	w.write("EndFile\n")
 	w.close()
-	i += 1
+	i += j
