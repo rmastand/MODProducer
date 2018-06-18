@@ -69,8 +69,7 @@ def read_mod_file(mod_file,file_trig_dict_output_dir,file_name,i,num_files):
 	trig_dict = {}
 
 	with open(mod_file) as file:
-		print "Processing file " + file_name
-		print "File "+str(i)+" of " + str(num_files)
+		
 		for line in file:
 			# MOST CODE TAKEN FROM GET_TRIGGER_INFO.py
 			# keeps track of the run, lumiBlock
@@ -130,6 +129,11 @@ def read_mod_file(mod_file,file_trig_dict_output_dir,file_name,i,num_files):
 i = 1
 num_files = len(os.listdir(mod_file_inpur_dir))
 for file in os.listdir(mod_file_inpur_dir):
-	file_trig_dict = read_mod_file(mod_file_inpur_dir+"/"+file,file_trig_dict_output_dir,file,i,num_files)
+	# if file has not already been processed
+	if file_name.replace(".mod",".txt") not in os.listdir(file_trig_dict_output_dir):
+		print "Processing file " + file_name + ", File "+str(i)+" of " + str(num_files)
+		file_trig_dict = read_mod_file(mod_file_inpur_dir+"/"+file,file_trig_dict_output_dir,file,i,num_files)
+	else:
+		print print "Already processed " + file_name + ", File "+str(i)+" of " + str(num_files)
 	i += 1
 	
