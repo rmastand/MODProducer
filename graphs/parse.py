@@ -134,6 +134,6 @@ for file in os.listdir(mod_file_inpur_dir):
 		print "Processing file " + file_name + ", File "+str(i)+" of " + str(num_files)
 		file_trig_dict = read_mod_file(mod_file_inpur_dir+"/"+file,file_trig_dict_output_dir,file,i,num_files)
 	else:
-		print print "Already processed " + file_name + ", File "+str(i)+" of " + str(num_files)
+		print "Already processed " + file_name + ", File "+str(i)+" of " + str(num_files)
 	i += 1
 	
