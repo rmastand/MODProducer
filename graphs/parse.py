@@ -130,10 +130,10 @@ i = 1
 num_files = len(os.listdir(mod_file_inpur_dir))
 for file in os.listdir(mod_file_inpur_dir):
 	# if file has not already been processed
-	if file_name.replace(".mod",".txt") not in os.listdir(file_trig_dict_output_dir):
-		print "Processing file " + file_name + ", File "+str(i)+" of " + str(num_files)
+	if file.replace(".mod",".txt") not in os.listdir(file_trig_dict_output_dir):
+		print "Processing file " + file + ", File "+str(i)+" of " + str(num_files)
 		file_trig_dict = read_mod_file(mod_file_inpur_dir+"/"+file,file_trig_dict_output_dir,file,i,num_files)
 	else:
-		print "Already processed " + file_name + ", File "+str(i)+" of " + str(num_files)
+		print "Already processed " + file + ", File "+str(i)+" of " + str(num_files)
 	i += 1
 	
