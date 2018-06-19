@@ -28,7 +28,7 @@ plt.rcParams['legend.fontsize'] = 24
 plt.rc('mathtext', rm='serif')
 plt.rcParams['figure.facecolor'] = "white"
 
-id_spacing = 25
+id_spacing = 100
 
 def zero_to_nan(values):
     """Replace every 0 with 'nan' and return a copy."""
