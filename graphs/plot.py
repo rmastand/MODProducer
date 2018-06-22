@@ -5,16 +5,20 @@ from matplotlib.offsetbox import TextArea, DrawingArea, OffsetImage, AnnotationB
 from matplotlib._png import read_png
 from mpl_toolkits.axes_grid.anchored_artists import AnchoredDrawingArea
 from matplotlib.cbook import get_sample_data
+from matplotlib.patches import Rectangle
 from matplotlib import patches
 from matplotlib import text as mtext
 import math
 
 plot_eff_lumi_file = sys.argv[1]
 plot_fired_over_lumi = sys.argv[2]
-logo_location = "/Users/mod/CMSOpenData/MODProducer/graphs/mod_logo.png"
+logo_location = "/Users/RMastandrea/UROP18/CMSOpenData/MODProducer/graphs/MODLogo.png"
 
-colors = ["b","g","orange","purple","c","maroon","limegreen","deeppink","orangered"]
-logo_text = "Preliminary          CMS 2011 Open Data"
+
+trigger_colors = {"HLT_Jet30":"#999999","HLT_Jet60":"#f781bf","HLT_Jet80":"#a65628",
+"HLT_Jet110":"#99cc00","HLT_Jet150":"#ff7f00","HLT_Jet190":"#984ea3","HLT_Jet240":"#4daf4a",
+"HLT_Jet300":"#377eb8","HLT_Jet370":"#e41a1c"}
+logo_text = "Preliminary"
 rev_ordered_triggers = ["HLT_Jet30","HLT_Jet60","HLT_Jet80","HLT_Jet110","HLT_Jet150","HLT_Jet190","HLT_Jet240","HLT_Jet300","HLT_Jet370"][::-1]
 
 
@@ -25,23 +29,40 @@ plt.rcParams['axes.labelsize'] = 24
 plt.rcParams['xtick.labelsize'] = 18
 plt.rcParams['ytick.labelsize'] = 18
 plt.rcParams['legend.fontsize'] = 24
+plt.rcParams['legend.fontsize'] = 24
+plt.rcParams['legend.fontsize'] = 24
+plt.rcParams['axes.linewidth'] = 2
+
+
+plt.rcParams['xtick.major.size'] = 10
+plt.rcParams['xtick.major.width'] = 2
+plt.rcParams['xtick.minor.size'] = 5
+plt.rcParams['xtick.minor.width'] = 2
+plt.rcParams['ytick.major.size'] = 10
+plt.rcParams['ytick.major.width'] = 2
+plt.rcParams['ytick.minor.size'] = 5
+plt.rcParams['ytick.minor.width'] = 2
+
 plt.rc('mathtext', rm='serif')
 plt.rcParams['figure.facecolor'] = "white"
-
-id_spacing = 100
+num_samples = 500
+id_spacing = 3000
 
 def zero_to_nan(values):
     """Replace every 0 with 'nan' and return a copy."""
     return [float('nan') if x==0 else x for x in values]
 
+extra = Rectangle((0, 0), 1, 1, fc="w", fill=False, edgecolor='none', linewidth=0)
+
+
 
 
 def logo_box():
-        
-        logo_offset_image = OffsetImage(read_png(get_sample_data(logo_location, asfileobj=False)), zoom=0.25, resample=1, dpi_cor=1)
-        text_box = TextArea(logo_text, textprops=dict(color='#444444', fontsize=20, weight='bold'))
+
+        logo_offset_image = OffsetImage(read_png(get_sample_data(logo_location, asfileobj=False)), zoom=0.08, resample=1, dpi_cor=1)
+        text_box = TextArea(logo_text, textprops=dict(color="#444444", fontsize=24,weight="normal"))
         logo_and_text_box = HPacker(children=[logo_offset_image, text_box], align="center", pad=0, sep=10)
-        anchored_box = AnchoredOffsetbox(loc=2, child=logo_and_text_box, pad=0.2, frameon=False, borderpad=0., bbox_to_anchor=[0.114, .95], bbox_transform = plt.gcf().transFigure)
+        anchored_box = AnchoredOffsetbox(loc=2, child=logo_and_text_box, pad=0.2, frameon=False, borderpad=0., bbox_to_anchor=[0.114, .97], bbox_transform = plt.gcf().transFigure)
         return anchored_box
 
 
@@ -56,51 +77,68 @@ Effective Luminosity, cumsum value
 """
 
 def graph_eff_lumin():
-	plt.figure(figsize= (10,10)) 
+	plt.figure(figsize= (10,10))
 	ax = plt.gca()
-	color_index = 0
-	
-	
+
+
 	eff_lumi_file =  open(plot_eff_lumi_file)
 	lines = eff_lumi_file.readlines()
 	# for the total luminosity file:
-	master_index = [int(x) for x in lines[0].split(",")]
-	master_lumin = [float(x) for x in lines[1].split(",")]
+	master_index = np.array([int(x) for x in lines[0].split(",")])+1
+
+	master_lumin = np.array([float(x) for x in lines[1].split(",")])
 	time_ordered_lumi_id = lines[2].split(",")
-	plt.plot(np.array(master_index)+1,master_lumin,"ro")
 
-	
-	x = .4
-	plt.text(x,70000,"Total Luminosity",color = "r")
+        #print np.logspace(min(master_index),max(master_index),num_samples)
+        good_indices = np.logspace(np.log10(min(master_index)),np.log10(max(master_index)),num_samples).astype(int) -min(master_index)
 
-	trig_name_positions = {"HLT_Jet30":(x,.2),"HLT_Jet60":(x,2),"HLT_Jet80":(x,10.5),
-			      "HLT_Jet110":(x,100),"HLT_Jet150":(x,400),"HLT_Jet190":(x,1000),
-			      "HLT_Jet240":(x,3000),"HLT_Jet300":(x,8000),"HLT_Jet370":(x,20000)}
-	
+	plt.plot(np.take(master_index,good_indices),np.take(master_lumin,good_indices),"k",linewidth=9.0)
+
+
+	x = .2
+	plt.text(x,11000,"Total Luminosity",color = "k")
+
+	trig_name_positions = {"HLT_Jet30":(x,.05),"HLT_Jet60":(x,1),"HLT_Jet80":(x,6),
+			      "HLT_Jet110":(x,20),"HLT_Jet150":(x,70),"HLT_Jet190":(x,300),
+			      "HLT_Jet240":(x,700),"HLT_Jet300":(x,2000),"HLT_Jet370":(x,5000)}
+
 	for trig_index,trig in enumerate(rev_ordered_triggers):
-		index = [int(x) for x in lines[2*trig_index+3].split(",")]
-		eff_lumin = [float(x) for x in lines[2*trig_index+4].split(",")]
-		plt.plot(np.array(index)+1,eff_lumin,colors[color_index])
-		plt.text(trig_name_positions[trig][0],trig_name_positions[trig][1],trig[4:],color = colors[color_index])
+	        print trig
 
-			
-		color_index += 1
+
+
+		index = np.array([int(x) for x in lines[2*trig_index+3].split(",")])+1
+
+		eff_lumin = np.array([float(x) for x in lines[2*trig_index+4].split(",")])
+                good_indices = np.logspace(np.log10(min(index)),np.log10(max(index)),num_samples).astype(int) - min(index)
+                print len(index), len(eff_lumin)
+        	plt.plot(np.take(index,good_indices),np.take(eff_lumin,good_indices),trigger_colors[trig],linewidth=4.0)
+
+		plt.text(trig_name_positions[trig][0],trig_name_positions[trig][1],trig[4:],color = trigger_colors[trig])
+
+
 	#plt.xlabel("Run:LumiBlock")
 	#plt.xticks(range(len(time_ordered_lumi_id))[::id_spacing], time_ordered_lumi_id[::id_spacing], rotation=30)
 	ax = plt.gca()
-	
-	ax.set_xlim(left = .3)
 
-	plt.xlabel("# of Luminosity Blocks (time-ordered)")
+	ax.set_xlim(left = .15,right = 30000)
+
+	plt.xlabel("Cumulative Luminosity Blocks")
 	ax.add_artist(logo_box())
-	plt.ylabel("Effective Luminosity " +"ub^{-1}")
+	plt.ylabel("Effective Luminosity [ub"+r"$^{-1}$]")
 	plt.yscale("log")
+
+
+        outside_text = ax.legend( [extra], ["CMS 2011 Open Data"], frameon=0, borderpad=0, fontsize=12, bbox_to_anchor=(1.0, 1.005), loc='lower right',prop = {'weight':'normal',"size":16})
+        ax.add_artist(outside_text)
 	plt.xscale("log")
+        plt.text(.2,2.5*10**8,"216 of 1223 AOD Files",weight="normal")
+
 
 	plt.savefig("eff_lumi.pdf")
 	plt.show()
-	
-	
+
+
 """
 plot_fired_over_lumin.txt:
 For each trigger, going from BIGGEST TO SMALLEST:
@@ -111,44 +149,49 @@ fired over eff lumi value
 def graph_fired_over_eff_lumin():
 	fired_lumi_file =  open(plot_fired_over_lumi)
 	lines = fired_lumi_file.readlines()
-	
-	plt.figure(figsize=(12,10))
+
+	plt.figure(figsize=(10,10))
 	color_index = 0
-	x = -270
-	trig_name_positions = {"HLT_Jet30":(x,150),"HLT_Jet60":(x,10),"HLT_Jet80":(x,2),
-			      "HLT_Jet110":(x,.4),"HLT_Jet150":(x,.1),"HLT_Jet190":(x,.03),
-			      "HLT_Jet240":(x,.01),"HLT_Jet300":(x,.002),"HLT_Jet370":(x,.001)}
-	
-	for trig in rev_ordered_triggers:	
+	x = -2400
+	trig_name_positions = {"HLT_Jet30":(x,150),"HLT_Jet60":(x,6),"HLT_Jet80":(x,1.5),
+			      "HLT_Jet110":(x,.3),"HLT_Jet150":(x,.095),"HLT_Jet190":(x,.025),
+			      "HLT_Jet240":(x,.009),"HLT_Jet300":(x,.002),"HLT_Jet370":(x,.0007)}
+        zorder = 15
+	for trig in rev_ordered_triggers:
+        	print trig
+                print lines[color_index*3+1][:10]
 		index = [int(x) for x in lines[color_index*3+1].split(",")]
 		yaxis = [float(x) for x in lines[color_index*3+2].split(",")]
-		
+        	print len(index),len(yaxis)
 
-		plt.text(trig_name_positions[trig][0],trig_name_positions[trig][1],trig[4:],color = colors[color_index])
-		plt.plot(np.array(index)+1,zero_to_nan(yaxis),colors[color_index])
+
+		plt.text(trig_name_positions[trig][0],trig_name_positions[trig][1],trig[4:],color = trigger_colors[trig])
+                plt.plot(np.array(index)+1,zero_to_nan(yaxis),trigger_colors[trig],rasterized=True,zorder=zorder)
+
 		color_index += 1
+                zorder -= 1
 
 	#plt.xlabel("Run:Lumiblock")
-	plt.xlabel("# of Luminosity Blocks (time-ordered)")
+	plt.xlabel("Luminosity Block (time-ordered)")
 
 	#plt.xticks(range(len(lines[0].split(",")))[::id_spacing],lines[0].split(",")[::id_spacing], rotation=30)
-	plt.ylabel("Times Fired / Effective Luminosity (ub)")
+	plt.ylabel("Effective Cross Section [ub]")
 	plt.yscale("log")
 	ax = plt.gca()
-	ax.set_xlim(left = -300)
-	box = ax.get_position()
-	ax.set_position([box.x0, box.y0, box.width * 0.8, box.height])
 
-	# Put a legend to the right of the current axis
-	ax.legend(loc='center left', bbox_to_anchor=(1, 0.5),frameon=False)
-	plt.xticks(np.arange(1,max(index),200))
+	ax.set_xlim(left = -3000)
+        ax.set_xticks(np.arange(0,max(index),1000), minor=True)
+        outside_text = ax.legend( [extra], ["CMS 2011 Open Data"], frameon=0, borderpad=0, bbox_to_anchor=(1.0, 1.005), loc='lower right',prop = {'weight':'normal',"size":16})
+        ax.add_artist(outside_text)
+
+	plt.xticks(np.arange(0,max(index),id_spacing))
 	ax.add_artist(logo_box())
+        plt.text(-2400,3500,"216 of 1223 AOD Files",weight="normal")
 	plt.savefig("fired_over_lumin.pdf")
 	plt.show()
-	
-	
+
+
 
 
 graph_eff_lumin()
 graph_fired_over_eff_lumin()
-
