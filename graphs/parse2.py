@@ -198,8 +198,13 @@ def plot_fired_over_eff_lumin():
 			new_times,fired_lumin = (list(t) for t in zip(*sorted(zip(trigger_time_v_fired_lumin[trig][0],trigger_time_v_fired_lumin[trig][1]))))
 			new_times, ordered_ids = (list(t) for t in zip(*sorted(zip(trigger_time_v_fired_lumin[trig][0],trigger_time_v_fired_lumin[trig][2]))))
 			
+			overlap = []
+			for i,mytime in enumerate(ttimes):
+				if mytime in new_times:
+					overlap.append(master_time_index[i]) 	
+			
 			writer.writerow(ordered_ids) 
-			writer.writerow(range(len(fired_lumin)))  
+			writer.writerow(overlap)  
 			writer.writerow(fired_lumin) 
 			
 	
