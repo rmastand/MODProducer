@@ -176,7 +176,7 @@ def plot_eff_lumin():
 			writer.writerow(overlap)  
 			writer.writerow(np.cumsum(eff_lumin)) 
 
-def plot_fired_over_eff_lumin():
+def plot_fired_over_eff_lumin(ttimes):
 	trigger_time_v_fired_lumin = {}
 	for trigger in master_trig_dict.keys():
 		trigger_time = []
@@ -206,6 +206,7 @@ def plot_fired_over_eff_lumin():
 			writer.writerow(ordered_ids) 
 			writer.writerow(overlap)  
 			writer.writerow(fired_lumin) 
+	return ttimes
 			
 	
 	
@@ -243,8 +244,8 @@ def lumi_blocks_in_file():
 
 	
 
-plot_eff_lumin()
-plot_fired_over_eff_lumin()
+ttimes = plot_eff_lumin()
+plot_fired_over_eff_lumin(ttimes)
 # currently i am NOT checking for validity for this last one
 #lumi_blocks_in_file()
 
