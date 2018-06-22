@@ -175,6 +175,8 @@ def plot_eff_lumin():
 					overlap.append(master_time_index[i]) 		
 			writer.writerow(overlap)  
 			writer.writerow(np.cumsum(eff_lumin)) 
+	print ttimes
+	return ttimes
 
 def plot_fired_over_eff_lumin(ttimes):
 	trigger_time_v_fired_lumin = {}
@@ -206,41 +208,10 @@ def plot_fired_over_eff_lumin(ttimes):
 			writer.writerow(ordered_ids) 
 			writer.writerow(overlap)  
 			writer.writerow(fired_lumin) 
-	return ttimes
+	
 			
 	
 	
-def lumi_blocks_in_file():
-	
-	# keys = mod files, values = dict
-		# keys = lumi block id, values = counts
-	lumi_blocks_in_file_dict = {}
-	
-	for filename in os.listdir(mod_file_inpur_dir):
-		lumi_blocks_in_file_dict[filename] = {}
-		with open(mod_file_inpur_dir+"/"+filename) as file:
-			
-			for line in file:
-				if ("Cond" in line.split()) and ("#" not in line.split()):
-					run,lumiBlock = line.split()[1],line.split()[3]
-					try:
-						lumi_blocks_in_file_dict[filename][run+"_"+lumiBlock] += 1
-					except KeyError:
-						lumi_blocks_in_file_dict[filename][run+"_"+lumiBlock] = 1
-						
-					
-	
-	for file in lumi_blocks_in_file_dict.keys():
-		plt.figure()
-		lumi_ids = lumi_blocks_in_file_dict[file].keys()
-		lumi_counts = lumi_blocks_in_file_dict[file].values()
-		lumi_ids,lumi_counts = (list(t) for t in zip(*sorted(zip(lumi_ids,lumi_counts))))
-		print lumi_ids
-		mybar = plt.bar(range(len(lumi_ids)), lumi_counts, align='center', tick_label=lumi_ids)
-		for label in mybar.ax.xaxis.get_ticklabels()[::20]:
-   			label.set_visible(False)
-		plt.show()
-		
 
 	
 
