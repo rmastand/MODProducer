@@ -176,7 +176,7 @@ def plot_eff_lumin():
 			writer.writerow(overlap)  
 			writer.writerow(np.cumsum(eff_lumin)) 
 	print ttimes
-	return ttimes
+	return ttimes,master_time_index
 
 def plot_fired_over_eff_lumin(ttimes):
 	trigger_time_v_fired_lumin = {}
@@ -215,8 +215,8 @@ def plot_fired_over_eff_lumin(ttimes):
 
 	
 
-ttimes = plot_eff_lumin()
-plot_fired_over_eff_lumin(ttimes)
+ttimes,master_time_index = plot_eff_lumin()
+plot_fired_over_eff_lumin(ttimes,master_time_index)
 # currently i am NOT checking for validity for this last one
 #lumi_blocks_in_file()
 
