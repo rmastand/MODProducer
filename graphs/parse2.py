@@ -175,10 +175,10 @@ def plot_eff_lumin():
 					overlap.append(master_time_index[i]) 		
 			writer.writerow(overlap)  
 			writer.writerow(np.cumsum(eff_lumin)) 
-	print ttimes
+
 	return ttimes,master_time_index
 
-def plot_fired_over_eff_lumin(ttimes):
+def plot_fired_over_eff_lumin(ttimes,master_time_index):
 	trigger_time_v_fired_lumin = {}
 	for trigger in master_trig_dict.keys():
 		trigger_time = []
