@@ -60,6 +60,8 @@ private:
    virtual void endRun(edm::Run&, edm::EventSetup const&);
    virtual void beginLuminosityBlock(edm::LuminosityBlock&, edm::EventSetup const&);
    virtual void endLuminosityBlock(edm::LuminosityBlock&, edm::EventSetup const&);
+   string to_string(int n);
+
    
    ofstream fileOutput_;
    ofstream statsOutput_;
@@ -137,6 +139,16 @@ FilenameMapProducer::~FilenameMapProducer() {
 
 }
 
+std::string PFCandidateProducer::to_string ( int number ) {
+  std::ostringstream oss;
+
+  // Works just like cout
+  oss<< number;
+
+  // Return the underlying string
+  return oss.str();
+}
+
 void FilenameMapProducer::produce(Event& iEvent, const EventSetup& iSetup) {
    
    int runNum = iEvent.id().run();
@@ -147,15 +159,15 @@ void FilenameMapProducer::produce(Event& iEvent, const EventSetup& iSetup) {
    fileOutput_ << eventNum << " " << runNum  << " " << currentProcessingFilename_ << endl;
    
    // easy map between lumi id to lumi run, lumi block
-   lumiToRun[std::to_string(runNum)+"_"+std::to_string(lumiBlock)] = std::to_string(runNum);
-   lumiToLumiB[std::to_string(runNum)+"_"+std::to_string(lumiBlock)] = std::to_string(lumiBlock);
+   lumiToRun[to_string(runNum)+"_"+to_string(lumiBlock)] = to_string(runNum);
+   lumiToLumiB[to_string(runNum)+"_"+to_string(lumiBlock)] = to_string(lumiBlock);
    
    // counter for number of events per lumi block
-   if (lumiNumEvents.count(std::to_string(runNum)+"_"+std::to_string(lumiBlock)) == 1) {
-      ++lumiNumEvents[std::to_string(runNum)+"_"+std::to_string(lumiBlock)];     
+   if (lumiNumEvents.count(to_string(runNum)+"_"+to_string(lumiBlock)) == 1) {
+      ++lumiNumEvents[to_string(runNum)+"_"+to_string(lumiBlock)];     
       }
    else {
-      lumiNumEvents[std::to_string(runNum)+"_"+std::to_string(lumiBlock)] = 1;
+      lumiNumEvents[to_string(runNum)+"_"+to_string(lumiBlock)] = 1;
       }
    ++totEvents;
 	
@@ -166,18 +178,18 @@ void FilenameMapProducer::produce(Event& iEvent, const EventSetup& iSetup) {
    
    // on the real data: checks for valid events, keeps counter of integrated luminosity
    if (dataType_ == "Data"){
-	   if (lumiDelData.count(std::to_string(runNum)+"_"+std::to_string(lumiBlock))==1) {
+	   if (lumiDelData.count(to_string(runNum)+"_"+to_string(lumiBlock))==1) {
 	      ++validEvents;
 
-	      if (std::find(std::begin(usedLumis), std::end(usedLumis), std::to_string(runNum)+"_"+std::to_string(lumiBlock)) != std::end(usedLumis))
+	      if (std::find(std::begin(usedLumis), std::end(usedLumis), so_string(runNum)+"_"+to_string(lumiBlock)) != std::end(usedLumis))
 	      {
 		// my_list has my_var
 
 	      }
 		   else {
-			   usedLumis.push_front(std::to_string(runNum)+"_"+std::to_string(lumiBlock));
-			   intLumiTotDel = intLumiTotDel + lumiDelData[std::to_string(runNum)+"_"+std::to_string(lumiBlock)];
-			   intLumiTotRec = intLumiTotRec + lumiRecData[std::to_string(runNum)+"_"+std::to_string(lumiBlock)];
+			   usedLumis.push_front(to_string(runNum)+"_"+to_string(lumiBlock));
+			   intLumiTotDel = intLumiTotDel + lumiDelData[to_string(runNum)+"_"+to_string(lumiBlock)];
+			   intLumiTotRec = intLumiTotRec + lumiRecData[to_string(runNum)+"_"+to_string(lumiBlock)];
 		   }
 	   }
 
