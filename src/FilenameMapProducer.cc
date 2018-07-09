@@ -181,7 +181,7 @@ void FilenameMapProducer::produce(Event& iEvent, const EventSetup& iSetup) {
 	   if (lumiDelData.count(to_string(runNum)+"_"+to_string(lumiBlock))==1) {
 	      ++validEvents;
 
-	      if (std::find(std::begin(usedLumis), std::end(usedLumis), so_string(runNum)+"_"+to_string(lumiBlock)) != std::end(usedLumis))
+	      if (std::find(usedLumis.begin(), usedLumis.end(), to_string(runNum)+"_"+to_string(lumiBlock)) != usedLumis.end())
 	      {
 		// my_list has my_var
 
