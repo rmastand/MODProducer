@@ -139,7 +139,7 @@ FilenameMapProducer::~FilenameMapProducer() {
 
 }
 
-std::string PFCandidateProducer::to_string ( int number ) {
+std::string FilenameMapProducer::to_string ( int number ) {
   std::ostringstream oss;
 
   // Works just like cout
