@@ -67,7 +67,7 @@ using namespace reco;
 using namespace fastjet;
 
 
-int chargedHadronVertex( const reco::VertexCollection& vertices, auto const & track,double ztrack ) const {
+int chargedHadronVertex( const reco::VertexCollection& vertices,  const & track,double ztrack )  {
 
   size_t  iVertex = 0;
   unsigned int index=0;
