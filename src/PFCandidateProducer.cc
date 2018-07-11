@@ -67,7 +67,7 @@ using namespace reco;
 using namespace fastjet;
 
 
-int chargedHadronVertex( const reco::VertexCollection& vertices, iterator pfcand ) const {
+int chargedHadronVertex( const reco::VertexCollection& vertices, const_iterator pfcand ) const {
 
   auto const & track = pfcand->trackRef();  
   size_t  iVertex = 0;
