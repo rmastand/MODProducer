@@ -59,6 +59,8 @@
 #include "SimDataFormats/PileupSummaryInfo/interface/PileupSummaryInfo.h"
 
 #include "FWCore/Utilities/interface/Exception.h"
+#include "CommonTools/ParticleFlow/interface/PFPileUpAlgo.h"
+
 
 using namespace std;
 using namespace edm;
@@ -86,7 +88,6 @@ int chargedHadronVertex( const reco::VertexCollection& vertices,  const & track,
 
   if (nFoundVertex>0){
     if (nFoundVertex!=1)
-      edm::LogWarning("TrackOnTwoVertex")<<"a track is shared by at least two verteces. Used to be an assert";
     return iVertex;
   }
   // no vertex found with this track. 
