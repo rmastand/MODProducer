@@ -67,6 +67,59 @@ using namespace reco;
 using namespace fastjet;
 
 
+int chargedHadronVertex( const reco::VertexCollection& vertices, const reco::PFCandidate *pfcand ) const {
+
+  auto const & track = pfcand->trackRef();  
+  size_t  iVertex = 0;
+  unsigned int index=0;
+  unsigned int nFoundVertex = 0;
+  float bestweight=0;
+  for( auto const & vtx : vertices) {
+      float w = vtx.trackWeight(track);
+     //select the vertex for which the track has the highest weight
+ 	if (w > bestweight){
+	  bestweight=w;
+	  iVertex=index;
+	  nFoundVertex++;
+	}
+     ++index;
+  }
+
+  if (nFoundVertex>0){
+    if (nFoundVertex!=1)
+      edm::LogWarning("TrackOnTwoVertex")<<"a track is shared by at least two verteces. Used to be an assert";
+    return iVertex;
+  }
+  // no vertex found with this track. 
+
+  // optional: as a secondary solution, associate the closest vertex in z
+  if ( checkClosestZVertex_ ) {
+
+    double dzmin = 10000;
+    double ztrack = pfcand->vertex().z();
+    bool foundVertex = false;
+    index = 0;
+    for(auto iv=vertices.begin(); iv!=vertices.end(); ++iv, ++index) {
+
+      double dz = fabs(ztrack - iv->z());
+      if(dz<dzmin) {
+	dzmin = dz; 
+	iVertex = index;
+	foundVertex = true;
+      }
+    }
+
+    if( foundVertex ) 
+      return iVertex;  
+
+  }
+
+
+  return -1 ;
+}
+
+
+
 class PFCandidateProducer : public EDProducer 
 {
 public: 
@@ -428,13 +481,14 @@ void PFCandidateProducer::produce(Event& iEvent, const EventSetup& iSetup) {
 	  // Get PFCandidates.
 	  for(reco::PFCandidateCollection::const_iterator it = PFCollection->begin(), end = PFCollection->end(); it != end; it++) {
 	    if (it == PFCollection->begin())
-	       output_ << "#    PFC" << "              px              py              pz          energy           pdgId" << endl;  
+	       output_ << "#    PFC" << "              px              py              pz          energy           pdgId             PV?" << endl;  
 	    
 	    px = it->px();
 	    py = it->py();
 	    pz = it->pz();
 	    energy = it->energy();
 	    int pdgId = it->pdgId();
+	    int PV = chargedHadronVertex(*primaryVerticesHandle,it);
 	    
 	    output_ << "     PFC"
 	        << setw(16) << fixed << setprecision(8) << px
@@ -442,6 +496,7 @@ void PFCandidateProducer::produce(Event& iEvent, const EventSetup& iSetup) {
 	        << setw(16) << fixed << setprecision(8) << pz
 	        << setw(16) << fixed << setprecision(8) << energy
 	        << setw(16) << noshowpos << pdgId
+		<< setw(16) << PV
 	        << endl;
 	   }
 	     
