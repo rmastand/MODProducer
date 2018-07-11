@@ -491,6 +491,8 @@ void PFCandidateProducer::produce(Event& iEvent, const EventSetup& iSetup) {
 	    int pdgId = it->pdgId();
 	    const reco::VertexCollection& vertices = *primaryVerticesHandle;
 	    int PV = chargedHadronVertex(vertices,*it);
+		  
+	    cout << pdgId << " " << PV << endl;
 	    
 	    output_ << "     PFC"
 	        << setw(16) << fixed << setprecision(8) << px
