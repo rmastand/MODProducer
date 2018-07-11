@@ -69,8 +69,9 @@ using namespace reco;
 using namespace fastjet;
 
 
-int chargedHadronVertex( const reco::VertexCollection& vertices, const track, double ztrack )  {
-
+int chargedHadronVertex( const reco::VertexCollection& vertices,const reco::PFCandidate& pfcand  )  {
+  
+  auto const & track = pfcand.trackRef();  
   size_t  iVertex = 0;
   unsigned int index=0;
   unsigned int nFoundVertex = 0;
@@ -96,6 +97,7 @@ int chargedHadronVertex( const reco::VertexCollection& vertices, const track, do
   if ( true ) {
 
     double dzmin = 10000;
+    double ztrack = pfcand.vertex().z();
     bool foundVertex = false;
     index = 0;
     for(auto iv=vertices.begin(); iv!=vertices.end(); ++iv, ++index) {
@@ -488,9 +490,7 @@ void PFCandidateProducer::produce(Event& iEvent, const EventSetup& iSetup) {
 	    energy = it->energy();
 	    int pdgId = it->pdgId();
 	    const reco::VertexCollection& vertices = *primaryVerticesHandle;
-	    auto const & track = it->trackRef();
-	    double ztrack = it->vertex().z();
-	    int PV = chargedHadronVertex(vertices,track,ztrack);
+	    int PV = chargedHadronVertex(vertices,*it);
 	    
 	    output_ << "     PFC"
 	        << setw(16) << fixed << setprecision(8) << px
