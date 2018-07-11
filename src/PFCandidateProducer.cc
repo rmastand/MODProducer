@@ -93,7 +93,7 @@ int chargedHadronVertex( const reco::VertexCollection& vertices, const reco::PFC
   // no vertex found with this track. 
 
   // optional: as a secondary solution, associate the closest vertex in z
-  if ( checkClosestZVertex_ ) {
+  if ( true ) {
 
     double dzmin = 10000;
     double ztrack = pfcand->vertex().z();
@@ -488,7 +488,8 @@ void PFCandidateProducer::produce(Event& iEvent, const EventSetup& iSetup) {
 	    pz = it->pz();
 	    energy = it->energy();
 	    int pdgId = it->pdgId();
-	    int PV = chargedHadronVertex(*primaryVerticesHandle,it);
+	    const reco::VertexCollection& vertices = *primaryVerticesHandle;
+	    int PV = chargedHadronVertex(vertices,it);
 	    
 	    output_ << "     PFC"
 	        << setw(16) << fixed << setprecision(8) << px
