@@ -446,7 +446,7 @@ void PFCandidateProducer::produce(Event& iEvent, const EventSetup& iSetup) {
 				  << endl;
 	      }
              if (dataType_ == "Sim") {
-		      output_ << "   STrig"
+		      output_ << "   Trig"
 				  << setw(40) << name
 				  << setw(16) << prescale.first
 				  << setw(16) << prescale.second
@@ -539,11 +539,25 @@ void PFCandidateProducer::produce(Event& iEvent, const EventSetup& iSetup) {
 		  for(reco::GenParticleCollection::const_iterator it = genParticles->begin(), end = genParticles->end(); it != end; it++) {
 		    if (it == genParticles->begin())
 				output_ << "#    Gen" << "              px              py              pz          energy           pdgId             PV?" << endl;  
+				
+			  	ostringstream os;
+			  	os << "#   Hard" << "              px              py              pz          energy           pdgId" << endl;   
 
-
+			  	
 				int pdgId = it->pdgId();
 				int status = it->status();
-
+			  
+			  	if ( status==3) {
+					output_ << "    Hard"
+						<< setw(16) << fixed << setprecision(8) << it->px()
+						<< setw(16) << fixed << setprecision(8) << it->yx()
+						<< setw(16) << fixed << setprecision(8) << it->pz()
+						<< setw(16) << fixed << setprecision(8) << it->energy()
+						<< setw(16) << noshowpos << pdgId
+						<< endl;
+					
+				}
+		
 				if ( status==1 ) {
 
 						px = it->px();
@@ -567,7 +581,7 @@ void PFCandidateProducer::produce(Event& iEvent, const EventSetup& iSetup) {
 		   }
 	   }
 	   
-	   
+	   output_ << os.str();
 	   output_ << "EndEvent" << endl;
 	   
 
