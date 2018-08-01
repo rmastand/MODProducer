@@ -548,7 +548,7 @@ void PFCandidateProducer::produce(Event& iEvent, const EventSetup& iSetup) {
 				int status = it->status();
 			  
 			  	if ( status==3) {
-					output_ << "    Hard"
+					os << "    Hard"
 						<< setw(16) << fixed << setprecision(8) << it->px()
 						<< setw(16) << fixed << setprecision(8) << it->py()
 						<< setw(16) << fixed << setprecision(8) << it->pz()
