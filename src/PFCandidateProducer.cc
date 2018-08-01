@@ -536,11 +536,12 @@ void PFCandidateProducer::produce(Event& iEvent, const EventSetup& iSetup) {
 	     
 	    // Gen Particles
 	  if (dataType_=="Sim"){
+		  ostringstream os;
 		  for(reco::GenParticleCollection::const_iterator it = genParticles->begin(), end = genParticles->end(); it != end; it++) {
 		    if (it == genParticles->begin())
 				output_ << "#    Gen" << "              px              py              pz          energy           pdgId             PV?" << endl;  
 				
-			  	ostringstream os;
+			  	
 			  	os << "#   Hard" << "              px              py              pz          energy           pdgId" << endl;   
 
 			  	
