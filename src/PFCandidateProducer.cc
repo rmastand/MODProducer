@@ -577,9 +577,10 @@ void PFCandidateProducer::produce(Event& iEvent, const EventSetup& iSetup) {
 						<< setw(16) << PV
 						<< endl;
 					}
-			    output_ << os.str();
+			  
 
 		   }
+		  output_ << os.str();
 	   }
 	   
 	 
