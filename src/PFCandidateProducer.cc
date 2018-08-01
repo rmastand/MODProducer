@@ -550,7 +550,7 @@ void PFCandidateProducer::produce(Event& iEvent, const EventSetup& iSetup) {
 			  	if ( status==3) {
 					output_ << "    Hard"
 						<< setw(16) << fixed << setprecision(8) << it->px()
-						<< setw(16) << fixed << setprecision(8) << it->yx()
+						<< setw(16) << fixed << setprecision(8) << it->py()
 						<< setw(16) << fixed << setprecision(8) << it->pz()
 						<< setw(16) << fixed << setprecision(8) << it->energy()
 						<< setw(16) << noshowpos << pdgId
@@ -577,11 +577,12 @@ void PFCandidateProducer::produce(Event& iEvent, const EventSetup& iSetup) {
 						<< setw(16) << PV
 						<< endl;
 					}
+			    output_ << os.str();
 
 		   }
 	   }
 	   
-	   output_ << os.str();
+	 
 	   output_ << "EndEvent" << endl;
 	   
 
