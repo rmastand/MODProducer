@@ -101,6 +101,7 @@ root://eospublic.cern.ch//eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20001/6
 root://eospublic.cern.ch//eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20001/6C9A09D5-2D3F-E311-AE04-003048F1B950.root
 root://eospublic.cern.ch//eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20001/6CF3596A-353F-E311-BB6A-02163E00BB6F.root
 root://eospublic.cern.ch//eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20001/762F1915-713F-E311-BA21-002590495034.root
+root://eospublic.cern.ch//eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20001/76C7AE0D-1E3F-E311-9EB3-003048D2BD66.root
 root://eospublic.cern.ch//eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20001/76CE3075-193F-E311-897B-003048F1DB64.root
 root://eospublic.cern.ch//eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20001/76F6FC9C-1B3F-E311-8E05-003048F02590.root
 root://eospublic.cern.ch//eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20001/7AB4B8B0-253F-E311-8239-02163E00C564.root
