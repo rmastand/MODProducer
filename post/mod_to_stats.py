@@ -47,9 +47,12 @@ def runs_to_lumi(filename):
 assure_path_exists(input_dir.replace("MOD","stats2")+"/")
 run_lumi_dict = runs_to_lumi(lumibyls)
 
+done_stats2 = os.listdir(input_dir.replace("MOD","stats2"))
+
 num_files = len(os.listdir(input_dir))
 j = 1
 for mod_orig in os.listdir(input_dir):
+	
 	print "Processing File " + str(j) + " of "+str(num_files)
 	total_lum_del = 0.0
 	total_lum_rec = 0.0
@@ -57,88 +60,91 @@ for mod_orig in os.listdir(input_dir):
 	total_events = 0
 	valid_events = 0
 	good_lumis = []
+	
+	if str(mod_orig[-40:-4])+".stats2" not in done_stats2:
+	
 
-# counters for what to write to stats2
-	with open(input_dir+"/"+mod_orig, "rb") as mod_file:
-	    for line in mod_file: 
-		
-		if ("#" not in line.split()) and (("Cond" in line.split()) or ("SCond" in line.split())):
-			# corresponds to 1 event
-			total_events += 1
-			run = line.split()[1]
-			lumiBlock = line.split()[3]
-			
-			if data_type == "Data":
-				try: 
-					luminosity = run_lumi_dict[(run,lumiBlock)]
+	# counters for what to write to stats2
+		with open(input_dir+"/"+mod_orig, "rb") as mod_file:
+		    for line in mod_file: 
+
+			if ("#" not in line.split()) and (("Cond" in line.split()) or ("SCond" in line.split())):
+				# corresponds to 1 event
+				total_events += 1
+				run = line.split()[1]
+				lumiBlock = line.split()[3]
+
+				if data_type == "Data":
+					try: 
+						luminosity = run_lumi_dict[(run,lumiBlock)]
+						is_valid = True
+					except KeyError:
+						is_valid = False 
+				if data_type == "Sim":
 					is_valid = True
-				except KeyError:
-					is_valid = False 
-			if data_type == "Sim":
-				is_valid = True
-				
-				
-			if is_valid: valid_events += 1
-			# summing up integrated lumi if the block has not already been counted
-			if data_type == "Data":
-				if (run,lumiBlock) not in good_lumis:
-					try:
-						total_lum_del += run_lumi_dict[(run,lumiBlock)][0]
-						total_lum_rec += run_lumi_dict[(run,lumiBlock)][1]
+
+
+				if is_valid: valid_events += 1
+				# summing up integrated lumi if the block has not already been counted
+				if data_type == "Data":
+					if (run,lumiBlock) not in good_lumis:
+						try:
+							total_lum_del += run_lumi_dict[(run,lumiBlock)][0]
+							total_lum_rec += run_lumi_dict[(run,lumiBlock)][1]
+							good_lumis.append((run,lumiBlock))
+						except:
+							pass
+
+
+					if (run,lumiBlock) not in lumi_info.keys():
+						lumi_info[(run,lumiBlock)] = {"events":1,"valid":0}
+						if is_valid: lumi_info[(run,lumiBlock)]["valid"] = 1
+					else:
+						lumi_info[(run,lumiBlock)]["events"] += 1
+				if data_type == "Sim":
+					if (run,lumiBlock) not in good_lumis:
 						good_lumis.append((run,lumiBlock))
-					except:
-						pass
+
+					if (run,lumiBlock) not in lumi_info.keys():
+						lumi_info[(run,lumiBlock)] = {"events":1,"valid":0}
+						if is_valid: lumi_info[(run,lumiBlock)]["valid"] = 1
+					else:
+						lumi_info[(run,lumiBlock)]["events"] += 1
 
 
-				if (run,lumiBlock) not in lumi_info.keys():
-					lumi_info[(run,lumiBlock)] = {"events":1,"valid":0}
-					if is_valid: lumi_info[(run,lumiBlock)]["valid"] = 1
-				else:
-					lumi_info[(run,lumiBlock)]["events"] += 1
-			if data_type == "Sim":
-				if (run,lumiBlock) not in good_lumis:
-					good_lumis.append((run,lumiBlock))
-					
-				if (run,lumiBlock) not in lumi_info.keys():
-					lumi_info[(run,lumiBlock)] = {"events":1,"valid":0}
-					if is_valid: lumi_info[(run,lumiBlock)]["valid"] = 1
-				else:
-					lumi_info[(run,lumiBlock)]["events"] += 1
+
+		mod_file.close()
+
+		# actually writes stats2
+		w = open(input_dir.replace("MOD","stats2")+"/"+str(mod_orig[-40:-4])+".stats2","w")
+		w.write("BeginFile Version " + version + " CMS_" + data_year + " " + data_type + " " + trigger_cat + "\n")
+
+		if data_type == "Data":
+
+			w.write("#        File"+format2_6("Filename",40)+format2_6("TotalEvents",15)+format2_6("ValidEvents",15)+format2_6("IntLumiDel",20)+format2_6("IntLumiRec",20)+"\n")
+			w.write("         File"+format2_6(str(mod_orig[-40:-4]),40)+format2_6(str(total_events),15)+format2_6(str(valid_events),15)+format2_6("{0:.3f}".format(total_lum_del),20)+format2_6("{0:.3f}".format(total_lum_rec),20)+"\n")
+			w.write("#       Block"+format2_6("RunNum",22)+format2_6("LumiBlock",18)+format2_6("Events",15)+format2_6("Valid?",15)+format2_6("IntLumiDel",20)+format2_6("IntLumiRec",20)+"\n")
+			for lumi in sorted(sorted(lumi_info.keys(),key=lambda tup: tup[1]),key=lambda tup: tup[0]):
+				try:
+					w.write("        Block"+format2_6(str(lumi[0]),22)+format2_6(str(lumi[1]),18)+format2_6(str(lumi_info[lumi]["events"]),15)+format2_6(str(lumi_info[lumi]["valid"]),15)+format2_6("{0:.3f}".format(run_lumi_dict[lumi][0]),20)+format2_6("{0:.3f}".format(run_lumi_dict[lumi][1]),20)+"\n")
+				except KeyError:
+					w.write("        Block"+format2_6(str(lumi[0]),22)+format2_6(str(lumi[1]),18)+format2_6(str(lumi_info[lumi]["events"]),15)+format2_6(str(lumi_info[lumi]["valid"]),15)+format2_6("0.000",20)+format2_6("0.000",20)+"\n")
+
+		if data_type == "Sim":
+			i = 0
+			with open(input_dir.replace("MOD","stats")+"/"+str(mod_orig[-40:-4])+".stats","r") as mod_file:
+				for line in mod_file: 
+					if i == 2:
+						cross_section = line.split()[-1]
+						break
+					i += 1
+			w.write("#       SFile"+format2_6("Filename",40)+format2_6("TotalEvents",15)+format2_6("ValidEvents",15)+format2_6("CrossSection",20)+"\n")
+			w.write("        SFile"+format2_6(str(mod_orig[-40:-4]),40)+format2_6(str(total_events),15)+format2_6(str(total_events),15)+format2_6("{0:.3f}".format(float(cross_section)),20)+"\n")
+			w.write("#      SBlock"+format2_6("RunNum",22)+format2_6("LumiBlock",18)+format2_6("Events",15)+format2_6("Valid?",15)+format2_6("CrossSection",20)+"\n")
+			for lumi in sorted(sorted(lumi_info.keys(),key=lambda tup: tup[1]),key=lambda tup: tup[0]):
+				w.write("       SBlock"+format2_6(str(lumi[0]),22)+format2_6(str(lumi[1]),18)+format2_6(str(lumi_info[lumi]["events"]),15)+format2_6("1",15)+format2_6("{0:.3f}".format(float(cross_section)),20)+"\n")
 
 
-			
-	mod_file.close()
-	
-	# actually writes stats2
-	w = open(input_dir.replace("MOD","stats2")+"/"+str(mod_orig[-40:-4])+".stats2","w")
-	w.write("BeginFile Version " + version + " CMS_" + data_year + " " + data_type + " " + trigger_cat + "\n")
-	
-	if data_type == "Data":
-		
-		w.write("#        File"+format2_6("Filename",40)+format2_6("TotalEvents",15)+format2_6("ValidEvents",15)+format2_6("IntLumiDel",20)+format2_6("IntLumiRec",20)+"\n")
-		w.write("         File"+format2_6(str(mod_orig[-40:-4]),40)+format2_6(str(total_events),15)+format2_6(str(valid_events),15)+format2_6("{0:.3f}".format(total_lum_del),20)+format2_6("{0:.3f}".format(total_lum_rec),20)+"\n")
-		w.write("#       Block"+format2_6("RunNum",22)+format2_6("LumiBlock",18)+format2_6("Events",15)+format2_6("Valid?",15)+format2_6("IntLumiDel",20)+format2_6("IntLumiRec",20)+"\n")
-		for lumi in sorted(sorted(lumi_info.keys(),key=lambda tup: tup[1]),key=lambda tup: tup[0]):
-			try:
-				w.write("        Block"+format2_6(str(lumi[0]),22)+format2_6(str(lumi[1]),18)+format2_6(str(lumi_info[lumi]["events"]),15)+format2_6(str(lumi_info[lumi]["valid"]),15)+format2_6("{0:.3f}".format(run_lumi_dict[lumi][0]),20)+format2_6("{0:.3f}".format(run_lumi_dict[lumi][1]),20)+"\n")
-			except KeyError:
-				w.write("        Block"+format2_6(str(lumi[0]),22)+format2_6(str(lumi[1]),18)+format2_6(str(lumi_info[lumi]["events"]),15)+format2_6(str(lumi_info[lumi]["valid"]),15)+format2_6("0.000",20)+format2_6("0.000",20)+"\n")
-		
-	if data_type == "Sim":
-		i = 0
-		with open(input_dir.replace("MOD","stats")+"/"+str(mod_orig[-40:-4])+".stats","r") as mod_file:
-	    		for line in mod_file: 
-				if i == 2:
-					cross_section = line.split()[-1]
-					break
-				i += 1
-		w.write("#       SFile"+format2_6("Filename",40)+format2_6("TotalEvents",15)+format2_6("ValidEvents",15)+format2_6("CrossSection",20)+"\n")
-		w.write("        SFile"+format2_6(str(mod_orig[-40:-4]),40)+format2_6(str(total_events),15)+format2_6(str(total_events),15)+format2_6("{0:.3f}".format(float(cross_section)),20)+"\n")
-		w.write("#      SBlock"+format2_6("RunNum",22)+format2_6("LumiBlock",18)+format2_6("Events",15)+format2_6("Valid?",15)+format2_6("CrossSection",20)+"\n")
-		for lumi in sorted(sorted(lumi_info.keys(),key=lambda tup: tup[1]),key=lambda tup: tup[0]):
-			w.write("       SBlock"+format2_6(str(lumi[0]),22)+format2_6(str(lumi[1]),18)+format2_6(str(lumi_info[lumi]["events"]),15)+format2_6("1",15)+format2_6("{0:.3f}".format(float(cross_section)),20)+"\n")
-	
-	
-	w.write("EndFile\n")
-	w.close()
+		w.write("EndFile\n")
+		w.close()
 	j += 1
