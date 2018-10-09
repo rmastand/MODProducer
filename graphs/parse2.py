@@ -179,6 +179,7 @@ def plot_eff_lumin():
 					overlap.append(master_time_index[i]) 		
 			writer.writerow(overlap)  
 			writer.writerow(np.cumsum(eff_lumin)) 
+			print "going"
 
 	return ttimes,master_time_index
 
@@ -212,6 +213,7 @@ def plot_fired_over_eff_lumin(ttimes,master_time_index):
 			writer.writerow(ordered_ids) 
 			writer.writerow(overlap)  
 			writer.writerow(fired_lumin) 
+			print "going2"
 	
 			
 	
