@@ -139,6 +139,7 @@ def plot_eff_lumin():
 	# also finds the integrated luminosity for all represented lumiblocks
 	master_lumin_ids = []
 	for trigger in master_trig_dict.keys():
+		print trigger
 		trigger_time = []
 		trigger_eff_lumin = []
 		for i,lumi_id in enumerate(master_trig_dict[trigger]["good_lumis"]):
@@ -155,10 +156,11 @@ def plot_eff_lumin():
 		master_times.append(lumi_id_to_gps_times[lumi_id])
 		master_lumin_rec.append(lumi_id_to_lumin[lumi_id][1]) 
 		
-
+	print "start sorting"
 	# sorts all the represented lumiblocks by time, gets the integrated luminosity BY LUMI BLOCK INDEX
 	ttimes,master_lumin_rec = (list(t) for t in zip(*sorted(zip(master_times,master_lumin_rec))))
 	master_time_index = range(len(master_times))
+	print "done sorting"
 	
 	
 	with open("graphs/plot_eff_lumin.txt", "w") as output:
