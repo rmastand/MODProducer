@@ -198,7 +198,7 @@ def graph_eff_lumin_time_ordered():
 	        print trig
 		index = np.array([int(x) for x in lines[2*trig_index+3].split(",")])+1
 		eff_lumin = np.array([float(x) for x in lines[2*trig_index+4].split(",")])
-                good_indices = np.linspace(min(index),(max(index),num_samples).astype(int) - min(index)
+                good_indices = np.linspace(min(index),max(index),num_samples).astype(int) - min(index)
                 print len(index), len(eff_lumin)
 		time_ordered_gps_trigger = []
 		for index_val in index:
