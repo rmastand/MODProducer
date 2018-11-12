@@ -205,7 +205,11 @@ def graph_eff_lumin_time_ordered():
                 good_indices = np.linspace(min(index),max(index),num_samples).astype(int) - min(index)
                 print len(index), len(eff_lumin)
 		time_ordered_gps_trigger = []
+
 		for index_val in index:
+			print len(time_ordered_gps)
+			print len(index)
+			print index_val
 			time_ordered_gps_trigger.append(time_ordered_gps[index_val])
         	plt.plot(np.take(time_ordered_gps_trigger,good_indices),np.take(eff_lumin,good_indices),trigger_colors[trig],linewidth=4.0)
 		plt.text(trig_name_positions[trig][0],trig_name_positions[trig][1],trig[4:],color = trigger_colors[trig])
