@@ -158,36 +158,39 @@ def plot_eff_lumin():
 		
 	print "start sorting"
 	# sorts all the represented lumiblocks by time, gets the integrated luminosity BY LUMI BLOCK INDEX
-	ttimes,master_lumin_rec = (list(t) for t in zip(*sorted(zip(master_times,master_lumin_rec))))
-	print ttimes
-	print master_lumin_rec
-	master_time_index = range(len(master_times))
+	master_times_sorted,master_lumin_rec = (list(t) for t in zip(*sorted(zip(master_times,master_lumin_rec))))
 	print "done sorting"
+	
 	
 	
 	with open("graphs/plot_eff_lumin.txt", "w") as output:
 		writer = csv.writer(output, lineterminator='\n')
-        	writer.writerow(master_time_index)  
+        	writer.writerow(master_times_sorted)  
+		master_times_index = range(len(master_times_sorted))
+		writer.writerow(master_times_index)   
 		writer.writerow(np.cumsum(master_lumin_rec))   
+	
 
 		# ordering the luminosity ids to be used as labels
-		lumis_in_dispay_format = [x[0]+":"+x[1] for x in lumi_id_to_gps_times.keys()]
-		ttimes,ordered_ids = (list(t) for t in zip(*sorted(zip(master_times,lumis_in_dispay_format))))
+		times_sorted,ordered_ids = (list(t) for t in zip(*sorted(zip(master_times,master_lumin_ids))))
 		writer.writerow(ordered_ids)   
 		# for each trigger: sorts all the represented lumiblocks by time, gets the effective luminosity BY LUMI BLOCK INDEX
 		for trig in ordered_triggers[::-1]:
 			times,eff_lumin = (list(t) for t in zip(*sorted(zip(trigger_time_v_lumin_rec[trig][0],trigger_time_v_lumin_rec[trig][1]))))
-			overlap = []
-			for i,mytime in enumerate(ttimes):
+			overlap_times = []
+			overlap_index = []
+			for i,mytime in enumerate(times_sorted):
 				if mytime in times:
-					overlap.append(master_time_index[i]) 		
-			writer.writerow(overlap)  
+					overlap_times.append(master_times_sorted[i]) 	
+					overlap_index.append(master_times_index[i]) 
+			writer.writerow(overlap_times)  
+			writer.writerow(overlap_index)  
 			writer.writerow(np.cumsum(eff_lumin)) 
 			print "going"
 
-	return ttimes,master_time_index
+	return ttimes,master_time_index,master_times_sorted
 
-def plot_fired_over_eff_lumin(ttimes,master_time_index):
+def plot_fired_over_eff_lumin(ttimes,master_time_index,master_times_sorted):
 	trigger_time_v_fired_lumin = {}
 	for trigger in master_trig_dict.keys():
 		trigger_time = []
@@ -209,13 +212,17 @@ def plot_fired_over_eff_lumin(ttimes,master_time_index):
 			new_times,fired_lumin = (list(t) for t in zip(*sorted(zip(trigger_time_v_fired_lumin[trig][0],trigger_time_v_fired_lumin[trig][1]))))
 			new_times, ordered_ids = (list(t) for t in zip(*sorted(zip(trigger_time_v_fired_lumin[trig][0],trigger_time_v_fired_lumin[trig][2]))))
 			
-			overlap = []
+			overlap_index = []
+			overlap_time = []
 			for i,mytime in enumerate(ttimes):
 				if mytime in new_times:
-					overlap.append(master_time_index[i]) 	
+					overlap_index.append(master_time_index[i]) 
+					overlap_time.append(master_times_sorted[i])
+					
 			
 			writer.writerow(ordered_ids) 
-			writer.writerow(overlap)  
+			writer.writerow(overlap_time)  
+			writer.writerow(overlap_index)  
 			writer.writerow(fired_lumin) 
 			print "going2"
 	
@@ -225,8 +232,8 @@ def plot_fired_over_eff_lumin(ttimes,master_time_index):
 
 	
 
-ttimes,master_time_index = plot_eff_lumin()
-plot_fired_over_eff_lumin(ttimes,master_time_index)
+ttimes,master_time_index,master_times_sorted = plot_eff_lumin()
+plot_fired_over_eff_lumin(ttimes,master_time_index,master_times_sorted)
 # currently i am NOT checking for validity for this last one
 #lumi_blocks_in_file()
 
