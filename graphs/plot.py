@@ -182,11 +182,9 @@ def graph_eff_lumin_time_ordered():
 	time_ordered_lumi_id = lines[2].split(",")
 	
 	time_ordered_gps = []
-	print lumi_id_to_gps_times
 	for lumi_block in time_ordered_lumi_id:
-		print lumi_block
-		print lumi_id_to_gps_times[(lumi_block.split(":")[0],lumi_block.split(":")[1])]
-		time_ordered_gps.append(lumi_id_to_gps_times[(int(lumi_block.split(":")[0]),int(lumi_block.split(":")[1]))])
+
+		time_ordered_gps.append(lumi_id_to_gps_times[(lumi_block.split(":")[0],lumi_block.split(":")[1])])
 
         good_indices = np.linspace(min(master_index),max(master_index),num_samples).astype(int) -min(master_index)
 
