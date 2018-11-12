@@ -159,6 +159,8 @@ def plot_eff_lumin():
 	print "start sorting"
 	# sorts all the represented lumiblocks by time, gets the integrated luminosity BY LUMI BLOCK INDEX
 	ttimes,master_lumin_rec = (list(t) for t in zip(*sorted(zip(master_times,master_lumin_rec))))
+	print ttimes
+	print master_lumin_rec
 	master_time_index = range(len(master_times))
 	print "done sorting"
 	
