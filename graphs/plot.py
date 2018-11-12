@@ -189,7 +189,7 @@ def graph_eff_lumin_time_ordered():
         good_indices = np.linspace(min(master_index),max(master_index),num_samples).astype(int) -min(master_index)
 
 	plt.plot(np.take(time_ordered_gps,good_indices),np.take(master_lumin,good_indices),"k",linewidth=9.0)
-
+	print np.take(time_ordered_gps,good_indices)
 
 	x = .2
 	plt.text(x,11000,"Total Luminosity",color = "k")
