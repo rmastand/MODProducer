@@ -185,7 +185,8 @@ def graph_eff_lumin_time_ordered():
 	for lumi_block in time_ordered_lumi_id:
 
 		time_ordered_gps.append(lumi_id_to_gps_times[(str(int(lumi_block.split(":")[0])),str(int(lumi_block.split(":")[1])))])
-
+	print time_ordered_gps
+	print good_indices
         good_indices = np.linspace(min(master_index),max(master_index),num_samples).astype(int) -min(master_index)
 
 	plt.plot(np.take(time_ordered_gps,good_indices),np.take(master_lumin,good_indices),"k",linewidth=9.0)
