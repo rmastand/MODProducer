@@ -54,7 +54,35 @@ def zero_to_nan(values):
 
 extra = Rectangle((0, 0), 1, 1, fc="w", fill=False, edgecolor='none', linewidth=0)
 
-
+def read_lumi_by_ls(lumibyls_file):
+	"""
+	returns two dicts with keys = (run,lumiBlock)
+	1st values: gps times
+	2nd values: (lumi_delivered, lumi_recorded)
+	"""
+	lumibyls = open(lumibyls_file)
+	lines =  lumibyls.readlines()
+	split_lines = [line.split(",") for line in lines][2:]
+	char = ""
+	lumi_id_to_gps_times = {}
+	lumi_id_to_lumin = {}
+	i = 0
+	while char !="#":
+		run = split_lines[i][0].split(":")[0]
+		lumi = split_lines[i][1].split(":")[0]
+		date = split_lines[i][2].split(" ")[0]
+		tim = split_lines[i][2].split(" ")[1]
+		mdy = [int(x) for x in date.split("/")]
+		hms = [int(x) for x in tim.split(":")]
+		dt = datetime.datetime(mdy[2], mdy[0], mdy[1], hms[0], hms[1],hms[2])
+		lumi_id_to_gps_times[(run,lumi)] = time.mktime(dt.timetuple())
+		lumi_id_to_lumin[(run,lumi)] = (float(split_lines[i][5]),float(split_lines[i][6]))
+		i += 1
+		try:
+			char = split_lines[i][0][0]
+		except: pass
+	return lumi_id_to_gps_times,lumi_id_to_lumin
+lumi_id_to_gps_times,lumi_id_to_lumin = read_lumi_by_ls(lumibyls_file)
 
 
 def logo_box():
@@ -138,6 +166,62 @@ def graph_eff_lumin():
 	plt.savefig("eff_lumi.pdf")
 	plt.show()
 
+def graph_eff_lumin_time_ordered():
+	plt.figure(figsize= (10,10))
+	ax = plt.gca()
+
+	eff_lumi_file =  open(plot_eff_lumi_file)
+	lines = eff_lumi_file.readlines()
+	# for the total luminosity file:
+	master_index = np.array([int(x) for x in lines[0].split(",")])+1
+
+	master_lumin = np.array([float(x) for x in lines[1].split(",")])
+	time_ordered_lumi_id = lines[2].split(",")
+	
+	time_ordered_gps = []
+	for lumi_block in time_ordered_lumi_id:
+		time_ordered_gps.append(lumi_id_to_gps_times[lumi_block])
+
+        good_indices = np.linspace(min(master_index),max(master_index),num_samples).astype(int) -min(master_index)
+
+	plt.plot(np.take(time_ordered_gps,good_indices),np.take(master_lumin,good_indices),"k",linewidth=9.0)
+
+
+	x = .2
+	plt.text(x,11000,"Total Luminosity",color = "k")
+
+	trig_name_positions = {"HLT_Jet30":(x,.05),"HLT_Jet60":(x,1),"HLT_Jet80":(x,6),
+			      "HLT_Jet110":(x,20),"HLT_Jet150":(x,70),"HLT_Jet190":(x,300),
+			      "HLT_Jet240":(x,700),"HLT_Jet300":(x,2000),"HLT_Jet370":(x,5000)}
+
+	for trig_index,trig in enumerate(rev_ordered_triggers):
+	        print trig
+		index = np.array([int(x) for x in lines[2*trig_index+3].split(",")])+1
+		eff_lumin = np.array([float(x) for x in lines[2*trig_index+4].split(",")])
+                good_indices = np.linspace(min(index),(max(index),num_samples).astype(int) - min(index)
+                print len(index), len(eff_lumin)
+		time_ordered_gps_trigger = []
+		for index_val in index:
+			time_ordered_gps_trigger.append(time_ordered_gps[index_val])
+        	plt.plot(np.take(time_ordered_gps_trigger,good_indices),np.take(eff_lumin,good_indices),trigger_colors[trig],linewidth=4.0)
+		plt.text(trig_name_positions[trig][0],trig_name_positions[trig][1],trig[4:],color = trigger_colors[trig])
+
+	ax = plt.gca()
+
+	ax.set_xlim(left = .15,right = 30000)
+
+	plt.xlabel("Cumulative Luminosity Blocks")
+	ax.add_artist(logo_box())
+	plt.ylabel("Effective Luminosity [ub"+r"$^{-1}$]")
+	plt.yscale("log")
+
+        outside_text = ax.legend( [extra], ["CMS 2011 Open Data"], frameon=0, borderpad=0, fontsize=12, bbox_to_anchor=(1.0, 1.005), loc='lower right',prop = {'weight':'normal',"size":16})
+        ax.add_artist(outside_text)
+        plt.text(.2,2.5*10**8,"216 of 1223 AOD Files",weight="normal")
+
+
+	plt.savefig("eff_lumi_time_ordered.pdf")
+	plt.show()
 
 """
 plot_fired_over_lumin.txt:
