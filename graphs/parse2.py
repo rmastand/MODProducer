@@ -188,9 +188,9 @@ def plot_eff_lumin():
 			writer.writerow(np.cumsum(eff_lumin)) 
 			print "going"
 
-	return ttimes,master_time_index,master_times_sorted
+	return master_time_index,master_times_sorted
 
-def plot_fired_over_eff_lumin(ttimes,master_time_index,master_times_sorted):
+def plot_fired_over_eff_lumin(master_time_index,master_times_sorted):
 	trigger_time_v_fired_lumin = {}
 	for trigger in master_trig_dict.keys():
 		trigger_time = []
@@ -214,7 +214,7 @@ def plot_fired_over_eff_lumin(ttimes,master_time_index,master_times_sorted):
 			
 			overlap_index = []
 			overlap_time = []
-			for i,mytime in enumerate(ttimes):
+			for i,mytime in enumerate(master_times_sorted):
 				if mytime in new_times:
 					overlap_index.append(master_time_index[i]) 
 					overlap_time.append(master_times_sorted[i])
@@ -232,8 +232,8 @@ def plot_fired_over_eff_lumin(ttimes,master_time_index,master_times_sorted):
 
 	
 
-ttimes,master_time_index,master_times_sorted = plot_eff_lumin()
-plot_fired_over_eff_lumin(ttimes,master_time_index,master_times_sorted)
+master_time_index,master_times_sorted = plot_eff_lumin()
+plot_fired_over_eff_lumin(master_time_index,master_times_sorted)
 # currently i am NOT checking for validity for this last one
 #lumi_blocks_in_file()
 
