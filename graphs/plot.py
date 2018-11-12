@@ -115,10 +115,10 @@ def graph_eff_lumin():
 	eff_lumi_file =  open(plot_eff_lumi_file)
 	lines = eff_lumi_file.readlines()
 	# for the total luminosity file:
-	master_index = np.array([int(x) for x in lines[0].split(",")])+1
+	master_index = np.array([int(x) for x in lines[1].split(",")])+1
 
-	master_lumin = np.array([float(x) for x in lines[1].split(",")])
-	time_ordered_lumi_id = lines[2].split(",")
+	master_lumin = np.array([float(x) for x in lines[2].split(",")])
+	time_ordered_lumi_id = lines[3].split(",")
 
         #print np.logspace(min(master_index),max(master_index),num_samples)
         good_indices = np.logspace(np.log10(min(master_index)),np.log10(max(master_index)),num_samples).astype(int) -min(master_index)
@@ -138,9 +138,9 @@ def graph_eff_lumin():
 
 
 
-		index = np.array([int(x) for x in lines[2*trig_index+3].split(",")])+1
+		index = np.array([int(x) for x in lines[2*trig_index+4].split(",")])+1
 
-		eff_lumin = np.array([float(x) for x in lines[2*trig_index+4].split(",")])
+		eff_lumin = np.array([float(x) for x in lines[2*trig_index+5].split(",")])
                 good_indices = np.logspace(np.log10(min(index)),np.log10(max(index)),num_samples).astype(int) - min(index)
                 print len(index), len(eff_lumin)
         	plt.plot(np.take(index,good_indices),np.take(eff_lumin,good_indices),trigger_colors[trig],linewidth=4.0)
@@ -176,16 +176,12 @@ def graph_eff_lumin_time_ordered():
 	eff_lumi_file =  open(plot_eff_lumi_file)
 	lines = eff_lumi_file.readlines()
 	# for the total luminosity file:
-	master_index = np.array([int(x) for x in lines[0].split(",")])+1
+	master_index = np.array([int(x) for x in lines[1].split(",")])+1
 
-	master_lumin = np.array([float(x) for x in lines[1].split(",")])
-	time_ordered_lumi_id = lines[2].split(",")
+	master_lumin = np.array([float(x) for x in lines[2].split(",")])
+	time_ordered_lumi_id = lines[3].split(",")
 	
-	time_ordered_gps = []
-	for lumi_block in time_ordered_lumi_id:
-
-		time_ordered_gps.append(lumi_id_to_gps_times[(str(int(lumi_block.split(":")[0])),str(int(lumi_block.split(":")[1])))])
-	print time_ordered_gps
+	time_ordered_gps = np.array([float(x) for x in lines[0].split(",")])
 	
         good_indices = np.linspace(min(master_index),max(master_index),num_samples).astype(int) -min(master_index)
 	print good_indices
@@ -281,6 +277,6 @@ def graph_fired_over_eff_lumin():
 
 
 
-#graph_eff_lumin()
+graph_eff_lumin()
 graph_eff_lumin_time_ordered()
-#graph_fired_over_eff_lumin()
+graph_fired_over_eff_lumin()
