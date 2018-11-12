@@ -211,7 +211,7 @@ def graph_eff_lumin_time_ordered():
 
 	ax = plt.gca()
 
-	ax.set_xlim(left = .15,right = 30000)
+	#ax.set_xlim(left = .15,right = 30000)
 
 	plt.xlabel("Cumulative Luminosity Blocks")
 	ax.add_artist(logo_box())
