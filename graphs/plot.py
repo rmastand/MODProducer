@@ -234,7 +234,7 @@ def graph_eff_lumin_time_ordered():
         plt.text(.2,2.5*10**8,"1223 of 1223 AOD Files",weight="normal")
 
 
-	#plt.savefig("eff_lumi_time_ordered.pdf")
+	plt.savefig("eff_lumi_time_ordered.pdf")
 	plt.show()
 	
 
@@ -290,7 +290,7 @@ def graph_fired_over_eff_lumin():
 	plt.savefig("fired_over_lumin.pdf")
 	plt.show()
 	
-def graph_fired_over_eff_lumin_time_ordered(x):
+def graph_fired_over_eff_lumin_time_ordered():
 	fired_lumi_file =  open(plot_fired_over_lumi)
 	lines = fired_lumi_file.readlines()
 
@@ -352,6 +352,6 @@ def graph_fired_over_eff_lumin_time_ordered(x):
 
 
 #graph_eff_lumin()
-graph_eff_lumin_time_ordered()
+#graph_eff_lumin_time_ordered()
 graph_fired_over_eff_lumin()
 graph_fired_over_eff_lumin_time_ordered()
