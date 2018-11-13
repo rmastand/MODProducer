@@ -323,7 +323,7 @@ def graph_fired_over_eff_lumin_time_ordered():
 	for i,index in enumerate(indices_for_xaxis):
 		print lumis[index]
 		print lumis[index].split(":")
-		labels[i] = lumi_id_to_date[(lumis[index].split(":")[0],lumis[index].split(":")[1])]
+		labels[i] = lumi_id_to_date[(str(int(lumis[index].split(":")[0])),str(int(lumis[index].split(":")[1])))]
 		
 	ax.set_xticklabels(labels)
 	
