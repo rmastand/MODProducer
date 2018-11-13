@@ -184,7 +184,7 @@ def graph_eff_lumin_time_ordered():
 	time_ordered_lumi_id = lines[3].split(",")
 
         #print np.logspace(min(master_index),max(master_index),num_samples)
-        good_indices = np.linspace(min(master_index),(max(master_index),num_samples).astype(int) -min(master_index)
+        good_indices = np.linspace(min(master_index),max(master_index),num_samples).astype(int) -min(master_index)
 
 	plt.plot(np.take(master_times,good_indices),np.take(master_lumin,good_indices),"k",linewidth=9.0)
 
