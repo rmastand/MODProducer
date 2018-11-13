@@ -320,10 +320,10 @@ def graph_fired_over_eff_lumin_time_ordered():
 	plt.xticks(np.take(times,indices_for_xaxis))
 	
 	labels = [item.get_text() for item in ax.get_xticklabels()]
-	for i in indices_for_xaxis:
-		print lumis[i]
-		print lumis[i].split(":")
-		labels[i] = lumi_id_to_date[(lumis[i].split(":")[0],lumis[i].split(":")[1])]
+	for i,index in enumerate(indices_for_xaxis):
+		print lumis[index]
+		print lumis[index].split(":")
+		labels[i] = lumi_id_to_date[(lumis[index].split(":")[0],lumis[index].split(":")[1])]
 		
 	ax.set_xticklabels(labels)
 	
