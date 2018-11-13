@@ -22,8 +22,8 @@ master_trig_dict = {"HLT_Jet190":{"good_lumis":[],"good_prescales":[],"fired":{}
 ordered_triggers = ["HLT_Jet30","HLT_Jet60","HLT_Jet80","HLT_Jet110","HLT_Jet150","HLT_Jet190","HLT_Jet240","HLT_Jet300","HLT_Jet370"]
 
 master_trig_dict = {"HLT_Jet190":{"good_lumis":[],"good_prescales":[],"fired":{}},
-						"HLT_Jet30":{"good_lumis":[],"good_prescales":[],"fired":{}},"HLT_Jet300":{"good_lumis":[],"good_prescales":[],"fired":{}}}
-ordered_triggers = ["HLT_Jet30","HLT_Jet190","HLT_Jet300"]
+						"HLT_Jet30":{"good_lumis":[],"good_prescales":[],"fired":{}}}
+ordered_triggers = ["HLT_Jet30","HLT_Jet190""]
 
 
 def read_lumi_by_ls(lumibyls_file):
@@ -73,7 +73,6 @@ def get_file_trig_dict_from_txt(filepath):
 	with open(filepath) as trig_info_file:
 		for line in trig_info_file:
 			line = line.splitlines()[0]
-			print len(line.split(","))
 			if i % 4 == 0: # if we have a trigger name
 				trigger_name = line.split()[-1] # holds for the rest of that trigger's information
 				trig_dict[trigger_name] =  {
