@@ -139,7 +139,7 @@ def graph_eff_lumin():
 		index = np.array([int(x) for x in lines[3*trig_index+5].split(",")])+1
 
 		eff_lumin = np.array([float(x) for x in lines[3*trig_index+6].split(",")])
-                good_indices = np.logspace(np.log10(min(index)),np.log10(max(index)),num_samples).astype(int) #- min(index)
+                good_indices = np.logspace(np.log10(min(index)),np.log10(max(index)),num_samples).astype(int) - min(index)
                 print len(index), len(eff_lumin)
 
         	plt.plot(np.take(index,good_indices),np.take(eff_lumin,good_indices),trigger_colors[trig],linewidth=4.0)
@@ -202,7 +202,7 @@ def graph_eff_lumin_time_ordered():
 		index = np.array([int(x) for x in lines[3*trig_index+5].split(",")])+1
 
 		eff_lumin = np.array([float(x) for x in lines[3*trig_index+6].split(",")])
-                good_indices = np.linspace(min(index),max(index),num_samples).astype(int) #- min(index)
+                good_indices = np.linspace(min(index),max(index),num_samples).astype(int) - min(index)
                 print len(index), len(eff_lumin)
 
         	plt.plot(np.take(times,good_indices),np.take(eff_lumin,good_indices),trigger_colors[trig],linewidth=4.0)
