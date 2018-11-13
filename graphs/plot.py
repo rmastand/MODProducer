@@ -269,25 +269,25 @@ def graph_fired_over_eff_lumin():
 		color_index += 1
                 zorder -= 1
 
+
+		
 	#plt.xlabel("Run:Lumiblock")
 	plt.xlabel("Luminosity Block (time-ordered)")
-	
-	
-
 	#plt.xticks(range(len(lines[0].split(",")))[::id_spacing],lines[0].split(",")[::id_spacing], rotation=30)
 	plt.ylabel("Effective Cross Section [ub]")
 	plt.yscale("log")
 	ax = plt.gca()
-
+	plt.xticks(np.arange(0,max(index),id_spacing))
+	
 	ax.set_xlim(left = -60000)
         outside_text = ax.legend( [extra], ["CMS 2011 Open Data"], frameon=0, borderpad=0, bbox_to_anchor=(1.0, 1.005), loc='lower right',prop = {'weight':'normal',"size":16})
         ax.add_artist(outside_text)
-	plt.xticks(np.arange(0,max(index),id_spacing))
+	
 	
 	ax.add_artist(logo_box())
         plt.text(x,3500,"1223 of 1223 AOD Files",weight="normal")
 	
-	#plt.savefig("fired_over_lumin.pdf")
+	plt.savefig("fired_over_lumin.pdf")
 	plt.show()
 	
 def graph_fired_over_eff_lumin_time_ordered():
@@ -297,7 +297,7 @@ def graph_fired_over_eff_lumin_time_ordered():
 	plt.figure(figsize=(10,10))
 	color_index = 0
 	
-	x = .996*1300086884
+	x = .9985*1300086884
 	
 	trig_name_positions = {"HLT_Jet30":(x,150),"HLT_Jet60":(x,6),"HLT_Jet80":(x,1.5),
 		      "HLT_Jet110":(x,.3),"HLT_Jet150":(x,.095),"HLT_Jet190":(x,.025),
@@ -336,7 +336,7 @@ def graph_fired_over_eff_lumin_time_ordered():
 	for i,index in enumerate(indices_for_xaxis):
 		
 		labels[i] = lumi_id_to_date[(str(int(lumis[index].split(":")[0])),str(int(lumis[index].split(":")[1])))]
-	ax.set_xlim(left = x,right = max(times)*1.0001)
+	ax.set_xlim(left = x*.998,right = max(times)*1.0001)
 	ax.set_xticklabels(labels)
 	
         outside_text = ax.legend( [extra], ["CMS 2011 Open Data"], frameon=0, borderpad=0, bbox_to_anchor=(1.0, 1.005), loc='lower right',prop = {'weight':'normal',"size":16})
