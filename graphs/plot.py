@@ -180,7 +180,6 @@ def graph_eff_lumin_time_ordered():
 
 	master_lumin = np.array([float(x) for x in lines[2].split(",")])
 	time_ordered_lumi_id = lines[3].split(",")
-	print time_ordered_lumi_id
 
         #print np.logspace(min(master_index),max(master_index),num_samples)
         good_indices = np.linspace(min(master_index),max(master_index),num_samples).astype(int) -min(master_index)
@@ -212,14 +211,13 @@ def graph_eff_lumin_time_ordered():
 
 	#ax.set_xlim(left = .15,right = 30000)
 	length = len(master_times)-1
-	indices_for_xaxis = np.linspace(length/8,length,6)
+	indices_for_xaxis = np.linspace(length/20,length,6)
 	indices_for_xaxis = [int(x) for x in indices_for_xaxis]
 	
 	plt.xticks(np.take(master_times,indices_for_xaxis))
 	
 	labels = [item.get_text() for item in ax.get_xticklabels()]
 	for i,index in enumerate(indices_for_xaxis):
-		print time_ordered_lumi_id[index]
 		labels[i] = lumi_id_to_date[(str(int(time_ordered_lumi_id[index].split(":")[0])),str(int(time_ordered_lumi_id[index].split(":")[1])))]
 		
 	ax.set_xticklabels(labels)
@@ -324,15 +322,14 @@ def graph_fired_over_eff_lumin_time_ordered():
 
 	length = len(times)-1
 
-	indices_for_xaxis = np.linspace(length/8,length,6)
+	indices_for_xaxis = np.linspace(length/20,length,6)
 	indices_for_xaxis = [int(x) for x in indices_for_xaxis]
 	
 	plt.xticks(np.take(times,indices_for_xaxis))
 	
 	labels = [item.get_text() for item in ax.get_xticklabels()]
 	for i,index in enumerate(indices_for_xaxis):
-		print lumis[index]
-		print lumis[index].split(":")
+		
 		labels[i] = lumi_id_to_date[(str(int(lumis[index].split(":")[0])),str(int(lumis[index].split(":")[1])))]
 		
 	ax.set_xticklabels(labels)
@@ -349,7 +346,7 @@ def graph_fired_over_eff_lumin_time_ordered():
 
 
 
-#graph_eff_lumin()
+graph_eff_lumin()
 graph_eff_lumin_time_ordered()
-#graph_fired_over_eff_lumin()
+graph_fired_over_eff_lumin()
 graph_fired_over_eff_lumin_time_ordered()
