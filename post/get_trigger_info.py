@@ -40,6 +40,7 @@ for file in os.listdir(mod_file_dir):
 	tot_valid = 0
 	# we'll use this later for calculate the total delivered and recorded luminosities
 	good_lumis = []
+	print file
 
 	with open(mod_file_dir+"/"+file, "rb") as mod_file:
 		for line in mod_file: 
@@ -94,7 +95,6 @@ for file in os.listdir(mod_file_dir):
 					if data_type == "Data":
 						trig_dict[line.split()[1]]["present"] += 1
 					
-						print file
 						if is_lumi_valid((run,lumiBlock),lumiId_to_lumin_dict) != 0:
 							if (run,lumiBlock) != old_lumi:
 								print run,lumiBlock, is_lumi_valid((run,lumiBlock),lumiId_to_lumin_dict)
