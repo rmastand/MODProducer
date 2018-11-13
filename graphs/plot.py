@@ -190,9 +190,9 @@ def graph_eff_lumin_time_ordered():
 	print min(master_times)
 	plt.text(x,11000,"Total Luminosity",color = "k")
 
-	trig_name_positions = {"HLT_Jet30":(x,.05),"HLT_Jet60":(x,1),"HLT_Jet80":(x,6),
-			      "HLT_Jet110":(x,20),"HLT_Jet150":(x,70),"HLT_Jet190":(x,300),
-			      "HLT_Jet240":(x,700),"HLT_Jet300":(x,2000),"HLT_Jet370":(x,5000)}
+	trig_name_positions = {"HLT_Jet30":(x,100),"HLT_Jet60":(x,8000),"HLT_Jet80":(x,10000),
+			      "HLT_Jet110":(x,30000),"HLT_Jet150":(x,1000000),"HLT_Jet190":(x,3000000),
+			      "HLT_Jet240":(x,700000000),"HLT_Jet300":(x,100000000),"HLT_Jet370":(x,200000000)}
 
 	for trig_index,trig in enumerate(rev_ordered_triggers):
 	        print trig
@@ -252,9 +252,9 @@ def graph_fired_over_eff_lumin():
 	plt.figure(figsize=(10,10))
 	color_index = 0
 	x = -25000
-	trig_name_positions = {"HLT_Jet30":(x,150),"HLT_Jet60":(x,6),"HLT_Jet80":(x,1.5),
-			      "HLT_Jet110":(x,.3),"HLT_Jet150":(x,.095),"HLT_Jet190":(x,.025),
-			      "HLT_Jet240":(x,.009),"HLT_Jet300":(x,.002),"HLT_Jet370":(x,.0007)}
+	trig_name_positions = {"HLT_Jet30":(x,1500),"HLT_Jet60":(x,60),"HLT_Jet80":(x,15),
+			      "HLT_Jet110":(x,3),"HLT_Jet150":(x,.95),"HLT_Jet190":(x,.25),
+			      "HLT_Jet240":(x,.09),"HLT_Jet300":(x,.02),"HLT_Jet370":(x,.007)}
         zorder = 15
 	for trig in rev_ordered_triggers:
         	print trig
@@ -278,13 +278,13 @@ def graph_fired_over_eff_lumin():
 	ax = plt.gca()
 
 	ax.set_xlim(left = -30000)
-        ax.set_xticks(np.arange(0,max(index),10000), minor=True)
+        ax.set_xticks(np.arange(0,max(index),30000), minor=True)
         outside_text = ax.legend( [extra], ["CMS 2011 Open Data"], frameon=0, borderpad=0, bbox_to_anchor=(1.0, 1.005), loc='lower right',prop = {'weight':'normal',"size":16})
         ax.add_artist(outside_text)
 
-	plt.xticks(np.arange(0,max(index),10000))
+	plt.xticks(np.arange(0,max(index),30000))
 	ax.add_artist(logo_box())
-        plt.text(-25000,3500,"216 of 1223 AOD Files",weight="normal")
+        plt.text(-25000,35000,"216 of 1223 AOD Files",weight="normal")
 	plt.savefig("fired_over_lumin.pdf")
 	plt.show()
 
@@ -298,9 +298,9 @@ def graph_fired_over_eff_lumin_time_ordered():
 	
 	x = .9985*1300086884
 	
-	trig_name_positions = {"HLT_Jet30":(x,150),"HLT_Jet60":(x,6),"HLT_Jet80":(x,1.5),
-		      "HLT_Jet110":(x,.3),"HLT_Jet150":(x,.095),"HLT_Jet190":(x,.025),
-		      "HLT_Jet240":(x,.009),"HLT_Jet300":(x,.002),"HLT_Jet370":(x,.0007)}
+	trig_name_positions = {"HLT_Jet30":(x,1500),"HLT_Jet60":(x,60),"HLT_Jet80":(x,15),
+		      "HLT_Jet110":(x,3),"HLT_Jet150":(x,.95),"HLT_Jet190":(x,.25),
+		      "HLT_Jet240":(x,.09),"HLT_Jet300":(x,.02),"HLT_Jet370":(x,.007)}
         zorder = 15
 	for trig in rev_ordered_triggers:
         	
