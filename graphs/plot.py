@@ -234,7 +234,7 @@ def graph_eff_lumin_time_ordered():
         plt.text(.2,2.5*10**8,"1223 of 1223 AOD Files",weight="normal")
 
 
-	plt.savefig("eff_lumi_time_ordered.pdf")
+	#plt.savefig("eff_lumi_time_ordered.pdf")
 	plt.show()
 	
 
