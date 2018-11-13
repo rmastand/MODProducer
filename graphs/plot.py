@@ -316,7 +316,7 @@ def graph_fired_over_eff_lumin_time_ordered():
 	ax = plt.gca()
 
 	#ax.set_xlim(left = -3000)
-        ax.set_xticks(np.linspace(0,max(times),10), minor=True)
+        ax.set_xticks(np.linspace(0,max(times),6), minor=True)
 	
 	labels = [item.get_text() for item in ax.get_xticklabels()]
 	labels[1] = 'Testing'
@@ -329,7 +329,7 @@ def graph_fired_over_eff_lumin_time_ordered():
         outside_text = ax.legend( [extra], ["CMS 2011 Open Data"], frameon=0, borderpad=0, bbox_to_anchor=(1.0, 1.005), loc='lower right',prop = {'weight':'normal',"size":16})
         ax.add_artist(outside_text)
 
-	plt.xticks(np.arange(0,max(times),id_spacing))
+
 	ax.add_artist(logo_box())
         plt.text(-2400,3500,"216 of 1223 AOD Files",weight="normal")
 	plt.savefig("fired_over_lumin_time_ordered.pdf")
@@ -339,7 +339,7 @@ def graph_fired_over_eff_lumin_time_ordered():
 
 
 
-graph_eff_lumin()
-graph_eff_lumin_time_ordered()
-graph_fired_over_eff_lumin()
+#graph_eff_lumin()
+#graph_eff_lumin_time_ordered()
+#graph_fired_over_eff_lumin()
 graph_fired_over_eff_lumin_time_ordered()
