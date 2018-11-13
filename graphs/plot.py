@@ -186,7 +186,7 @@ def graph_eff_lumin_time_ordered():
 
 	plt.plot(np.take(master_times,good_indices),np.take(master_lumin,good_indices),"k",linewidth=9.0)
 
-	x = min(master_times)*.9999
+	x = min(master_times)*.999
 	plt.text(x,11000,"Total Luminosity",color = "k")
 
 	trig_name_positions = {"HLT_Jet30":(x,.05),"HLT_Jet60":(x,1),"HLT_Jet80":(x,6),
@@ -209,7 +209,7 @@ def graph_eff_lumin_time_ordered():
 
 	ax = plt.gca()
 
-	ax.set_xlim(left = min(master_times)*.999,right = max(master_times)*1.005)
+	ax.set_xlim(left = min(master_times)*.995,right = max(master_times)*1.00005)
 	length = len(master_times)-1
 	indices_for_xaxis = np.linspace(length/20,length,5)
 	indices_for_xaxis = [int(x) for x in indices_for_xaxis]
@@ -235,6 +235,8 @@ def graph_eff_lumin_time_ordered():
 
 	plt.savefig("eff_lumi_time_ordered.pdf")
 	plt.show()
+	
+	return x
 
 """
 plot_fired_over_lumin.txt:
@@ -249,7 +251,7 @@ def graph_fired_over_eff_lumin():
 
 	plt.figure(figsize=(10,10))
 	color_index = 0
-	x = -2400
+	x = -24000
 	trig_name_positions = {"HLT_Jet30":(x,150),"HLT_Jet60":(x,6),"HLT_Jet80":(x,1.5),
 			      "HLT_Jet110":(x,.3),"HLT_Jet150":(x,.095),"HLT_Jet190":(x,.025),
 			      "HLT_Jet240":(x,.009),"HLT_Jet300":(x,.002),"HLT_Jet370":(x,.0007)}
@@ -275,26 +277,27 @@ def graph_fired_over_eff_lumin():
 	plt.yscale("log")
 	ax = plt.gca()
 
-	ax.set_xlim(left = -6000)
+	ax.set_xlim(left = -60000)
         outside_text = ax.legend( [extra], ["CMS 2011 Open Data"], frameon=0, borderpad=0, bbox_to_anchor=(1.0, 1.005), loc='lower right',prop = {'weight':'normal',"size":16})
         ax.add_artist(outside_text)
 
 	plt.xticks(np.arange(0,max(index),id_spacing))
 	ax.add_artist(logo_box())
-        plt.text(-2400,3500,"1223 of 1223 AOD Files",weight="normal")
+        plt.text(x,3500,"1223 of 1223 AOD Files",weight="normal")
 	plt.savefig("fired_over_lumin.pdf")
 	plt.show()
 	
-def graph_fired_over_eff_lumin_time_ordered():
+def graph_fired_over_eff_lumin_time_ordered(x):
 	fired_lumi_file =  open(plot_fired_over_lumi)
 	lines = fired_lumi_file.readlines()
 
 	plt.figure(figsize=(10,10))
 	color_index = 0
-	x = min(times)*.9999
+	
+	
 	trig_name_positions = {"HLT_Jet30":(x,150),"HLT_Jet60":(x,6),"HLT_Jet80":(x,1.5),
-			      "HLT_Jet110":(x,.3),"HLT_Jet150":(x,.095),"HLT_Jet190":(x,.025),
-			      "HLT_Jet240":(x,.009),"HLT_Jet300":(x,.002),"HLT_Jet370":(x,.0007)}
+		      "HLT_Jet110":(x,.3),"HLT_Jet150":(x,.095),"HLT_Jet190":(x,.025),
+		      "HLT_Jet240":(x,.009),"HLT_Jet300":(x,.002),"HLT_Jet370":(x,.0007)}
         zorder = 15
 	for trig in rev_ordered_triggers:
         	
@@ -303,6 +306,7 @@ def graph_fired_over_eff_lumin_time_ordered():
 		index = [int(x) for x in lines[color_index*4+2].split(",")]
 		yaxis = [float(x) for x in lines[color_index*4+3].split(",")]
         	print len(index),len(yaxis)
+		
 
 
 		plt.text(trig_name_positions[trig][0],trig_name_positions[trig][1],trig[4:],color = trigger_colors[trig])
@@ -328,14 +332,14 @@ def graph_fired_over_eff_lumin_time_ordered():
 	for i,index in enumerate(indices_for_xaxis):
 		
 		labels[i] = lumi_id_to_date[(str(int(lumis[index].split(":")[0])),str(int(lumis[index].split(":")[1])))]
-	ax.set_xlim(left = min(times)*.999,right = max(times)*1.0005)
+	ax.set_xlim(left = x,right = max(times)*1.0005)
 	ax.set_xticklabels(labels)
 	
         outside_text = ax.legend( [extra], ["CMS 2011 Open Data"], frameon=0, borderpad=0, bbox_to_anchor=(1.0, 1.005), loc='lower right',prop = {'weight':'normal',"size":16})
         ax.add_artist(outside_text)
 
 	ax.add_artist(logo_box())
-        plt.text(-2400,3500,"1223 of 1223 AOD Files",weight="normal")
+        plt.text(x,3500,"1223 of 1223 AOD Files",weight="normal")
 	plt.savefig("fired_over_lumin_time_ordered.pdf")
 	plt.show()
 
@@ -344,6 +348,6 @@ def graph_fired_over_eff_lumin_time_ordered():
 
 
 #graph_eff_lumin()
-graph_eff_lumin_time_ordered()
+x=graph_eff_lumin_time_ordered()
 graph_fired_over_eff_lumin()
-graph_fired_over_eff_lumin_time_ordered()
+graph_fired_over_eff_lumin_time_ordered(x)
