@@ -316,6 +316,7 @@ def graph_fired_over_eff_lumin_time_ordered():
 	print length
 	indices_for_xaxis = np.linspace(length/6,length,6)
 	indices_for_xaxis = [int(x) for x in indices_for_xaxis]
+	print indices_for_xaxis
 	print times[indices_for_xaxis]
 	plt.xticks(times[indices_for_xaxis])
 	
