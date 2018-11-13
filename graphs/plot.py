@@ -312,7 +312,7 @@ def graph_fired_over_eff_lumin_time_ordered():
 	plt.yscale("log")
 	ax = plt.gca()
 
-	length = len(times)
+	length = len(times)-1
 	print length
 	indices_for_xaxis = np.linspace(length/6,length,6)
 	indices_for_xaxis = [int(x) for x in indices_for_xaxis]
