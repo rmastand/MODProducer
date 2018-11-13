@@ -251,15 +251,16 @@ def graph_fired_over_eff_lumin():
 
 	plt.figure(figsize=(10,10))
 	color_index = 0
-	x = -24000
+	x = -2400
 	trig_name_positions = {"HLT_Jet30":(x,150),"HLT_Jet60":(x,6),"HLT_Jet80":(x,1.5),
 			      "HLT_Jet110":(x,.3),"HLT_Jet150":(x,.095),"HLT_Jet190":(x,.025),
 			      "HLT_Jet240":(x,.009),"HLT_Jet300":(x,.002),"HLT_Jet370":(x,.0007)}
         zorder = 15
 	for trig in rev_ordered_triggers:
-        	
-		index = [int(x) for x in lines[color_index*4+2].split(",")]
-		yaxis = [float(x) for x in lines[color_index*4+3].split(",")]
+        	print trig
+                print lines[color_index*3+1][:10]
+		index = [int(x) for x in lines[color_index*3+1].split(",")]
+		yaxis = [float(x) for x in lines[color_index*3+2].split(",")]
         	print len(index),len(yaxis)
 
 
@@ -269,26 +270,25 @@ def graph_fired_over_eff_lumin():
 		color_index += 1
                 zorder -= 1
 
-
-		
 	#plt.xlabel("Run:Lumiblock")
 	plt.xlabel("Luminosity Block (time-ordered)")
+
 	#plt.xticks(range(len(lines[0].split(",")))[::id_spacing],lines[0].split(",")[::id_spacing], rotation=30)
 	plt.ylabel("Effective Cross Section [ub]")
 	plt.yscale("log")
 	ax = plt.gca()
-	plt.xticks(np.arange(0,max(index),id_spacing))
-	
-	ax.set_xlim(left = -60000,right =max(index)*1.25)
+
+	ax.set_xlim(left = -3000)
+        ax.set_xticks(np.arange(0,max(index),1000), minor=True)
         outside_text = ax.legend( [extra], ["CMS 2011 Open Data"], frameon=0, borderpad=0, bbox_to_anchor=(1.0, 1.005), loc='lower right',prop = {'weight':'normal',"size":16})
         ax.add_artist(outside_text)
-	
-	
+
+	plt.xticks(np.arange(0,max(index),id_spacing))
 	ax.add_artist(logo_box())
-        plt.text(x,3500,"1223 of 1223 AOD Files",weight="normal")
-	
+        plt.text(-2400,3500,"216 of 1223 AOD Files",weight="normal")
 	plt.savefig("fired_over_lumin.pdf")
 	plt.show()
+
 	
 def graph_fired_over_eff_lumin_time_ordered():
 	fired_lumi_file =  open(plot_fired_over_lumi)
