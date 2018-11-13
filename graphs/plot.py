@@ -188,9 +188,9 @@ def graph_eff_lumin_time_ordered():
 
 	x = min(master_times)*.9985
 	print min(master_times)
-	plt.text(x,500000000,"Total Luminosity",color = "k")
+	plt.text(x,800000000,"Total Luminosity",color = "k")
 
-	trig_name_positions = {"HLT_Jet30":(x,100),"HLT_Jet60":(x,8000),"HLT_Jet80":(x,10000),
+	trig_name_positions = {"HLT_Jet30":(x,100),"HLT_Jet60":(x,7000),"HLT_Jet80":(x,10000),
 			      "HLT_Jet110":(x,30000),"HLT_Jet150":(x,1000000),"HLT_Jet190":(x,3000000),
 			      "HLT_Jet240":(x,700000000),"HLT_Jet300":(x,100000000),"HLT_Jet370":(x,200000000)}
 
@@ -352,5 +352,5 @@ def graph_fired_over_eff_lumin_time_ordered():
 
 #graph_eff_lumin()
 graph_eff_lumin_time_ordered()
-graph_fired_over_eff_lumin()
+#graph_fired_over_eff_lumin()
 #graph_fired_over_eff_lumin_time_ordered()
