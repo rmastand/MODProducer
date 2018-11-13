@@ -158,7 +158,7 @@ def plot_eff_lumin():
 	master_lumin_rec = []
 	for lumi_id in master_lumin_ids:
 		master_times.append(lumi_id_to_gps_times[(lumi_id.split(":")[0],lumi_id.split(":")[1])])
-		master_lumin_rec.append(lumi_id_to_lumin[lumi_id][1]) 
+		master_lumin_rec.append(lumi_id_to_lumin[(lumi_id.split(":")[0],lumi_id.split(":")[1])][1]) 
 		
 	print "start sorting"
 	# sorts all the represented lumiblocks by time, gets the integrated luminosity BY LUMI BLOCK INDEX
