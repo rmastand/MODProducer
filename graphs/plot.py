@@ -15,7 +15,7 @@ import math
 plot_eff_lumi_file = sys.argv[1]
 plot_fired_over_lumi = sys.argv[2]
 lumibyls_file = sys.argv[3]
-logo_location = "/Users/RMastandrea/UROP18/CMSOpenData/MODProducer/graphs/MODLogo.png"
+logo_location = "/Users/prekshan/rmastand/CMSOpenData/MODProducer/graphs/MODLogo.png"
 
 
 trigger_colors = {"HLT_Jet30":"#999999","HLT_Jet60":"#f781bf","HLT_Jet80":"#a65628",
