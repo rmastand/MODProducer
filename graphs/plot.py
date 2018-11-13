@@ -186,7 +186,7 @@ def graph_eff_lumin_time_ordered():
 
 	plt.plot(np.take(master_times,good_indices),np.take(master_lumin,good_indices),"k",linewidth=9.0)
 
-	x = min(master_times)*.9996
+	x = min(master_times)*.9993
 	print min(master_times)
 	plt.text(x,11000,"Total Luminosity",color = "k")
 
@@ -210,7 +210,7 @@ def graph_eff_lumin_time_ordered():
 
 	ax = plt.gca()
 
-	ax.set_xlim(left = min(master_times)*.9995,right = max(master_times)*1.0001)
+	ax.set_xlim(left = min(master_times)*.999,right = max(master_times)*1.0001)
 	length = len(master_times)-1
 	indices_for_xaxis = np.linspace(length/20,length,5)
 	indices_for_xaxis = [int(x) for x in indices_for_xaxis]
@@ -271,6 +271,8 @@ def graph_fired_over_eff_lumin():
 
 	#plt.xlabel("Run:Lumiblock")
 	plt.xlabel("Luminosity Block (time-ordered)")
+	
+	plt.xticks(np.arange(0,max(index),id_spacing))
 
 	#plt.xticks(range(len(lines[0].split(",")))[::id_spacing],lines[0].split(",")[::id_spacing], rotation=30)
 	plt.ylabel("Effective Cross Section [ub]")
@@ -281,9 +283,10 @@ def graph_fired_over_eff_lumin():
         outside_text = ax.legend( [extra], ["CMS 2011 Open Data"], frameon=0, borderpad=0, bbox_to_anchor=(1.0, 1.005), loc='lower right',prop = {'weight':'normal',"size":16})
         ax.add_artist(outside_text)
 
-	plt.xticks(np.arange(0,max(index),id_spacing))
+	
 	ax.add_artist(logo_box())
         plt.text(x,3500,"1223 of 1223 AOD Files",weight="normal")
+	
 	plt.savefig("fired_over_lumin.pdf")
 	plt.show()
 	
@@ -294,6 +297,7 @@ def graph_fired_over_eff_lumin_time_ordered(x):
 	plt.figure(figsize=(10,10))
 	color_index = 0
 	
+	x = .996*1300086884
 	
 	trig_name_positions = {"HLT_Jet30":(x,150),"HLT_Jet60":(x,6),"HLT_Jet80":(x,1.5),
 		      "HLT_Jet110":(x,.3),"HLT_Jet150":(x,.095),"HLT_Jet190":(x,.025),
