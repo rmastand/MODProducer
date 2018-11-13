@@ -167,7 +167,7 @@ def graph_eff_lumin():
 	plt.show()
 
 def graph_eff_lumin_time_ordered():
-	plt.figure(figsize= (10,10))
+	plt.figure(figsize=(10,10))
 	ax = plt.gca()
 
 
@@ -279,7 +279,7 @@ def graph_fired_over_eff_lumin():
 	ax = plt.gca()
 	plt.xticks(np.arange(0,max(index),id_spacing))
 	
-	ax.set_xlim(left = -60000)
+	ax.set_xlim(left = -60000,max(index)*1.25)
         outside_text = ax.legend( [extra], ["CMS 2011 Open Data"], frameon=0, borderpad=0, bbox_to_anchor=(1.0, 1.005), loc='lower right',prop = {'weight':'normal',"size":16})
         ax.add_artist(outside_text)
 	
