@@ -207,12 +207,20 @@ def graph_eff_lumin_time_ordered():
 
 		plt.text(trig_name_positions[trig][0],trig_name_positions[trig][1],trig[4:],color = trigger_colors[trig])
 
-
-	#plt.xlabel("Run:LumiBlock")
-	#plt.xticks(range(len(time_ordered_lumi_id))[::id_spacing], time_ordered_lumi_id[::id_spacing], rotation=30)
 	ax = plt.gca()
 
 	#ax.set_xlim(left = .15,right = 30000)
+	length = len(master_times)-1
+	indices_for_xaxis = np.linspace(length/8,length,6)
+	indices_for_xaxis = [int(x) for x in indices_for_xaxis]
+	
+	plt.xticks(np.take(master_times,indices_for_xaxis))
+	
+	labels = [item.get_text() for item in ax.get_xticklabels()]
+	for i,index in enumerate(indices_for_xaxis):
+		labels[i] = lumi_id_to_date[(str(int(time_ordered_lumi_id[index].split(":")[0])),str(int(time_ordered_lumi_id[index].split(":")[1])))]
+		
+	ax.set_xticklabels(labels)
 
 	plt.xlabel("Time")
 	ax.add_artist(logo_box())
@@ -314,7 +322,7 @@ def graph_fired_over_eff_lumin_time_ordered():
 
 	length = len(times)-1
 
-	indices_for_xaxis = np.linspace(length/6,length,6)
+	indices_for_xaxis = np.linspace(length/8,length,6)
 	indices_for_xaxis = [int(x) for x in indices_for_xaxis]
 	
 	plt.xticks(np.take(times,indices_for_xaxis))
@@ -340,6 +348,6 @@ def graph_fired_over_eff_lumin_time_ordered():
 
 
 #graph_eff_lumin()
-#graph_eff_lumin_time_ordered()
+graph_eff_lumin_time_ordered()
 #graph_fired_over_eff_lumin()
 graph_fired_over_eff_lumin_time_ordered()
