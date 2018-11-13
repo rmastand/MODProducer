@@ -136,7 +136,7 @@ def graph_eff_lumin():
 	for trig_index,trig in enumerate(rev_ordered_triggers):
 	        print trig
 
-		index = np.array([float(x) for x in lines[3*trig_index+5].split(",")])+1
+		index = np.array([int(x) for x in lines[3*trig_index+5].split(",")])+1
 
 		eff_lumin = np.array([float(x) for x in lines[3*trig_index+6].split(",")])
                 good_indices = np.logspace(np.log10(min(index)),np.log10(max(index)),num_samples).astype(int) - min(index)
