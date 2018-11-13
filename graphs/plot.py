@@ -231,7 +231,7 @@ def graph_eff_lumin_time_ordered():
 
         outside_text = ax.legend( [extra], ["CMS 2011 Open Data"], frameon=0, borderpad=0, fontsize=12, bbox_to_anchor=(1.0, 1.005), loc='lower right',prop = {'weight':'normal',"size":16})
         ax.add_artist(outside_text)
-        plt.text(.2,2.5*10**8,"1223 of 1223 AOD Files",weight="normal")
+        plt.text(.2,5*10**8,"1223 of 1223 AOD Files",weight="normal")
 
 
 	plt.savefig("eff_lumi_time_ordered.pdf")
@@ -252,9 +252,9 @@ def graph_fired_over_eff_lumin():
 	plt.figure(figsize=(10,10))
 	color_index = 0
 	x = -25000
-	trig_name_positions = {"HLT_Jet30":(x,1500),"HLT_Jet60":(x,60),"HLT_Jet80":(x,15),
-			      "HLT_Jet110":(x,3),"HLT_Jet150":(x,.95),"HLT_Jet190":(x,.25),
-			      "HLT_Jet240":(x,.09),"HLT_Jet300":(x,.02),"HLT_Jet370":(x,.007)}
+	trig_name_positions = {"HLT_Jet30":(x,15000),"HLT_Jet60":(x,600),"HLT_Jet80":(x,150),
+			      "HLT_Jet110":(x,30),"HLT_Jet150":(x,9.5),"HLT_Jet190":(x,2.5),
+			      "HLT_Jet240":(x,.9),"HLT_Jet300":(x,.2),"HLT_Jet370":(x,.07)}
         zorder = 15
 	for trig in rev_ordered_triggers:
         	print trig
@@ -298,9 +298,9 @@ def graph_fired_over_eff_lumin_time_ordered():
 	
 	x = .9985*1300086884
 	
-	trig_name_positions = {"HLT_Jet30":(x,1500),"HLT_Jet60":(x,60),"HLT_Jet80":(x,15),
-		      "HLT_Jet110":(x,3),"HLT_Jet150":(x,.95),"HLT_Jet190":(x,.25),
-		      "HLT_Jet240":(x,.09),"HLT_Jet300":(x,.02),"HLT_Jet370":(x,.007)}
+	trig_name_positions = {"HLT_Jet30":(x,15000),"HLT_Jet60":(x,600),"HLT_Jet80":(x,150),
+		      "HLT_Jet110":(x,30),"HLT_Jet150":(x,9.5),"HLT_Jet190":(x,2.5),
+		      "HLT_Jet240":(x,.9),"HLT_Jet300":(x,.2),"HLT_Jet370":(x,.07)}
         zorder = 15
 	for trig in rev_ordered_triggers:
         	
@@ -350,7 +350,7 @@ def graph_fired_over_eff_lumin_time_ordered():
 
 
 
-graph_eff_lumin()
+#graph_eff_lumin()
 graph_eff_lumin_time_ordered()
 graph_fired_over_eff_lumin()
 graph_fired_over_eff_lumin_time_ordered()
