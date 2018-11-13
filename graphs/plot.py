@@ -149,7 +149,7 @@ def graph_eff_lumin():
 	#plt.xticks(range(len(time_ordered_lumi_id))[::id_spacing], time_ordered_lumi_id[::id_spacing], rotation=30)
 	ax = plt.gca()
 
-	ax.set_xlim(left = .15,right = 30000)
+	ax.set_xlim(left = .15,right = 60000)
 
 	plt.xlabel("Cumulative Luminosity Blocks")
 	ax.add_artist(logo_box())
@@ -160,7 +160,7 @@ def graph_eff_lumin():
         outside_text = ax.legend( [extra], ["CMS 2011 Open Data"], frameon=0, borderpad=0, fontsize=12, bbox_to_anchor=(1.0, 1.005), loc='lower right',prop = {'weight':'normal',"size":16})
         ax.add_artist(outside_text)
 	plt.xscale("log")
-        plt.text(.2,2.5*10**8,"216 of 1223 AOD Files",weight="normal")
+        plt.text(.2,2.5*10**8,"1223 of 1223 AOD Files",weight="normal")
 
 
 	plt.savefig("eff_lumi.pdf")
@@ -186,7 +186,7 @@ def graph_eff_lumin_time_ordered():
 
 	plt.plot(np.take(master_times,good_indices),np.take(master_lumin,good_indices),"k",linewidth=9.0)
 
-	x = .2
+	x = min(master_times)*.9
 	plt.text(x,11000,"Total Luminosity",color = "k")
 
 	trig_name_positions = {"HLT_Jet30":(x,.05),"HLT_Jet60":(x,1),"HLT_Jet80":(x,6),
@@ -209,9 +209,9 @@ def graph_eff_lumin_time_ordered():
 
 	ax = plt.gca()
 
-	#ax.set_xlim(left = .15,right = 30000)
+	ax.set_xlim(left = min(master_times)*.9,right = max(master_times)*1.25)
 	length = len(master_times)-1
-	indices_for_xaxis = np.linspace(length/20,length,6)
+	indices_for_xaxis = np.linspace(length/20,length,5)
 	indices_for_xaxis = [int(x) for x in indices_for_xaxis]
 	
 	plt.xticks(np.take(master_times,indices_for_xaxis))
@@ -230,7 +230,7 @@ def graph_eff_lumin_time_ordered():
 
         outside_text = ax.legend( [extra], ["CMS 2011 Open Data"], frameon=0, borderpad=0, fontsize=12, bbox_to_anchor=(1.0, 1.005), loc='lower right',prop = {'weight':'normal',"size":16})
         ax.add_artist(outside_text)
-        plt.text(.2,2.5*10**8,"216 of 1223 AOD Files",weight="normal")
+        plt.text(.2,2.5*10**8,"1223 of 1223 AOD Files",weight="normal")
 
 
 	plt.savefig("eff_lumi_time_ordered.pdf")
@@ -255,8 +255,7 @@ def graph_fired_over_eff_lumin():
 			      "HLT_Jet240":(x,.009),"HLT_Jet300":(x,.002),"HLT_Jet370":(x,.0007)}
         zorder = 15
 	for trig in rev_ordered_triggers:
-        	print trig
-                print lines[color_index*3+1][:10]
+        	
 		index = [int(x) for x in lines[color_index*4+2].split(",")]
 		yaxis = [float(x) for x in lines[color_index*4+3].split(",")]
         	print len(index),len(yaxis)
@@ -276,14 +275,14 @@ def graph_fired_over_eff_lumin():
 	plt.yscale("log")
 	ax = plt.gca()
 
-	ax.set_xlim(left = -3000)
-        ax.set_xticks(np.arange(0,max(index),1000), minor=True)
+	ax.set_xlim(left = -6000)
+        ax.set_xticks(np.arange(0,max(index),30), minor=True)
         outside_text = ax.legend( [extra], ["CMS 2011 Open Data"], frameon=0, borderpad=0, bbox_to_anchor=(1.0, 1.005), loc='lower right',prop = {'weight':'normal',"size":16})
         ax.add_artist(outside_text)
 
 	plt.xticks(np.arange(0,max(index),id_spacing))
 	ax.add_artist(logo_box())
-        plt.text(-2400,3500,"216 of 1223 AOD Files",weight="normal")
+        plt.text(-2400,3500,"1223 of 1223 AOD Files",weight="normal")
 	plt.savefig("fired_over_lumin.pdf")
 	plt.show()
 	
@@ -299,8 +298,7 @@ def graph_fired_over_eff_lumin_time_ordered():
 			      "HLT_Jet240":(x,.009),"HLT_Jet300":(x,.002),"HLT_Jet370":(x,.0007)}
         zorder = 15
 	for trig in rev_ordered_triggers:
-        	print trig
-                print lines[color_index*3+1][:10]
+        	
 		lumis = [x for x in lines[color_index*4].split(",")]
 		times = [float(x) for x in lines[color_index*4+1].split(",")]
 		index = [int(x) for x in lines[color_index*4+2].split(",")]
@@ -322,7 +320,7 @@ def graph_fired_over_eff_lumin_time_ordered():
 
 	length = len(times)-1
 
-	indices_for_xaxis = np.linspace(length/20,length,6)
+	indices_for_xaxis = np.linspace(length/20,length,5)
 	indices_for_xaxis = [int(x) for x in indices_for_xaxis]
 	
 	plt.xticks(np.take(times,indices_for_xaxis))
@@ -331,14 +329,14 @@ def graph_fired_over_eff_lumin_time_ordered():
 	for i,index in enumerate(indices_for_xaxis):
 		
 		labels[i] = lumi_id_to_date[(str(int(lumis[index].split(":")[0])),str(int(lumis[index].split(":")[1])))]
-		
+	ax.set_xlim(left = min(times)*.9,right = max(times)*1.25)
 	ax.set_xticklabels(labels)
 	
         outside_text = ax.legend( [extra], ["CMS 2011 Open Data"], frameon=0, borderpad=0, bbox_to_anchor=(1.0, 1.005), loc='lower right',prop = {'weight':'normal',"size":16})
         ax.add_artist(outside_text)
 
 	ax.add_artist(logo_box())
-        plt.text(-2400,3500,"216 of 1223 AOD Files",weight="normal")
+        plt.text(-2400,3500,"1223 of 1223 AOD Files",weight="normal")
 	plt.savefig("fired_over_lumin_time_ordered.pdf")
 	plt.show()
 
