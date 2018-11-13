@@ -57,7 +57,7 @@ def zero_to_nan(values):
 
 extra = Rectangle((0, 0), 1, 1, fc="w", fill=False, edgecolor='none', linewidth=0)
 
-def read_lumi_by_ls(lumibyls_file):
+def lumi_id_to_dmy(lumibyls_file):
 	"""
 	returns two dicts with keys = (run,lumiBlock)
 	1st values: gps times
@@ -67,8 +67,7 @@ def read_lumi_by_ls(lumibyls_file):
 	lines =  lumibyls.readlines()
 	split_lines = [line.split(",") for line in lines][2:]
 	char = ""
-	lumi_id_to_gps_times = {}
-	lumi_id_to_lumin = {}
+	lumi_id_to_date = {}
 	i = 0
 	while char !="#":
 		run = split_lines[i][0].split(":")[0]
@@ -78,14 +77,13 @@ def read_lumi_by_ls(lumibyls_file):
 		mdy = [int(x) for x in date.split("/")]
 		hms = [int(x) for x in tim.split(":")]
 		dt = datetime.datetime(mdy[2], mdy[0], mdy[1], hms[0], hms[1],hms[2])
-		lumi_id_to_gps_times[(run,lumi)] = time.mktime(dt.timetuple())
-		lumi_id_to_lumin[(run,lumi)] = (float(split_lines[i][5]),float(split_lines[i][6]))
+		lumi_id_to_date[(run,lumi)] = str(mdy[1])+"/"+str(mdy[0])+"/"+str(mdy[2])
 		i += 1
 		try:
 			char = split_lines[i][0][0]
 		except: pass
-	return lumi_id_to_gps_times,lumi_id_to_lumin
-lumi_id_to_gps_times,lumi_id_to_lumin = read_lumi_by_ls(lumibyls_file)
+	return lumi_id_to_date
+lumi_id_to_date = lumi_id_to_dmy(lumibyls_file)
 
 
 def logo_box():
@@ -295,6 +293,7 @@ def graph_fired_over_eff_lumin_time_ordered():
 	for trig in rev_ordered_triggers:
         	print trig
                 print lines[color_index*3+1][:10]
+		lumis = [x for x in lines[color_index*4].split(",")]
 		times = [float(x) for x in lines[color_index*4+1].split(",")]
 		index = [int(x) for x in lines[color_index*4+2].split(",")]
 		yaxis = [float(x) for x in lines[color_index*4+3].split(",")]
@@ -307,28 +306,23 @@ def graph_fired_over_eff_lumin_time_ordered():
 		color_index += 1
                 zorder -= 1
 
-	#plt.xlabel("Run:Lumiblock")
 	plt.xlabel("Time")
 
-	#plt.xticks(range(len(lines[0].split(",")))[::id_spacing],lines[0].split(",")[::id_spacing], rotation=30)
 	plt.ylabel("Effective Cross Section [ub]")
 	plt.yscale("log")
 	ax = plt.gca()
 
-	#ax.set_xlim(left = -3000)
-        ax.set_xticks(np.linspace(0,max(times),6), minor=True)
-	
+	length = len(times)
+	indices_for_xaxis = np.linspace(length/6,length,6)
+	plt.xticks(times[indices_for_xaxis])
 	labels = [item.get_text() for item in ax.get_xticklabels()]
-	labels[1] = 'Testing'
-
+	for i in indices_for_xaxis:
+		labels[i] = lumi_id_to_date[(lumis[i].split(":")[0],lumis[i].split(":")[1])]
+		
 	ax.set_xticklabels(labels)
-	
-	
-	
 	
         outside_text = ax.legend( [extra], ["CMS 2011 Open Data"], frameon=0, borderpad=0, bbox_to_anchor=(1.0, 1.005), loc='lower right',prop = {'weight':'normal',"size":16})
         ax.add_artist(outside_text)
-
 
 	ax.add_artist(logo_box())
         plt.text(-2400,3500,"216 of 1223 AOD Files",weight="normal")
