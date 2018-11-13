@@ -251,7 +251,7 @@ def graph_fired_over_eff_lumin():
 
 	plt.figure(figsize=(10,10))
 	color_index = 0
-	x = -2400
+	x = -24000
 	trig_name_positions = {"HLT_Jet30":(x,150),"HLT_Jet60":(x,6),"HLT_Jet80":(x,1.5),
 			      "HLT_Jet110":(x,.3),"HLT_Jet150":(x,.095),"HLT_Jet190":(x,.025),
 			      "HLT_Jet240":(x,.009),"HLT_Jet300":(x,.002),"HLT_Jet370":(x,.0007)}
@@ -277,14 +277,14 @@ def graph_fired_over_eff_lumin():
 	plt.yscale("log")
 	ax = plt.gca()
 
-	ax.set_xlim(left = -3000)
-        ax.set_xticks(np.arange(0,max(index),1000), minor=True)
+	ax.set_xlim(left = -30000)
+        ax.set_xticks(np.arange(0,max(index),10000), minor=True)
         outside_text = ax.legend( [extra], ["CMS 2011 Open Data"], frameon=0, borderpad=0, bbox_to_anchor=(1.0, 1.005), loc='lower right',prop = {'weight':'normal',"size":16})
         ax.add_artist(outside_text)
 
-	plt.xticks(np.arange(0,max(index),id_spacing))
+	#plt.xticks(np.arange(0,max(index),id_spacing))
 	ax.add_artist(logo_box())
-        plt.text(-2400,3500,"216 of 1223 AOD Files",weight="normal")
+        plt.text(-24000,3500,"216 of 1223 AOD Files",weight="normal")
 	plt.savefig("fired_over_lumin.pdf")
 	plt.show()
 
