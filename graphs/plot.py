@@ -313,16 +313,16 @@ def graph_fired_over_eff_lumin_time_ordered():
 	ax = plt.gca()
 
 	length = len(times)-1
-	print length
+
 	indices_for_xaxis = np.linspace(length/6,length,6)
 	indices_for_xaxis = [int(x) for x in indices_for_xaxis]
-	print indices_for_xaxis
-	print np.take(times,indices_for_xaxis)
 	
 	plt.xticks(np.take(times,indices_for_xaxis))
 	
 	labels = [item.get_text() for item in ax.get_xticklabels()]
 	for i in indices_for_xaxis:
+		print lumis[i]
+		print lumis[i].split(":")
 		labels[i] = lumi_id_to_date[(lumis[i].split(":")[0],lumis[i].split(":")[1])]
 		
 	ax.set_xticklabels(labels)
