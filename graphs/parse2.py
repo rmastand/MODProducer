@@ -148,7 +148,7 @@ def plot_eff_lumin():
 		trigger_eff_lumin = []
 		for i,lumi_id in enumerate(master_trig_dict[trigger]["good_lumis"]):
 			if lumi_id not in master_lumin_ids:
-				master_lumin_ids.append(str(lumi_id[0])+":"+str(lumi_id[1]))
+				master_lumin_ids.append(lumi_id)
 			trigger_time.append(lumi_id_to_gps_times[lumi_id])
 			trigger_eff_lumin.append(lumi_id_to_lumin[lumi_id][1]/master_trig_dict[trigger]["good_prescales"][i])
 		trigger_time_v_lumin_rec[trigger] = trigger_time,trigger_eff_lumin
@@ -157,8 +157,8 @@ def plot_eff_lumin():
 	master_times = []
 	master_lumin_rec = []
 	for lumi_id in master_lumin_ids:
-		master_times.append(lumi_id_to_gps_times[(lumi_id.split(":")[0],lumi_id.split(":")[1])])
-		master_lumin_rec.append(lumi_id_to_lumin[(lumi_id.split(":")[0],lumi_id.split(":")[1])][1]) 
+		master_times.append(lumi_id_to_gps_times[lumi_id])
+		master_lumin_rec.append(lumi_id_to_lumin[lumi_id][1]) 
 		
 	print "start sorting"
 	# sorts all the represented lumiblocks by time, gets the integrated luminosity BY LUMI BLOCK INDEX
@@ -177,7 +177,10 @@ def plot_eff_lumin():
 
 		# ordering the luminosity ids to be used as labels
 		times_sorted,ordered_ids = (list(t) for t in zip(*sorted(zip(master_times,master_lumin_ids))))
-		writer.writerow(ordered_ids)   
+		ids_good_format = []
+		for id in ordered_ids:
+			ids_good_format.append(str(id[0])+":"+str(id[1]))
+		writer.writerow(ids_good_format)   
 		# for each trigger: sorts all the represented lumiblocks by time, gets the effective luminosity BY LUMI BLOCK INDEX
 		for trig in ordered_triggers[::-1]:
 			times,eff_lumin = (list(t) for t in zip(*sorted(zip(trigger_time_v_lumin_rec[trig][0],trigger_time_v_lumin_rec[trig][1]))))
