@@ -149,7 +149,7 @@ def graph_eff_lumin():
 	#plt.xticks(range(len(time_ordered_lumi_id))[::id_spacing], time_ordered_lumi_id[::id_spacing], rotation=30)
 	ax = plt.gca()
 
-	ax.set_xlim(left = .15,right = 60000)
+	ax.set_xlim(left = .15,right = max(master_index)*1.25)
 
 	plt.xlabel("Cumulative Luminosity Blocks")
 	ax.add_artist(logo_box())
@@ -209,7 +209,7 @@ def graph_eff_lumin_time_ordered():
 
 	ax = plt.gca()
 
-	ax.set_xlim(left = min(master_times)*.9,right = max(master_times)*1.25)
+	ax.set_xlim(left = min(master_times)*.9,right = max(master_times)*1.005)
 	length = len(master_times)-1
 	indices_for_xaxis = np.linspace(length/20,length,5)
 	indices_for_xaxis = [int(x) for x in indices_for_xaxis]
@@ -276,7 +276,6 @@ def graph_fired_over_eff_lumin():
 	ax = plt.gca()
 
 	ax.set_xlim(left = -6000)
-        ax.set_xticks(np.arange(0,max(index),30), minor=True)
         outside_text = ax.legend( [extra], ["CMS 2011 Open Data"], frameon=0, borderpad=0, bbox_to_anchor=(1.0, 1.005), loc='lower right',prop = {'weight':'normal',"size":16})
         ax.add_artist(outside_text)
 
@@ -329,7 +328,7 @@ def graph_fired_over_eff_lumin_time_ordered():
 	for i,index in enumerate(indices_for_xaxis):
 		
 		labels[i] = lumi_id_to_date[(str(int(lumis[index].split(":")[0])),str(int(lumis[index].split(":")[1])))]
-	ax.set_xlim(left = min(times)*.9,right = max(times)*1.25)
+	ax.set_xlim(left = min(times)*.999,right = max(times)*1.005)
 	ax.set_xticklabels(labels)
 	
         outside_text = ax.legend( [extra], ["CMS 2011 Open Data"], frameon=0, borderpad=0, bbox_to_anchor=(1.0, 1.005), loc='lower right',prop = {'weight':'normal',"size":16})
