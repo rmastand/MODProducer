@@ -127,13 +127,15 @@ for file in os.listdir(parsed_file_inpur_dir):
 	file_trig_dict = get_file_trig_dict_from_txt(parsed_file_inpur_dir+"/"+file)
 	for trig in file_trig_dict.keys():
 		if cut_trigger_name(trig) in master_trig_dict.keys():
-			master_trig_dict[cut_trigger_name(trig)]["good_lumis"] = master_trig_dict[cut_trigger_name(trig)]["good_lumis"]+file_trig_dict[trig]["good_lumis"]
-			master_trig_dict[cut_trigger_name(trig)]["good_prescales"] = master_trig_dict[cut_trigger_name(trig)]["good_prescales"]+file_trig_dict[trig]["good_prescales"]
-			for lumi_id in file_trig_dict[trig]["fired"].keys():
-				try:
-					master_trig_dict[cut_trigger_name(trig)]["fired"][lumi_id] += file_trig_dict[trig]["fired"][lumi_id]
-				except KeyError:
-					master_trig_dict[cut_trigger_name(trig)]["fired"][lumi_id] = file_trig_dict[trig]["fired"][lumi_id]
+			for i,good_lumi in enumerate(file_trig_dict[trig]["good_lumis"]):
+				if good_lumi not in master_trig_dict[cut_trigger_name(trig)]["good_lumis"]:
+					master_trig_dict[cut_trigger_name(trig)]["good_lumis"].append(good_lumi)
+					master_trig_dict[cut_trigger_name(trig)]["good_prescales"].append(file_trig_dict[trig]["good_prescales"][i])
+					for lumi_id in file_trig_dict[trig]["fired"].keys():
+						try:
+							master_trig_dict[cut_trigger_name(trig)]["fired"][lumi_id] += file_trig_dict[trig]["fired"][lumi_id]
+						except KeyError:
+							master_trig_dict[cut_trigger_name(trig)]["fired"][lumi_id] = file_trig_dict[trig]["fired"][lumi_id]
 
 
 def plot_eff_lumin():
