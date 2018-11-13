@@ -180,6 +180,7 @@ def graph_eff_lumin_time_ordered():
 
 	master_lumin = np.array([float(x) for x in lines[2].split(",")])
 	time_ordered_lumi_id = lines[3].split("),(")
+	print time_ordered_lumi_id
 
         #print np.logspace(min(master_index),max(master_index),num_samples)
         good_indices = np.linspace(min(master_index),max(master_index),num_samples).astype(int) -min(master_index)
