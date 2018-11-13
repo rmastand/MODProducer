@@ -287,7 +287,7 @@ def graph_fired_over_eff_lumin():
 	ax.add_artist(logo_box())
         plt.text(x,3500,"1223 of 1223 AOD Files",weight="normal")
 	
-	plt.savefig("fired_over_lumin.pdf")
+	#plt.savefig("fired_over_lumin.pdf")
 	plt.show()
 	
 def graph_fired_over_eff_lumin_time_ordered():
