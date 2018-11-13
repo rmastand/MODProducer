@@ -32,7 +32,7 @@ def is_lumi_valid(lumi_id,lumiId_to_lumin_dict):
 
 lumiId_to_lumin_dict = get_lumiId_to_lumin(skimmed_lumibyls)
 assure_path_exists(mod_file_dir.replace("MOD","trig")+"/")
-
+old_lumi = 0
 
 for file in os.listdir(mod_file_dir):
 	trig_dict = {}
@@ -93,8 +93,12 @@ for file in os.listdir(mod_file_dir):
 				else:
 					if data_type == "Data":
 						trig_dict[line.split()[1]]["present"] += 1
+					
+						print file
 						if is_lumi_valid((run,lumiBlock),lumiId_to_lumin_dict) != 0:
-							print run,lumiBlock, is_lumi_valid((run,lumiBlock),lumiId_to_lumin_dict)
+							if (run,lumiBlock) != old_lumi:
+								print run,lumiBlock, is_lumi_valid((run,lumiBlock),lumiId_to_lumin_dict)
+								old_lumi = (run,lumiBlock) 
 						trig_dict[line.split()[1]]["present_valid"] += is_lumi_valid((run,lumiBlock),lumiId_to_lumin_dict)
 						trig_dict[line.split()[1]]["present_valid_fired"] += is_lumi_valid((run,lumiBlock),lumiId_to_lumin_dict) and int(line.split()[4])
 						if (is_lumi_valid((run,lumiBlock),lumiId_to_lumin_dict) and int(line.split()[4]))==1:
