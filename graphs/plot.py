@@ -177,7 +177,7 @@ def graph_eff_lumin_time_ordered():
 	lines = eff_lumi_file.readlines()
 	# for the total luminosity file:
 	
-	master_times = np.array([int(x) for x in lines[0].split(",")])+1
+	master_times = np.array([float(x) for x in lines[0].split(",")])+1
 	master_index = np.array([int(x) for x in lines[1].split(",")])+1
 
 	master_lumin = np.array([float(x) for x in lines[2].split(",")])
@@ -198,7 +198,7 @@ def graph_eff_lumin_time_ordered():
 	for trig_index,trig in enumerate(rev_ordered_triggers):
 	        print trig
 
-		times = np.array([int(x) for x in lines[3*trig_index+4].split(",")])
+		times = np.array([float(x) for x in lines[3*trig_index+4].split(",")])
 		index = np.array([int(x) for x in lines[3*trig_index+5].split(",")])+1
 
 		eff_lumin = np.array([float(x) for x in lines[3*trig_index+6].split(",")])
