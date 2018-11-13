@@ -188,7 +188,9 @@ def graph_eff_lumin_time_ordered():
 
 	x = min(master_times)*.9985
 	print min(master_times)
-	plt.text(x,1200000000,"Total Luminosity",color = "k")
+	plt.text(x,1000000000,"Total Luminosity",color = "k")
+	
+	plt.text(x,1200000000,"1223 of 1223 AOD Files",weight="normal")
 
 	trig_name_positions = {"HLT_Jet30":(x,100),"HLT_Jet60":(x,4000),"HLT_Jet80":(x,10000),
 			      "HLT_Jet110":(x,30000),"HLT_Jet150":(x,1000000),"HLT_Jet190":(x,3000000),
@@ -231,7 +233,7 @@ def graph_eff_lumin_time_ordered():
 
         outside_text = ax.legend( [extra], ["CMS 2011 Open Data"], frameon=0, borderpad=0, fontsize=12, bbox_to_anchor=(1.0, 1.005), loc='lower right',prop = {'weight':'normal',"size":16})
         ax.add_artist(outside_text)
-        plt.text(x,50,"1223 of 1223 AOD Files",weight="normal")
+        
 
 
 	plt.savefig("eff_lumi_time_ordered.pdf")
