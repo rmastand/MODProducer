@@ -73,6 +73,7 @@ def get_file_trig_dict_from_txt(filepath):
 	with open(filepath) as trig_info_file:
 		for line in trig_info_file:
 			line = line.splitlines()[0]
+			print len(line.split(","))
 			if i % 4 == 0: # if we have a trigger name
 				trigger_name = line.split()[-1] # holds for the rest of that trigger's information
 				trig_dict[trigger_name] =  {
@@ -83,6 +84,7 @@ def get_file_trig_dict_from_txt(filepath):
 								     }
 				
 			elif i % 4 == 1: # if we have a list of good lumis:
+			
 				good_lumis = []
 				try:
 					for lumi in line.split(","):
