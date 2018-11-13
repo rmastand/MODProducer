@@ -93,6 +93,7 @@ for file in os.listdir(mod_file_dir):
 				else:
 					if data_type == "Data":
 						trig_dict[line.split()[1]]["present"] += 1
+						print run,lumiBlock, is_lumi_valid((run,lumiBlock),lumiId_to_lumin_dict)
 						trig_dict[line.split()[1]]["present_valid"] += is_lumi_valid((run,lumiBlock),lumiId_to_lumin_dict)
 						trig_dict[line.split()[1]]["present_valid_fired"] += is_lumi_valid((run,lumiBlock),lumiId_to_lumin_dict) and int(line.split()[4])
 						if (is_lumi_valid((run,lumiBlock),lumiId_to_lumin_dict) and int(line.split()[4]))==1:
