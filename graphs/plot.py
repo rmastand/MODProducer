@@ -199,7 +199,7 @@ def graph_eff_lumin_time_ordered():
 		times = np.array([float(x) for x in lines[3*trig_index+4].split(",")])
 		index = np.array([int(x) for x in lines[3*trig_index+5].split(",")])+1
 
-		eff_lumin = np.array([float(x) for x in lines[3*trig_index+6].split(",")])
+		eff_lumin = np.array([float(x) for x in lines[3*trig_index+6].split("),(")])
                 good_indices = np.linspace(min(index),max(index),num_samples).astype(int) - min(index)
                 print len(index), len(eff_lumin)
 
@@ -219,7 +219,7 @@ def graph_eff_lumin_time_ordered():
 	labels = [item.get_text() for item in ax.get_xticklabels()]
 	for i,index in enumerate(indices_for_xaxis):
 		print time_ordered_lumi_id[index]
-		print time_ordered_lumi_id[index].split(":")
+		print time_ordered_lumi_id[index].split("")
 		labels[i] = lumi_id_to_date[(str(int(time_ordered_lumi_id[index].split(":")[0])),str(int(time_ordered_lumi_id[index].split(":")[1])))]
 		
 	ax.set_xticklabels(labels)
