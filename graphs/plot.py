@@ -231,7 +231,7 @@ def graph_eff_lumin_time_ordered():
 
         outside_text = ax.legend( [extra], ["CMS 2011 Open Data"], frameon=0, borderpad=0, fontsize=12, bbox_to_anchor=(1.0, 1.005), loc='lower right',prop = {'weight':'normal',"size":16})
         ax.add_artist(outside_text)
-        plt.text(x,10,"1223 of 1223 AOD Files",weight="normal")
+        plt.text(x,50,"1223 of 1223 AOD Files",weight="normal")
 
 
 	plt.savefig("eff_lumi_time_ordered.pdf")
