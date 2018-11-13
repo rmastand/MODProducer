@@ -179,13 +179,16 @@ def plot_eff_lumin():
 			times,eff_lumin = (list(t) for t in zip(*sorted(zip(trigger_time_v_lumin_rec[trig][0],trigger_time_v_lumin_rec[trig][1]))))
 			overlap_times = []
 			overlap_index = []
+			eff_lumin_2 = []
 			for i,mytime in enumerate(times_sorted):
 				if mytime in times:
 					overlap_times.append(master_times_sorted[i]) 	
 					overlap_index.append(master_times_index[i]) 
+					eff_lumin_2.append(eff_lumin[times.index[mytime]])
+			print len(eff_lumin_2),len(eff_lumin)
 			writer.writerow(overlap_times)  
 			writer.writerow(overlap_index)  
-			writer.writerow(np.cumsum(eff_lumin)) 
+			writer.writerow(np.cumsum(eff_lumin_2)) 
 			print "going"
 
 	return master_times_index,master_times_sorted
@@ -214,16 +217,19 @@ def plot_fired_over_eff_lumin(master_times_index,master_times_sorted):
 			
 			overlap_index = []
 			overlap_time = []
+			fired_lumin_2 = []
 			for i,mytime in enumerate(master_times_sorted):
 				if mytime in new_times:
 					overlap_index.append(master_times_index[i]) 
 					overlap_time.append(master_times_sorted[i])
+					fired_lumin_2.append(fired_lumin[new_times.index[mytime]])
+
 					
 			
 			writer.writerow(ordered_ids) 
 			writer.writerow(overlap_time)  
 			writer.writerow(overlap_index)  
-			writer.writerow(fired_lumin) 
+			writer.writerow(fired_lumin_2) 
 			print "going2"
 	
 			
