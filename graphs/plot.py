@@ -216,7 +216,7 @@ def graph_eff_lumin_time_ordered():
 
 	#ax.set_xlim(left = .15,right = 30000)
 
-	plt.xlabel("Cumulative Luminosity Blocks")
+	plt.xlabel("Time")
 	ax.add_artist(logo_box())
 	plt.ylabel("Effective Luminosity [ub"+r"$^{-1}$]")
 	plt.yscale("log")
@@ -308,7 +308,7 @@ def graph_fired_over_eff_lumin_time_ordered():
                 zorder -= 1
 
 	#plt.xlabel("Run:Lumiblock")
-	plt.xlabel("Luminosity Block (time-ordered)")
+	plt.xlabel("Time")
 
 	#plt.xticks(range(len(lines[0].split(",")))[::id_spacing],lines[0].split(",")[::id_spacing], rotation=30)
 	plt.ylabel("Effective Cross Section [ub]")
@@ -316,11 +316,20 @@ def graph_fired_over_eff_lumin_time_ordered():
 	ax = plt.gca()
 
 	#ax.set_xlim(left = -3000)
-        ax.set_xticks(np.arange(0,max(index),1000), minor=True)
+        ax.set_xticks(np.linspace(0,max(times),10), minor=True)
+	
+	labels = [item.get_text() for item in ax.get_xticklabels()]
+	labels[1] = 'Testing'
+
+	ax.set_xticklabels(labels)
+	
+	
+	
+	
         outside_text = ax.legend( [extra], ["CMS 2011 Open Data"], frameon=0, borderpad=0, bbox_to_anchor=(1.0, 1.005), loc='lower right',prop = {'weight':'normal',"size":16})
         ax.add_artist(outside_text)
 
-	plt.xticks(np.arange(0,max(index),id_spacing))
+	plt.xticks(np.arange(0,max(times),id_spacing))
 	ax.add_artist(logo_box())
         plt.text(-2400,3500,"216 of 1223 AOD Files",weight="normal")
 	plt.savefig("fired_over_lumin_time_ordered.pdf")
