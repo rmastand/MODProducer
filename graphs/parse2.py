@@ -21,9 +21,9 @@ master_trig_dict = {"HLT_Jet190":{"good_lumis":[],"good_prescales":[],"fired":{}
 						"HLT_Jet30":{"good_lumis":[],"good_prescales":[],"fired":{}},"HLT_Jet300":{"good_lumis":[],"good_prescales":[],"fired":{}}}
 ordered_triggers = ["HLT_Jet30","HLT_Jet60","HLT_Jet80","HLT_Jet110","HLT_Jet150","HLT_Jet190","HLT_Jet240","HLT_Jet300","HLT_Jet370"]
 
-#master_trig_dict = {"HLT_Jet190":{"good_lumis":[],"good_prescales":[],"fired":{}},
-#						"HLT_Jet30":{"good_lumis":[],"good_prescales":[],"fired":{}}}
-#ordered_triggers = ["HLT_Jet30","HLT_Jet190"]
+master_trig_dict = {"HLT_Jet190":{"good_lumis":[],"good_prescales":[],"fired":{}},
+						"HLT_Jet30":{"good_lumis":[],"good_prescales":[],"fired":{}}}
+ordered_triggers = ["HLT_Jet30","HLT_Jet190"]
 
 
 def read_lumi_by_ls(lumibyls_file):
@@ -190,7 +190,7 @@ def plot_eff_lumin():
 				if mytime in times:
 					overlap_times.append(master_times_sorted[i]) 	
 					overlap_index.append(master_times_index[i]) 
-					eff_lumin_2.append(eff_lumin[times.index[mytime]])
+					eff_lumin_2.append(eff_lumin[times.index(mytime)])
 			print len(eff_lumin_2),len(eff_lumin)
 			writer.writerow(overlap_times)  
 			writer.writerow(overlap_index)  
@@ -228,7 +228,7 @@ def plot_fired_over_eff_lumin(master_times_index,master_times_sorted):
 				if mytime in new_times:
 					overlap_index.append(master_times_index[i]) 
 					overlap_time.append(master_times_sorted[i])
-					fired_lumin_2.append(fired_lumin[new_times.index[mytime]])
+					fired_lumin_2.append(fired_lumin[new_times.index(mytime)])
 
 					
 			
