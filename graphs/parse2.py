@@ -21,9 +21,7 @@ master_trig_dict = {"HLT_Jet190":{"good_lumis":[],"good_prescales":[],"fired":{}
 						"HLT_Jet30":{"good_lumis":[],"good_prescales":[],"fired":{}},"HLT_Jet300":{"good_lumis":[],"good_prescales":[],"fired":{}}}
 ordered_triggers = ["HLT_Jet30","HLT_Jet60","HLT_Jet80","HLT_Jet110","HLT_Jet150","HLT_Jet190","HLT_Jet240","HLT_Jet300","HLT_Jet370"]
 
-master_trig_dict = {"HLT_Jet190":{"good_lumis":[],"good_prescales":[],"fired":{}},
-						"HLT_Jet30":{"good_lumis":[],"good_prescales":[],"fired":{}}}
-ordered_triggers = ["HLT_Jet30","HLT_Jet190"]
+
 
 
 def read_lumi_by_ls(lumibyls_file):
