@@ -148,7 +148,7 @@ def plot_eff_lumin():
 		trigger_eff_lumin = []
 		for i,lumi_id in enumerate(master_trig_dict[trigger]["good_lumis"]):
 			if lumi_id not in master_lumin_ids:
-				master_lumin_ids.append(lumi_id)
+				master_lumin_ids.append(str(lumi_id[0])+":"+str(lumi_id[1]))
 			trigger_time.append(lumi_id_to_gps_times[lumi_id])
 			trigger_eff_lumin.append(lumi_id_to_lumin[lumi_id][1]/master_trig_dict[trigger]["good_prescales"][i])
 		trigger_time_v_lumin_rec[trigger] = trigger_time,trigger_eff_lumin
@@ -157,7 +157,7 @@ def plot_eff_lumin():
 	master_times = []
 	master_lumin_rec = []
 	for lumi_id in master_lumin_ids:
-		master_times.append(lumi_id_to_gps_times[lumi_id])
+		master_times.append(lumi_id_to_gps_times[(lumi_id.split(":")[0],lumi_id.split(":")[1])])
 		master_lumin_rec.append(lumi_id_to_lumin[lumi_id][1]) 
 		
 	print "start sorting"
