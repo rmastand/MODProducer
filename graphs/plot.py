@@ -335,7 +335,7 @@ def graph_fired_over_eff_lumin_time_ordered():
 	for i,index in enumerate(indices_for_xaxis):
 		
 		labels[i] = lumi_id_to_date[(str(int(lumis[index].split(":")[0])),str(int(lumis[index].split(":")[1])))]
-	ax.set_xlim(left = x*.998,right = max(times)*1.0001)
+	ax.set_xlim(left = 1300086884*.998,right = max(times)*1.0001)
 	ax.set_xticklabels(labels)
 	
         outside_text = ax.legend( [extra], ["CMS 2011 Open Data"], frameon=0, borderpad=0, bbox_to_anchor=(1.0, 1.005), loc='lower right',prop = {'weight':'normal',"size":16})
