@@ -142,9 +142,6 @@ def graph_eff_lumin():
                 good_indices = np.logspace(np.log10(min(index)),np.log10(max(index)),num_samples).astype(int) - min(index)
                 print len(index), len(eff_lumin)
 
-		print type(index[0])
-		print type(good_indices[0])
-		print type(eff_lumin[0])
         	plt.plot(np.take(index,good_indices),np.take(eff_lumin,good_indices),trigger_colors[trig],linewidth=4.0)
 
 		plt.text(trig_name_positions[trig][0],trig_name_positions[trig][1],trig[4:],color = trigger_colors[trig])
@@ -175,20 +172,21 @@ def graph_eff_lumin_time_ordered():
 	plt.figure(figsize= (10,10))
 	ax = plt.gca()
 
+
 	eff_lumi_file =  open(plot_eff_lumi_file)
 	lines = eff_lumi_file.readlines()
 	# for the total luminosity file:
+	
+	master_times = np.array([int(x) for x in lines[0].split(",")])+1
 	master_index = np.array([int(x) for x in lines[1].split(",")])+1
 
 	master_lumin = np.array([float(x) for x in lines[2].split(",")])
 	time_ordered_lumi_id = lines[3].split(",")
-	
-	time_ordered_gps = np.array([float(x) for x in lines[0].split(",")])
-	
-        good_indices = np.linspace(min(master_index),max(master_index),num_samples).astype(int) -min(master_index)
-	print good_indices
-	plt.plot(np.take(time_ordered_gps,good_indices),np.take(master_lumin,good_indices),"k",linewidth=9.0)
-	print np.take(time_ordered_gps,good_indices)
+
+        #print np.logspace(min(master_index),max(master_index),num_samples)
+        good_indices = np.linspace(min(master_index),(max(master_index),num_samples).astype(int) -min(master_index)
+
+	plt.plot(np.take(master_times,good_indices),np.take(master_lumin,good_indices),"k",linewidth=9.0)
 
 	x = .2
 	plt.text(x,11000,"Total Luminosity",color = "k")
@@ -199,15 +197,21 @@ def graph_eff_lumin_time_ordered():
 
 	for trig_index,trig in enumerate(rev_ordered_triggers):
 	        print trig
-		index = np.array([int(x) for x in lines[2*trig_index+3].split(",")])+1
-		eff_lumin = np.array([float(x) for x in lines[2*trig_index+4].split(",")])
+
+		times = np.array([int(x) for x in lines[3*trig_index+4].split(",")])
+		index = np.array([int(x) for x in lines[3*trig_index+5].split(",")])+1
+
+		eff_lumin = np.array([float(x) for x in lines[3*trig_index+6].split(",")])
                 good_indices = np.linspace(min(index),max(index),num_samples).astype(int) - min(index)
                 print len(index), len(eff_lumin)
-		print "done"
-        	plt.plot(np.take(time_ordered_gps,good_indices),np.take(eff_lumin,good_indices),trigger_colors[trig],linewidth=4.0)
-		print "done plotting"
+
+        	plt.plot(np.take(times,good_indices),np.take(eff_lumin,good_indices),trigger_colors[trig],linewidth=4.0)
+
 		plt.text(trig_name_positions[trig][0],trig_name_positions[trig][1],trig[4:],color = trigger_colors[trig])
 
+
+	#plt.xlabel("Run:LumiBlock")
+	#plt.xticks(range(len(time_ordered_lumi_id))[::id_spacing], time_ordered_lumi_id[::id_spacing], rotation=30)
 	ax = plt.gca()
 
 	#ax.set_xlim(left = .15,right = 30000)
@@ -216,6 +220,7 @@ def graph_eff_lumin_time_ordered():
 	ax.add_artist(logo_box())
 	plt.ylabel("Effective Luminosity [ub"+r"$^{-1}$]")
 	plt.yscale("log")
+
 
         outside_text = ax.legend( [extra], ["CMS 2011 Open Data"], frameon=0, borderpad=0, fontsize=12, bbox_to_anchor=(1.0, 1.005), loc='lower right',prop = {'weight':'normal',"size":16})
         ax.add_artist(outside_text)
@@ -280,5 +285,5 @@ def graph_fired_over_eff_lumin():
 
 
 graph_eff_lumin()
-#graph_eff_lumin_time_ordered()
+graph_eff_lumin_time_ordered()
 graph_fired_over_eff_lumin()
