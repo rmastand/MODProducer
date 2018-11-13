@@ -246,8 +246,8 @@ def graph_fired_over_eff_lumin():
 	for trig in rev_ordered_triggers:
         	print trig
                 print lines[color_index*3+1][:10]
-		index = [int(x) for x in lines[color_index*3+1].split(",")]
-		yaxis = [float(x) for x in lines[color_index*3+2].split(",")]
+		index = [int(x) for x in lines[color_index*4+2].split(",")]
+		yaxis = [float(x) for x in lines[color_index*4+3].split(",")]
         	print len(index),len(yaxis)
 
 
