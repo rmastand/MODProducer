@@ -31,7 +31,6 @@ for trig_dir in all_trig_dirs:
 					master_info = line.split()
 					#ignore the version numbers for the trigger name
 					trigger_name = master_info[1][:-3]
-					print trigger_name
 					present = int(master_info[2])
 					valid = int(master_info[3])
 					fired = int(master_info[4])
