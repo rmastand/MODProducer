@@ -53,7 +53,7 @@ w.write("total events:"+str(total_events[0])+", valid events:"+str(total_events[
 w.write(setw("Trigger Name",35)  + setw("Present",n)+ setw("Frac Present",n)+setw("Valid",n)+ setw("Frac Valid",n) + setw("Fired",n)+ setw("Frac Fired",n) +"\n") 
 
 for trigger_name in all_triggers_dict.keys():
-	w.write(setw(trigger_name,35)+setw(str(all_triggers_dict[trigger_name][0]),n)+setw("1",n)+setw(str(all_triggers_dict[trigger_name][1]),n)+'{:20x}'.format(float(all_triggers_dict[trigger_name][1])/all_triggers_dict[trigger_name][0]))+setw(str(all_triggers_dict[trigger_name][2]),n)+'{:20x}'.format(float(all_triggers_dict[trigger_name][2])/all_triggers_dict[trigger_name][0]))+ "\n") 
+	w.write(setw(trigger_name,35)+setw(str(all_triggers_dict[trigger_name][0]),n)+setw("1",n)+setw(str(all_triggers_dict[trigger_name][1]),n)+'{:20x}'.format(float(all_triggers_dict[trigger_name][1])/all_triggers_dict[trigger_name][0])+setw(str(all_triggers_dict[trigger_name][2]),n)+'{:20x}'.format(float(all_triggers_dict[trigger_name][2])/all_triggers_dict[trigger_name][0])+ "\n") 
 w.close()
 
 
