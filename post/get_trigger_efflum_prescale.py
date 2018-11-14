@@ -38,7 +38,6 @@ all_mod_dirs = ["/Volumes/Seagate Backup Plus Drive/MITOpenDataProject/eos/opend
 "/Volumes/Seagate Backup Plus Drive/MITOpenDataProject/eos/opendata/cms/Run2011A/Jet/MOD/12Oct2013-v1/20000_c/",
 "/Volumes/Seagate Backup Plus Drive/MITOpenDataProject/eos/opendata/cms/Run2011A/Jet/MOD/12Oct2013-v1/20001/"]
 
-all_mod_dirs = ["/Volumes/Seagate Backup Plus Drive/MITOpenDataProject/eos/opendata/cms/Run2011A/Jet/MOD/12Oct2013-v1/20002/"]
 
 i = 0
 for mod_file_dir in all_mod_dirs:
@@ -91,9 +90,9 @@ for mod_file_dir in all_mod_dirs:
 w = open(output_table,"w")
 
 if data_type == "Data":
-	w.write(format2_6("Name",40)+format2_6("Eff Lumin Rec",13)+format2_6("Avg Prescale",12)+"\n")
+	w.write(format2_6("Name",40)+format2_6("Eff Lumin Rec",30)+format2_6("Avg Prescale",30)+"\n")
 	for trig in trig_dict.keys():	
-		w.write(format2_6(trig,40)+format2_6(str(np.sum(trig_dict[trig]["good_lumin"]))[:10],13)+format2_6(str(np.mean(trig_dict[trig]["good_prescales"]))[:10],12)+"\n")	
+		w.write(format2_6(trig,40)+format2_6(str(np.sum(trig_dict[trig]["good_lumin"]))[:10],30)+format2_6(str(np.mean(trig_dict[trig]["good_prescales"]))[:10],30)+"\n")	
 w.write("EndFile")
 w.close()
 
