@@ -72,18 +72,18 @@ for mod_file_dir in all_mod_dirs:
 						if data_type == "Data":
 							if is_lumi_valid((run,lumiBlock),lumiId_to_lumin_dict):
 								if (run,lumiBlock) not in trig_dict[line.split()[1][:-3]]["good_lumis"]:
-								trig_dict[line.split()[1][:-3]]["good_lumis"].append((run,lumiBlock))
-								trig_dict[line.split()[1][:-3]]["good_prescales"].append(float(line.split()[2])*float(line.split()[3]))
-								trig_dict[line.split()[1][:-3]]["good_lumin"].append(lumiId_to_lumin_dict[(run,lumiBlock)][1]/(float(line.split()[2])*float(line.split()[3])))
+									trig_dict[line.split()[1][:-3]]["good_lumis"].append((run,lumiBlock))
+									trig_dict[line.split()[1][:-3]]["good_prescales"].append(float(line.split()[2])*float(line.split()[3]))
+									trig_dict[line.split()[1][:-3]]["good_lumin"].append(lumiId_to_lumin_dict[(run,lumiBlock)][1]/(float(line.split()[2])*float(line.split()[3])))
 
 
 					else:
 						if data_type == "Data":
 							if is_lumi_valid((run,lumiBlock),lumiId_to_lumin_dict):
 								if (run,lumiBlock) not in trig_dict[line.split()[1][:-3]]["good_lumis"]:
-								trig_dict[line.split()[1][:-3]]["good_lumis"].append((run,lumiBlock))
-								trig_dict[line.split()[1][:-3]]["good_prescales"].append(float(line.split()[2])*float(line.split()[3]))
-								trig_dict[line.split()[1][:-3]]["good_lumin"].append(lumiId_to_lumin_dict[(run,lumiBlock)][1]/(float(line.split()[2])*float(line.split()[3])))
+									trig_dict[line.split()[1][:-3]]["good_lumis"].append((run,lumiBlock))
+									trig_dict[line.split()[1][:-3]]["good_prescales"].append(float(line.split()[2])*float(line.split()[3]))
+									trig_dict[line.split()[1][:-3]]["good_lumin"].append(lumiId_to_lumin_dict[(run,lumiBlock)][1]/(float(line.split()[2])*float(line.split()[3])))
 
 
 						
