@@ -43,11 +43,15 @@ for trig_dir in all_trig_dirs:
 						all_triggers_dict[trigger_name][0] += present
 						all_triggers_dict[trigger_name][1] += valid
 						all_triggers_dict[trigger_name][2] += fired
-				
+
+def setw(word,n):
+	return " "*(n-len(word))+word
+			
+n = 20
 w = open("trigger_table.txt","w")
-w.write("total "+str(total_events[0])+" "+str(total_events[1])+"\n")
+w.write("total events:"+str(total_events[0])+", valid events:"+str(total_events[1])+"\n")
 for trigger_name in all_triggers_dict.keys():
-	w.write(trigger_name + " " + str(all_triggers_dict[trigger_name][0])+" "+str(all_triggers_dict[trigger_name][1])+ " " + str(all_triggers_dict[trigger_name][2])+ "\n") 
+	w.write(setw(trigger_name,n)  + setw(str(all_triggers_dict[trigger_name][0]),n)+setw(str(all_triggers_dict[trigger_name][1]),n) + setw(str(all_triggers_dict[trigger_name][2]),n)+ "\n") 
 w.close()
 
 
