@@ -16,7 +16,7 @@ all_trig_dirs = ["/Volumes/Seagate Backup Plus Drive/MITOpenDataProject/eos/open
 
 #structure: trigger: (present,valid,fired)
 #contains a bonus item: total events = (present, valid)
-all_triggers_dict = {total_events : (0,0)}
+all_triggers_dict = {"total_events" : (0,0)}
 
 for trig_dir in all_trig_dirs:
 	for file in os.listdir(trig_dir):
