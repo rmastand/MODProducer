@@ -23,8 +23,8 @@ for trig_dir in all_trig_dirs:
 		with open(trig_dir+"/"+file, "r") as trig_file:
 			for line in trig_file:
 				if ("File" in line.split()) and ("#" not in line.split()):
-					all_triggers_dict["total_events"][0] += line.split()[2]
-					all_triggers_dict["total_events"][1] += line.split()[3]
+					all_triggers_dict["total_events"][0] += int(line.split()[2])
+					all_triggers_dict["total_events"][1] += int(line.split()[3])
 				# looks for each trigger event
 				if ("Trig" in line.split()) and ("#" not in line.split()):
 					master_info = line.split()
