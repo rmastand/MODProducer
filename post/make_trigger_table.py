@@ -16,15 +16,14 @@ all_trig_dirs = ["/Volumes/Seagate Backup Plus Drive/MITOpenDataProject/eos/open
 
 #structure: trigger: (present,valid,fired)
 #contains a bonus item: total events = (present, valid)
-all_triggers_dict = {"total_events" : (0,0)}
+all_triggers_dict = {"total_events" : [0,0]}
 
 for trig_dir in all_trig_dirs:
 	for file in os.listdir(trig_dir):
 		with open(trig_dir+"/"+file, "r") as trig_file:
 			for line in trig_file:
 				if ("File" in line.split()) and ("#" not in line.split()):
-					print int(line.split()[2])
-					print all_triggers_dict["total_events"][0]
+					
 					all_triggers_dict["total_events"][0] += int(line.split()[2])
 					all_triggers_dict["total_events"][1] += int(line.split()[3])
 				# looks for each trigger event
@@ -39,7 +38,7 @@ for trig_dir in all_trig_dirs:
 
 					# if we haven't seen the trigger before:
 					if trigger_name not in all_triggers_dict.keys():
-						all_triggers_dict[trigger_name] = (present, valid, fired)
+						all_triggers_dict[trigger_name] = [present, valid, fired]
 					else:
 						all_triggers_dict[trigger_name][0] += present
 						all_triggers_dict[trigger_name][1] += valid
