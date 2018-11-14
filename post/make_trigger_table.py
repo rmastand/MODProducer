@@ -23,13 +23,14 @@ for trig_dir in all_trig_dirs:
 		with open(trig_dir+"/"+file, "r") as trig_file:
 			for line in trig_file:
 				if ("File" in line.split()) and ("#" not in line.split()):
-					all_triggers_dict[total_events][0] += line.split()[2]
-					all_triggers_dict[total_events][1] += line.split()[3]
+					all_triggers_dict["total_events"][0] += line.split()[2]
+					all_triggers_dict["total_events"][1] += line.split()[3]
 				# looks for each trigger event
 				if ("Trig" in line.split()) and ("#" not in line.split()):
 					master_info = line.split()
 					#ignore the version numbers for the trigger name
 					trigger_name = master_info[1][:-3]
+					print trigger_name
 					present = int(master_info[2])
 					valid = int(master_info[3])
 					fired = int(master_info[4])
