@@ -38,7 +38,7 @@ all_mod_dirs = ["/Volumes/Seagate Backup Plus Drive/MITOpenDataProject/eos/opend
 "/Volumes/Seagate Backup Plus Drive/MITOpenDataProject/eos/opendata/cms/Run2011A/Jet/MOD/12Oct2013-v1/20000_c/",
 "/Volumes/Seagate Backup Plus Drive/MITOpenDataProject/eos/opendata/cms/Run2011A/Jet/MOD/12Oct2013-v1/20001/"]
 
-i = 1
+i = 0
 for mod_file_dir in all_mod_dirs:
 	for file in os.listdir(mod_file_dir):
 		i += 1
