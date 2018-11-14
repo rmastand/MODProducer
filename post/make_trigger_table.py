@@ -16,7 +16,8 @@ all_trig_dirs = ["/Volumes/Seagate Backup Plus Drive/MITOpenDataProject/eos/open
 
 #structure: trigger: (present,valid,fired)
 #contains a bonus item: total events = (present, valid)
-all_triggers_dict = {"total_events" : [0,0]}
+total_events  = [0,0]
+all_triggers_dict = {}
 
 for trig_dir in all_trig_dirs:
 	for file in os.listdir(trig_dir):
@@ -24,8 +25,8 @@ for trig_dir in all_trig_dirs:
 			for line in trig_file:
 				if ("File" in line.split()) and ("#" not in line.split()):
 					
-					all_triggers_dict["total_events"][0] += int(line.split()[2])
-					all_triggers_dict["total_events"][1] += int(line.split()[3])
+					all_triggers_dict[total_events][0] += int(line.split()[2])
+					all_triggers_dict[total_events][1] += int(line.split()[3])
 				# looks for each trigger event
 				if ("Trig" in line.split()) and ("#" not in line.split()):
 					master_info = line.split()
@@ -44,7 +45,7 @@ for trig_dir in all_trig_dirs:
 						all_triggers_dict[trigger_name][2] += fired
 				
 w = open("trigger_table.txt","w")
-w.write("total "+str(all_triggers_dict["total_events"][0])+" "+str(all_triggers_dict["total_events"][1])+"\n")
+w.write("total "+str(all_triggers_dict[total_events][0])+" "+str(all_triggers_dict[total_events][1])+"\n")
 for trigger_name in all_triggers_dict.keys():
 	w.write(trigger_name + " " + str(all_triggers_dict[trigger_name][0])+" "+str(all_triggers_dict[trigger_name][1])+ " " + str(all_triggers_dict[trigger_name][2])+ "\n") 
 w.close()
