@@ -44,7 +44,7 @@ for trig_dir in all_trig_dirs:
 						all_triggers_dict[trigger_name][2] += fired
 				
 w = open("trigger_table.txt","w")
-w.write("total "+str(all_triggers_dict[total_events][0])+" "+str(all_triggers_dict[total_events][1])+"\n")
+w.write("total "+str(all_triggers_dict["total_events"][0])+" "+str(all_triggers_dict["total_events"][1])+"\n")
 for trigger_name in all_triggers_dict.keys():
 	w.write(trigger_name + " " + str(all_triggers_dict[trigger_name][0])+" "+str(all_triggers_dict[trigger_name][1])+ " " + str(all_triggers_dict[trigger_name][2])+ "\n") 
 w.close()
