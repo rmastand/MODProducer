@@ -51,7 +51,7 @@ n = 20
 w = open("trigger_table.txt","w")
 w.write("total events:"+str(total_events[0])+", valid events:"+str(total_events[1])+"\n")
 for trigger_name in all_triggers_dict.keys():
-	w.write(setw(trigger_name,n)  + setw(str(all_triggers_dict[trigger_name][0]),n)+setw(str(all_triggers_dict[trigger_name][1]),n) + setw(str(all_triggers_dict[trigger_name][2]),n)+ "\n") 
+	w.write(setw(trigger_name,35)  + setw(str(all_triggers_dict[trigger_name][0]),n)+setw(str(all_triggers_dict[trigger_name][1]),n) + setw(str(all_triggers_dict[trigger_name][2]),n)+ "\n") 
 w.close()
 
 
