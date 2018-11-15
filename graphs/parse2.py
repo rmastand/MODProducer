@@ -36,6 +36,8 @@ def read_lumi_by_ls(lumibyls_file):
 	char = ""
 	lumi_id_to_gps_times = {}
 	lumi_id_to_lumin = {}
+	time_series_all = []
+	lumin_all = []
 	i = 0
 	while char !="#":
 		run = split_lines[i][0].split(":")[0]
@@ -47,15 +49,17 @@ def read_lumi_by_ls(lumibyls_file):
 		dt = datetime.datetime(mdy[2], mdy[0], mdy[1], hms[0], hms[1],hms[2])
 		lumi_id_to_gps_times[(run,lumi)] = time.mktime(dt.timetuple())
 		lumi_id_to_lumin[(run,lumi)] = (float(split_lines[i][5]),float(split_lines[i][6]))
+		time_series_all.append(time.mktime(dt.timetuple()))
+		lumin_all.append(float(split_lines[i][6]))
 		i += 1
 		try:
 			char = split_lines[i][0][0]
 		except: pass
-	return lumi_id_to_gps_times,lumi_id_to_lumin
+	return lumi_id_to_gps_times,lumi_id_to_lumin,time_series_all,lumin_all
 
 
 
-lumi_id_to_gps_times,lumi_id_to_lumin = read_lumi_by_ls(lumibyls_file)
+lumi_id_to_gps_times,lumi_id_to_lumin,time_series_all,lumin_all = read_lumi_by_ls(lumibyls_file)
 
 def get_file_trig_dict_from_txt(filepath):
 	"""
@@ -169,10 +173,15 @@ def plot_eff_lumin():
 	
 	with open("graphs/plot_eff_lumin.txt", "w") as output:
 		writer = csv.writer(output, lineterminator='\n')
+		writer.writerow(time_series_all)  
+		writer.writerow(np.cumsum(lumin_all))  
         	writer.writerow(master_times_sorted)  
 		master_times_index = range(len(master_times_sorted))
 		writer.writerow(master_times_index)   
-		writer.writerow(np.cumsum(master_lumin_rec))   
+		writer.writerow(np.cumsum(master_lumin_rec))  
+		
+		print "total valid", len(lumin_all)
+		print "single jet valid", len(master_lumin_rec)
 	
 
 		# ordering the luminosity ids to be used as labels
