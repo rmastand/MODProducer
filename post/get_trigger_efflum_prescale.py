@@ -172,9 +172,11 @@ def write_eff_lumin_and_prescales():
 		# ordering the luminosity ids to be used as labels
 		times_sorted,ordered_ids = (list(t) for t in zip(*sorted(zip(master_times,master_lumin_ids))))
 		
+		output.write(setw("Trigger Name",40)+setw("Eff Lumin Rec",30)+setw("Avg Prescale",30)+"\n")
+		
 		# for each trigger: sorts all the represented lumiblocks by time, gets the effective luminosity BY LUMI BLOCK INDEX
 		for trig in ordered_triggers[::-1]:
-			output.write(setw("Trigger Name",40)+setw("Eff Lumin Rec",30)+setw("Avg Prescale",30)+"\n")
+			
 			
 		
 			
