@@ -18,14 +18,14 @@ def cut_trigger_name(name):
 	return name.rsplit("_", 1)[0]
 
 # good_lumis,good_prescales
-master_trig_dict = {"HLT_Jet190":{"good_lumis":[],"good_prescales":[],"fired":{}},"HLT_Jet370":{"good_lumis":[],"good_prescales":[],"fired":{}},
-					"HLT_Jet150":{"good_lumis":[],"good_prescales":[],"fired":{}},"HLT_Jet240":{"good_lumis":[],"good_prescales":[],"fired":{}},
-					"HLT_Jet110":{"good_lumis":[],"good_prescales":[],"fired":{}},"HLT_Jet80":{"good_lumis":[],"good_prescales":[],"fired":{}},
-						"HLT_Jet60":{"good_lumis":[],"good_prescales":[],"fired":{}},
-						"HLT_Jet30":{"good_lumis":[],"good_prescales":[],"fired":{}},"HLT_Jet300":{"good_lumis":[],"good_prescales":[],"fired":{}}}
-ordered_triggers = ["HLT_Jet30","HLT_Jet60","HLT_Jet80","HLT_Jet110","HLT_Jet150","HLT_Jet190","HLT_Jet240","HLT_Jet300","HLT_Jet370"]
+#master_trig_dict = {"HLT_Jet190":{"good_lumis":[],"good_prescales":[],"fired":{}},"HLT_Jet370":{"good_lumis":[],"good_prescales":[],"fired":{}},
+#					"HLT_Jet150":{"good_lumis":[],"good_prescales":[],"fired":{}},"HLT_Jet240":{"good_lumis":[],"good_prescales":[],"fired":{}},
+#					"HLT_Jet110":{"good_lumis":[],"good_prescales":[],"fired":{}},"HLT_Jet80":{"good_lumis":[],"good_prescales":[],"fired":{}},
+#						"HLT_Jet60":{"good_lumis":[],"good_prescales":[],"fired":{}},
+#						"HLT_Jet30":{"good_lumis":[],"good_prescales":[],"fired":{}},"HLT_Jet300":{"good_lumis":[],"good_prescales":[],"fired":{}}}
+#ordered_triggers = ["HLT_Jet30","HLT_Jet60","HLT_Jet80","HLT_Jet110","HLT_Jet150","HLT_Jet190","HLT_Jet240","HLT_Jet300","HLT_Jet370"]
 
-
+master_trig_dict ={}
 
 
 def read_lumi_by_ls(lumibyls_file):
@@ -129,7 +129,6 @@ for file in os.listdir(parsed_file_inpur_dir):
 	q += 1
 	file_trig_dict = get_file_trig_dict_from_txt(parsed_file_inpur_dir+"/"+file)
 	for trig in file_trig_dict.keys():
-		if cut_trigger_name(trig) in master_trig_dict.keys():
 			for i,good_lumi in enumerate(file_trig_dict[trig]["good_lumis"]):
 				if good_lumi not in master_trig_dict[cut_trigger_name(trig)]["good_lumis"]:
 					master_trig_dict[cut_trigger_name(trig)]["good_lumis"].append(good_lumi)
@@ -175,7 +174,7 @@ def write_eff_lumin_and_prescales():
 		output.write(setw("Trigger Name",40)+setw("Eff Lumin Rec",30)+setw("Avg Prescale",30)+"\n")
 		
 		# for each trigger: sorts all the represented lumiblocks by time, gets the effective luminosity BY LUMI BLOCK INDEX
-		for trig in ordered_triggers[::-1]:
+		for trig in master_trig_dict.keys():
 			
 			
 		
