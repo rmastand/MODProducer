@@ -134,7 +134,6 @@ for file in os.listdir(parsed_file_inpur_dir):
 	print q, num_files
 	q += 1
 	file_trig_dict = get_file_trig_dict_from_txt(parsed_file_inpur_dir+"/"+file)
-	print master_trig_dict.keys()
 	for trig in file_trig_dict.keys():
 			for i,good_lumi in enumerate(file_trig_dict[trig]["good_lumis"]):
 				if good_lumi not in master_trig_dict[cut_trigger_name(trig)]["good_lumis"]:
