@@ -77,7 +77,7 @@ def get_file_trig_dict_from_txt(filepath):
 			line = line.splitlines()[0]
 			if i % 4 == 0: # if we have a trigger name
 				trigger_name = line.split()[-1] # holds for the rest of that trigger's information
-				master_trig_dict[trigger_name] = {
+				master_trig_dict[trigger_name[:-3]] = {
 								      "good_lumis":[],
 								      # corresponds to the prescale for a given GOOD LUMI BLOCK
 								      "good_prescales":[],
