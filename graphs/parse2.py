@@ -210,7 +210,7 @@ def plot_eff_lumin():
 		writer.writerow(np.cumsum(master_lumin_rec))  
 		
 		print "total valid", len(lumin_all)
-		print "single jet valid", len(runA_lumin_rec_sorted)
+		print "runA jet valid", len(runA_lumin_rec_sorted)
 	
 
 		# ordering the luminosity ids to be used as labels
