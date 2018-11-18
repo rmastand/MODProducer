@@ -7,6 +7,6 @@ read_alumi_lines = open(run_alumi_file,"r").readlines()
 for line in read_alumi_lines[4:]:
 
   char = line[0]
-  if char != "#":
+  if char != "+":
     run = line.split()[1].split(":")[0]
     print run
