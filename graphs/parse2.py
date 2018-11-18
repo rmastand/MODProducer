@@ -199,7 +199,7 @@ def plot_eff_lumin():
 		#first write out all the luminosity in run A
 		writer = csv.writer(output, lineterminator='\n')
 		writer.writerow(runA_times_sorted)  
-		np.cumsum(runA_lumin_rec_sorted)[-1]
+		print np.cumsum(runA_lumin_rec_sorted)[-1]
 		
 		
 		writer.writerow(np.cumsum(runA_lumin_rec_sorted)) 
