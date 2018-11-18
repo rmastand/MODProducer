@@ -7,6 +7,18 @@ import csv
 
 parsed_file_inpur_dir = sys.argv[1]
 lumibyls_file = sys.argv[2]
+run_alumi_file = sys.argv[3]
+
+runA_runs = []
+read_alumi_lines = open(run_alumi_file,"r").readlines()
+for line in read_alumi_lines[4:]:
+  char = line[0]
+  print char
+  if char != "+":
+    runA_runs.append(line.split()[1].split(":")[0])
+  else:
+    break
+print "Done reading in ALumi"
 
 
 def cut_trigger_name(name):
@@ -160,28 +172,42 @@ def plot_eff_lumin():
 	# now to get the time / recorded integrated luminosity data
 	master_times = []
 	master_lumin_rec = []
+
+	runA_times= []
+	runA_lumin_rec = []
+	
 	for lumi_id in master_lumin_ids:
 		master_times.append(lumi_id_to_gps_times[lumi_id])
 		master_lumin_rec.append(lumi_id_to_lumin[lumi_id][1]) 
+		if lumi_id[0] in runA_runs:
+			runA_times.append(lumi_id_to_gps_times[lumi_id])
+			runA_lumin_rec.append(lumi_id_to_lumin[lumi_id][1]) 
+			
 		
 	print "start sorting"
 	# sorts all the represented lumiblocks by time, gets the integrated luminosity BY LUMI BLOCK INDEX
 	master_times_sorted,master_lumin_rec = (list(t) for t in zip(*sorted(zip(master_times,master_lumin_rec))))
+	runA_times_sorted,runA_lumin_rec_sorted = (list(t) for t in zip(*sorted(zip(runA_times,runA_lumin_rec))))
+
+	
 	print "done sorting"
 	
 	
 	
 	with open("graphs/plot_eff_lumin.txt", "w") as output:
+		
+		#first write out all the luminosity in run A
 		writer = csv.writer(output, lineterminator='\n')
-		writer.writerow(time_series_all)  
-		writer.writerow(np.cumsum(lumin_all))  
+		writer.writerow(runA_times_sorted)  
+		writer.writerow(np.cumsum(runA_lumin_rec_sorted)) 
+		
         	writer.writerow(master_times_sorted)  
 		master_times_index = range(len(master_times_sorted))
 		writer.writerow(master_times_index)   
 		writer.writerow(np.cumsum(master_lumin_rec))  
 		
 		print "total valid", len(lumin_all)
-		print "single jet valid", len(master_lumin_rec)
+		print "single jet valid", len(runA_lumin_rec_sorted)
 	
 
 		# ordering the luminosity ids to be used as labels
