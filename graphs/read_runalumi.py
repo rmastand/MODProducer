@@ -10,3 +10,6 @@ for line in read_alumi_lines[4:]:
   print char
   if char != "+":
     run = line.split()[1].split(":")[0]
+  else:
+    break
+print "done"
