@@ -113,15 +113,17 @@ def graph_eff_lumin():
 	eff_lumi_file =  open(plot_eff_lumi_file)
 	lines = eff_lumi_file.readlines()
 	# for the total luminosity file:
-	master_index = np.array([int(x) for x in lines[1].split(",")])+1
-
-	master_lumin = np.array([float(x) for x in lines[2].split(",")])
-	time_ordered_lumi_id = lines[3].split(",")
+	
+	runA_lumin = np.array([float(x) for x in lines[1].split(",")])
+	runA_index = np.array(range(len(runA_lumin)))+1
+	master_index = np.array([int(x) for x in lines[3].split(",")])+1
+	master_lumin = np.array([float(x) for x in lines[4].split(",")])
+	time_ordered_lumi_id = lines[5].split(",")
 
         #print np.logspace(min(master_index),max(master_index),num_samples)
-        good_indices = np.logspace(np.log10(min(master_index)),np.log10(max(master_index)),num_samples).astype(int) -min(master_index)
+        good_indices = np.logspace(np.log10(min(runA_index)),np.log10(max(runA_index)),num_samples).astype(int) -min(runA_index)
 
-	plt.plot(np.take(master_index,good_indices),np.take(master_lumin,good_indices),"k",linewidth=9.0)
+	plt.plot(np.take(runA_index,good_indices),np.take(runA_lumin,good_indices),"k",linewidth=9.0)
 
 
 	x = .2
@@ -134,9 +136,9 @@ def graph_eff_lumin():
 	for trig_index,trig in enumerate(rev_ordered_triggers):
 	        print trig
 
-		index = np.array([int(x) for x in lines[3*trig_index+5].split(",")])+1
+		index = np.array([int(x) for x in lines[3*trig_index+7].split(",")])+1
 
-		eff_lumin = np.array([float(x) for x in lines[3*trig_index+6].split(",")])
+		eff_lumin = np.array([float(x) for x in lines[3*trig_index+8].split(",")])
                 good_indices = np.logspace(np.log10(min(index)),np.log10(max(index)),num_samples).astype(int) - min(index)
                 print len(index), len(eff_lumin)
 
@@ -175,16 +177,21 @@ def graph_eff_lumin_time_ordered():
 	lines = eff_lumi_file.readlines()
 	# for the total luminosity file:
 	
-	master_times = np.array([float(x) for x in lines[0].split(",")])+1
-	master_index = np.array([int(x) for x in lines[1].split(",")])+1
+	runA_times = np.array([float(x) for x in lines[0].split(",")])
+	runA_lumin = np.array([float(x) for x in lines[1].split(",")])
+	runA_index = np.array(range(len(runA_lumin)))+1
 
-	master_lumin = np.array([float(x) for x in lines[2].split(",")])
+	
+	master_times = np.array([float(x) for x in lines[2].split(",")])
+	master_index = np.array([int(x) for x in lines[3].split(",")])+1
+
+	master_lumin = np.array([float(x) for x in lines[4].split(",")])
 	time_ordered_lumi_id = lines[3].split(",")
 
         #print np.logspace(min(master_index),max(master_index),num_samples)
-        good_indices = np.linspace(min(master_index),max(master_index),num_samples).astype(int) -min(master_index)
+        good_indices = np.linspace(min(runA_index),max(runA_index),num_samples).astype(int) -min(runA_index)
 
-	plt.plot(np.take(master_times,good_indices),np.take(master_lumin,good_indices),"k",linewidth=9.0)
+	plt.plot(np.take(runA_times,good_indices),np.take(runA_lumin,good_indices),"k",linewidth=9.0)
 
 	x = min(master_times)*.9985
 	print min(master_times)
@@ -199,10 +206,10 @@ def graph_eff_lumin_time_ordered():
 	for trig_index,trig in enumerate(rev_ordered_triggers):
 	        print trig
 
-		times = np.array([float(x) for x in lines[3*trig_index+4].split(",")])
-		index = np.array([int(x) for x in lines[3*trig_index+5].split(",")])+1
+		times = np.array([float(x) for x in lines[3*trig_index+6].split(",")])
+		index = np.array([int(x) for x in lines[3*trig_index+7].split(",")])+1
 
-		eff_lumin = np.array([float(x) for x in lines[3*trig_index+6].split(",")])
+		eff_lumin = np.array([float(x) for x in lines[3*trig_index+8].split(",")])
                 good_indices = np.linspace(min(index),max(index),num_samples).astype(int) - min(index)
                 print len(index), len(eff_lumin)
 
