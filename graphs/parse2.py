@@ -178,6 +178,7 @@ def plot_eff_lumin():
 	for lumi_id in master_lumin_ids:
 		master_times.append(lumi_id_to_gps_times[lumi_id])
 		master_lumin_rec.append(lumi_id_to_lumin[lumi_id][1]) 
+	for lumi_id in lumi_id_to_lumin.keys():
 		if lumi_id[0] in runA_runs:
 			runA_times.append(lumi_id_to_gps_times[lumi_id])
 			runA_lumin_rec.append(lumi_id_to_lumin[lumi_id][1]) 
@@ -198,7 +199,9 @@ def plot_eff_lumin():
 		#first write out all the luminosity in run A
 		writer = csv.writer(output, lineterminator='\n')
 		writer.writerow(runA_times_sorted)  
-		print runA_lumin_rec_sorted[-1]
+		np.cumsum(runA_lumin_rec_sorted)[-1]
+		
+		
 		writer.writerow(np.cumsum(runA_lumin_rec_sorted)) 
 		
         	writer.writerow(master_times_sorted)  
