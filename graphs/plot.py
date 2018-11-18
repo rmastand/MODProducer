@@ -359,7 +359,7 @@ def graph_fired_over_eff_lumin_time_ordered():
 
 
 
-#graph_eff_lumin()
+graph_eff_lumin()
 graph_eff_lumin_time_ordered()
-#graph_fired_over_eff_lumin()
-#graph_fired_over_eff_lumin_time_ordered()
+graph_fired_over_eff_lumin()
+graph_fired_over_eff_lumin_time_ordered()
