@@ -13,7 +13,6 @@ runA_runs = []
 read_alumi_lines = open(run_alumi_file,"r").readlines()
 for line in read_alumi_lines[4:]:
   char = line[0]
-  print char
   if char != "+":
     runA_runs.append(line.split()[1].split(":")[0])
   else:
