@@ -192,7 +192,7 @@ def write_eff_lumin_and_prescales():
 		for trig in master_trig_dict.keys():
 			
 			
-			times,eff_lumin = (list(t) for t in zip(*sorted(zip(trigger_time_v_lumin_rec[trig][0],trigger_time_v_lumin_rec[trig][1]))))
+			times,eff_lumin = trigger_time_v_lumin_rec[trig][0],trigger_time_v_lumin_rec[trig][1]
 
 			eff_lumin_2 = []
 			for i,mytime in enumerate(master_times):
