@@ -228,6 +228,7 @@ def graph_eff_lumin_time_ordered():
 	
 	labels = [item.get_text() for item in ax.get_xticklabels()]
 	for i,index in enumerate(indices_for_xaxis):
+		print time_ordered_lumi_id[index]
 		labels[i] = lumi_id_to_date[(str(int(time_ordered_lumi_id[index].split(":")[0])),str(int(time_ordered_lumi_id[index].split(":")[1])))]
 		
 	ax.set_xticklabels(labels)
