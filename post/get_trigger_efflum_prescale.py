@@ -179,7 +179,6 @@ def write_eff_lumin_and_prescales():
 			runA_lumin_rec.append(lumi_id_to_lumin[lumi_id][1]) 
 			
 		
-by time, gets the integrated luminosity BY LUMI BLOCK INDEX
 	
 	with open(output_file, "w") as output:
 		
