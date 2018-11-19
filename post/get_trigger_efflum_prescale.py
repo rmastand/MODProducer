@@ -174,15 +174,28 @@ def write_eff_lumin_and_prescales():
 		trigger_time_v_lumin_rec[trigger] = trigger_time,trigger_eff_lumin
 
 	# now to get the time / recorded integrated luminosity data
+	master_times = []
+	master_lumin_rec = []
 	
 	runA_times= []
 	runA_lumin_rec = []
+	
+	for lumi_id in master_lumin_ids:
+		master_times.append(lumi_id_to_gps_times[lumi_id])
+		master_lumin_rec.append(lumi_id_to_lumin[lumi_id][1]) 
 	
 	for lumi_id in lumi_id_to_lumin.keys():
 		if lumi_id[0] in runA_runs:
 			runA_times.append(lumi_id_to_gps_times[lumi_id])
 			runA_lumin_rec.append(lumi_id_to_lumin[lumi_id][1]) 
-		
+	
+	
+	print "start sorting"
+	# sorts all the represented lumiblocks by time, gets the integrated luminosity BY LUMI BLOCK INDEX
+	master_times_sorted,master_lumin_rec = (list(t) for t in zip(*sorted(zip(master_times,master_lumin_rec))))
+	print "done sorting"
+
+	
 
 	
 	
@@ -201,7 +214,7 @@ def write_eff_lumin_and_prescales():
 			times,eff_lumin = (list(t) for t in zip(*sorted(zip(trigger_time_v_lumin_rec[trig][0],trigger_time_v_lumin_rec[trig][1]))))
 
 			eff_lumin_2 = []
-			for i,mytime in enumerate(times_sorted):
+			for i,mytime in enumerate(master_times_sorted):
 				if mytime in times:
 
 					eff_lumin_2.append(eff_lumin[times.index(mytime)])
