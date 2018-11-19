@@ -183,10 +183,7 @@ def write_eff_lumin_and_prescales():
 			runA_times.append(lumi_id_to_gps_times[lumi_id])
 			runA_lumin_rec.append(lumi_id_to_lumin[lumi_id][1]) 
 		
-	print "start sorting"
-	# sorts all the represented lumiblocks by time, gets the integrated luminosity BY LUMI BLOCK INDEX
-	master_times_sorted,master_lumin_rec = (list(t) for t in zip(*sorted(zip(master_times,master_lumin_rec))))
-	print "done sorting"
+
 	
 	
 	with open(output_file, "w") as output:
