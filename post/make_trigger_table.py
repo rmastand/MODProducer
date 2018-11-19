@@ -61,7 +61,7 @@ for line in read_lines[2:]:
 def setw(word,n):
 	return " "*(n-len(word))+word
 			
-n = 15
+n = 20
 w = open("trigger_table.txt","w")
 
 w.write("total events:"+str(total_events[0])+", valid events:"+str(total_events[1])+",frac valid events:"+str(float(total_events[1])/total_events[0])[:10]+"\n")
