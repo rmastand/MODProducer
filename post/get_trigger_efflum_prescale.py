@@ -141,6 +141,10 @@ for file in os.listdir(parsed_file_inpur_dir):
 					master_trig_dict[cut_trigger_name(trig)]["good_prescales"].append(file_trig_dict[trig]["good_prescales"][i])
 
 
+					
+					
+					
+					
 def write_eff_lumin_and_prescales():
 	# finds time vs effective luminosity curves for all triggers
 	trigger_time_v_lumin_rec = {}
@@ -158,11 +162,14 @@ def write_eff_lumin_and_prescales():
 		trigger_time_v_lumin_rec[trigger] = trigger_time,trigger_eff_lumin
 
 	# now to get the time / recorded integrated luminosity data
-	master_times = []
-	master_lumin_rec = []
-	for lumi_id in master_lumin_ids:
-		master_times.append(lumi_id_to_gps_times[lumi_id])
-		master_lumin_rec.append(lumi_id_to_lumin[lumi_id][1]) 
+	
+	runA_times= []
+	runA_lumin_rec = []
+	
+	for lumi_id in lumi_id_to_lumin.keys():
+		if lumi_id[0] in runA_runs:
+			runA_times.append(lumi_id_to_gps_times[lumi_id])
+			runA_lumin_rec.append(lumi_id_to_lumin[lumi_id][1]) 
 		
 	print "start sorting"
 	# sorts all the represented lumiblocks by time, gets the integrated luminosity BY LUMI BLOCK INDEX
@@ -172,18 +179,15 @@ def write_eff_lumin_and_prescales():
 	
 	with open(output_file, "w") as output:
 		
-		output.write(setw("Total luminosity",40)+setw(str(np.sum(master_lumin_rec))[:30],40)+"\n")
+		output.write(setw("Total luminosity",40)+setw(str(np.sum(runA_lumin_rec))[:30],40)+"\n")
 		
 		# ordering the luminosity ids to be used as labels
-		times_sorted,ordered_ids = (list(t) for t in zip(*sorted(zip(master_times,master_lumin_ids))))
 		
 		output.write(setw("Trigger Name",40)+setw("Eff Lumin Rec",30)+setw("Avg Prescale",30)+"\n")
 		
 		# for each trigger: sorts all the represented lumiblocks by time, gets the effective luminosity BY LUMI BLOCK INDEX
 		for trig in master_trig_dict.keys():
 			
-			
-		
 			
 			times,eff_lumin = (list(t) for t in zip(*sorted(zip(trigger_time_v_lumin_rec[trig][0],trigger_time_v_lumin_rec[trig][1]))))
 
