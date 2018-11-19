@@ -30,14 +30,7 @@ def cut_trigger_name(name):
 	return name.rsplit("_", 1)[0]
 
 # good_lumis,good_prescales
-#master_trig_dict = {"HLT_Jet190":{"good_lumis":[],"good_prescales":[],"fired":{}},"HLT_Jet370":{"good_lumis":[],"good_prescales":[],"fired":{}},
-#					"HLT_Jet150":{"good_lumis":[],"good_prescales":[],"fired":{}},"HLT_Jet240":{"good_lumis":[],"good_prescales":[],"fired":{}},
-#					"HLT_Jet110":{"good_lumis":[],"good_prescales":[],"fired":{}},"HLT_Jet80":{"good_lumis":[],"good_prescales":[],"fired":{}},
-#						"HLT_Jet60":{"good_lumis":[],"good_prescales":[],"fired":{}},
-#						"HLT_Jet30":{"good_lumis":[],"good_prescales":[],"fired":{}},"HLT_Jet300":{"good_lumis":[],"good_prescales":[],"fired":{}}}
-#ordered_triggers = ["HLT_Jet30","HLT_Jet60","HLT_Jet80","HLT_Jet110","HLT_Jet150","HLT_Jet190","HLT_Jet240","HLT_Jet300","HLT_Jet370"]
-
-master_trig_dict ={}
+master_trig_dict = {}
 
 
 def read_lumi_by_ls(lumibyls_file):
@@ -52,6 +45,8 @@ def read_lumi_by_ls(lumibyls_file):
 	char = ""
 	lumi_id_to_gps_times = {}
 	lumi_id_to_lumin = {}
+	time_series_all = []
+	lumin_all = []
 	i = 0
 	while char !="#":
 		run = split_lines[i][0].split(":")[0]
@@ -63,15 +58,17 @@ def read_lumi_by_ls(lumibyls_file):
 		dt = datetime.datetime(mdy[2], mdy[0], mdy[1], hms[0], hms[1],hms[2])
 		lumi_id_to_gps_times[(run,lumi)] = time.mktime(dt.timetuple())
 		lumi_id_to_lumin[(run,lumi)] = (float(split_lines[i][5]),float(split_lines[i][6]))
+		time_series_all.append(time.mktime(dt.timetuple()))
+		lumin_all.append(float(split_lines[i][6]))
 		i += 1
 		try:
 			char = split_lines[i][0][0]
 		except: pass
-	return lumi_id_to_gps_times,lumi_id_to_lumin
+	return lumi_id_to_gps_times,lumi_id_to_lumin,time_series_all,lumin_all
 
 
 
-lumi_id_to_gps_times,lumi_id_to_lumin = read_lumi_by_ls(lumibyls_file)
+lumi_id_to_gps_times,lumi_id_to_lumin,time_series_all,lumin_all = read_lumi_by_ls(lumibyls_file)
 
 def get_file_trig_dict_from_txt(filepath):
 	"""
@@ -89,12 +86,6 @@ def get_file_trig_dict_from_txt(filepath):
 			line = line.splitlines()[0]
 			if i % 4 == 0: # if we have a trigger name
 				trigger_name = line.split()[-1] # holds for the rest of that trigger's information
-				master_trig_dict[trigger_name[:-3]] = {
-								      "good_lumis":[],
-								      # corresponds to the prescale for a given GOOD LUMI BLOCK
-								      "good_prescales":[],
-									  "fired":{}
-								     }
 				trig_dict[trigger_name] =  {
 								      "good_lumis":[],
 								      # corresponds to the prescale for a given GOOD LUMI BLOCK
@@ -147,19 +138,13 @@ for file in os.listdir(parsed_file_inpur_dir):
 	q += 1
 	file_trig_dict = get_file_trig_dict_from_txt(parsed_file_inpur_dir+"/"+file)
 	for trig in file_trig_dict.keys():
-		if cut_trigger_name(trig) not in master_trig_dict.keys():
-			master_trig_dict[cut_trigger_name(trig)] = {"good_lumis":[],"good_prescales":[]}
-		for i,good_lumi in enumerate(file_trig_dict[trig]["good_lumis"]):
-			if good_lumi not in master_trig_dict[cut_trigger_name(trig)]["good_lumis"]:
-				master_trig_dict[cut_trigger_name(trig)]["good_lumis"].append(good_lumi)
-				master_trig_dict[cut_trigger_name(trig)]["good_prescales"].append(file_trig_dict[trig]["good_prescales"][i])
+		if cut_trigger_name(trig) in master_trig_dict.keys():
+			for i,good_lumi in enumerate(file_trig_dict[trig]["good_lumis"]):
+				if good_lumi not in master_trig_dict[cut_trigger_name(trig)]["good_lumis"]:
+					master_trig_dict[cut_trigger_name(trig)]["good_lumis"].append(good_lumi)
+					master_trig_dict[cut_trigger_name(trig)]["good_prescales"].append(file_trig_dict[trig]["good_prescales"][i])
+				
 
-
-
-					
-					
-					
-					
 def write_eff_lumin_and_prescales():
 	# finds time vs effective luminosity curves for all triggers
 	trigger_time_v_lumin_rec = {}
@@ -179,28 +164,22 @@ def write_eff_lumin_and_prescales():
 	# now to get the time / recorded integrated luminosity data
 	master_times = []
 	master_lumin_rec = []
-	
+
 	runA_times= []
 	runA_lumin_rec = []
 	
 	for lumi_id in master_lumin_ids:
 		master_times.append(lumi_id_to_gps_times[lumi_id])
 		master_lumin_rec.append(lumi_id_to_lumin[lumi_id][1]) 
-	
 	for lumi_id in lumi_id_to_lumin.keys():
 		if lumi_id[0] in runA_runs:
 			runA_times.append(lumi_id_to_gps_times[lumi_id])
 			runA_lumin_rec.append(lumi_id_to_lumin[lumi_id][1]) 
-	
-	
+			
+		
 	print "start sorting"
 	# sorts all the represented lumiblocks by time, gets the integrated luminosity BY LUMI BLOCK INDEX
-	master_times_sorted,master_lumin_rec = (list(t) for t in zip(*sorted(zip(master_times,master_lumin_rec))))
-	print "done sorting"
-
-	
-
-	
+	master_times_sorted,master_lumin_rec = (list(t) for t in zip(*sorted(zip(master_times,master_lumin_rec))))	
 	
 	with open(output_file, "w") as output:
 		
