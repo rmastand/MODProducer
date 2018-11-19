@@ -152,7 +152,7 @@ for file in os.listdir(parsed_file_inpur_dir):
 					master_trig_dict[cut_trigger_name(trig)]["good_lumis"].append(good_lumi)
 					master_trig_dict[cut_trigger_name(trig)]["good_prescales"].append(file_trig_dict[trig]["good_prescales"][i])
 
-
+print master_trig_dict
 					
 					
 					
