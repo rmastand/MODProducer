@@ -11,7 +11,8 @@ output_file = sys.argv[4]
 
 rev_ordered_triggers = ["HLT_Jet30","HLT_Jet60","HLT_Jet80","HLT_Jet110","HLT_Jet150","HLT_Jet190","HLT_Jet240","HLT_Jet300","HLT_Jet370"][::-1]
 
-
+def setw(word,n):
+	return " "*(n-len(word))+word
 
 
 """
@@ -44,7 +45,19 @@ for trig_index,trig in enumerate(rev_ordered_triggers):
 		if master_time in trigger_times:
 			trigger_index_dict[trigger][i] = 1
 
+n = 15
 w = open(output_file,"w")
+
+first_line = setw("Time",n)
+for trigger in rev_ordered_triggers:
+	first_line += " " + setw(trigger,n)
+w.write(first_line+"\n")
+for i,master_time in enumerate(runA_times):
+	line = master_time
+	for trigger in rev_ordered_triggers:
+		line += " " + setw(str(trigger_index_dict[trigger][i]),n)
+	w.write(line+"\n")
+
 w.write()
 
 
