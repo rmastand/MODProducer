@@ -6,8 +6,7 @@ import sys
 
 plot_eff_lumi_file = sys.argv[1]
 lumibyls_file = sys.argv[2]
-plot_eff_lumi_file = sys.argv[3]
-output_file = sys.argv[4]
+output_file = sys.argv[3]
 
 rev_ordered_triggers = ["HLT_Jet30","HLT_Jet60","HLT_Jet80","HLT_Jet110","HLT_Jet150","HLT_Jet190","HLT_Jet240","HLT_Jet300","HLT_Jet370"][::-1]
 
