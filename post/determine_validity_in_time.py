@@ -53,7 +53,7 @@ for trigger in rev_ordered_triggers:
 	first_line += " " + setw(trigger,n)
 w.write(first_line+"\n")
 for i,master_time in enumerate(runA_times):
-	line = master_time
+	line = setw(str(master_time),n)
 	
 	for trigger in rev_ordered_triggers:
 		print trigger
