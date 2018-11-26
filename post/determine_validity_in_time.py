@@ -65,6 +65,15 @@ for i,master_time in enumerate(runA_times):
 
 w.close()
 
+print "finished writing"
 
+search_val = ["1","0","1"]
+for trigger in rev_ordered_triggers:
+	print trigger
+	array = trigger_index_dict[trigger]
+	idx = [np.s_[i:m-n+1+i] for i in range(n)]
+	found = [array[idx[i]] == search_val[i] for i in range(n)]
+	found_1 = np.all(found, axis=0)
+	print np.where(found_1)
 
 
