@@ -7,6 +7,7 @@ import os
 import numpy as np
 
 eff_lumin_table = sys.argv[1]
+table_out_name = sys.arvg[2]
 
 
 all_trig_dirs = ["/Volumes/Seagate Backup Plus Drive/MITOpenDataProject/eos/opendata/cms/Run2011A/Jet/trig/12Oct2013-v1/10000/",
@@ -49,6 +50,7 @@ for trig_dir in all_trig_dirs:
 triggers_lumin_eff_dict	= {}				
 lumi_info_file = open(eff_lumin_table,"r")
 read_lines = lumi_info_file.readlines()
+total_luminosity = float(read_lines[0].split()[1])
 for line in read_lines[2:]:
 	trigger_name = line.split()[0]
 	eff_lumin_rec = line.split()[1]
@@ -61,16 +63,17 @@ for line in read_lines[2:]:
 def setw(word,n):
 	return " "*(n-len(word))+word
 			
-n = 20
-w = open("trigger_table.txt","w")
+n = 15
+w = open(table_out_name,"w")
 
 w.write("total events:"+str(total_events[0])+", valid events:"+str(total_events[1])+",frac valid events:"+str(float(total_events[1])/total_events[0])[:10]+"\n")
-w.write(setw("Trigger Name",35)  + setw("Present",n)+ setw("Frac Present",n)+setw("Valid",n)+ setw("Frac Valid",n) + setw("Fired",n)+ setw("Frac Fired",n)+setw("Eff Lumi Rec",n)+setw("Avg Prescale",n) +"\n") 
+w.write(setw("Trigger Name",35)  + setw("Present",n)+ setw("Frac Present",n)+setw("Valid",n)+ setw("Frac Valid",n) + setw("Fired",n)+ setw("Frac Fired",n)+setw("Eff Lumi Rec",20)+setw("Avg Prescale",20) +"\n") 
 
 for trigger_name in all_triggers_dict.keys():
 	
+
 	
-	w.write(setw(trigger_name,35)+setw(str(all_triggers_dict[trigger_name][0]),n)+setw( str(float(all_triggers_dict[trigger_name][0])/float(total_events[0]))[:10],n)+setw(str(all_triggers_dict[trigger_name][1]),n)+setw( str(float(all_triggers_dict[trigger_name][1])/float(total_events[0]))[:10],n)  +setw(str(all_triggers_dict[trigger_name][2]),n)+setw( str(float(all_triggers_dict[trigger_name][2])/float(total_events[0]))[:10],n)+setw(triggers_lumin_eff_dict[trigger_name][0],n)+setw(triggers_lumin_eff_dict[trigger_name][1],n)  + "\n") 
+	w.write(setw(trigger_name,35)+setw(str(all_triggers_dict[trigger_name][0]),n)+setw( str(float(all_triggers_dict[trigger_name][0])/float(total_events[0]))[:10],n)+setw(str(all_triggers_dict[trigger_name][1]),n)+setw( str(float(all_triggers_dict[trigger_name][1])/float(total_events[0]))[:10],n)  +setw(str(all_triggers_dict[trigger_name][2]),n)+setw( str(float(all_triggers_dict[trigger_name][2])/float(total_events[0]))[:10],n)+setw(triggers_lumin_eff_dict[trigger_name][0],20)+setw(total_luminosity/triggers_lumin_eff_dict[trigger_name][0],20)  + "\n") 
 w.close()
 
 
