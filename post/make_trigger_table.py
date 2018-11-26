@@ -50,7 +50,7 @@ for trig_dir in all_trig_dirs:
 triggers_lumin_eff_dict	= {}				
 lumi_info_file = open(eff_lumin_table,"r")
 read_lines = lumi_info_file.readlines()
-total_luminosity = float(read_lines[0].split()[1])
+total_luminosity = float(read_lines[0].split()[2])
 for line in read_lines[2:]:
 	trigger_name = line.split()[0]
 	eff_lumin_rec = line.split()[1]
