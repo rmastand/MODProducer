@@ -37,8 +37,7 @@ trigger_index_dict = {}
 for trigger in rev_ordered_triggers:
 	trigger_index_dict[trigger] = []
 
-for trig_index,trig in enumerate(rev_ordered_triggers):
-	print trig
+for trig_index,trigger in enumerate(rev_ordered_triggers):
 	trigger_times = np.array([float(x) for x in lines[3*trig_index+6].split(",")])
 	for i,master_time in enumerate(runA_times):
 		if master_time in trigger_times:
