@@ -54,6 +54,7 @@ w.write(first_line+"\n")
 for i,master_time in enumerate(runA_times):
 	line = master_time
 	for trigger in rev_ordered_triggers:
+		print trigger_index_dict[trigger][:100]
 		line += " " + setw(str(trigger_index_dict[trigger][i]),n)
 	w.write(line+"\n")
 
