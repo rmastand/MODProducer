@@ -69,13 +69,17 @@ print "finished writing"
 
 print "total valid lumi in run A", len(runA_times)
 
+
+for trigger in rev_ordered_triggers:
+	array = trigger_index_dict[trigger]
+	print "total valid in ", trigger, sum([float(x) for x in array])
+
+	
+print "testing 101"
 search_val = ["1","0","1"]
 N = len(search_val)
 for trigger in rev_ordered_triggers:
 	array = trigger_index_dict[trigger]
-
-	print "total valid in ", trigger, sum([float(x) for x in array])
-	
 	possibles = np.where(array == search_val[0])[0]
 	solns = []
 	for p in possibles:
@@ -84,6 +88,34 @@ for trigger in rev_ordered_triggers:
        			solns.append(p)
 	print(solns)
 	
+print "testing 1001"
+search_val = ["1","0","0","1"]
+N = len(search_val)
+for trigger in rev_ordered_triggers:
+	array = trigger_index_dict[trigger]
+	possibles = np.where(array == search_val[0])[0]
+	solns = []
+	for p in possibles:
+    		check = values[p:p+N]
+    		if np.all(check == searchval):
+       			solns.append(p)
+	print(solns)
+	
+
+print "testing 10001"
+search_val = ["1","0","0","0","1"]
+N = len(search_val)
+for trigger in rev_ordered_triggers:
+	array = trigger_index_dict[trigger]
+	possibles = np.where(array == search_val[0])[0]
+	solns = []
+	for p in possibles:
+    		check = values[p:p+N]
+    		if np.all(check == searchval):
+       			solns.append(p)
+	print(solns)
+	
+
 
 
 
