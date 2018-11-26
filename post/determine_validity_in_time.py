@@ -41,9 +41,9 @@ for trig_index,trigger in enumerate(rev_ordered_triggers):
 	trigger_times = np.array([float(x) for x in lines[3*trig_index+6].split(",")])
 	for i,master_time in enumerate(runA_times):
 		if master_time in trigger_times:
-			trigger_index_dict[trigger].append(1)
+			trigger_index_dict[trigger].append("1")
 		else:
-			trigger_index_dict[trigger].append(0)
+			trigger_index_dict[trigger].append("0")
 
 n = 15
 w = open(output_file,"w")
@@ -56,10 +56,9 @@ for i,master_time in enumerate(runA_times):
 	line = master_time
 	
 	for trigger in rev_ordered_triggers:
-		print len(trigger_index_dict[trigger])
-		print i
-		print trigger_index_dict[trigger][:100]
-		line += " " + setw(str(trigger_index_dict[trigger][i]),n)
+		print trigger
+
+		line += " " + setw(trigger_index_dict[trigger][i],n)
 	w.write(line+"\n")
 
 w.write()
