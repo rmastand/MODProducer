@@ -35,14 +35,16 @@ time_ordered_lumi_id = lines[5].split(",")
 trigger_index_dict = {}
 
 for trigger in rev_ordered_triggers:
-	trigger_index_dict[trigger] = np.empty(len(runA_times)).fill("0")
+	trigger_index_dict[trigger] = []
 
 for trig_index,trig in enumerate(rev_ordered_triggers):
 	print trig
 	trigger_times = np.array([float(x) for x in lines[3*trig_index+6].split(",")])
 	for i,master_time in enumerate(runA_times):
 		if master_time in trigger_times:
-			trigger_index_dict[trigger][i] = "1"
+			trigger_index_dict[trigger].append(1)
+		else:
+			trigger_index_dict[trigger].append(0)
 
 n = 15
 w = open(output_file,"w")
