@@ -67,11 +67,15 @@ w.close()
 
 print "finished writing"
 
+print "total valid lumi in run A", len(runA_times)
+
 search_val = ["1","0","1"]
 N = len(search_val)
 for trigger in rev_ordered_triggers:
-	print trigger
 	array = trigger_index_dict[trigger]
+
+	print "total valid in ", trigger, sum([float(x) for x in array])
+	
 	possibles = np.where(array == search_val[0])[0]
 	solns = []
 	for p in possibles:
