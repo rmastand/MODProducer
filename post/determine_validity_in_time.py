@@ -54,7 +54,7 @@ for trigger in rev_ordered_triggers:
 w.write(first_line+"\n")
 
 for i,master_time in enumerate(runA_times):
-	if i % 10000 = 0:
+	if i % 10000 == 0:
 		print i, len(runA_times)
 	line = setw(str(master_time),n)
 	
