@@ -101,7 +101,7 @@ def read_mod_file(mod_file,file_trig_dict_output_dir,file_name,i,num_files):
 
 		with open(file_trig_dict_output_dir+file_name.replace(".mod",".txt"), "w") as output:
 			for trigger in trig_dict:
-				line = trigger + " " + str(len(trig_dict[trigger]["all_lumis"])) + " " + str(len(trig_dict[trigger]["good_lumis"])) " "\n"
+				line = trigger + " " + str(len(trig_dict[trigger]["all_lumis"])) + " " + str(len(trig_dict[trigger]["good_lumis"]))+"\n"
 				output.write(line)
 			
 		return trig_dict
