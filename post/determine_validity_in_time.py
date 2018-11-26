@@ -42,7 +42,7 @@ for trig_index,trig in enumerate(rev_ordered_triggers):
 	trigger_times = np.array([float(x) for x in lines[3*trig_index+6].split(",")])
 	for i,master_time in enumerate(runA_times):
 		if master_time in trigger_times:
-			trigger_index_dict[trigger][i] = 1
+			trigger_index_dict[trigger][i] = 1.
 
 n = 15
 w = open(output_file,"w")
