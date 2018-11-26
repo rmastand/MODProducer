@@ -1,147 +1,122 @@
-import sys
-import os
 import numpy as np
+import datetime
+import time
+import sys
+import ast
+import os
+import csv
 
+"""generates file trig dicts, prints them to 1 dict for each file"""
 
-mod_file_dir = sys.argv[1]
-skimmed_lumibyls = sys.argv[2]
-data_type = sys.argv[3]
+lumibyls_file = sys.argv[1]
+mod_file_inpur_dir = sys.argv[2]
+file_trig_dict_output_dir = sys.argv[3]
 
-def format2_6(string,num):
-	return " "*(num-len(string))+ string
+def read_lumi_by_ls(lumibyls_file):
+	"""
+	returns two dicts with keys = (run,lumiBlock)
+	1st values: gps times
+	2nd values: (lumi_delivered, lumi_recorded)
+	"""
+	lumibyls = open(lumibyls_file)
+	lines =  lumibyls.readlines()
+	split_lines = [line.split(",") for line in lines][2:]
+	char = ""
+	lumi_id_to_gps_times = {}
+	lumi_id_to_lumin = {}
+	i = 0
+	while char !="#":
+		run = split_lines[i][0].split(":")[0]
+		lumi = split_lines[i][1].split(":")[0]
+		date = split_lines[i][2].split(" ")[0]
+		tim = split_lines[i][2].split(" ")[1]
+		mdy = [int(x) for x in date.split("/")]
+		hms = [int(x) for x in tim.split(":")]
+		dt = datetime.datetime(mdy[2], mdy[0], mdy[1], hms[0], hms[1],hms[2])
+		lumi_id_to_gps_times[(run,lumi)] = time.mktime(dt.timetuple())
+		lumi_id_to_lumin[(run,lumi)] = (float(split_lines[i][5]),float(split_lines[i][6]))
+		i += 1
+		try:
+			char = split_lines[i][0][0]
+		except: pass
+	return lumi_id_to_gps_times,lumi_id_to_lumin
 
-def assure_path_exists(path):
-        dir = os.path.dirname(path)
-        if not os.path.exists(dir):
-                os.makedirs(dir)
-
-def get_lumiId_to_lumin(skim_filename):
-	lumiId_to_lumin_dict = {}
-	with open(skim_filename,"r") as skim_file:
-		for line in skim_file:
-			lumi_id,lumi_del,lumi_rec = line.split()
-			lumiId_to_lumin_dict[(lumi_id.split("_")[0],lumi_id.split("_")[1])] = float(lumi_del),float(lumi_rec)
-	return lumiId_to_lumin_dict
-		
-def is_lumi_valid(lumi_id,lumiId_to_lumin_dict):
+def is_lumi_valid(lumi_id, lumi_id_to_lumin):
+	"""
+	lumi_id = (run,lumiBlock)
+	"""
 	try:
-		luminosity = lumiId_to_lumin_dict[lumi_id]
+		luminosity = lumi_id_to_lumin[lumi_id]
 		return 1
 	except KeyError:
-		return 0
+		pass
 
-lumiId_to_lumin_dict = get_lumiId_to_lumin(skimmed_lumibyls)
-assure_path_exists(mod_file_dir.replace("MOD","trigl")+"/")
+lumi_id_to_gps_times,lumi_id_to_lumin = read_lumi_by_ls(lumibyls_file)
 
-for file in os.listdir(mod_file_dir):
-	trig_dict = {}
-	tot_present = 0
-	tot_valid = 0
-	# we'll use this later for calculate the total delivered and recorded luminosities
-	good_lumis = []
-	print file
 
-	with open(mod_file_dir+"/"+file, "rb") as mod_file:
-		for line in mod_file: 
+def read_mod_file(mod_file,file_trig_dict_output_dir,file_name,i,num_files):
+	"""
+	prints a dict of triggers FOR EACH MOD file
+	keys are triggers names (with versions)
+	subdicts are lists of good lumis the trigger was present for and the corresponding good prescale values
 	
+	each n correponds to a different trigger name
+	line n = uncut trigger name (with version)
+	line n+1 = list of good lumins ids trig_dict["good_lumis"]
+	line n+2 = list of good prescales trig_dict["good_prescales"]
+	line n+3 = list of lumi: # times fired paired. Comes from a dict where lumi id is the key and # times fired is the value trig_dict["fired"]
+	"""
+	trig_dict = {}
 
+	with open(mod_file) as file:
+		
+		for line in file:
+			# MOST CODE TAKEN FROM GET_TRIGGER_INFO.py
 			# keeps track of the run, lumiBlock
 			# this should signal each separate event
-			if (("Cond" in line.split()) or ("SCond" in line.split())) and ("#" not in line.split()):
+			if ("Cond" in line.split()) and ("#" not in line.split()):
 				run,lumiBlock = line.split()[1],line.split()[3]
-				tot_present += 1
-
-				if (is_lumi_valid((run,lumiBlock),lumiId_to_lumin_dict)) and (data_type == "Data"):
-					tot_valid += 1		
-					if (run,lumiBlock) not in good_lumis:
-						good_lumis.append((run,lumiBlock))
-				if data_type == "Sim":
-					tot_valid += 1
 
 			if ("Trig" in line.split()) and ("#" not in line.split()):
 				# all within 1 event
 				# given line: [Trig identifier, trig name, prescale1, prescale2, fired?]
 				if line.split()[1] not in trig_dict.keys():
-					trig_dict[line.split()[1]] = {"present":1,
-								      "present_valid":0,	    
-								      "present_valid_fired":0,
-								      # calc average over all VALID and FIRED EVENTS
-								      "avg_prescale":[],
-								      # no repetitions
+					trig_dict[line.split()[1]] = {
 								      "good_lumis":[],
-								      # corresponds to the prescale for a given GOOD LUMI BLOCK
-								      "good_prescales":[]
+								      "all_lumis":[]
 								     }
-					if data_type == "Data":
-						trig_dict[line.split()[1]]["present_valid"] = is_lumi_valid((run,lumiBlock),lumiId_to_lumin_dict)
-						trig_dict[line.split()[1]]["present_valid_fired"] = is_lumi_valid((run,lumiBlock),lumiId_to_lumin_dict) and int(line.split()[4])
-						if trig_dict[line.split()[1]]["present_valid_fired"]==1:
-							trig_dict[line.split()[1]]["avg_prescale"].append(float(line.split()[2])*float(line.split()[3]))
-						if is_lumi_valid((run,lumiBlock),lumiId_to_lumin_dict) and ((run,lumiBlock) not in trig_dict[line.split()[1]]["good_lumis"]):
-							trig_dict[line.split()[1]]["good_lumis"].append((run,lumiBlock))
-							trig_dict[line.split()[1]]["good_prescales"].append(float(line.split()[2])*float(line.split()[3]))
-
-					if data_type == "Sim":
-						trig_dict[line.split()[1]]["present_valid"] = 1
-						trig_dict[line.split()[1]]["present_valid_fired"] = int(line.split()[4])
-						if trig_dict[line.split()[1]]["present_valid_fired"]==1:
-							trig_dict[line.split()[1]]["avg_prescale"].append(float(line.split()[2])*float(line.split()[3]))
+					if (run,lumiBlock) not in trig_dict[line.split()[1]]["all_lumis"]:
+						trig_dict[line.split()[1]]["all_lumis"].append((run,lumiBlock))
+					if is_lumi_valid((run,lumiBlock),lumi_id_to_lumin):
 						if (run,lumiBlock) not in trig_dict[line.split()[1]]["good_lumis"]:
 							trig_dict[line.split()[1]]["good_lumis"].append((run,lumiBlock))
-							trig_dict[line.split()[1]]["good_prescales"].append(float(line.split()[2])*float(line.split()[3]))
-
+							
 				else:
-					if data_type == "Data":
-						trig_dict[line.split()[1]]["present"] += 1
-					
-						
-						trig_dict[line.split()[1]]["present_valid"] += is_lumi_valid((run,lumiBlock),lumiId_to_lumin_dict)
-						trig_dict[line.split()[1]]["present_valid_fired"] += is_lumi_valid((run,lumiBlock),lumiId_to_lumin_dict) and int(line.split()[4])
-						if (is_lumi_valid((run,lumiBlock),lumiId_to_lumin_dict) and int(line.split()[4]))==1:
-							trig_dict[line.split()[1]]["avg_prescale"].append(float(line.split()[2])*float(line.split()[3]))
-						if is_lumi_valid((run,lumiBlock),lumiId_to_lumin_dict) and ((run,lumiBlock) not in trig_dict[line.split()[1]]["good_lumis"]):
-							trig_dict[line.split()[1]]["good_lumis"].append((run,lumiBlock))
-							trig_dict[line.split()[1]]["good_prescales"].append(float(line.split()[2])*float(line.split()[3]))
-					if data_type == "Sim":
-						trig_dict[line.split()[1]]["present"] += 1
-						trig_dict[line.split()[1]]["present_valid"] += 1
-						trig_dict[line.split()[1]]["present_valid_fired"] += int(line.split()[4])
-						if int(line.split()[4])==1:
-							trig_dict[line.split()[1]]["avg_prescale"].append(float(line.split()[2])*float(line.split()[3]))
+
+					if (run,lumiBlock) not in trig_dict[line.split()[1]]["all_lumis"]:
+						trig_dict[line.split()[1]]["all_lumis"].append((run,lumiBlock))
+					if is_lumi_valid((run,lumiBlock),lumi_id_to_lumin):
 						if (run,lumiBlock) not in trig_dict[line.split()[1]]["good_lumis"]:
 							trig_dict[line.split()[1]]["good_lumis"].append((run,lumiBlock))
-							trig_dict[line.split()[1]]["good_prescales"].append(float(line.split()[2])*float(line.split()[3]))
 
-	
-	
-	
-	statsFile = open(mod_file_dir.replace("MOD","stats")+"/"+str(file[-40:-4])+".stats")
-	lines = statsFile.readlines()
-	statsFile.close()
-	
-	w = open(mod_file_dir.replace("MOD","trigl")+"/"+str(file[-40:-4])+".trigl","w")
-	w.writelines([item for item in lines[:-1]])
-	
-	if data_type == "Data":
-		w.write("#        Trig"+format2_6("Name",40)+format2_6("Present",13)+format2_6("Valid",12)+format2_6("Fired",12)+format2_6("EffLumiDel",13)+format2_6("EffLumiRec",20)+format2_6("AvePrescale",14)+"\n")
-		for trig in trig_dict.keys():
-			eff_lum_del = []
-			eff_lum_rec = []
-			for i in range(len(trig_dict[trig]["good_lumis"])):
-				try:
-					eff_lum_del.append(lumiId_to_lumin_dict[trig_dict[trig]["good_lumis"][i]][0]/trig_dict[trig]["good_prescales"][i])
-					eff_lum_rec.append(lumiId_to_lumin_dict[trig_dict[trig]["good_lumis"][i]][1]/trig_dict[trig]["good_prescales"][i])
-				except KeyError:
-					eff_lum_del.append(0.000)
-					eff_lum_rec.append(0.000)
-
-			w.write("         Trig"+format2_6(trig,40)+format2_6(str(trig_dict[trig]["present"]),13)+format2_6(str(trig_dict[trig]["present_valid"]),12)+format2_6(str(trig_dict[trig]["present_valid_fired"]),12)+format2_6(str("{0:.3f}".format(np.sum(eff_lum_del))),13)+format2_6(str("{0:.3f}".format(np.sum(eff_lum_rec))),20)+format2_6(str("{0:.3f}".format(np.mean(trig_dict[trig]["avg_prescale"]))),14)+"\n")	
-		
-	if data_type == "Sim":
-		w.write("#       STrig"+format2_6("Name",40)+format2_6("Present",15)+format2_6("Valid",15)+format2_6("Fired",20)+"\n")
-		for trig in trig_dict.keys():
-			w.write("        STrig"+format2_6(trig,40)+format2_6(str(trig_dict[trig]["present"]),15)+format2_6(str(trig_dict[trig]["present_valid"]),15)+format2_6(str(trig_dict[trig]["present_valid_fired"]),20)+"\n")	
-	w.write("EndFile")
-	w.close()
+		with open(file_trig_dict_output_dir+file_name.replace(".mod",".txt"), "w") as output:
+			writer = csv.writer(output, lineterminator='\n')
+			for trigger in trig_dict:
+				writer.writerow(["# "+trigger]) 
+				writer.writerow(len(trig_dict[trigger]["all_lumis"]))
+				writer.writerow(len(trig_dict[trigger]["good_lumis"]))
+				
+		return trig_dict
 
 
+i = 1
+num_files = len(os.listdir(mod_file_inpur_dir))
+for file in os.listdir(mod_file_inpur_dir):
+	# if file has not already been processed
+	if file.replace(".mod",".txt") not in os.listdir(file_trig_dict_output_dir):
+		print "Processing file " + file + ", File "+str(i)+" of " + str(num_files)
+		file_trig_dict = read_mod_file(mod_file_inpur_dir+"/"+file,file_trig_dict_output_dir,file,i,num_files)
+	else:
+		print "Already processed " + file + ", File "+str(i)+" of " + str(num_files)
+	i += 1
+	
