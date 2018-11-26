@@ -52,7 +52,10 @@ first_line = setw("Time",n)
 for trigger in rev_ordered_triggers:
 	first_line += " " + setw(trigger,n)
 w.write(first_line+"\n")
+
 for i,master_time in enumerate(runA_times):
+	if i % 10000 = 0:
+		print i, len(runA_times)
 	line = setw(str(master_time),n)
 	
 	for trigger in rev_ordered_triggers:
