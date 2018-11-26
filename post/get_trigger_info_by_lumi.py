@@ -100,12 +100,10 @@ def read_mod_file(mod_file,file_trig_dict_output_dir,file_name,i,num_files):
 							trig_dict[line.split()[1]]["good_lumis"].append((run,lumiBlock))
 
 		with open(file_trig_dict_output_dir+file_name.replace(".mod",".txt"), "w") as output:
-			writer = csv.writer(output, lineterminator='\n')
 			for trigger in trig_dict:
-				writer.writerow(["# "+trigger]) 
-				writer.writerow(len(trig_dict[trigger]["all_lumis"]))
-				writer.writerow(len(trig_dict[trigger]["good_lumis"]))
-				
+				line = trigger + " " + str(len(trig_dict[trigger]["all_lumis"])) + " " + str(len(trig_dict[trigger]["good_lumis"])) " "\n"
+				output.write(line)
+			
 		return trig_dict
 
 
