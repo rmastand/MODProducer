@@ -31,7 +31,7 @@ def is_lumi_valid(lumi_id,lumiId_to_lumin_dict):
 		return 0
 
 lumiId_to_lumin_dict = get_lumiId_to_lumin(skimmed_lumibyls)
-assure_path_exists(mod_file_dir.replace("MOD","trig")+"/")
+assure_path_exists(mod_file_dir.replace("MOD","trigl")+"/")
 
 for file in os.listdir(mod_file_dir):
 	trig_dict = {}
@@ -119,7 +119,7 @@ for file in os.listdir(mod_file_dir):
 	lines = statsFile.readlines()
 	statsFile.close()
 	
-	w = open(mod_file_dir.replace("MOD","trig")+"/"+str(file[-40:-4])+".trig","w")
+	w = open(mod_file_dir.replace("MOD","trigl")+"/"+str(file[-40:-4])+".trigl","w")
 	w.writelines([item for item in lines[:-1]])
 	
 	if data_type == "Data":
