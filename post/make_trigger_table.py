@@ -7,7 +7,7 @@ import os
 import numpy as np
 
 eff_lumin_table = sys.argv[1]
-table_out_name = sys.arvg[2]
+table_out_name = sys.argv[2]
 
 
 all_trig_dirs = ["/Volumes/Seagate Backup Plus Drive/MITOpenDataProject/eos/opendata/cms/Run2011A/Jet/trig/12Oct2013-v1/10000/",
@@ -66,14 +66,13 @@ def setw(word,n):
 n = 15
 w = open(table_out_name,"w")
 
+for trigger_name in all_triggers_dict.keys():	
+	w.write(setw(trigger_name,35)+setw(str(all_triggers_dict[trigger_name][0]),n)+setw( str(float(all_triggers_dict[trigger_name][0])/float(total_events[0]))[:10],n)+setw(str(all_triggers_dict[trigger_name][1]),n)+setw( str(float(all_triggers_dict[trigger_name][1])/float(total_events[0]))[:10],n)  +setw(str(all_triggers_dict[trigger_name][2]),n)+setw( str(float(all_triggers_dict[trigger_name][2])/float(total_events[0]))[:10],n)+setw(triggers_lumin_eff_dict[trigger_name][0],20)+setw(total_luminosity/triggers_lumin_eff_dict[trigger_name][0],20)  + "\n") 
+
 w.write("total events:"+str(total_events[0])+", valid events:"+str(total_events[1])+",frac valid events:"+str(float(total_events[1])/total_events[0])[:10]+"\n")
 w.write(setw("Trigger Name",35)  + setw("Present",n)+ setw("Frac Present",n)+setw("Valid",n)+ setw("Frac Valid",n) + setw("Fired",n)+ setw("Frac Fired",n)+setw("Eff Lumi Rec",20)+setw("Avg Prescale",20) +"\n") 
-
-for trigger_name in all_triggers_dict.keys():
 	
-
 	
-	w.write(setw(trigger_name,35)+setw(str(all_triggers_dict[trigger_name][0]),n)+setw( str(float(all_triggers_dict[trigger_name][0])/float(total_events[0]))[:10],n)+setw(str(all_triggers_dict[trigger_name][1]),n)+setw( str(float(all_triggers_dict[trigger_name][1])/float(total_events[0]))[:10],n)  +setw(str(all_triggers_dict[trigger_name][2]),n)+setw( str(float(all_triggers_dict[trigger_name][2])/float(total_events[0]))[:10],n)+setw(triggers_lumin_eff_dict[trigger_name][0],20)+setw(total_luminosity/triggers_lumin_eff_dict[trigger_name][0],20)  + "\n") 
 w.close()
 
 
