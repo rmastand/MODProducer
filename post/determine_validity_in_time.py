@@ -53,15 +53,20 @@ for trigger in rev_ordered_triggers:
 	first_line += " " + setw(trigger,n)
 w.write(first_line+"\n")
 
+test_sum = 0
 for i,master_time in enumerate(runA_times):
 	if i % 10000 == 0:
 		print i, len(runA_times)
 	line = setw(str(master_time),n)
 	
 	for trigger in rev_ordered_triggers:
+		test_sum += int(trigger_index_dict[trigger][i])
 		
 		line += " " + setw(trigger_index_dict[trigger][i],n)
 	w.write(line+"\n")
+	if test_sum == 0:
+		print master_time
+		print time_ordered_lumi_id[i]
 
 w.close()
 
@@ -73,7 +78,7 @@ print "total valid lumi in run A", len(runA_times)
 for trigger in rev_ordered_triggers:
 	array = trigger_index_dict[trigger]
 	print "total valid in ", trigger, sum([float(x) for x in array])
-
+"""
 	
 print "testing 101"
 search_val = ["1","0","1"]
@@ -115,7 +120,7 @@ for trigger in rev_ordered_triggers:
        			solns.append(p)
 	print(solns)
 	
-
+"""
 
 
 
