@@ -30,8 +30,9 @@ def read_lumi_by_ls(lumibyls_file):
 	i = 0
 	while char !="#":
 		run = split_lines[i][0].split(":")[0]
-		lumi = split_lines[i][1].split(":")[0]		
-		lumi_id_to_lumin[(run,lumi)] = (float(split_lines[i][5]),float(split_lines[i][6]))
+		lumi = split_lines[i][1].split(":")[0]	
+		lumi_id = run+":"+lumi
+		lumi_id_to_lumin[lumi_id] = (float(split_lines[i][5]),float(split_lines[i][6]))
 
 		i += 1
 		try:
