@@ -53,7 +53,8 @@ for trigger in rev_ordered_triggers:
 	first_line += " " + setw(trigger,n)
 w.write(first_line+"\n")
 
-
+zero_events_times = []
+zero_events_lumis = []
 for i,master_time in enumerate(runA_times):
 	test_sum = 0
 	if i % 10000 == 0:
@@ -66,10 +67,14 @@ for i,master_time in enumerate(runA_times):
 		line += " " + setw(trigger_index_dict[trigger][i],n)
 	w.write(line+"\n")
 	if test_sum == 0:
-		print master_time
-		print time_ordered_lumi_id[i]
+		zero_events_times.append(master_time)
+		zero_events_lumis.append(time_ordered_lumi_id[i])
 
 w.close()
+
+print zero_events_times
+print zero_events_lumis
+print len(zero_events_times)
 
 print "finished writing"
 
