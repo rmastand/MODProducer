@@ -53,18 +53,17 @@ for trigger in rev_ordered_triggers:
 	first_line += " " + setw(trigger,n)
 w.write(first_line+"\n")
 
-test_sum = 0
 for i,master_time in enumerate(runA_times):
 	if i % 10000 == 0:
 		print i, len(runA_times)
 	line = setw(str(master_time),n)
 	
 	for trigger in rev_ordered_triggers:
-		test_sum += int(trigger_index_dict[trigger][i])
+		
 		
 		line += " " + setw(trigger_index_dict[trigger][i],n)
 	w.write(line+"\n")
-	if test_sum == 0:
+	if trigger_index_dict["HLT_Jet370"][i] == "0":
 		print master_time
 		print time_ordered_lumi_id[i]
 
