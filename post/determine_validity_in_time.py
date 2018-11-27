@@ -30,25 +30,18 @@ def read_lumi_by_ls(lumibyls_file):
 	i = 0
 	while char !="#":
 		run = split_lines[i][0].split(":")[0]
-		lumi = split_lines[i][1].split(":")[0]
-		date = split_lines[i][2].split(" ")[0]
-		tim = split_lines[i][2].split(" ")[1]
-		mdy = [int(x) for x in date.split("/")]
-		hms = [int(x) for x in tim.split(":")]
-		dt = datetime.datetime(mdy[2], mdy[0], mdy[1], hms[0], hms[1],hms[2])
-		lumi_id_to_gps_times[(run,lumi)] = time.mktime(dt.timetuple())
+		lumi = split_lines[i][1].split(":")[0]		
 		lumi_id_to_lumin[(run,lumi)] = (float(split_lines[i][5]),float(split_lines[i][6]))
-		time_series_all.append(time.mktime(dt.timetuple()))
-		lumin_all.append(float(split_lines[i][6]))
+
 		i += 1
 		try:
 			char = split_lines[i][0][0]
 		except: pass
-	return lumi_id_to_gps_times,lumi_id_to_lumin,time_series_all,lumin_all
+	return lumi_id_to_lumin
 
 
 
-lumi_id_to_gps_times,lumi_id_to_lumin,time_series_all,lumin_all = read_lumi_by_ls(lumibyls_file)
+lumi_id_to_lumin = read_lumi_by_ls(lumibyls_file)
 
 
 """
