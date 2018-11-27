@@ -13,6 +13,43 @@ rev_ordered_triggers = ["HLT_Jet30","HLT_Jet60","HLT_Jet80","HLT_Jet110","HLT_Je
 def setw(word,n):
 	return " "*(n-len(word))+word
 
+def read_lumi_by_ls(lumibyls_file):
+	"""
+	returns two dicts with keys = (run,lumiBlock)
+	1st values: gps times
+	2nd values: (lumi_delivered, lumi_recorded)
+	"""
+	lumibyls = open(lumibyls_file)
+	lines =  lumibyls.readlines()
+	split_lines = [line.split(",") for line in lines][2:]
+	char = ""
+	lumi_id_to_gps_times = {}
+	lumi_id_to_lumin = {}
+	time_series_all = []
+	lumin_all = []
+	i = 0
+	while char !="#":
+		run = split_lines[i][0].split(":")[0]
+		lumi = split_lines[i][1].split(":")[0]
+		date = split_lines[i][2].split(" ")[0]
+		tim = split_lines[i][2].split(" ")[1]
+		mdy = [int(x) for x in date.split("/")]
+		hms = [int(x) for x in tim.split(":")]
+		dt = datetime.datetime(mdy[2], mdy[0], mdy[1], hms[0], hms[1],hms[2])
+		lumi_id_to_gps_times[(run,lumi)] = time.mktime(dt.timetuple())
+		lumi_id_to_lumin[(run,lumi)] = (float(split_lines[i][5]),float(split_lines[i][6]))
+		time_series_all.append(time.mktime(dt.timetuple()))
+		lumin_all.append(float(split_lines[i][6]))
+		i += 1
+		try:
+			char = split_lines[i][0][0]
+		except: pass
+	return lumi_id_to_gps_times,lumi_id_to_lumin,time_series_all,lumin_all
+
+
+
+lumi_id_to_gps_times,lumi_id_to_lumin,time_series_all,lumin_all = read_lumi_by_ls(lumibyls_file)
+
 
 """
 plot_eff_luminosity.txt:
@@ -55,6 +92,7 @@ w.write(first_line+"\n")
 
 zero_events_times = []
 zero_events_lumis = []
+zero_events_lumin = []
 for i,master_time in enumerate(runA_times):
 	test_sum = 0
 	if i % 10000 == 0:
@@ -69,11 +107,14 @@ for i,master_time in enumerate(runA_times):
 	if test_sum == 0:
 		zero_events_times.append(master_time)
 		zero_events_lumis.append(time_ordered_lumi_id[i])
+		zero_events_lumin.append(lumi_id_to_lumin[time_ordered_lumi_id[i]])
+		
 
 w.close()
 
 print zero_events_times
 print zero_events_lumis
+print zero_events_lumin
 print len(zero_events_times)
 
 print "finished writing"
