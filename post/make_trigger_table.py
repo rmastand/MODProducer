@@ -8,6 +8,8 @@ import numpy as np
 
 eff_lumin_table = sys.argv[1]
 table_out_name = sys.argv[2]
+setting = sys.argv[3]
+lumi_dir = sys.argv[4]
 
 
 all_trig_dirs = ["/Volumes/Seagate Backup Plus Drive/MITOpenDataProject/eos/opendata/cms/Run2011A/Jet/trig/12Oct2013-v1/10000/",
@@ -46,6 +48,7 @@ for trig_dir in all_trig_dirs:
 						all_triggers_dict[trigger_name][1] += valid
 						all_triggers_dict[trigger_name][2] += fired
 
+valid_lumi_runA = 109428.
 											
 triggers_lumin_eff_dict	= {}				
 lumi_info_file = open(eff_lumin_table,"r")
@@ -57,22 +60,45 @@ for line in read_lines[2:]:
 	eff_lumin_rec = line.split()[1]
 	avg_prescale = line.split()[2]
 	triggers_lumin_eff_dict[trigger_name] = (eff_lumin_rec,avg_prescale)
+	
+# trigger: (total, valid)
+valid_lumi_dict = {}
 
-						
-						
-						
+for file in os.listdir(lumi_dir):
+	with open(lumi_dir+"/"+file, "r") as lumi_file:
+		for line in lumi_file:
+			trigger = line.split()[0][:-3]
+			print trigger
+			total = int(line.split()[1])
+			valid = int(line.split()[2])
+			try:
+				valid_lumi_dict[trigger][0] += total
+				valid_lumi_dict[trigger][1] += valid
+			except:
+				valid_lumi_dict[trigger] = [total,valid]
+
+											
 def setw(word,n):
 	return " "*(n-len(word))+word
 			
 n = 15
 w = open(table_out_name,"w")
-w.write(setw("Trigger Name",35)  + setw("Present",n)+ setw("Frac Present",n)+setw("Valid",n)+ setw("Frac Valid",n) + setw("Fired",n)+ setw("Frac Fired",n)+setw("Eff Lumi Rec",20)+setw("Avg Prescale",20) +"\n") 
+if setting == "event":
+	w.write(setw("Trigger Name",35)  + setw("Present",n)+ setw("Frac Present",n)+setw("Valid",n)+ setw("Frac Valid",n) + setw("Fired",n)+ setw("Frac Fired",n)+setw("Eff Lumi Rec",20)+setw("Avg Prescale",20) +"\n") 
 
-for trigger_name in all_triggers_dict.keys():	
-	w.write(setw(trigger_name,35)+setw(str(all_triggers_dict[trigger_name][0]),n)+setw( str(float(all_triggers_dict[trigger_name][0])/float(total_events[0]))[:10],n)+setw(str(all_triggers_dict[trigger_name][1]),n)+setw( str(float(all_triggers_dict[trigger_name][1])/float(total_events[0]))[:10],n)  +setw(str(all_triggers_dict[trigger_name][2]),n)+setw( str(float(all_triggers_dict[trigger_name][2])/float(total_events[0]))[:10],n)+setw(triggers_lumin_eff_dict[trigger_name][0],20)+setw(str(total_luminosity/float(triggers_lumin_eff_dict[trigger_name][0])),20)  + "\n") 
+	for trigger_name in all_triggers_dict.keys():	
+		w.write(setw(trigger_name,35)+setw(str(all_triggers_dict[trigger_name][0]),n)+setw( str(float(all_triggers_dict[trigger_name][0])/float(total_events[0]))[:10],n)+setw(str(all_triggers_dict[trigger_name][1]),n)+setw( str(float(all_triggers_dict[trigger_name][1])/float(total_events[0]))[:10],n)  +setw(str(all_triggers_dict[trigger_name][2]),n)+setw( str(float(all_triggers_dict[trigger_name][2])/float(total_events[0]))[:10],n)+setw(triggers_lumin_eff_dict[trigger_name][0],20)+setw(str(total_luminosity/float(triggers_lumin_eff_dict[trigger_name][0])),20)  + "\n") 
 
-w.write(setw("Total",35)+setw(str(total_events[0]),n)+setw("1",n)+setw(str(total_events[1]),n)+setw(str(float(total_events[1])/float(total_events[0]))[:10],n)  +setw("N/A",n)+setw("N/A",n)+setw(str(total_luminosity),20)+setw("NA",20)  + "\n") 
-	
+	w.write(setw("Total",35)+setw(str(total_events[0]),n)+setw("1",n)+setw(str(total_events[1]),n)+setw(str(float(total_events[1])/float(total_events[0]))[:10],n)  +setw("N/A",n)+setw("N/A",n)+setw(str(total_luminosity),20)+setw("NA",20)  + "\n") 
+if setting == "lumi":
+	w.write(setw("Trigger Name",35)  + setw("Present",n)+ setw("Frac Present",n)+setw("Valid",n)+ setw("Frac Valid",n) +setw("Eff Lumi Rec",20)+setw("Avg Prescale",20) +"\n") 
+
+	for trigger_name in all_triggers_dict.keys():	
+		w.write(setw(trigger_name,35)+
+			setw(str(valid_lumi_dict[trigger][0]]),n)+setw( str(valid_lumi_dict[trigger][0]]/valid_lumi_runA),n)+setw(str(valid_lumi_dict[trigger][1] ),n)+setw( str(valid_lumi_dict[trigger][1]]/valid_lumi_runA),n)  +setw(triggers_lumin_eff_dict[trigger_name][0],20)+setw(str(total_luminosity/float(triggers_lumin_eff_dict[trigger_name][0])),20)  + "\n") 
+
+	w.write(setw("Total",35)+setw("N/A",n)+setw("N/A",n)+setw(str(valid_lumi_runA),n)+setw("1",n)  +setw(str(total_luminosity),20)+setw("NA",20)  + "\n") 
+
 	
 w.close()
 
