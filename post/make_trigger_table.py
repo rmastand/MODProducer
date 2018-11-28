@@ -68,8 +68,15 @@ for file in os.listdir(lumi_dir):
 	with open(lumi_dir+"/"+file, "r") as lumi_file:
 		for line in lumi_file:
 			trigger = line.split()[0][:-3]
-			total = int(line.split()[1])
-			valid = int(line.split()[2])
+			try:
+				total = int(line.split()[1])
+			except ValueError:
+				total = 0
+			try:
+				valid = int(line.split()[2])
+			except ValueError:
+				valid = 0
+			
 			print line.split()
 			try:
 				valid_lumi_dict[trigger][0] += total
