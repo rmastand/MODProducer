@@ -81,6 +81,7 @@ for file in os.listdir(lumi_dir):
 				valid_lumi_dict[trigger][0] += total
 				valid_lumi_dict[trigger][1] += valid
 			except KeyError:
+				print trigger
 				valid_lumi_dict[trigger] = [total,valid]
 				
 											
