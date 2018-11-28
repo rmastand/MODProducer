@@ -83,8 +83,6 @@ for file in os.listdir(lumi_dir):
 			except KeyError:
 				valid_lumi_dict[trigger] = [total,valid]
 				
-print valid_lumi_dict
-
 											
 def setw(word,n):
 	return " "*(n-len(word))+word
