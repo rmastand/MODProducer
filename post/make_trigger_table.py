@@ -76,13 +76,12 @@ for file in os.listdir(lumi_dir):
 				valid = int(line.split()[2])
 			except ValueError:
 				valid = 0
-			
 			try:
 				valid_lumi_dict[trigger][0] += total
 				valid_lumi_dict[trigger][1] += valid
 			except KeyError:
-				print trigger
-				valid_lumi_dict[trigger] = [total,valid]
+				if trigger[0] == "H":
+					valid_lumi_dict[trigger] = [total,valid]
 				
 											
 def setw(word,n):
