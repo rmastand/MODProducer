@@ -69,12 +69,13 @@ for file in os.listdir(lumi_dir):
 		for line in lumi_file:
 			trigger = line.split()[0][:-3]
 			print line.split()
+			print file
 			total = int(line.split()[1])
 			valid = int(line.split()[2])
 			try:
 				valid_lumi_dict[trigger][0] += total
 				valid_lumi_dict[trigger][1] += valid
-			except:
+			except KeyError:
 				valid_lumi_dict[trigger] = [total,valid]
 
 											
