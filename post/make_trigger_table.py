@@ -77,7 +77,6 @@ for file in os.listdir(lumi_dir):
 			except ValueError:
 				valid = 0
 			
-			print line.split()
 			try:
 				valid_lumi_dict[trigger][0] += total
 				valid_lumi_dict[trigger][1] += valid
