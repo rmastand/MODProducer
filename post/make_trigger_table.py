@@ -95,14 +95,14 @@ if setting == "event":
 	for trigger_name in all_triggers_dict.keys():	
 		w.write(setw(trigger_name,35)+setw(str(all_triggers_dict[trigger_name][0]),n)+setw( str(float(all_triggers_dict[trigger_name][0])/float(total_events[0]))[:10],n)+setw(str(all_triggers_dict[trigger_name][1]),n)+setw( str(float(all_triggers_dict[trigger_name][1])/float(total_events[0]))[:10],n)  +setw(str(all_triggers_dict[trigger_name][2]),n)+setw( str(float(all_triggers_dict[trigger_name][2])/float(total_events[0]))[:10],n)+setw(triggers_lumin_eff_dict[trigger_name][0],20)+setw(str(total_luminosity/float(triggers_lumin_eff_dict[trigger_name][0])),20)  + "\n") 
 
-	w.write(setw("Total",35)+setw(str(total_events[0]),n)+setw("1",n)+setw(str(total_events[1]),n)+setw(str(float(total_events[1])/float(total_events[0]))[:10],n)  +setw("N/A",n)+setw("N/A",n)+setw(str(total_luminosity),20)+setw("NA",20)  + "\n") 
+	w.write(setw("Total",35)+setw(str(total_events[0]),n)+setw("1",n)+setw(str(total_events[1]),n)+setw(str(float(total_events[1])/float(total_events[0]))[:10],n)  +setw("N/A",n)+setw("N/A",n)+setw(str(total_luminosity),20)+setw("N/A",20)  + "\n") 
 if setting == "lumi":
 	w.write(setw("Trigger Name",35)  + setw("Present",n)+ setw("Frac Present",n)+setw("Valid",n)+ setw("Frac Valid",n) +setw("Eff Lumi Rec",20)+setw("Avg Prescale",20) +"\n") 
 
 	for trigger_name in all_triggers_dict.keys():	
 		w.write(setw(trigger_name,35)+setw(str(valid_lumi_dict[trigger][0]),n)+setw( str(valid_lumi_dict[trigger][0]/valid_lumi_runA),n)+setw(str(valid_lumi_dict[trigger][1] ),n)+setw( str(valid_lumi_dict[trigger][1]/valid_lumi_runA),n)  +setw(triggers_lumin_eff_dict[trigger_name][0],20)+setw(str(total_luminosity/float(triggers_lumin_eff_dict[trigger_name][0])),20)  + "\n") 
 
-	w.write(setw("Total",35)+setw("N/A",n)+setw("N/A",n)+setw(str(valid_lumi_runA),n)+setw("1",n)  +setw(str(total_luminosity),20)+setw("NA",20)  + "\n") 
+	w.write(setw("Total",35)+setw("N/A",n)+setw("N/A",n)+setw(str(valid_lumi_runA),n)+setw("1",n)  +setw(str(total_luminosity),20)+setw("N/A",20)  + "\n") 
 
 	
 w.close()
