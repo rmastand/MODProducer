@@ -68,7 +68,7 @@ for file in os.listdir(lumi_dir):
 	with open(lumi_dir+"/"+file, "r") as lumi_file:
 		for line in lumi_file:
 			trigger = line.split()[0][:-3]
-			print trigger
+			print line.split()
 			total = int(line.split()[1])
 			valid = int(line.split()[2])
 			try:
