@@ -109,7 +109,7 @@ for i,master_time in enumerate(runA_times):
 	except IndexError:
 		prev_time = "N/A"
 		prev_id = "N/A"
-		prev_lumin = 0="N/A"
+		prev_lumin ="N/A"
 	try: 
 		post_time = runA_times[i+1]
 		post_id = time_ordered_lumi_id[i+1]
