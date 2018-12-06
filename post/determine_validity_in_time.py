@@ -7,6 +7,7 @@ import sys
 plot_eff_lumi_file = sys.argv[1]
 lumibyls_file = sys.argv[2]
 output_file = sys.argv[3]
+summary_file = sys.argv[4]
 
 rev_ordered_triggers = ["HLT_Jet30","HLT_Jet60","HLT_Jet80","HLT_Jet110","HLT_Jet150","HLT_Jet190","HLT_Jet240","HLT_Jet300","HLT_Jet370"][::-1]
 
@@ -78,16 +79,46 @@ for trig_index,trigger in enumerate(rev_ordered_triggers):
 
 n = 15
 w = open(output_file,"w")
+s = open(summary_file,"w")
 
 first_line = setw("Time",n)
 for trigger in rev_ordered_triggers:
 	first_line += " " + setw(trigger,n)
 w.write(first_line+"\n")
 
+n = 15
+first_line = setw("Event time",n) + setw("Event ID",n) +setw("Event Lumi",n) +setw("Pre time",n) +setw("Pre ID",n) +setw("Pre Lumi",n)  +setw("Post time",n) +setw("Post ID",n) +setw("Post Lumi",n) 
+
+s.write(first_line+"\n")
+
+
+
+
+
 zero_events_times = []
 zero_events_lumis = []
 zero_events_lumin = []
 for i,master_time in enumerate(runA_times):
+	event_time = master_time
+	event_id = time_ordered_lumi_id[i]
+	event_lumin = lumi_id_to_lumin[time_ordered_lumi_id[i]][1]
+	try: 
+		prev_time = runA_times[i-1]
+		prev_id = time_ordered_lumi_id[i-1]
+		prev_lumin = lumi_id_to_lumin[time_ordered_lumi_id[i-1]][1]
+	except IndexError:
+		prev_time = "N/A"
+		prev_id = "N/A"
+		prev_lumin = 0="N/A"
+	try: 
+		post_time = runA_times[i+1]
+		post_id = time_ordered_lumi_id[i+1]
+		post_lumin = lumi_id_to_lumin[time_ordered_lumi_id[i+1]][1]
+	except IndexError:
+		post_time = "N/A"
+		post_id = "N/A"
+		post_lumin = "N/A"
+		
 	test_sum = 0
 	if i % 10000 == 0:
 		print i, len(runA_times)
@@ -99,12 +130,15 @@ for i,master_time in enumerate(runA_times):
 		line += " " + setw(trigger_index_dict[trigger][i],n)
 	w.write(line+"\n")
 	if test_sum == 0:
-		zero_events_times.append(master_time)
-		zero_events_lumis.append(time_ordered_lumi_id[i])
-		zero_events_lumin.append(lumi_id_to_lumin[time_ordered_lumi_id[i]])
+		zero_events_times.append(event_time)
+		zero_events_lumis.append(event_id)
+		zero_events_lumin.append(event_lumin)
+		line  = setw(str(event_time),n) + setw(str(event_id),n) +setw(str(event_lumin),n) +setw(str(prev_time),n) +setw(str(prev_id),n) +setw(str(prev_lumin),n)  +setw(str(post_time),n) +setw(str(post_id),n) +setw(str(post_lumin),n) 
+		s.write(line+"\n")
 		
 
 w.close()
+s.close()
 
 print zero_events_times
 print zero_events_lumis
