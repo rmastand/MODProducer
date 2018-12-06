@@ -101,11 +101,11 @@ zero_events_lumin = []
 for i,master_time in enumerate(runA_times):
 	event_time = master_time
 	event_id = time_ordered_lumi_id[i]
-	event_lumin = lumi_id_to_lumin[time_ordered_lumi_id[i]][1]
+	event_lumin = lumi_id_to_lumin[time_ordered_lumi_id[i].rstrip()][1]
 	try: 
 		prev_time = runA_times[i-1]
 		prev_id = time_ordered_lumi_id[i-1]
-		prev_lumin = lumi_id_to_lumin[time_ordered_lumi_id[i-1]][1]
+		prev_lumin = lumi_id_to_lumin[time_ordered_lumi_id[i-1].rstrip()][1]
 	except IndexError:
 		prev_time = "N/A"
 		prev_id = "N/A"
@@ -113,7 +113,7 @@ for i,master_time in enumerate(runA_times):
 	try: 
 		post_time = runA_times[i+1]
 		post_id = time_ordered_lumi_id[i+1]
-		post_lumin = lumi_id_to_lumin[time_ordered_lumi_id[i+1]][1]
+		post_lumin = lumi_id_to_lumin[time_ordered_lumi_id[i+1].rstrip()][1]
 	except IndexError:
 		post_time = "N/A"
 		post_id = "N/A"
