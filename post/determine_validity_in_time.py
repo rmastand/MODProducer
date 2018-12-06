@@ -2,6 +2,8 @@
 
 import numpy as np
 import sys
+import datetime
+import time
 
 
 plot_eff_lumi_file = sys.argv[1]
@@ -24,26 +26,33 @@ def read_lumi_by_ls(lumibyls_file):
 	lines =  lumibyls.readlines()
 	split_lines = [line.split(",") for line in lines][2:]
 	char = ""
-	lumi_id_to_gps_times = {}
-	lumi_id_to_lumin = {}
-	time_series_all = []
+	time_to_id = {}
+	time_to_lumin = {}
 	lumin_all = []
 	i = 0
 	while char !="#":
 		run = split_lines[i][0].split(":")[0]
-		lumi = split_lines[i][1].split(":")[0]	
-		lumi_id = run+":"+lumi
-		lumi_id_to_lumin[lumi_id] = (float(split_lines[i][5]),float(split_lines[i][6]))
-
+		lumi = split_lines[i][1].split(":")[0]
+		date = split_lines[i][2].split(" ")[0]
+		tim = split_lines[i][2].split(" ")[1]
+		mdy = [int(x) for x in date.split("/")]
+		hms = [int(x) for x in tim.split(":")]
+		dt = datetime.datetime(mdy[2], mdy[0], mdy[1], hms[0], hms[1],hms[2])
+		timestamp = time.mktime(dt.timetuple())
+		time_to_id[timestamp] = run+":"+lumi
+		time_to_lumin[timestamp] = float(split_lines[i][6])
 		i += 1
 		try:
 			char = split_lines[i][0][0]
 		except: pass
-	return lumi_id_to_lumin
+	return time_to_id,time_to_lumin
 
 
 
-lumi_id_to_lumin = read_lumi_by_ls(lumibyls_file)
+
+
+
+time_to_id,time_to_lumin = read_lumi_by_ls(lumibyls_file)
 
 
 """
@@ -104,24 +113,16 @@ zero_events_lumin = []
 for i,master_time in enumerate(runA_times):
 	
 	event_time = master_time
-	event_id = time_ordered_lumi_id[i]
-	event_lumin = lumi_id_to_lumin[time_ordered_lumi_id[i].rstrip()][1]
+	event_id = time_to_id[event_time]	
+	event_lumin = time_to_lumin[event_time]
 	try: 
 		prev_time = runA_times[i-1]
-		prev_id = time_ordered_lumi_id[i-1]
-		prev_lumin = lumi_id_to_lumin[time_ordered_lumi_id[i-1].rstrip()][1]
 	except IndexError:
 		prev_time = "N/A"
-		prev_id = "N/A"
-		prev_lumin ="N/A"
 	try: 
 		post_time = runA_times[i+1]
-		post_id = time_ordered_lumi_id[i+1]
-		post_lumin = lumi_id_to_lumin[time_ordered_lumi_id[i+1].rstrip()][1]
 	except IndexError:
 		post_time = "N/A"
-		post_id = "N/A"
-		post_lumin = "N/A"
 		
 	test_sum = 0
 	if i % 10000 == 0:
@@ -137,6 +138,15 @@ for i,master_time in enumerate(runA_times):
 		zero_events_times.append(event_time)
 		zero_events_lumis.append(event_id)
 		zero_events_lumin.append(event_lumin)
+		try: prev_id = time_to_id[prev_time]	
+		except KeyError: prev_id = "N/A"
+		try: post_id = time_to_id[post_time]	
+		except KeyError: prev_id = "N/A"
+		try: prev_lumin = time_to_lumin[prev_time]	
+		except KeyError: prev_id = "N/A"
+		try: post_lumin = time_to_lumin[post_time]	
+		except KeyError: prev_id = "N/A"
+			
 		line  = setw(str(event_time),n) + setw(str(event_id),n) +setw(str(event_lumin),n) +setw(str(prev_time),n) +setw(str(prev_id),n) +setw(str(prev_lumin),n)  +setw(str(post_time),n) +setw(str(post_id),n) +setw(str(post_lumin),n) 
 		s.write(line+"\n")
 		
@@ -157,49 +167,6 @@ print "total valid lumi in run A", len(runA_times)
 for trigger in rev_ordered_triggers:
 	array = trigger_index_dict[trigger]
 	print "total valid in ", trigger, sum([float(x) for x in array])
-"""
-	
-print "testing 101"
-search_val = ["1","0","1"]
-N = len(search_val)
-for trigger in rev_ordered_triggers:
-	array = trigger_index_dict[trigger]
-	possibles = np.where(array == search_val[0])[0]
-	solns = []
-	for p in possibles:
-    		check = values[p:p+N]
-    		if np.all(check == searchval):
-       			solns.append(p)
-	print(solns)
-	
-print "testing 1001"
-search_val = ["1","0","0","1"]
-N = len(search_val)
-for trigger in rev_ordered_triggers:
-	array = trigger_index_dict[trigger]
-	possibles = np.where(array == search_val[0])[0]
-	solns = []
-	for p in possibles:
-    		check = values[p:p+N]
-    		if np.all(check == searchval):
-       			solns.append(p)
-	print(solns)
-	
-
-print "testing 10001"
-search_val = ["1","0","0","0","1"]
-N = len(search_val)
-for trigger in rev_ordered_triggers:
-	array = trigger_index_dict[trigger]
-	possibles = np.where(array == search_val[0])[0]
-	solns = []
-	for p in possibles:
-    		check = values[p:p+N]
-    		if np.all(check == searchval):
-       			solns.append(p)
-	print(solns)
-	
-"""
 
 
 
