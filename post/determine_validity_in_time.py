@@ -73,8 +73,6 @@ lines = eff_lumi_file.readlines()
 runA_times = np.array([float(x) for x in lines[0].split(",")])
 time_ordered_lumi_id = lines[5].split(",")
 
-print len(runA_times)
-print len(time_ordered_lumi_id)
 
 trigger_index_dict = {}
 
