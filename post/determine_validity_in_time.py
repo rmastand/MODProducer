@@ -64,6 +64,9 @@ lines = eff_lumi_file.readlines()
 runA_times = np.array([float(x) for x in lines[0].split(",")])
 time_ordered_lumi_id = lines[5].split(",")
 
+print len(runA_times)
+print len(time_ordered_lumi_id)
+
 trigger_index_dict = {}
 
 for trigger in rev_ordered_triggers:
@@ -99,6 +102,7 @@ zero_events_times = []
 zero_events_lumis = []
 zero_events_lumin = []
 for i,master_time in enumerate(runA_times):
+	
 	event_time = master_time
 	event_id = time_ordered_lumi_id[i]
 	event_lumin = lumi_id_to_lumin[time_ordered_lumi_id[i].rstrip()][1]
