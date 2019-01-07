@@ -151,140 +151,21 @@ for file in os.listdir(parsed_file_inpur_dir):
 						except KeyError:
 							master_trig_dict[cut_trigger_name(trig)]["fired"][lumi_id] = file_trig_dict[trig]["fired"][lumi_id]
 
-
-def plot_eff_lumin():
-	# finds time vs effective luminosity curves for all triggers
-	trigger_time_v_lumin_rec = {}
-	# also finds the integrated luminosity for all represented lumiblocks
-	master_lumin_ids = []
-	for trigger in master_trig_dict.keys():
-		print trigger
-		trigger_time = []
-		trigger_eff_lumin = []
-		for i,lumi_id in enumerate(master_trig_dict[trigger]["good_lumis"]):
-			if lumi_id not in master_lumin_ids:
-				master_lumin_ids.append(lumi_id)
-			trigger_time.append(lumi_id_to_gps_times[lumi_id])
-			trigger_eff_lumin.append(lumi_id_to_lumin[lumi_id][1]/master_trig_dict[trigger]["good_prescales"][i])
-		trigger_time_v_lumin_rec[trigger] = trigger_time,trigger_eff_lumin
-
-	# now to get the time / recorded integrated luminosity data
-	master_times = []
-	master_lumin_rec = []
-
-	runA_times= []
-	runA_lumin_rec = []
+lumi_to_events_dict = {}
+for trigger in ordered_triggers:
+	lumi_to_events_dict[trigger] = ([],[])
 	
-	for lumi_id in master_lumin_ids:
-		master_times.append(lumi_id_to_gps_times[lumi_id])
-		master_lumin_rec.append(lumi_id_to_lumin[lumi_id][1]) 
-	for lumi_id in lumi_id_to_lumin.keys():
-		if lumi_id[0] in runA_runs:
-			runA_times.append(lumi_id_to_gps_times[lumi_id])
-			runA_lumin_rec.append(lumi_id_to_lumin[lumi_id][1]) 
-			
-		
-	print "start sorting"
-	# sorts all the represented lumiblocks by time, gets the integrated luminosity BY LUMI BLOCK INDEX
-	master_times_sorted,master_lumin_rec = (list(t) for t in zip(*sorted(zip(master_times,master_lumin_rec))))
-	runA_times_sorted,runA_lumin_rec_sorted = (list(t) for t in zip(*sorted(zip(runA_times,runA_lumin_rec))))
+for trigger in ordered_triggers:
+	for lumi_id in master_trig_dict[trigger]["fired"].keys():
+		lumi_to_events_dict[trigger][0].append(lumi_id_to_lumin[lumi_id][1])
+		lumi_to_events_dict[trigger][1].append(master_trig_dict[trigger]["fired"][lumi_id])
+
+for trigger in ordered_triggers:	
+	plt.figure()
+	plt.scatter(lumi_to_events_dict[trigger][0],lumi_to_events_dict[trigger][1])
+	plt.xlabel("luminosity")
+	plt.ylabel("# events")
+	plt.title(trigger)
+	plt.show()
 
 	
-	print "done sorting"
-	
-	
-	
-	with open("graphs/plot_eff_lumin.txt", "w") as output:
-		
-		#first write out all the luminosity in run A
-		writer = csv.writer(output, lineterminator='\n')
-		writer.writerow(runA_times_sorted)  
-		print np.cumsum(runA_lumin_rec_sorted)[-1]
-		
-		
-		writer.writerow(np.cumsum(runA_lumin_rec_sorted)) 
-		
-        	writer.writerow(master_times_sorted)  
-		master_times_index = range(len(master_times_sorted))
-		writer.writerow(master_times_index)   
-		writer.writerow(np.cumsum(master_lumin_rec))  
-		
-		print "total valid", len(lumin_all)
-		print "runA jet valid", len(runA_lumin_rec_sorted)
-	
-
-		# ordering the luminosity ids to be used as labels
-		times_sorted,ordered_ids = (list(t) for t in zip(*sorted(zip(master_times,master_lumin_ids))))
-		ids_good_format = []
-		for id in ordered_ids:
-			ids_good_format.append(str(id[0])+":"+str(id[1]))
-		writer.writerow(ids_good_format)   
-		# for each trigger: sorts all the represented lumiblocks by time, gets the effective luminosity BY LUMI BLOCK INDEX
-		for trig in ordered_triggers[::-1]:
-			times,eff_lumin = (list(t) for t in zip(*sorted(zip(trigger_time_v_lumin_rec[trig][0],trigger_time_v_lumin_rec[trig][1]))))
-			overlap_times = []
-			overlap_index = []
-			eff_lumin_2 = []
-			for i,mytime in enumerate(times_sorted):
-				if mytime in times:
-					overlap_times.append(master_times_sorted[i]) 	
-					overlap_index.append(master_times_index[i]) 
-					eff_lumin_2.append(eff_lumin[times.index(mytime)])
-			print len(eff_lumin_2),len(eff_lumin)
-			writer.writerow(overlap_times)  
-			writer.writerow(overlap_index)  
-			writer.writerow(np.cumsum(eff_lumin_2)) 
-			print "going"
-
-	return master_times_index,master_times_sorted
-
-def plot_fired_over_eff_lumin(master_times_index,master_times_sorted):
-	trigger_time_v_fired_lumin = {}
-	for trigger in master_trig_dict.keys():
-		trigger_time = []
-		trigger_fired_lumin = []
-		trigger_lumi = []
-		for i,lumi_id in enumerate(master_trig_dict[trigger]["good_lumis"]):
-			eff_lumin = lumi_id_to_lumin[lumi_id][1]/master_trig_dict[trigger]["good_prescales"][i]
-			try:
-				trigger_fired_lumin.append(float(master_trig_dict[trigger]["fired"][lumi_id])/eff_lumin)
-				trigger_time.append(lumi_id_to_gps_times[lumi_id])
-				trigger_lumi.append(lumi_id[0]+":"+lumi_id[1])
-			except ZeroDivisionError:
-				pass
-		trigger_time_v_fired_lumin[trigger] = trigger_time,trigger_fired_lumin,trigger_lumi
-
-	with open("graphs/plot_fired_over_lumin.txt", "w") as output:
-		writer = csv.writer(output, lineterminator='\n')
-		for trig in ordered_triggers[::-1]:
-			new_times,fired_lumin = (list(t) for t in zip(*sorted(zip(trigger_time_v_fired_lumin[trig][0],trigger_time_v_fired_lumin[trig][1]))))
-			new_times, ordered_ids = (list(t) for t in zip(*sorted(zip(trigger_time_v_fired_lumin[trig][0],trigger_time_v_fired_lumin[trig][2]))))
-			
-			overlap_index = []
-			overlap_time = []
-			fired_lumin_2 = []
-			for i,mytime in enumerate(master_times_sorted):
-				if mytime in new_times:
-					overlap_index.append(master_times_index[i]) 
-					overlap_time.append(master_times_sorted[i])
-					fired_lumin_2.append(fired_lumin[new_times.index(mytime)])
-
-					
-			
-			writer.writerow(ordered_ids) 
-			writer.writerow(overlap_time)  
-			writer.writerow(overlap_index)  
-			writer.writerow(fired_lumin_2) 
-			print "going2"
-	
-			
-	
-	
-
-	
-
-master_times_index,master_times_sorted = plot_eff_lumin()
-plot_fired_over_eff_lumin(master_times_index,master_times_sorted)
-# currently i am NOT checking for validity for this last one
-#lumi_blocks_in_file()
-
