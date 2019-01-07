@@ -167,6 +167,6 @@ for trigger in ordered_triggers:
 	plt.xlabel("luminosity")
 	plt.ylabel("# events")
 	plt.title(trigger)
-	plt.show()
+	plt.savefig(trigger)
 
 	
