@@ -4,6 +4,7 @@ import os
 import datetime
 import time
 import csv
+import matplotlib.pyplot as plt
 
 parsed_file_inpur_dir = sys.argv[1]
 lumibyls_file = sys.argv[2]
