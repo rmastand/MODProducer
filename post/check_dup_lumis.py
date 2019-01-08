@@ -11,7 +11,7 @@ import csv
 lumibyls_file = sys.argv[1]
 #mod_file_inpur_dir = sys.argv[2]
 
-all_dirs = [/Volumes/Seagate Backup Plus Drive/MITOpenDataProject/eos/opendata/cms/Run2011A/Jet/MOD/12Oct2013-v1/20001/]
+all_dirs = ["/Volumes/Seagate Backup Plus Drive/MITOpenDataProject/eos/opendata/cms/Run2011A/Jet/MOD/12Oct2013-v1/20001/"]
 
 
 def read_lumi_by_ls(lumibyls_file):
