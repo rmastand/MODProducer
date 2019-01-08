@@ -10,7 +10,6 @@ import csv
 
 lumibyls_file = sys.argv[1]
 mod_file_inpur_dir = sys.argv[2]
-file_trig_dict_output_dir = sys.argv[3]
 
 def read_lumi_by_ls(lumibyls_file):
 	"""
@@ -54,7 +53,7 @@ def is_lumi_valid(lumi_id, lumi_id_to_lumin):
 lumi_id_to_gps_times,lumi_id_to_lumin = read_lumi_by_ls(lumibyls_file)
 
 
-def read_mod_file(mod_file,file_trig_dict_output_dir,file_name,i,num_files):
+def read_mod_file(mod_file,file_name,i,num_files):
 	"""
 	prints a dict of triggers FOR EACH MOD file
 	keys are triggers names (with versions)
@@ -66,7 +65,7 @@ def read_mod_file(mod_file,file_trig_dict_output_dir,file_name,i,num_files):
 	line n+2 = list of good prescales trig_dict["good_prescales"]
 	line n+3 = list of lumi: # times fired paired. Comes from a dict where lumi id is the key and # times fired is the value trig_dict["fired"]
 	"""
-	trig_dict = {}
+	valid_lumis = []
 
 	with open(mod_file) as file:
 		
@@ -76,64 +75,22 @@ def read_mod_file(mod_file,file_trig_dict_output_dir,file_name,i,num_files):
 			# this should signal each separate event
 			if ("Cond" in line.split()) and ("#" not in line.split()):
 				run,lumiBlock = line.split()[1],line.split()[3]
+				if is_lumi_valid((run,lumiBlock),lumi_id_to_lumin):
+					if float(run+"."+lumiBlock) not in valid_lumis:
+						valid_lumis.append(float(run+"."+lumiBlock))
+	return valid_lumis
 
-			if ("Trig" in line.split()) and ("#" not in line.split()):
-				# all within 1 event
-				# given line: [Trig identifier, trig name, prescale1, prescale2, fired?]
-				if line.split()[1] not in trig_dict.keys():
-					trig_dict[line.split()[1]] = {
-								      "good_lumis":[],
-								      # corresponds to the prescale for a given GOOD LUMI BLOCK
-								      "good_prescales":[],
-									  "fired":{}
-
-								     }
-
-					# if the lumi block is valid and if not alredy been analyzed (so present by definition)
-					if is_lumi_valid((run,lumiBlock),lumi_id_to_lumin):
-						if (run,lumiBlock) not in trig_dict[line.split()[1]]["good_lumis"]:
-							trig_dict[line.split()[1]]["good_lumis"].append((run,lumiBlock))
-							trig_dict[line.split()[1]]["good_prescales"].append(float(line.split()[2])*float(line.split()[3]))
-						try:
-							trig_dict[line.split()[1]]["fired"][(run,lumiBlock)]+= int(line.split()[4])
-						except KeyError:
-							trig_dict[line.split()[1]]["fired"][(run,lumiBlock)] = int(line.split()[4])
-				else:
-
-					if is_lumi_valid((run,lumiBlock),lumi_id_to_lumin):
-						if (run,lumiBlock) not in trig_dict[line.split()[1]]["good_lumis"]:
-							trig_dict[line.split()[1]]["good_lumis"].append((run,lumiBlock))
-							trig_dict[line.split()[1]]["good_prescales"].append(float(line.split()[2])*float(line.split()[3]))
-						try:
-							trig_dict[line.split()[1]]["fired"][(run,lumiBlock)]+= int(line.split()[4])
-						except KeyError:
-							trig_dict[line.split()[1]]["fired"][(run,lumiBlock)] = int(line.split()[4])
-
-		with open(file_trig_dict_output_dir+file_name.replace(".mod",".txt"), "w") as output:
-			writer = csv.writer(output, lineterminator='\n')
-			for trigger in trig_dict:
-				writer.writerow(["# "+trigger]) 
-				good_lumis = []
-				for lumi in trig_dict[trigger]["good_lumis"]:
-					good_lumis.append(lumi[0]+":"+lumi[1])
-				writer.writerow(good_lumis)
-				writer.writerow(trig_dict[trigger]["good_prescales"])
-				fired = []
-				for lumi_id in trig_dict[trigger]["fired"].keys():
-				
-					fired.append(lumi_id[0]+"_"+lumi_id[1]+":"+str(trig_dict[trigger]["fired"][lumi_id]))
-				writer.writerow(fired)
-		return trig_dict
-
-
+		
+all_valid_lumis = []
 i = 1
 num_files = len(os.listdir(mod_file_inpur_dir))
 for file in os.listdir(mod_file_inpur_dir):
 	# if file has not already been processed
-	if file.replace(".mod",".txt") not in os.listdir(file_trig_dict_output_dir):
-		print "Processing file " + file + ", File "+str(i)+" of " + str(num_files)
-		file_trig_dict = read_mod_file(mod_file_inpur_dir+"/"+file,file_trig_dict_output_dir,file,i,num_files)
-	else:
-		print "Already processed " + file + ", File "+str(i)+" of " + str(num_files)
+	print "Processing file " + file + ", File "+str(i)+" of " + str(num_files)
+	valid_lumis = read_mod_file(mod_file_inpur_dir+"/"+file,file,i,num_files)
+	all_valid_lumis += valid_lumis
 	i += 1
-	
+
+
+print len(set([x for x in all_valid_lumis if all_valid_lumis.count(x) > 1]))
+print set([x for x in all_valid_lumis if all_valid_lumis.count(x) > 1])
