@@ -62,7 +62,7 @@ def is_lumi_valid(lumi_id, lumi_id_to_lumin):
 lumi_id_to_gps_times,lumi_id_to_lumin = read_lumi_by_ls(lumibyls_file)
 
 
-def read_mod_file(mod_file,file_trig_dict_output_dir,file_name,i,num_files,output):
+def read_mod_file(mod_file,file_name,i,num_files,output):
 
 	with open(mod_file) as file:
 		
@@ -112,6 +112,6 @@ with open(output_file,"w") as output:
 	for file in os.listdir(mod_file_inpur_dir):
 		# if file has not already been processed
 		print "Processing file " + file + ", File "+str(i)+" of " + str(num_files)
-		file_trig_dict = read_mod_file(mod_file_inpur_dir+"/"+file,file_trig_dict_output_dir,file,i,num_files,output)
+		file_trig_dict = read_mod_file(mod_file_inpur_dir+"/"+file,file,i,num_files,output)
 		i += 1
 	
