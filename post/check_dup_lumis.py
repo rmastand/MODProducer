@@ -9,7 +9,10 @@ import csv
 """generates file trig dicts, prints them to 1 dict for each file"""
 
 lumibyls_file = sys.argv[1]
-mod_file_inpur_dir = sys.argv[2]
+#mod_file_inpur_dir = sys.argv[2]
+
+all_dirs = [/Volumes/Seagate Backup Plus Drive/MITOpenDataProject/eos/opendata/cms/Run2011A/Jet/MOD/12Oct2013-v1/20001/]
+
 
 def read_lumi_by_ls(lumibyls_file):
 	"""
@@ -83,13 +86,14 @@ def read_mod_file(mod_file,file_name,i,num_files):
 		
 all_valid_lumis = []
 i = 1
-num_files = len(os.listdir(mod_file_inpur_dir))
-for file in os.listdir(mod_file_inpur_dir):
-	# if file has not already been processed
-	print "Processing file " + file + ", File "+str(i)+" of " + str(num_files)
-	valid_lumis = read_mod_file(mod_file_inpur_dir+"/"+file,file,i,num_files)
-	all_valid_lumis += valid_lumis
-	i += 1
+num_files = 1223
+for dire in all_dirs
+	for file in os.listdir(dire):
+		# if file has not already been processed
+		print "Processing file " + file + ", File "+str(i)+" of " + str(num_files)
+		valid_lumis = read_mod_file(mod_file_inpur_dir+"/"+file,file,i,num_files)
+		all_valid_lumis += valid_lumis
+		i += 1
 
 
 print len(set([x for x in all_valid_lumis if all_valid_lumis.count(x) > 1]))
