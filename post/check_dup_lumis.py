@@ -91,7 +91,7 @@ for dire in all_dirs:
 	for file in os.listdir(dire):
 		# if file has not already been processed
 		print "Processing file " + file + ", File "+str(i)+" of " + str(num_files)
-		valid_lumis = read_mod_file(mod_file_inpur_dir+"/"+file,file,i,num_files)
+		valid_lumis = read_mod_file(dire+"/"+file,file,i,num_files)
 		all_valid_lumis += valid_lumis
 		i += 1
 
