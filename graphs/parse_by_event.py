@@ -91,17 +91,18 @@ def read_mod_file(mod_file,file_name,i,num_files,output):
 						
 			
 			elif "EndEvent" in line.split():
-				line += setw(event,10)+setw(run,10)+setw(lumiBlock,10)
-				for item in triggers_present:
-					line += item+','
-				line += "  "
-				for item in triggers_prescales:
-					line += item+','
-				line += "  "
-				for item in triggers_fired:
-					line += item+','
-				line += "\n"
-				output.write(line)
+				if is_lumi_valid((run,lumiBlock),lumi_id_to_lumin):
+					line += setw(event,10)+setw(run,10)+setw(lumiBlock,10)
+					for item in triggers_present:
+						line += item+','
+					line += "  "
+					for item in triggers_prescales:
+						line += item+','
+					line += "  "
+					for item in triggers_fired:
+						line += item+','
+					line += "\n"
+					output.write(line)
 	
 
 i = 1
