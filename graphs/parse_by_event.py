@@ -93,13 +93,13 @@ def read_mod_file(mod_file,file_trig_dict_output_dir,file_name,i,num_files,outpu
 			elif "EndEvent" in line.split():
 				line += setw(event,10)+setw(run,10)+setw(lumiBlock,10)
 				for item in triggers_present:
-					line += item+',"
+					line += item+','
 				line += "  "
 				for item in triggers_prescales:
-					line += item+',"
+					line += item+','
 				line += "  "
 				for item in triggers_fired:
-					line += item+',"
+					line += item+','
 				line += "\n"
 				output_file.write(line)
 	
