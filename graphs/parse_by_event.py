@@ -101,7 +101,7 @@ def read_mod_file(mod_file,file_name,i,num_files,output):
 				for item in triggers_fired:
 					line += item+','
 				line += "\n"
-				output_file.write(line)
+				output.write(line)
 	
 
 i = 1
