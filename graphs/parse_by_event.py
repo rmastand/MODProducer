@@ -10,11 +10,15 @@ import ast
 import os
 import csv
 
+
+def setw(word,n):
+	return str(word)+" "*(n-len(word))
+
 """generates file trig dicts, prints them to 1 dict for each file"""
 
 lumibyls_file = sys.argv[1]
 mod_file_inpur_dir = sys.argv[2]
-file_trig_dict_output_dir = sys.argv[3]
+output_file = sys.argv[3]
 
 def read_lumi_by_ls(lumibyls_file):
 	"""
@@ -58,19 +62,7 @@ def is_lumi_valid(lumi_id, lumi_id_to_lumin):
 lumi_id_to_gps_times,lumi_id_to_lumin = read_lumi_by_ls(lumibyls_file)
 
 
-def read_mod_file(mod_file,file_trig_dict_output_dir,file_name,i,num_files):
-	"""
-	prints a dict of triggers FOR EACH MOD file
-	keys are triggers names (with versions)
-	subdicts are lists of good lumis the trigger was present for and the corresponding good prescale values
-	
-	each n correponds to a different trigger name
-	line n = uncut trigger name (with version)
-	line n+1 = list of good lumins ids trig_dict["good_lumis"]
-	line n+2 = list of good prescales trig_dict["good_prescales"]
-	line n+3 = list of lumi: # times fired paired. Comes from a dict where lumi id is the key and # times fired is the value trig_dict["fired"]
-	"""
-	trig_dict = {}
+def read_mod_file(mod_file,file_trig_dict_output_dir,file_name,i,num_files,output):
 
 	with open(mod_file) as file:
 		
@@ -78,66 +70,48 @@ def read_mod_file(mod_file,file_trig_dict_output_dir,file_name,i,num_files):
 			# MOST CODE TAKEN FROM GET_TRIGGER_INFO.py
 			# keeps track of the run, lumiBlock
 			# this should signal each separate event
-			if ("Cond" in line.split()) and ("#" not in line.split()):
-				run,lumiBlock = line.split()[1],line.split()[3]
+			if "BeginEvent" in line.split():
+				triggers_present = []
+				triggers_prescales = []
+				triggers_fired = []
+				line = ""
+			elif ("Cond" in line.split()) and ("#" not in line.split()):
+				# means we hit a new event
+				run,event,lumiBlock = line.split()[1],line.split()[2],line.split()[3]
 
-			if ("Trig" in line.split()) and ("#" not in line.split()):
+			elif ("Trig" in line.split()) and ("#" not in line.split()):
 				# all within 1 event
 				# given line: [Trig identifier, trig name, prescale1, prescale2, fired?]
-				if line.split()[1] not in trig_dict.keys():
-					trig_dict[line.split()[1]] = {
-								      "good_lumis":[],
-								      # corresponds to the prescale for a given GOOD LUMI BLOCK
-								      "good_prescales":[],
-									  "fired":{}
-
-								     }
-
-					# if the lumi block is valid and if not alredy been analyzed (so present by definition)
-					if is_lumi_valid((run,lumiBlock),lumi_id_to_lumin):
-						if (run,lumiBlock) not in trig_dict[line.split()[1]]["good_lumis"]:
-							trig_dict[line.split()[1]]["good_lumis"].append((run,lumiBlock))
-							trig_dict[line.split()[1]]["good_prescales"].append(float(line.split()[2])*float(line.split()[3]))
-						try:
-							trig_dict[line.split()[1]]["fired"][(run,lumiBlock)]+= int(line.split()[4])
-						except KeyError:
-							trig_dict[line.split()[1]]["fired"][(run,lumiBlock)] = int(line.split()[4])
-				else:
-
-					if is_lumi_valid((run,lumiBlock),lumi_id_to_lumin):
-						if (run,lumiBlock) not in trig_dict[line.split()[1]]["good_lumis"]:
-							trig_dict[line.split()[1]]["good_lumis"].append((run,lumiBlock))
-							trig_dict[line.split()[1]]["good_prescales"].append(float(line.split()[2])*float(line.split()[3]))
-						try:
-							trig_dict[line.split()[1]]["fired"][(run,lumiBlock)]+= int(line.split()[4])
-						except KeyError:
-							trig_dict[line.split()[1]]["fired"][(run,lumiBlock)] = int(line.split()[4])
-
-		with open(file_trig_dict_output_dir+file_name.replace(".mod",".txt"), "w") as output:
-			writer = csv.writer(output, lineterminator='\n')
-			for trigger in trig_dict:
-				writer.writerow(["# "+trigger]) 
-				good_lumis = []
-				for lumi in trig_dict[trigger]["good_lumis"]:
-					good_lumis.append(lumi[0]+":"+lumi[1])
-				writer.writerow(good_lumis)
-				writer.writerow(trig_dict[trigger]["good_prescales"])
-				fired = []
-				for lumi_id in trig_dict[trigger]["fired"].keys():
 				
-					fired.append(lumi_id[0]+"_"+lumi_id[1]+":"+str(trig_dict[trigger]["fired"][lumi_id]))
-				writer.writerow(fired)
-		return trig_dict
-
+				if is_lumi_valid((run,lumiBlock),lumi_id_to_lumin):
+					triggers_present.append(line.split()[1])
+					triggers_prescales.append(str(float(line.split()[2])*float(line.split()[3])))
+					if int(line.split()[4]) == 1:
+						triggers_fired.append(line.split()[1])
+						
+			
+			elif "EndEvent" in line.split():
+				line += setw(event,10)+setw(run,10)+setw(lumiBlock,10)
+				for item in triggers_present:
+					line += item+',"
+				line += "  "
+				for item in triggers_prescales:
+					line += item+',"
+				line += "  "
+				for item in triggers_fired:
+					line += item+',"
+				line += "\n"
+				output_file.write(line)
+	
 
 i = 1
 num_files = len(os.listdir(mod_file_inpur_dir))
-for file in os.listdir(mod_file_inpur_dir):
-	# if file has not already been processed
-	if file.replace(".mod",".txt") not in os.listdir(file_trig_dict_output_dir):
+with open(output_file,"w") as output:
+	output.write(setw("EventNum",10)+setw("RunNum",10)+setw("LumiNum",10)+setw("Triggers Present",20)+setw("Trigger Prescales",20)+setw("Triggers Fired",20)+"\n")
+
+	for file in os.listdir(mod_file_inpur_dir):
+		# if file has not already been processed
 		print "Processing file " + file + ", File "+str(i)+" of " + str(num_files)
-		file_trig_dict = read_mod_file(mod_file_inpur_dir+"/"+file,file_trig_dict_output_dir,file,i,num_files)
-	else:
-		print "Already processed " + file + ", File "+str(i)+" of " + str(num_files)
-	i += 1
+		file_trig_dict = read_mod_file(mod_file_inpur_dir+"/"+file,file_trig_dict_output_dir,file,i,num_files,output)
+		i += 1
 	
