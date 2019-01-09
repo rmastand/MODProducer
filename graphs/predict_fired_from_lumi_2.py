@@ -60,6 +60,7 @@ with open(parsed_by_event,"r") as event_listing:
         triggers_fired = line.split()[5].split(",")
         triggers_fired = [x[:-3] for x in triggers_fired]
         prescales = line.split()[4].split(",")
+	print prescales
         prescales = [float(x) for x in prescales]
 
         for j, present_trigger in triggers_present:
