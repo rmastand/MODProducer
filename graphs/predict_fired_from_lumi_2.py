@@ -62,7 +62,7 @@ with open(parsed_by_event,"r") as event_listing:
         prescales = line.split()[4].split(",")[-1]
         prescales = [float(x) for x in prescales]
 
-        for j, present_trigger in triggers_present:
+        for j, present_trigger in enumerate(triggers_present):
           if present_trigger in rev_ordered_triggers:
             if lumi_id not in master_dict[trigger].keys():
               master_dict[trigger][lumi_id] = {"prescale":0,"times_fired":0}
