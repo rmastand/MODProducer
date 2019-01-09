@@ -66,7 +66,12 @@ with open(parsed_by_event,"r") as event_listing:
           if present_trigger in rev_ordered_triggers:
             if lumi_id not in master_dict[trigger].keys():
               master_dict[trigger][lumi_id] = {"prescale":0,"times_fired":0}
-            master_dict[trigger][lumi_id]["prescale"] = prescales[j]
+	    try:
+            	master_dict[trigger][lumi_id]["prescale"] = prescales[j]
+	    except IndexError:
+		print prescales
+		print triggers_present
+		print present_trigger
             if present_trigger in triggers_fired:   
               master_dict[trigger][lumi_id]["times_fired"] += 1 
     else: print master_dict
