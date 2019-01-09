@@ -76,7 +76,6 @@ with open(parsed_by_event,"r") as event_listing:
               master_dict[trigger][lumi_id]["times_fired"] += 1 
     else: 
 	print master_dict
-	exit()
-	
-      
+	break
+print "out"
       
