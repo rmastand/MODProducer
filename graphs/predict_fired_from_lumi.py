@@ -158,14 +158,15 @@ for trigger in ordered_triggers:
 	
 for trigger in ordered_triggers:
 	for lumi_id in master_trig_dict[trigger]["fired"].keys():
-		lumi_to_events_dict[trigger][0].append(lumi_id_to_lumin[lumi_id][1])
+		prescale = master_trig_dict[trigger]["good_prescales"][master_trig_dict[trigger]["good_lumis"].index(lumi_id)]
+		lumi_to_events_dict[trigger][0].append(lumi_id_to_lumin[lumi_id][1]/float(prescale))
 		lumi_to_events_dict[trigger][1].append(master_trig_dict[trigger]["fired"][lumi_id])
 
 for trigger in ordered_triggers:	
 	plt.figure()
-	plt.scatter(lumi_to_events_dict[trigger][0],lumi_to_events_dict[trigger][1])
+	plt.scatter(lumi_to_events_dict[trigger][0],lumi_to_events_dict[trigger][1],s=1)
 	plt.xlabel("luminosity")
-	plt.ylabel("# events")
+	plt.ylabel("# fired")
 	plt.title(trigger)
 	plt.savefig(trigger)
 
