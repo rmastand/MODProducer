@@ -27,8 +27,6 @@ def read_lumi_by_ls(lumibyls_file):
 		tim = split_lines[i][2].split(" ")[1]
 		mdy = [int(x) for x in date.split("/")]
 		hms = [int(x) for x in tim.split(":")]
-		dt = datetime.datetime(mdy[2], mdy[0], mdy[1], hms[0], hms[1],hms[2])
-		lumi_id_to_gps_times[(run,lumi)] = time.mktime(dt.timetuple())
 		lumi_id_to_lumin[(run,lumi)] = (float(split_lines[i][5]),float(split_lines[i][6]))
 		time_series_all.append(time.mktime(dt.timetuple()))
 		lumin_all.append(float(split_lines[i][6]))
@@ -36,11 +34,11 @@ def read_lumi_by_ls(lumibyls_file):
 		try:
 			char = split_lines[i][0][0]
 		except: pass
-	return lumi_id_to_gps_times,lumi_id_to_lumin,time_series_all,lumin_all
+	return lumi_id_to_lumin
 
 
 
-lumi_id_to_gps_times,lumi_id_to_lumin,time_series_all,lumin_all = read_lumi_by_ls(lumibyls_file)
+lumi_id_to_lumin = read_lumi_by_ls(lumibyls_file)
 i = 0
 rev_ordered_triggers = ["HLT_Jet30","HLT_Jet60","HLT_Jet80","HLT_Jet110","HLT_Jet150","HLT_Jet190","HLT_Jet240","HLT_Jet300","HLT_Jet370"][::-1]
 
