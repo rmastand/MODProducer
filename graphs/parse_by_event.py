@@ -116,6 +116,6 @@ with open(output_file,"w") as output:
 		for file in os.listdir(dire):
 			# if file has not already been processed
 			print "Processing file " + file + ", File "+str(i)+" of " + str(num_files)
-			file_trig_dict = read_mod_file(mod_file_inpur_dir+"/"+file,file,i,num_files,output)
+			file_trig_dict = read_mod_file(dire+"/"+file,file,i,num_files,output)
 			i += 1
 	
