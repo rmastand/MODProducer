@@ -101,4 +101,5 @@ for dire in all_dirs:
 
 
 print len(set([x for x in all_valid_lumis if all_valid_lumis.count(x) > 1]))
-print set([x for x in all_valid_lumis if all_valid_lumis.count(x) > 1])
+print len(all_valid_lumis)
+#print set([x for x in all_valid_lumis if all_valid_lumis.count(x) > 1])
