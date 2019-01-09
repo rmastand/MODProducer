@@ -26,7 +26,10 @@ with open(parsed_by_event,"r") as event_listing:
       triggers_present = line.split()[3].split(",")
       # cuts the version numbers out
       triggers_present = [x[:-3] for x in triggers_present]
-      triggers_fired = line.split()[5].split(",")
+      try:
+        triggers_fired = line.split()[5].split(",")
+      except IndexError:
+        print line
       triggers_fired = [x[:-3] for x in triggers_fired]
       if (lower_trig_name in triggers_fired) and (higher_trig_name in triggers_present):
         num_lower_fired_and_higher_present += 1
