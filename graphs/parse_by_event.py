@@ -13,12 +13,14 @@ import csv
 
 def setw(word,n):
 	return str(word)+" "*(n-len(word))
-
-"""generates file trig dicts, prints them to 1 dict for each file"""
+all_MOD_dirs = ["/Volumes/Seagate Backup Plus Drive/MITOpenDataProject/eos/opendata/cms/Run2011A/Jet/MOD/12Oct2013-v1/10000/",
+	       "/Volumes/Seagate Backup Plus Drive/MITOpenDataProject/eos/opendata/cms/Run2011A/Jet/MOD/12Oct2013-v1/20000_a/",
+		"/Volumes/Seagate Backup Plus Drive/MITOpenDataProject/eos/opendata/cms/Run2011A/Jet/MOD/12Oct2013-v1/20000_b/",
+	       "/Volumes/Seagate Backup Plus Drive/MITOpenDataProject/eos/opendata/cms/Run2011A/Jet/MOD/12Oct2013-v1/20000_c/",
+	       "/Volumes/Seagate Backup Plus Drive/MITOpenDataProject/eos/opendata/cms/Run2011A/Jet/MOD/12Oct2013-v1/20001/"]
 
 lumibyls_file = sys.argv[1]
-mod_file_inpur_dir = sys.argv[2]
-output_file = sys.argv[3]
+output_file = sys.argv[2]
 
 def read_lumi_by_ls(lumibyls_file):
 	"""
@@ -106,13 +108,14 @@ def read_mod_file(mod_file,file_name,i,num_files,output):
 	
 
 i = 1
-num_files = len(os.listdir(mod_file_inpur_dir))
+num_files = 1223
 with open(output_file,"w") as output:
 	output.write(setw("EventNum",10)+setw("RunNum",10)+setw("LumiNum",10)+setw("Triggers Present",20)+setw("Trigger Prescales",20)+setw("Triggers Fired",20)+"\n")
-
-	for file in os.listdir(mod_file_inpur_dir):
-		# if file has not already been processed
-		print "Processing file " + file + ", File "+str(i)+" of " + str(num_files)
-		file_trig_dict = read_mod_file(mod_file_inpur_dir+"/"+file,file,i,num_files,output)
-		i += 1
+	for dire in all_MOD_dirs:
+		
+		for file in os.listdir(dire):
+			# if file has not already been processed
+			print "Processing file " + file + ", File "+str(i)+" of " + str(num_files)
+			file_trig_dict = read_mod_file(mod_file_inpur_dir+"/"+file,file,i,num_files,output)
+			i += 1
 	
