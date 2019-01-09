@@ -165,7 +165,7 @@ for trigger in ordered_triggers:
 for trigger in ordered_triggers:	
 	plt.figure()
 	plt.scatter(lumi_to_events_dict[trigger][0],lumi_to_events_dict[trigger][1],s=1)
-	plt.xlabel("luminosity")
+	plt.xlabel("Effective Luminosity")
 	plt.ylabel("# fired")
 	plt.title(trigger)
 	plt.savefig(trigger)
