@@ -3,6 +3,7 @@ import numpy as np
 import sys
 
 parsed_by_event = sys.argv[1]
+lumibyls_file = sys.argv[2]
 
 def read_lumi_by_ls(lumibyls_file):
 	"""
