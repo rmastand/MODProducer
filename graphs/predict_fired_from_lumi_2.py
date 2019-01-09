@@ -28,8 +28,6 @@ def read_lumi_by_ls(lumibyls_file):
 		mdy = [int(x) for x in date.split("/")]
 		hms = [int(x) for x in tim.split(":")]
 		lumi_id_to_lumin[(run,lumi)] = (float(split_lines[i][5]),float(split_lines[i][6]))
-		time_series_all.append(time.mktime(dt.timetuple()))
-		lumin_all.append(float(split_lines[i][6]))
 		i += 1
 		try:
 			char = split_lines[i][0][0]
