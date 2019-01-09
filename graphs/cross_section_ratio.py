@@ -20,7 +20,12 @@ num_higher_fired_given_lower_fired_and_higher_present = 0
 with open(parsed_by_event,"r") as event_listing:
   for line in event_listing:
     if "EventNum" not in line.split(): #just ignores the top line
-      print line.split()[3].split(",")
-      print line.split()[5].split(",")
+      triggers_present = line.split()[3].split(",")
+      triggers_present = [x[:-3] for x in triggers_present]
+      triggers_fired = line.split()[5].split(",")
+      triggers_fired = [x[:-3] for x in triggers_fired]
+      print triggers_present
+      print triggers_fired
+      
       
 
