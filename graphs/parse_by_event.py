@@ -94,7 +94,7 @@ def read_mod_file(mod_file,file_name,i,num_files,output):
 			
 			elif "EndEvent" in line.split():
 				if is_lumi_valid((run,lumiBlock),lumi_id_to_lumin):
-					to_write += setw(event,10)+setw(run,10)+setw(lumiBlock,10)
+					to_write += setw(event,20)+setw(run,15)+setw(lumiBlock,15)
 					for item in triggers_present:
 						to_write += item+','
 					to_write += "  "
@@ -110,7 +110,7 @@ def read_mod_file(mod_file,file_name,i,num_files,output):
 i = 1
 num_files = 1223
 with open(output_file,"w") as output:
-	output.write(setw("EventNum",10)+setw("RunNum",10)+setw("LumiNum",10)+setw("Triggers Present",20)+setw("Trigger Prescales",20)+setw("Triggers Fired",20)+"\n")
+	output.write(setw("EventNum",20)+setw("RunNum",15)+setw("LumiNum",15)+setw("Triggers Present",20)+setw("Trigger Prescales",20)+setw("Triggers Fired",20)+"\n")
 	for dire in all_MOD_dirs:
 		
 		for file in os.listdir(dire):
