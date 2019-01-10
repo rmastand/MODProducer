@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import numpy as np
 import sys
+import csv
 
 parsed_by_event = sys.argv[1]
 lumibyls_file = sys.argv[2]
@@ -81,6 +82,7 @@ effective lumi
 times fired
 """
 with open(output_file,"w") as output:
+	writer = csv.writer(output, lineterminator='\n')
 	for trigger in master_dict.keys():
 		lumi_ids = []
 		eff_lumins = []
@@ -90,19 +92,10 @@ with open(output_file,"w") as output:
 			lumi_ids.append(lumi_id[0]+":"+lumi_id[1])  
 			eff_lumins.append(lumi_id_to_lumin[lumi_id][1]/float(master_dict[trigger][lumi_id]["prescale"]))
 			times_fired.append(master_dict[trigger][lumi_id]["times_fired"])
-		line = ""
-		for x in lumi_ids:
-			line += x + ","
-		output.write(line+"\n")
-		line = ""
-		for x in eff_lumins:
-			line += str(x) + ","
-		output.write(line+"\n")
-		line = ""
-		for x in times_fired:
-			line += str(x) + ","
-		output.write(line+"\n")
-
+		writer.writerow(lumi_ids)
+		writer.writerow(eff_lumins)
+		writer.writerow(times_fired)
+		
 
 
 
