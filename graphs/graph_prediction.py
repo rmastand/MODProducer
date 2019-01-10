@@ -24,7 +24,7 @@ with open(input_file, "r") as input:
       times_fired = [int(x) for x in times_fired]
       trigger_dict[trigger][1] = times_fired
     
- for trigger in trigger_dict.keys():
+for trigger in trigger_dict.keys():
   plt.figure()
   plt.scatter(trigger_dict[trigger][0],trigger_dict[trigger][0],s=1)
   plt.xlabel("Effective Luminosity")
