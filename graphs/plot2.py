@@ -12,8 +12,8 @@ from matplotlib import patches
 from matplotlib import text as mtext
 import math
 
-plot_input_file = sys.argv[1]
-lumibyls_file = sys.argv[3]
+#plot_input_file = sys.argv[1]
+lumibyls_file = sys.argv[1]
 logo_location = "/Users/prekshan/rmastand/CMSOpenData/MODProducer/graphs/MODLogo.png"
 
 
