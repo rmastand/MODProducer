@@ -80,12 +80,12 @@ with open(parsed_by_event,"r") as event_listing:
 	
 
 
-"""
-# trigger
-lumi id
-effective lumi
-times fired
-"""
+			"""
+			# trigger
+			lumi id
+			effective lumi
+			times fired
+			"""
 			with open(output_file,"r") as output:
 				for trigger in master_dict.keys():
 					lumi_ids = []
