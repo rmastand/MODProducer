@@ -210,8 +210,8 @@ def graph_eff_lumin_time_ordered():
 
 	plt.plot(np.take(runA_times,g_i),np.take(runA_lumin,g_i),"k",linewidth=9.0)
 
-	x = min(master_times)*.9985
-	print min(master_times)
+	x = min(runA_times)*.9985
+	print min(runA_times)
 	plt.text(x,600000000,"Total Luminosity",color = "k")
 	
 	plt.text(x,1200000000,"1223 of 1223 AOD Files",weight="normal")
@@ -240,8 +240,8 @@ def graph_eff_lumin_time_ordered():
 
 	ax = plt.gca()
 
-	ax.set_xlim(left = min(master_times)*.998,right = max(master_times)*1.0001)
-	length = len(master_times)-1
+	ax.set_xlim(left = min(runA_times)*.998,right = max(runA_times)*1.0001)
+	length = len(runA_times)-1
 	indices_for_xaxis = np.linspace(length/20,length,5)
 	indices_for_xaxis = [int(x) for x in indices_for_xaxis]
 	
