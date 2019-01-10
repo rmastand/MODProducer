@@ -121,7 +121,8 @@ def graph_eff_lumin():
 
         #print np.logspace(min(master_index),max(master_index),num_samples)
         good_indices = np.logspace(np.log10(min(runA_index)),np.log10(max(runA_index)),num_samples).astype(int) #-min(runA_index)
-	print good_indices
+	print good_indices[:100]
+	print runA_index[:100]
 
 	plt.plot(np.take(runA_index,good_indices),np.take(runA_lumin,good_indices),"k",linewidth=9.0)
 
