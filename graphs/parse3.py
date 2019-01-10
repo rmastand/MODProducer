@@ -209,6 +209,7 @@ for trigger in rev_ordered_triggers:
   for id,time in enumerate(runA_times_sorted):
     if time in trigger_times_dict[trigger]:
       trigger_ids.append(id)
+      i = trigger_times_dict[trigger].index(time)
       try:
     		trigger_cross_section_sorted.append(float(trigger_eff_lumis_dict[trigger][i])/trigger_eff_fired_dict[trigger][i])
       except ZeroDivisionError:
