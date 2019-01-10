@@ -93,7 +93,7 @@ runA_ids = []
 
 for lumi_id in lumi_id_to_lumin.keys():
 		if lumi_id[0] in runA_runs:
-			runA_times.append(lumi_id_to_gps_times[lumi_id])
+			runA_times.append(id_to_time[lumi_id])
 			runA_lumin_rec.append(lumi_id_to_lumin[lumi_id][1]) 
       			runA_ids.append(lumi_id)
       
