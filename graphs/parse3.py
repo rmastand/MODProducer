@@ -124,7 +124,7 @@ writer.writerow(runA_lumin_rec_sorted)
 
 for trigger in rev_ordered_triggers[::-1]:
   # write the times out
-  trigger_times = [lumi_id_to_gps_times[lumi_id] for x in trigger_lumi_ids_dict[trigger]]
+  trigger_times = [id_to_time[lumi_id] for x in trigger_lumi_ids_dict[trigger]]
   trigger_times_sorted,trigger_lumin_rec_sorted = (list(t) for t in zip(*sorted(zip(trigger_times,trigger_eff_lumis_dict[trigger]))))
   writer.writerow(trigger_times_sorted)  
   writer.writerow(trigger_lumin_rec_sorted)  
@@ -148,7 +148,7 @@ writer.writerow(master_id_nums)
 writer.writerow(runA_lumin_rec_sorted)  
 
 for trigger in rev_ordered_triggers[::-1]:
-  trigger_times = [lumi_id_to_gps_times[lumi_id] for x in trigger_lumi_ids_dict[trigger]]
+  trigger_times = [id_to_time[lumi_id] for x in trigger_lumi_ids_dict[trigger]]
   trigger_ids = []
   for id,time in enumerate(runA_times_sorted):
     if times in trigger_times:
@@ -167,7 +167,7 @@ trigger luminosity
 """
 print "cross lumsection as time" 
 for trigger in rev_ordered_triggers[::-1]:
-  trigger_times = [lumi_id_to_gps_times[lumi_id] for x in trigger_lumi_ids_dict[trigger]]
+  trigger_times = [id_to_time[lumi_id] for x in trigger_lumi_ids_dict[trigger]]
   trigger_cross_section = []
   for i,eff_lumin in enumerate(trigger_eff_lumis_dict[trigger]):
     trigger_eff_lumin.append(float(eff_lumin)/trigger_eff_fired_dict[trigger])
@@ -184,7 +184,7 @@ trigger luminosity
 """
 print "cross section as id" 
 for trigger in rev_ordered_triggers[::-1]:
-  trigger_times = [lumi_id_to_gps_times[lumi_id] for x in trigger_lumi_ids_dict[trigger]]
+  trigger_times = [id_to_time[lumi_id] for x in trigger_lumi_ids_dict[trigger]]
   trigger_ids = []
   for id,time in enumerate(runA_times_sorted):
     if times in trigger_times:
