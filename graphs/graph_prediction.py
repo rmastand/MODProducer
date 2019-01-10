@@ -11,7 +11,7 @@ with open(input_file, "r") as input:
     i += 1
     if "#" in line.split():
       trigger = line.split()[1]
-      trigger_dict[trigger] == ([],[]) #eff lumi, times fired
+      trigger_dict[trigger] = ([],[]) #eff lumi, times fired
       i = 0
     elif i == 1: # lumi ids
       pass
