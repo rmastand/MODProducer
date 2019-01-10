@@ -25,7 +25,7 @@ with open(parsed_by_event,"r") as event_listing:
     if i % 10000 == 0:
       print "on line "+ str(i)
     if "EventNum" not in line.split(): #just ignores the top line
-      print line.split()[3]
+      print line.split()
       triggers_present = line.split()[3].split(",")[:-1]
       # cuts the version numbers out
       triggers_present = [x[:-3] for x in triggers_present]
