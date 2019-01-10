@@ -245,7 +245,7 @@ def graph_eff_lumin_time_ordered():
 	indices_for_xaxis = np.linspace(length/20,length,5)
 	indices_for_xaxis = [int(x) for x in indices_for_xaxis]
 	
-	plt.xticks(np.take(master_times,indices_for_xaxis))
+	plt.xticks(np.take(runA_times,indices_for_xaxis))
 	
 	labels = [item.get_text() for item in ax.get_xticklabels()]
 	for i,index in enumerate(indices_for_xaxis):
