@@ -205,20 +205,16 @@ writer = csv.writer(output_4, lineterminator='\n')
 print "cross section as id" 
 for trigger in rev_ordered_triggers:
   trigger_ids = []
+  trigger_cross_section_sorted = []
   for id,time in enumerate(runA_times_sorted):
     if time in trigger_times_dict[trigger]:
       trigger_ids.append(id)
-  trigger_cross_section = []
-  for i,eff_lumin in enumerate(trigger_eff_lumis_dict[trigger]):
-        try:
-    		trigger_cross_section.append(float(eff_lumin)/trigger_eff_fired_dict[trigger][i])
-    	except ZeroDivisionError:
-		trigger_cross_section.append(0.)
+      try:
+    		trigger_cross_section_sorted.append(float(trigger_eff_lumis_dict[trigger][i])/trigger_eff_fired_dict[trigger][i])
+      except ZeroDivisionError:
+		trigger_cross_section_sorted.append(0.)
   writer.writerow(trigger_ids)  
   writer.writerow(trigger_cross_section_sorted)  
-  print len(trigger_times_dict[trigger])
-  print len(trigger_eff_lumis_dict[trigger])
-  print len(trigger_cross_section)
   print len(trigger_ids)
   print len(trigger_cross_section_sorted)
   print
