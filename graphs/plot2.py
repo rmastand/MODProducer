@@ -191,7 +191,7 @@ def graph_eff_lumin_time_ordered():
 	
 	runA_times = np.array([float(x) for x in lines[1].split(",")])
 	runA_lumin = np.array([float(x) for x in lines[2].split(",")])
-	#runA_index = np.array(range(len(runA_lumin)))+1
+	runA_index = np.array([float(x) for x in lines[0].split(",")])
 
 	
 	#master_times = np.array([float(x) for x in lines[2].split(",")])
@@ -202,8 +202,13 @@ def graph_eff_lumin_time_ordered():
 
         #print np.logspace(min(master_index),max(master_index),num_samples)
         good_indices = np.linspace(min(runA_index),max(runA_index),num_samples).astype(int) #-min(runA_index)
+	
+	g_i = []
+	for m,ind in enumerate(runA_index):
+		if ind in good_indices:
+			g_i.append(m)
 
-	plt.plot(np.take(runA_times,good_indices),np.take(runA_lumin,good_indices),"k",linewidth=9.0)
+	plt.plot(np.take(runA_times,g_i),np.take(runA_lumin,g_i),"k",linewidth=9.0)
 
 	x = min(master_times)*.9985
 	print min(master_times)
@@ -224,8 +229,12 @@ def graph_eff_lumin_time_ordered():
 		eff_lumin = np.array([float(x) for x in lines[2*trig_index+4].split(",")])
                 good_indices = np.linspace(min(index),max(index),num_samples).astype(int)# - min(index)
                 print len(index), len(eff_lumin)
+		g_i = []
+		for m,ind in enumerate(index):
+			if ind in good_indices:
+				g_i.append(m)
 
-        	plt.plot(np.take(times,good_indices),np.take(eff_lumin,good_indices),trigger_colors[trig],linewidth=4.0)
+        	plt.plot(np.take(times,g_i),np.take(eff_lumin,g_i),trigger_colors[trig],linewidth=4.0)
 
 		plt.text(trig_name_positions[trig][0],trig_name_positions[trig][1],trig[4:],color = trigger_colors[trig])
 
@@ -371,7 +380,7 @@ def graph_fired_over_eff_lumin_time_ordered():
 
 
 
-graph_eff_lumin()
+#graph_eff_lumin()
 graph_eff_lumin_time_ordered()
 graph_fired_over_eff_lumin()
 graph_fired_over_eff_lumin_time_ordered()
