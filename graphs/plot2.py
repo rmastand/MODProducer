@@ -224,7 +224,7 @@ def graph_eff_lumin_time_ordered():
 	        print trig
 
 		times = np.array([float(x) for x in lines[2*trig_index+3].split(",")])
-		index = np.array([int(x) for x in lines[2*trig_index+4].split(",")])+1
+		index = range(len(times))
 
 		eff_lumin = np.array([float(x) for x in lines[2*trig_index+4].split(",")])
                 good_indices = np.linspace(min(index),max(index),num_samples).astype(int)# - min(index)
