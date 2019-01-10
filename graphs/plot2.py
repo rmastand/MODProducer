@@ -135,19 +135,14 @@ def graph_eff_lumin():
 
 	for trig_index,trig in enumerate(rev_ordered_triggers):
 	        print trig
-		#print lines[0][:20]
-		#print lines[1][:20]
-		#print lines[2][:20]
-		#print lines[3][:20]
-		#print lines[4][:20]
-		
+
 		index = np.array([int(x) for x in lines[2*trig_index+3].split(",")[1:-1]])
 
 		eff_lumin = np.array([float(x) for x in lines[2*trig_index+4].split(",")[1:-1]])
                 good_indices = np.logspace(np.log10(min(index)),np.log10(max(index)),num_samples).astype(int) #- min(index)
                 print len(index), len(eff_lumin)
-		print index[-20:]
-		print good_indices[-20:]
+		
+
 
         	plt.plot(np.take(index,np.where(good_indices==index)),np.take(eff_lumin,np.where(good_indices==index)),trigger_colors[trig],linewidth=4.0)
 
@@ -158,7 +153,7 @@ def graph_eff_lumin():
 	#plt.xticks(range(len(time_ordered_lumi_id))[::id_spacing], time_ordered_lumi_id[::id_spacing], rotation=30)
 	ax = plt.gca()
 
-	ax.set_xlim(left = .15,right = max(master_index)*1.25)
+	ax.set_xlim(left = .15,right = max(runA_index)*1.25)
 
 	plt.xlabel("Cumulative Luminosity Blocks")
 	ax.add_artist(logo_box())
