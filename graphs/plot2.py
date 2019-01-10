@@ -185,13 +185,13 @@ def graph_eff_lumin_time_ordered():
 	ax = plt.gca()
 
 
-	input_file =  open("eff_lumi_id.txt","r")
+	input_file =  open("eff_lumi_time.txt","r")
 	lines = input_file.readlines()
 	# for the total luminosity file:
 	
 	runA_times = np.array([float(x) for x in lines[1].split(",")])
 	runA_lumin = np.array([float(x) for x in lines[2].split(",")])
-	runA_index = np.array([float(x) for x in lines[0].split(",")])
+	runA_index = range(len(runA_times))
 
 	
 	#master_times = np.array([float(x) for x in lines[2].split(",")])
