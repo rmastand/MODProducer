@@ -97,11 +97,11 @@ with open(output_file,"w") as output:
 		output.write(line+"\n")
 		line = ""
 		for x in eff_lumins:
-			line += x + ","
+			line += str(x) + ","
 		output.write(line+"\n")
 		line = ""
 		for x in times_fired:
-			line += x + ","
+			line += str(x) + ","
 		output.write(line+"\n")
 
 
