@@ -101,7 +101,7 @@ with open(by_event_2_file, "r") as input:
 runA_times= []
 for lumi_id in lumi_id_to_lumin.keys():
 		if lumi_id[0] in runA_runs:
-			runA_times.append(lumi_id_to_gps_times[lumi_id])
+			runA_times.append(id_to_time[lumi_id])
 
 runA_times = sorted(runA_times)			
 			
