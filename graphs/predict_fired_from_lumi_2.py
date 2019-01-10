@@ -50,7 +50,7 @@ for trigger in rev_ordered_triggers:
 with open(parsed_by_event,"r") as event_listing:
 	for line in event_listing:
 		      i += 1
-		      if i > 1000:
+		      if i > 100000:
 			break
 		      if i % 10000 == 0:
 			
