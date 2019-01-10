@@ -114,7 +114,7 @@ def graph_eff_lumin():
 	# for the total luminosity file:
 	
 	runA_lumin = np.array([float(x) for x in lines[2].split(",")])[1:]
-	runA_index = np.array([float(x) for x in lines[1].split(",")])[1:]
+	runA_index = np.array([int(x) for x in lines[1].split(",")])[1:]
 	#master_index = np.array([int(x) for x in lines[3].split(",")])+1
 	#master_lumin = np.array([float(x) for x in lines[4].split(",")])
 	time_ordered_lumi_id = lines[0].split(",")
