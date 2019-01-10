@@ -95,7 +95,7 @@ for lumi_id in lumi_id_to_lumin.keys():
 		if lumi_id[0] in runA_runs:
 			runA_times.append(lumi_id_to_gps_times[lumi_id])
 			runA_lumin_rec.append(lumi_id_to_lumin[lumi_id][1]) 
-      runA_ids.append(lumi_id)
+      			runA_ids.append(lumi_id)
       
 print "sorting Run A"
 runA_times_sorted,runA_lumin_rec_sorted = (list(t) for t in zip(*sorted(zip(runA_times,runA_lumin_rec))))
