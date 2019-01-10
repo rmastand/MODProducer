@@ -46,30 +46,33 @@ rev_ordered_triggers = ["HLT_Jet30","HLT_Jet60","HLT_Jet80","HLT_Jet110","HLT_Je
 master_dict = {}
 for trigger in rev_ordered_triggers:
   master_dict[trigger] = {}
-while i < 100:
-	with open(parsed_by_event,"r") as event_listing:
-		for line in event_listing:
-			      i += 1
-			      if i % 10000 == 0:
-				print "on line "+ str(i)
-			      if "EventNum" not in line.split(): #just ignores the top line
-				lumi_id = (line.split()[1],line.split()[2])
-				triggers_present = line.split()[3].split(",")
-				# cuts the version numbers out
-				triggers_present = [x[:-3] for x in triggers_present]
-				triggers_fired = line.split()[5].split(",")
-				triggers_fired = [x[:-3] for x in triggers_fired]
-				prescales = line.split()[4].split(",")[:-1]
-				prescales = [float(x) for x in prescales]
 
-				for j, present_trigger in enumerate(triggers_present):
-				  if present_trigger in rev_ordered_triggers:
-				    if lumi_id not in master_dict[trigger].keys():
-				      master_dict[trigger][lumi_id] = {"prescale":prescales[j],"times_fired":0}		  
-				    if present_trigger in triggers_fired:   
-				      master_dict[trigger][lumi_id]["times_fired"] += 1
+with open(parsed_by_event,"r") as event_listing:
+	for line in event_listing:
+		      i += 1
+		      if i > 1000:
+			break
+		      if i % 10000 == 0:
+			
+			print "on line "+ str(i)
+		      if "EventNum" not in line.split(): #just ignores the top line
+			lumi_id = (line.split()[1],line.split()[2])
+			triggers_present = line.split()[3].split(",")
+			# cuts the version numbers out
+			triggers_present = [x[:-3] for x in triggers_present]
+			triggers_fired = line.split()[5].split(",")
+			triggers_fired = [x[:-3] for x in triggers_fired]
+			prescales = line.split()[4].split(",")[:-1]
+			prescales = [float(x) for x in prescales]
 
-	
+			for j, present_trigger in enumerate(triggers_present):
+			  if present_trigger in rev_ordered_triggers:
+			    if lumi_id not in master_dict[trigger].keys():
+			      master_dict[trigger][lumi_id] = {"prescale":prescales[j],"times_fired":0}		  
+			    if present_trigger in triggers_fired:   
+			      master_dict[trigger][lumi_id]["times_fired"] += 1
+
+
 
 
 """
