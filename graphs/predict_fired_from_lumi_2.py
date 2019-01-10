@@ -68,9 +68,9 @@ with open(parsed_by_event,"r") as event_listing:
 			for j, present_trigger in enumerate(triggers_present):
 			  if present_trigger in rev_ordered_triggers:
 			    if lumi_id not in master_dict[trigger].keys():
-			      master_dict[trigger][lumi_id] = {"prescale":prescales[j],"times_fired":0}		  
+			      master_dict[present_trigger][lumi_id] = {"prescale":prescales[j],"times_fired":0}		  
 			    if present_trigger in triggers_fired:   
-			      master_dict[trigger][lumi_id]["times_fired"] += 1
+			      master_dict[present_trigger][lumi_id]["times_fired"] += 1
 
 
 
