@@ -20,7 +20,7 @@ num_higher_fired_given_lower_fired_and_higher_present = 0
 with open(parsed_by_event,"r") as event_listing:
   for line in event_listing:
     i += 1
-    if i > 50000:
+    if i > 500000:
       break
     if i % 10000 == 0:
       print "on line "+ str(i)
