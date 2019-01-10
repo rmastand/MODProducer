@@ -216,12 +216,12 @@ for trigger in rev_ordered_triggers:
 		trigger_cross_section.append(0.)
   writer.writerow(trigger_ids)  
   writer.writerow(trigger_cross_section_sorted)  
-print len(trigger_times_dict[trigger])
-print len(trigger_eff_lumis_dict[trigger])
-print len(trigger_cross_section)
-print len(trigger_ids)
-print len(trigger_cross_section_sorted)
-print
+  print len(trigger_times_dict[trigger])
+  print len(trigger_eff_lumis_dict[trigger])
+  print len(trigger_cross_section)
+  print len(trigger_ids)
+  print len(trigger_cross_section_sorted)
+  print
 output_4.close()
 
  
