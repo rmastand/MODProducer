@@ -180,12 +180,14 @@ writer = csv.writer(output_3, lineterminator='\n')
 print "cross lumsection as time" 
 for trigger in rev_ordered_triggers:
   trigger_cross_section = []
+  ttimes = []
   for i,eff_lumin in enumerate(trigger_eff_lumis_dict[trigger]):
     try:
     	trigger_cross_section.append(float(eff_lumin)/trigger_eff_fired_dict[trigger][i])
+	ttimes.append(trigger_times_dict[trigger][i])
     except ZeroDivisionError:
 	pass
-  trigger_times_sorted,trigger_cross_section_sorted = (list(t) for t in zip(*sorted(zip(trigger_times_dict[trigger],trigger_cross_section))))
+  trigger_times_sorted,trigger_cross_section_sorted = (list(t) for t in zip(*sorted(zip(ttimes,trigger_cross_section))))
   writer.writerow(trigger_times_sorted)  
   writer.writerow(trigger_cross_section_sorted)  
   
@@ -208,12 +210,14 @@ for trigger in rev_ordered_triggers:
     if time in trigger_times_dict[trigger]:
       trigger_ids.append(id)
   trigger_cross_section = []
+  iids = []
   for i,eff_lumin in enumerate(trigger_eff_lumis_dict[trigger]):
         try:
     		trigger_cross_section.append(float(eff_lumin)/trigger_eff_fired_dict[trigger][i])
+		iids.append(trigger_ids[i])
         except ZeroDivisionError:
 		pass
-  writer.writerow(trigger_ids)  
+  writer.writerow(iids)  
   writer.writerow(trigger_cross_section_sorted)  
 output_4.close()
 
