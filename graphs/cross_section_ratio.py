@@ -25,12 +25,12 @@ with open(parsed_by_event,"r") as event_listing:
     if i % 10000 == 0:
       print "on line "+ str(i)
     if "EventNum" not in line.split(): #just ignores the top line
-      print line.split()
-      triggers_present = line.split()[3].split(",")[:-1]
+      
+      triggers_present = line.split()[3].split(",")
       # cuts the version numbers out
       triggers_present = [x[:-3] for x in triggers_present]
       
-      triggers_fired = line.split()[5].split(",")[:-1]
+      triggers_fired = line.split()[5].split(",")
       
       triggers_fired = [x[:-3] for x in triggers_fired]
       if (lower_trig_name in triggers_fired) and (higher_trig_name in triggers_present):
