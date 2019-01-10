@@ -277,7 +277,7 @@ Fired over eff lumi number index
 fired over eff lumi value
 """
 def graph_fired_over_eff_lumin():
-	input_file =  open("x_sec_time.txt","r")
+	input_file =  open("x_sec_id.txt","r")
 	lines = input_file.readlines()
 
 	plt.figure(figsize=(10,10))
@@ -381,6 +381,6 @@ def graph_fired_over_eff_lumin_time_ordered():
 
 
 #graph_eff_lumin()
-graph_eff_lumin_time_ordered()
+#graph_eff_lumin_time_ordered()
 graph_fired_over_eff_lumin()
 graph_fired_over_eff_lumin_time_ordered()
