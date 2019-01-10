@@ -120,7 +120,7 @@ def graph_eff_lumin():
 	time_ordered_lumi_id = lines[0].split(",")
 
         #print np.logspace(min(master_index),max(master_index),num_samples)
-        good_indices = np.logspace(np.log10(min(runA_index)),np.log10(max(runA_index)),num_samples).astype(int) -min(runA_index)
+        good_indices = np.logspace(np.log10(min(runA_index)),np.log10(max(runA_index)),num_samples).astype(int)# -min(runA_index)
 	
 
 	plt.plot(np.take(runA_index,good_indices),np.take(runA_lumin,good_indices),"k",linewidth=9.0)
@@ -144,12 +144,12 @@ def graph_eff_lumin():
 		index = np.array([int(x) for x in lines[2*trig_index+3].split(",")[1:-1]])
 
 		eff_lumin = np.array([float(x) for x in lines[2*trig_index+4].split(",")[1:-1]])
-                good_indices = np.logspace(np.log10(min(index)),np.log10(max(index)),num_samples).astype(int) - min(index)
+                good_indices = np.logspace(np.log10(min(index)),np.log10(max(index)),num_samples).astype(int) #- min(index)
                 print len(index), len(eff_lumin)
 		print index[-20:]
 		print good_indices[-20:]
 
-        	plt.plot(np.take(index,good_indices),np.take(eff_lumin,good_indices),trigger_colors[trig],linewidth=4.0)
+        	plt.plot(np.take(index,np.where(good_indices==index)),np.take(eff_lumin,np.where(good_indices==index)),trigger_colors[trig],linewidth=4.0)
 
 		plt.text(trig_name_positions[trig][0],trig_name_positions[trig][1],trig[4:],color = trigger_colors[trig])
 
