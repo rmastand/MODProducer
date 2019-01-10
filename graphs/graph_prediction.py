@@ -32,5 +32,4 @@ for trigger in trigger_dict.keys():
   plt.xlabel("Effective Luminosity")
   plt.ylabel("Times Fired")
   plt.title(trigger)
-  plt.show()
   plt.savefig(trigger+".png")
