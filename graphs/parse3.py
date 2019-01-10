@@ -199,7 +199,7 @@ trigger ids nums
 trigger luminosity
 """
 
-output_4 = open("x_sec_time.txt","w")
+output_4 = open("x_sec_id.txt","w")
 writer = csv.writer(output_4, lineterminator='\n')
 
 print "cross section as id" 
