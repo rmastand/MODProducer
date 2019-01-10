@@ -11,15 +11,13 @@ with open(input_file, "r") as input:
     i += 1
     if "#" in line.split():
       trigger = line.split()[1]
-      trigger_dict[trigger] = (0,0) #eff lumi, times fired
+      trigger_dict[trigger] = [0,0] #eff lumi, times fired
       i = 0
     elif i == 1: # lumi ids
       pass
     elif i == 2: # eff lumis
       eff_lumis = line.split(",")[:-1]
       eff_lumis = [float(x) for x in eff_lumis]
-      print eff_lumis
-      print trigger_dict[trigger][0]
       trigger_dict[trigger][0] = eff_lumis
     elif i == 3: # # times fired
       times_fired = line.split(",")[:-1]
