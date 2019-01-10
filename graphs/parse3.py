@@ -179,15 +179,20 @@ trigger luminosity
 output_3 = open("x_sec_time.txt","w")
 writer = csv.writer(output_3, lineterminator='\n')
 print "cross lumsection as time" 
+
+
 for trigger in rev_ordered_triggers:
-  trigger_cross_section = []
-  for i,eff_lumin in enumerate(trigger_eff_lumis_dict[trigger]):
-    try:
-    	trigger_cross_section.append(float(eff_lumin)/trigger_eff_fired_dict[trigger][i])
-    except ZeroDivisionError:
-	trigger_cross_section.append(0.)
-  trigger_times_sorted,trigger_cross_section_sorted = (list(t) for t in zip(*sorted(zip(trigger_times_dict[trigger],trigger_cross_section))))
-  writer.writerow(trigger_times_sorted)  
+  ttimes = []
+  trigger_cross_section_sorted = []
+  for id,time in enumerate(runA_times_sorted):
+    if time in trigger_times_dict[trigger]:
+      ttimes.append(time)
+      i = trigger_times_dict[trigger].index(time)
+      try:
+    		trigger_cross_section_sorted.append(float(trigger_eff_lumis_dict[trigger][i])/trigger_eff_fired_dict[trigger][i])
+      except ZeroDivisionError:
+		trigger_cross_section_sorted.append(0.)
+  writer.writerow(ttimes)  
   writer.writerow(trigger_cross_section_sorted)  
   
 output_3.close()
@@ -216,9 +221,7 @@ for trigger in rev_ordered_triggers:
 		trigger_cross_section_sorted.append(0.)
   writer.writerow(trigger_ids)  
   writer.writerow(trigger_cross_section_sorted)  
-  print len(trigger_ids)
-  print len(trigger_cross_section_sorted)
-  print
+
 output_4.close()
 
  
