@@ -65,6 +65,7 @@ id_to_time,time_to_lumin,lumi_id_to_lumin,time_to_id = read_lumi_by_ls(lumibyls_
 trigger_lumi_ids_dict = {}
 trigger_eff_lumis_dict = {}
 trigger_eff_fired_dict = {}
+trigger_times_dict = {}
 
 i = 0
 with open(by_event_2_file, "r") as input:
@@ -86,7 +87,12 @@ with open(by_event_2_file, "r") as input:
       times_fired = line.split(",")[:-1]
       times_fired = [int(x) for x in times_fired]
       trigger_eff_fired_dict[trigger] = times_fired
- 
+
+
+for trigger in rev_ordered_triggers:
+	trigger_times_dict[trigger] = [id_to_time[lumi_id] for x in trigger_lumi_ids_dict[trigger]]
+
+
 runA_times= []
 runA_lumin_rec = []
 runA_ids = []
@@ -126,8 +132,7 @@ writer.writerow(runA_lumin_rec_sorted)
 
 for trigger in rev_ordered_triggers:
   # write the times out
-  trigger_times = [id_to_time[lumi_id] for x in trigger_lumi_ids_dict[trigger]]
-  trigger_times_sorted,trigger_lumin_rec_sorted = (list(t) for t in zip(*sorted(zip(trigger_times,trigger_eff_lumis_dict[trigger]))))
+  trigger_times_sorted,trigger_lumin_rec_sorted = (list(t) for t in zip(*sorted(zip(trigger_times_dict[trigger],trigger_eff_lumis_dict[trigger]))))
   writer.writerow(trigger_times_sorted)  
   writer.writerow(trigger_lumin_rec_sorted)  
 output_1.close()
@@ -155,10 +160,9 @@ writer.writerow(master_id_nums)
 writer.writerow(runA_lumin_rec_sorted)  
 
 for trigger in rev_ordered_triggers:
-  trigger_times = [id_to_time[lumi_id] for x in trigger_lumi_ids_dict[trigger]]
   trigger_ids = []
   for id,time in enumerate(runA_times_sorted):
-    if time in trigger_times:
+    if time in trigger_times_dict[trigger]:
       trigger_ids.append(id)
   writer.writerow(trigger_ids)  
   writer.writerow(trigger_lumin_rec_sorted)  
@@ -176,14 +180,13 @@ output_3 = open("x_sec_time.txt","w")
 writer = csv.writer(output_3, lineterminator='\n')
 print "cross lumsection as time" 
 for trigger in rev_ordered_triggers:
-  trigger_times = [id_to_time[lumi_id] for x in trigger_lumi_ids_dict[trigger]]
   trigger_cross_section = []
   for i,eff_lumin in enumerate(trigger_eff_lumis_dict[trigger]):
     try:
     	trigger_cross_section.append(float(eff_lumin)/trigger_eff_fired_dict[trigger][i])
     except ZeroDivisionError:
 	pass
-  trigger_times_sorted,trigger_cross_section_sorted = (list(t) for t in zip(*sorted(zip(trigger_times,trigger_cross_section))))
+  trigger_times_sorted,trigger_cross_section_sorted = (list(t) for t in zip(*sorted(zip(trigger_times_dict[trigger],trigger_cross_section))))
   writer.writerow(trigger_times_sorted)  
   writer.writerow(trigger_cross_section_sorted)  
   
@@ -201,10 +204,9 @@ writer = csv.writer(output_4, lineterminator='\n')
 
 print "cross section as id" 
 for trigger in rev_ordered_triggers:
-  trigger_times = [id_to_time[lumi_id] for x in trigger_lumi_ids_dict[trigger]]
   trigger_ids = []
   for id,time in enumerate(runA_times_sorted):
-    if time in trigger_times:
+    if time in trigger_times_dict[trigger]:
       trigger_ids.append(id)
   trigger_cross_section = []
   for i,eff_lumin in enumerate(trigger_eff_lumis_dict[trigger]):
