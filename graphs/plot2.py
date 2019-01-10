@@ -12,8 +12,7 @@ from matplotlib import patches
 from matplotlib import text as mtext
 import math
 
-plot_eff_lumi_file = sys.argv[1]
-plot_fired_over_lumi = sys.argv[2]
+plot_input_file = sys.argv[1]
 lumibyls_file = sys.argv[3]
 logo_location = "/Users/prekshan/rmastand/CMSOpenData/MODProducer/graphs/MODLogo.png"
 
@@ -110,18 +109,18 @@ def graph_eff_lumin():
 	ax = plt.gca()
 
 
-	eff_lumi_file =  open(plot_eff_lumi_file)
-	lines = eff_lumi_file.readlines()
+	input_file =  open("eff_lumi_id.txt","r")
+	lines = input_file.readlines()
 	# for the total luminosity file:
 	
-	runA_lumin = np.array([float(x) for x in lines[1].split(",")])
-	runA_index = np.array(range(len(runA_lumin)))+1
-	master_index = np.array([int(x) for x in lines[3].split(",")])+1
-	master_lumin = np.array([float(x) for x in lines[4].split(",")])
-	time_ordered_lumi_id = lines[5].split(",")
+	runA_lumin = np.array([float(x) for x in lines[2].split(",")])
+	runA_index = np.array([float(x) for x in lines[1].split(",")])
+	#master_index = np.array([int(x) for x in lines[3].split(",")])+1
+	#master_lumin = np.array([float(x) for x in lines[4].split(",")])
+	time_ordered_lumi_id = lines[0].split(",")
 
         #print np.logspace(min(master_index),max(master_index),num_samples)
-        good_indices = np.logspace(np.log10(min(runA_index)),np.log10(max(runA_index)),num_samples).astype(int) -min(runA_index)
+        good_indices = np.logspace(np.log10(min(runA_index)),np.log10(max(runA_index)),num_samples).astype(int) #-min(runA_index)
 
 	plt.plot(np.take(runA_index,good_indices),np.take(runA_lumin,good_indices),"k",linewidth=9.0)
 
@@ -136,10 +135,10 @@ def graph_eff_lumin():
 	for trig_index,trig in enumerate(rev_ordered_triggers):
 	        print trig
 
-		index = np.array([int(x) for x in lines[3*trig_index+7].split(",")])+1
+		index = np.array([int(x) for x in lines[2*trig_index+3].split(",")])+1
 
-		eff_lumin = np.array([float(x) for x in lines[3*trig_index+8].split(",")])
-                good_indices = np.logspace(np.log10(min(index)),np.log10(max(index)),num_samples).astype(int) - min(index)
+		eff_lumin = np.array([float(x) for x in lines[2*trig_index+4].split(",")])
+                good_indices = np.logspace(np.log10(min(index)),np.log10(max(index)),num_samples).astype(int) #- min(index)
                 print len(index), len(eff_lumin)
 
         	plt.plot(np.take(index,good_indices),np.take(eff_lumin,good_indices),trigger_colors[trig],linewidth=4.0)
@@ -173,23 +172,23 @@ def graph_eff_lumin_time_ordered():
 	ax = plt.gca()
 
 
-	eff_lumi_file =  open(plot_eff_lumi_file)
-	lines = eff_lumi_file.readlines()
+	input_file =  open("eff_lumi_id.txt","r")
+	lines = input_file.readlines()
 	# for the total luminosity file:
 	
-	runA_times = np.array([float(x) for x in lines[0].split(",")])
-	runA_lumin = np.array([float(x) for x in lines[1].split(",")])
-	runA_index = np.array(range(len(runA_lumin)))+1
+	runA_times = np.array([float(x) for x in lines[1].split(",")])
+	runA_lumin = np.array([float(x) for x in lines[2].split(",")])
+	#runA_index = np.array(range(len(runA_lumin)))+1
 
 	
-	master_times = np.array([float(x) for x in lines[2].split(",")])
-	master_index = np.array([int(x) for x in lines[3].split(",")])+1
+	#master_times = np.array([float(x) for x in lines[2].split(",")])
+	#master_index = np.array([int(x) for x in lines[3].split(",")])+1
 
-	master_lumin = np.array([float(x) for x in lines[4].split(",")])
-	time_ordered_lumi_id = lines[5].split(",")
+	#master_lumin = np.array([float(x) for x in lines[4].split(",")])
+	time_ordered_lumi_id = lines[0].split(",")
 
         #print np.logspace(min(master_index),max(master_index),num_samples)
-        good_indices = np.linspace(min(runA_index),max(runA_index),num_samples).astype(int) -min(runA_index)
+        good_indices = np.linspace(min(runA_index),max(runA_index),num_samples).astype(int) #-min(runA_index)
 
 	plt.plot(np.take(runA_times,good_indices),np.take(runA_lumin,good_indices),"k",linewidth=9.0)
 
@@ -206,11 +205,11 @@ def graph_eff_lumin_time_ordered():
 	for trig_index,trig in enumerate(rev_ordered_triggers):
 	        print trig
 
-		times = np.array([float(x) for x in lines[3*trig_index+6].split(",")])
-		index = np.array([int(x) for x in lines[3*trig_index+7].split(",")])+1
+		times = np.array([float(x) for x in lines[2*trig_index+3].split(",")])
+		#index = np.array([int(x) for x in lines[3*trig_index+7].split(",")])+1
 
-		eff_lumin = np.array([float(x) for x in lines[3*trig_index+8].split(",")])
-                good_indices = np.linspace(min(index),max(index),num_samples).astype(int) - min(index)
+		eff_lumin = np.array([float(x) for x in lines[2*trig_index+4].split(",")])
+                good_indices = np.linspace(min(index),max(index),num_samples).astype(int)# - min(index)
                 print len(index), len(eff_lumin)
 
         	plt.plot(np.take(times,good_indices),np.take(eff_lumin,good_indices),trigger_colors[trig],linewidth=4.0)
@@ -256,8 +255,8 @@ Fired over eff lumi number index
 fired over eff lumi value
 """
 def graph_fired_over_eff_lumin():
-	fired_lumi_file =  open(plot_fired_over_lumi)
-	lines = fired_lumi_file.readlines()
+	input_file =  open("x_sec_time.txt","r")
+	lines = input_file.readlines()
 
 	plt.figure(figsize=(10,10))
 	color_index = 0
@@ -268,8 +267,8 @@ def graph_fired_over_eff_lumin():
         zorder = 15
 	for trig in rev_ordered_triggers:
         	print trig
-		index = [int(x) for x in lines[color_index*4+2].split(",")]
-		yaxis = [float(x) for x in lines[color_index*4+3].split(",")]
+		index = [int(x) for x in lines[color_index*2].split(",")]
+		yaxis = [float(x) for x in lines[color_index*2+1].split(",")]
         	print len(index),len(yaxis)
 
 
@@ -300,9 +299,8 @@ def graph_fired_over_eff_lumin():
 
 	
 def graph_fired_over_eff_lumin_time_ordered():
-	fired_lumi_file =  open(plot_fired_over_lumi)
-	lines = fired_lumi_file.readlines()
-
+	input_file =  open("x_sec_time.txt","r")
+	lines = input_file.readlines()
 	plt.figure(figsize=(10,10))
 	color_index = 0
 	
@@ -314,10 +312,10 @@ def graph_fired_over_eff_lumin_time_ordered():
         zorder = 15
 	for trig in rev_ordered_triggers:
         	
-		lumis = [x for x in lines[color_index*4].split(",")]
-		times = [float(x) for x in lines[color_index*4+1].split(",")]
-		index = [int(x) for x in lines[color_index*4+2].split(",")]
-		yaxis = [float(x) for x in lines[color_index*4+3].split(",")]
+		#lumis = [x for x in lines[color_index*4].split(",")]
+		times = [float(x) for x in lines[color_index*2].split(",")]
+		#index = [int(x) for x in lines[color_index*4+2].split(",")]
+		yaxis = [float(x) for x in lines[color_index*2+1].split(",")]
         	print len(index),len(yaxis)
 		
 
@@ -360,7 +358,7 @@ def graph_fired_over_eff_lumin_time_ordered():
 
 
 
-#graph_eff_lumin()
+graph_eff_lumin()
 graph_eff_lumin_time_ordered()
 graph_fired_over_eff_lumin()
 graph_fired_over_eff_lumin_time_ordered()
