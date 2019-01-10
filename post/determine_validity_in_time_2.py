@@ -39,6 +39,7 @@ def read_lumi_by_ls(lumibyls_file):
 	split_lines = [line.split(",") for line in lines][2:]
 	char = ""
 	id_to_time = {}
+	time_to_id = {}
 	time_to_lumin = {}
 	lumi_id_to_lumin = {}
 	lumin_all = []
@@ -55,18 +56,19 @@ def read_lumi_by_ls(lumibyls_file):
 		lumi_id_to_lumin[(run,lumi)] = (float(split_lines[i][5]),float(split_lines[i][6]))
 		id_to_time[(run,lumi)] = timestamp
 		time_to_lumin[timestamp] = float(split_lines[i][6])
+		time_to_id[timestamp] = run+":"+lumi
 		i += 1
 		try:
 			char = split_lines[i][0][0]
 		except: pass
-	return id_to_time,time_to_lumin,lumi_id_to_lumin
+	return id_to_time,time_to_lumin,lumi_id_to_lumin,time_to_id
 
 
 
 
 
 
-id_to_time,time_to_lumin,lumi_id_to_lumin = read_lumi_by_ls(lumibyls_file)
+id_to_time,time_to_lumin,lumi_id_to_lumin,time_to_id = read_lumi_by_ls(lumibyls_file)
 
 
 """
