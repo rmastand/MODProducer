@@ -151,7 +151,7 @@ for trigger in rev_ordered_triggers[::-1]:
   trigger_times = [id_to_time[lumi_id] for x in trigger_lumi_ids_dict[trigger]]
   trigger_ids = []
   for id,time in enumerate(runA_times_sorted):
-    if times in trigger_times:
+    if time in trigger_times:
       trigger_ids.append(id)
   writer.writerow(trigger_ids)  
   writer.writerow(trigger_lumin_rec_sorted)  
