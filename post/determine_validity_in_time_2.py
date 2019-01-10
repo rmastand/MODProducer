@@ -53,7 +53,7 @@ def read_lumi_by_ls(lumibyls_file):
 		dt = datetime.datetime(mdy[2], mdy[0], mdy[1], hms[0], hms[1],hms[2])
 		timestamp = time.mktime(dt.timetuple())
 		lumi_id_to_lumin[(run,lumi)] = (float(split_lines[i][5]),float(split_lines[i][6]))
-		id_to_time[run+":"+lumi] = timestamp
+		id_to_time[(run,lumi)] = timestamp
 		time_to_lumin[timestamp] = float(split_lines[i][6])
 		i += 1
 		try:
@@ -90,6 +90,7 @@ with open(by_event_2_file, "r") as input:
       i = 0
     elif i == 1: # lumi ids
       lumi_ids = line.split(",")[:-1]
+      lumi_ids = [(x.split(":")[0],x.split(":")[1]) for x in lumi_ids]
       trigger_ids_dict[trigger] = lumi_ids
     elif i == 2: # eff lumis
       pass
