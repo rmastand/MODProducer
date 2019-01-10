@@ -179,6 +179,7 @@ def graph_eff_lumin():
 
 	plt.savefig("eff_lumi.pdf")
 	plt.show()
+	return time_ordered_lumi_id
 
 def graph_eff_lumin_time_ordered():
 	plt.figure(figsize=(10,10))
@@ -320,7 +321,7 @@ def graph_fired_over_eff_lumin():
 	plt.show()
 
 	
-def graph_fired_over_eff_lumin_time_ordered():
+def graph_fired_over_eff_lumin_time_ordered(lumis):
 	input_file =  open("x_sec_time.txt","r")
 	lines = input_file.readlines()
 	plt.figure(figsize=(10,10))
@@ -357,7 +358,7 @@ def graph_fired_over_eff_lumin_time_ordered():
 
 	length = len(times)-1
 
-	indices_for_xaxis = np.linspace(length/20,length,5)
+	indices_for_xaxis = np.linspace(length/2000,length,5)
 	indices_for_xaxis = [int(x) for x in indices_for_xaxis]
 	
 	plt.xticks(np.take(times,indices_for_xaxis))
@@ -381,7 +382,7 @@ def graph_fired_over_eff_lumin_time_ordered():
 
 
 
-#graph_eff_lumin()
+time_ordered_lumi_id = graph_eff_lumin()
 #graph_eff_lumin_time_ordered()
 #graph_fired_over_eff_lumin()
-graph_fired_over_eff_lumin_time_ordered()
+graph_fired_over_eff_lumin_time_ordered(time_ordered_lumi_id)
