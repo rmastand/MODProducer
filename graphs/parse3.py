@@ -170,7 +170,7 @@ for trigger in rev_ordered_triggers[::-1]:
   trigger_times = [id_to_time[lumi_id] for x in trigger_lumi_ids_dict[trigger]]
   trigger_cross_section = []
   for i,eff_lumin in enumerate(trigger_eff_lumis_dict[trigger]):
-    trigger_cross_section.append(float(eff_lumin)/trigger_eff_fired_dict[trigger])
+    trigger_cross_section.append(float(eff_lumin)/trigger_eff_fired_dict[trigger][i])
   trigger_times_sorted,trigger_cross_section_sorted = (list(t) for t in zip(*sorted(zip(trigger_times,trigger_cross_section))))
   writer.writerow(trigger_times_sorted)  
   writer.writerow(trigger_cross_section_sorted)  
