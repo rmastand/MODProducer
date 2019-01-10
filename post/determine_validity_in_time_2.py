@@ -40,6 +40,7 @@ def read_lumi_by_ls(lumibyls_file):
 	char = ""
 	id_to_time = {}
 	time_to_lumin = {}
+	lumi_id_to_lumin = {}
 	lumin_all = []
 	i = 0
 	while char !="#":
@@ -51,20 +52,21 @@ def read_lumi_by_ls(lumibyls_file):
 		hms = [int(x) for x in tim.split(":")]
 		dt = datetime.datetime(mdy[2], mdy[0], mdy[1], hms[0], hms[1],hms[2])
 		timestamp = time.mktime(dt.timetuple())
+		lumi_id_to_lumin[(run,lumi)] = (float(split_lines[i][5]),float(split_lines[i][6]))
 		id_to_time[run+":"+lumi] = timestamp
 		time_to_lumin[timestamp] = float(split_lines[i][6])
 		i += 1
 		try:
 			char = split_lines[i][0][0]
 		except: pass
-	return id_to_time,time_to_lumin
+	return id_to_time,time_to_lumin,lumi_id_to_lumin
 
 
 
 
 
 
-id_to_time,time_to_lumin = read_lumi_by_ls(lumibyls_file)
+id_to_time,time_to_lumin,lumi_id_to_lumin = read_lumi_by_ls(lumibyls_file)
 
 
 """
