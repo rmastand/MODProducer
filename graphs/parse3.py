@@ -95,7 +95,7 @@ for lumi_id in lumi_id_to_lumin.keys():
 		if lumi_id[0] in runA_runs:
 			runA_times.append(id_to_time[lumi_id])
 			runA_lumin_rec.append(lumi_id_to_lumin[lumi_id][1]) 
-      			runA_ids.append(lumi_id)
+      			runA_ids.append(lumi_id[0]+":"+lumi_id[1])
       
 print "sorting Run A"
 runA_times_sorted,runA_lumin_rec_sorted = (list(t) for t in zip(*sorted(zip(runA_times,runA_lumin_rec))))
@@ -170,7 +170,7 @@ for trigger in rev_ordered_triggers[::-1]:
   trigger_times = [id_to_time[lumi_id] for x in trigger_lumi_ids_dict[trigger]]
   trigger_cross_section = []
   for i,eff_lumin in enumerate(trigger_eff_lumis_dict[trigger]):
-    trigger_eff_lumin.append(float(eff_lumin)/trigger_eff_fired_dict[trigger])
+    trigger_cross_section.append(float(eff_lumin)/trigger_eff_fired_dict[trigger])
   trigger_times_sorted,trigger_cross_section_sorted = (list(t) for t in zip(*sorted(zip(trigger_times,trigger_cross_section))))
   writer.writerow(trigger_times_sorted)  
   writer.writerow(trigger_cross_section_sorted)  
@@ -191,7 +191,7 @@ for trigger in rev_ordered_triggers[::-1]:
       trigger_ids.append(id)
   trigger_cross_section = []
   for i,eff_lumin in enumerate(trigger_eff_lumis_dict[trigger]):
-    trigger_eff_lumin.append(float(eff_lumin)/trigger_eff_fired_dict[trigger])
+    trigger_cross_section.append(float(eff_lumin)/trigger_eff_fired_dict[trigger])
   writer.writerow(trigger_ids)  
   writer.writerow(trigger_cross_section_sorted)  
   
