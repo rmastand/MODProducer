@@ -92,7 +92,7 @@ with open(output_file,"r") as output:
 		output.write("# "+trigger+"\n")
 		for lumi_id in master_dict[trigger].keys():
 			lumi_ids.append(lumi_id[0]+":"+lumi_id[1])  
-			eff_lumins.append(lumi_id_to_lumin[lumi_id][1]/float(master_dict[trigger][lumi_id]["prescale"])
+			eff_lumins.append(lumi_id_to_lumin[lumi_id][1]/float(master_dict[trigger][lumi_id]["prescale"]))
 			times_fired.append(master_dict[trigger][lumi_id]["times_fired"])
 		line = ""
 		for x in lumi_ids:
