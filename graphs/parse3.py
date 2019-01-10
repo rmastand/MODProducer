@@ -1,6 +1,7 @@
 """
 parses o.txt to a ready-to-plot array of numbers
 """
+# -*- coding: utf-8 -*-
 import numpy as np
 import sys
 import datetime
