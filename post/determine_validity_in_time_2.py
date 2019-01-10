@@ -10,6 +10,18 @@ by_event_2_file = sys.argv[1]
 lumibyls_file = sys.argv[2]
 output_file = sys.argv[3]
 summary_file = sys.argv[4]
+run_alumi_file = sys.argv[3]
+
+
+runA_runs = []
+read_alumi_lines = open(run_alumi_file,"r").readlines()
+for line in read_alumi_lines[4:]:
+  char = line[0]
+  if char != "+":
+    runA_runs.append(line.split()[1].split(":")[0])
+  else:
+    break
+print "Done reading in ALumi"
 
 rev_ordered_triggers = ["HLT_Jet30","HLT_Jet60","HLT_Jet80","HLT_Jet110","HLT_Jet150","HLT_Jet190","HLT_Jet240","HLT_Jet300","HLT_Jet370"][::-1]
 
@@ -84,9 +96,13 @@ with open(by_event_2_file, "r") as input:
       
 
 # all point represent VALID lumiblocks, either in totla or for a given trigger
-runA_times = np.array([float(x) for x in lines[0].split(",")])
+runA_times= []
+for lumi_id in lumi_id_to_lumin.keys():
+		if lumi_id[0] in runA_runs:
+			runA_times.append(lumi_id_to_gps_times[lumi_id])
 
-
+runA_times = sorted(runA_times)			
+			
 trigger_index_dict = {}
 
 for trigger in rev_ordered_triggers:
