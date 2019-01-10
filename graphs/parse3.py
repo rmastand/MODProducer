@@ -9,7 +9,7 @@ import csv
 
 by_event_2_file = sys.argv[1]
 lumibyls_file = sys.argv[2]
-output_file = sys.argv[3]
+#output_file = sys.argv[3]
 run_alumi_file = sys.argv[4]
 
 runA_runs = []
@@ -103,8 +103,7 @@ runA_times_sorted,runA_ids_sorted = (list(t) for t in zip(*sorted(zip(runA_times
 
 
 
-output = open(output_file,"w")
-writer = csv.writer(output, lineterminator='\n')
+
 
 """ 
 PLOT EFF LUMINOSITY AS A FUNCTION OF TIME
@@ -116,6 +115,9 @@ for each trigger, largest to smallest:
 trigger times
 trigger luminosity
 """
+output_1 = open("eff_lumi_time.txt","w")
+writer = csv.writer(output_1, lineterminator='\n')
+
 print "eff lumi as time" 
 writer.writerow(runA_ids_sorted)  
 writer.writerow(runA_times_sorted)  
@@ -128,6 +130,7 @@ for trigger in rev_ordered_triggers:
   trigger_times_sorted,trigger_lumin_rec_sorted = (list(t) for t in zip(*sorted(zip(trigger_times,trigger_eff_lumis_dict[trigger]))))
   writer.writerow(trigger_times_sorted)  
   writer.writerow(trigger_lumin_rec_sorted)  
+output_1.close()
 
   
 """ 
@@ -141,6 +144,10 @@ trigger ids nums
 trigger luminosity
 """
 print "eff lumi as id" 
+
+output_2 = open("eff_lumi_id.txt","w")
+writer = csv.writer(output_2, lineterminator='\n')
+
 master_id_nums = range(len(runA_ids_sorted))
   
 writer.writerow(runA_ids_sorted)  
@@ -155,7 +162,7 @@ for trigger in rev_ordered_triggers:
       trigger_ids.append(id)
   writer.writerow(trigger_ids)  
   writer.writerow(trigger_lumin_rec_sorted)  
-  
+output_2.close()
 
 
 """ 
@@ -165,6 +172,8 @@ for each trigger, largest to smallest:
 trigger ids times
 trigger luminosity
 """
+output_3 = open("x_sec_time.txt","w")
+writer = csv.writer(output_3, lineterminator='\n')
 print "cross lumsection as time" 
 for trigger in rev_ordered_triggers:
   trigger_times = [id_to_time[lumi_id] for x in trigger_lumi_ids_dict[trigger]]
@@ -178,6 +187,7 @@ for trigger in rev_ordered_triggers:
   writer.writerow(trigger_times_sorted)  
   writer.writerow(trigger_cross_section_sorted)  
   
+output_3.close()
 """ 
 PLOT CROSS SECTION AS THE IDS
 print out:
@@ -185,6 +195,10 @@ for each trigger, largest to smallest:
 trigger ids nums
 trigger luminosity
 """
+
+output_4 = open("x_sec_time.txt","w")
+writer = csv.writer(output_4, lineterminator='\n')
+
 print "cross section as id" 
 for trigger in rev_ordered_triggers:
   trigger_times = [id_to_time[lumi_id] for x in trigger_lumi_ids_dict[trigger]]
@@ -200,6 +214,6 @@ for trigger in rev_ordered_triggers:
 		pass
   writer.writerow(trigger_ids)  
   writer.writerow(trigger_cross_section_sorted)  
-  
+output_4.close()
 
  
