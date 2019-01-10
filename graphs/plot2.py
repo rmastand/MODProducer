@@ -336,6 +336,7 @@ def graph_fired_over_eff_lumin_time_ordered():
         	
 		#lumis = [x for x in lines[color_index*4].split(",")]
 		times = [float(x) for x in lines[color_index*2].split(",")]
+		index = range(len(times))
 		#index = [int(x) for x in lines[color_index*4+2].split(",")]
 		yaxis = [float(x) for x in lines[color_index*2+1].split(",")]
         	print len(index),len(yaxis)
@@ -382,5 +383,5 @@ def graph_fired_over_eff_lumin_time_ordered():
 
 #graph_eff_lumin()
 #graph_eff_lumin_time_ordered()
-graph_fired_over_eff_lumin()
+#graph_fired_over_eff_lumin()
 graph_fired_over_eff_lumin_time_ordered()
