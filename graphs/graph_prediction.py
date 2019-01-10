@@ -1,6 +1,6 @@
 import numpy as np
 import sys
-impoty matplotlib.pyplot as plt
+import matplotlib.pyplot as plt
 
 input_file = sys.argv[1]
 
