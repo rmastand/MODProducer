@@ -89,7 +89,7 @@ with open(by_event_2_file, "r") as input:
 
 
 for trigger in rev_ordered_triggers:
-	trigger_times_dict[trigger] = [id_to_time[lumi_id] for x in trigger_lumi_ids_dict[trigger]]
+	trigger_times_dict[trigger] = [id_to_time[x] for x in trigger_lumi_ids_dict[trigger]]
 
 
 runA_times= []
