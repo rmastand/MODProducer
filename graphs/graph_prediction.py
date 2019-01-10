@@ -11,6 +11,7 @@ with open(input_file, "r") as input:
     i += 1
     if "#" in line.split():
       trigger = line.split()[1]
+      print trigger
       trigger_dict[trigger] = [0,0] #eff lumi, times fired
       i = 0
     elif i == 1: # lumi ids
@@ -25,6 +26,7 @@ with open(input_file, "r") as input:
       trigger_dict[trigger][1] = times_fired
     
 for trigger in trigger_dict.keys():
+  
   plt.figure()
   plt.scatter(trigger_dict[trigger][0],trigger_dict[trigger][0],s=1)
   plt.xlabel("Effective Luminosity")
