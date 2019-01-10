@@ -135,7 +135,7 @@ def graph_eff_lumin():
 
 	for trig_index,trig in enumerate(rev_ordered_triggers):
 	        print trig
-
+		print lines[2*trig_index+3]
 		index = np.array([int(x) for x in lines[2*trig_index+3].split(",")[:-1]])
 
 		eff_lumin = np.array([float(x) for x in lines[2*trig_index+4].split(",")[:-1]])
