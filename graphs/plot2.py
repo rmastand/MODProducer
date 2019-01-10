@@ -22,7 +22,6 @@ trigger_colors = {"HLT_Jet30":"#999999","HLT_Jet60":"#f781bf","HLT_Jet80":"#a656
 "HLT_Jet300":"#377eb8","HLT_Jet370":"#e41a1c"}
 logo_text = "Preliminary"
 rev_ordered_triggers = ["HLT_Jet30","HLT_Jet60","HLT_Jet80","HLT_Jet110","HLT_Jet150","HLT_Jet190","HLT_Jet240","HLT_Jet300","HLT_Jet370"][::-1]
-rev_ordered_triggers = ["HLT_Jet30","HLT_Jet60","HLT_Jet80","HLT_Jet110","HLT_Jet150","HLT_Jet190"][::-1]
 
 
 plt.rcParams['font.family'] = 'serif'
@@ -136,6 +135,11 @@ def graph_eff_lumin():
 
 	for trig_index,trig in enumerate(rev_ordered_triggers):
 	        print trig
+		print lines[0][:20]
+		print lines[1][:20]
+		print lines[2][:20]
+		print lines[3][:20]
+		print lines[4][:20]
 		print lines[2*trig_index+3]
 		index = np.array([int(x) for x in lines[2*trig_index+3].split(",")[:-1]])
 
