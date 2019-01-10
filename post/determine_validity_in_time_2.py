@@ -6,7 +6,7 @@ import datetime
 import time
 
 
-plot_eff_lumi_file = sys.argv[1]
+by_event_2_file = sys.argv[1]
 lumibyls_file = sys.argv[2]
 output_file = sys.argv[3]
 summary_file = sys.argv[4]
@@ -26,7 +26,7 @@ def read_lumi_by_ls(lumibyls_file):
 	lines =  lumibyls.readlines()
 	split_lines = [line.split(",") for line in lines][2:]
 	char = ""
-	time_to_id = {}
+	id_to_time = {}
 	time_to_lumin = {}
 	lumin_all = []
 	i = 0
@@ -39,20 +39,20 @@ def read_lumi_by_ls(lumibyls_file):
 		hms = [int(x) for x in tim.split(":")]
 		dt = datetime.datetime(mdy[2], mdy[0], mdy[1], hms[0], hms[1],hms[2])
 		timestamp = time.mktime(dt.timetuple())
-		time_to_id[timestamp] = run+":"+lumi
+		id_to_time[run+":"+lumi] = timestamp
 		time_to_lumin[timestamp] = float(split_lines[i][6])
 		i += 1
 		try:
 			char = split_lines[i][0][0]
 		except: pass
-	return time_to_id,time_to_lumin
+	return id_to_time,time_to_lumin
 
 
 
 
 
 
-time_to_id,time_to_lumin = read_lumi_by_ls(lumibyls_file)
+id_to_time,time_to_lumin = read_lumi_by_ls(lumibyls_file)
 
 
 """
@@ -65,13 +65,26 @@ Effective Luminosity, number index
 Effective Luminosity, cumsum value
 """
 
-eff_lumi_file =  open(plot_eff_lumi_file)
-lines = eff_lumi_file.readlines()
-# for the total luminosity file:
+trigger_ids_dict = {}
+i = 0
+with open(by_event_2_file, "r") as input:
+  for line in input:
+    i += 1
+    if "#" in line.split():
+      trigger = line.split()[1]
+      print trigger
+      i = 0
+    elif i == 1: # lumi ids
+      lumi_ids = line.split(",")[:-1]
+      trigger_ids_dict[trigger] = lumi_ids
+    elif i == 2: # eff lumis
+      pass
+    elif i == 3: # # times fired
+      pass
+      
 
 # all point represent VALID lumiblocks, either in totla or for a given trigger
 runA_times = np.array([float(x) for x in lines[0].split(",")])
-time_ordered_lumi_id = lines[5].split(",")
 
 
 trigger_index_dict = {}
@@ -80,7 +93,8 @@ for trigger in rev_ordered_triggers:
 	trigger_index_dict[trigger] = []
 
 for trig_index,trigger in enumerate(rev_ordered_triggers):
-	trigger_times = np.array([float(x) for x in lines[3*trig_index+6].split(",")])
+	trigger_ids = trigger_ids_dict[trigger]
+	trigger_times = [id_to_time[x] for x in trigger_ids]
 	for i,master_time in enumerate(runA_times):
 		if master_time in trigger_times:
 			trigger_index_dict[trigger].append("1")
