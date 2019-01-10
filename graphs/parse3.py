@@ -220,6 +220,8 @@ for trigger in rev_ordered_triggers:
 		pass
   writer.writerow(iids)  
   writer.writerow(trigger_cross_section_sorted)  
+  print len(iids)
+  print len(trigger_cross_section_sorted)
 output_4.close()
 
  
