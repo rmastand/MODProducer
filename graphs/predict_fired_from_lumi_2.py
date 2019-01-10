@@ -49,7 +49,6 @@ for trigger in rev_ordered_triggers:
 
 with open(parsed_by_event,"r") as event_listing:
 	for line in event_listing:
-		if i < 100:
 		      i += 1
 		      if i % 10000 == 0:
 			print "on line "+ str(i)
@@ -75,40 +74,39 @@ with open(parsed_by_event,"r") as event_listing:
 				print present_trigger
 			    if present_trigger in triggers_fired:   
 			      master_dict[trigger][lumi_id]["times_fired"] += 1
-		else: 
-			print master_dict
+		
 	
 
 
-			"""
-			# trigger
-			lumi id
-			effective lumi
-			times fired
-			"""
-			with open(output_file,"r") as output:
-				for trigger in master_dict.keys():
-					lumi_ids = []
-					eff_lumins = []
-					times_fired = []
-					output.write("# "+trigger+"\n")
-					for lumi_id in master_dict[trigger].keys():
-						lumi_ids.append(lumi_id[0]+":"+lumi_id[1])  
-						eff_lumins.append(lumi_id_to_lumin[lumi_id][1]/float(master_dict[trigger][lumi_id]["prescale"])
-						times_fired.append(master_dict[trigger][lumi_id]["times_fired"])
-					line = ""
-					for x in lumi_ids:
-						line += x + ","
-					output.write(line+"\n")
-					line = ""
-					for x in eff_lumins:
-						line += x + ","
-					output.write(line+"\n")
-					line = ""
-					for x in times_fired:
-						line += x + ","
-					output.write(line+"\n")
-			exit()
+"""
+# trigger
+lumi id
+effective lumi
+times fired
+"""
+with open(output_file,"r") as output:
+	for trigger in master_dict.keys():
+		lumi_ids = []
+		eff_lumins = []
+		times_fired = []
+		output.write("# "+trigger+"\n")
+		for lumi_id in master_dict[trigger].keys():
+			lumi_ids.append(lumi_id[0]+":"+lumi_id[1])  
+			eff_lumins.append(lumi_id_to_lumin[lumi_id][1]/float(master_dict[trigger][lumi_id]["prescale"])
+			times_fired.append(master_dict[trigger][lumi_id]["times_fired"])
+		line = ""
+		for x in lumi_ids:
+			line += x + ","
+		output.write(line+"\n")
+		line = ""
+		for x in eff_lumins:
+			line += x + ","
+		output.write(line+"\n")
+		line = ""
+		for x in times_fired:
+			line += x + ","
+		output.write(line+"\n")
+
 
 
 
