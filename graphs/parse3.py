@@ -216,8 +216,7 @@ for trigger in rev_ordered_triggers:
 		trigger_cross_section.append(0.)
   writer.writerow(trigger_ids)  
   writer.writerow(trigger_cross_section_sorted)  
-  print len(trigger_ids)
-  print len(trigger_cross_section_sorted)
+
 output_4.close()
 
  
