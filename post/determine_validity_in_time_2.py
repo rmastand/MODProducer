@@ -10,7 +10,7 @@ by_event_2_file = sys.argv[1]
 lumibyls_file = sys.argv[2]
 output_file = sys.argv[3]
 summary_file = sys.argv[4]
-run_alumi_file = sys.argv[3]
+run_alumi_file = sys.argv[5]
 
 
 runA_runs = []
