@@ -121,9 +121,14 @@ def graph_eff_lumin():
 
         #print np.logspace(min(master_index),max(master_index),num_samples)
         good_indices = np.logspace(np.log10(min(runA_index)),np.log10(max(runA_index)),num_samples).astype(int)# -min(runA_index)
+	g_i = []
+	for m,index in enumerate(runA_index):
+		if index in good_indices:
+			g_i.append(m)
+		
 	
 
-	plt.plot(np.take(runA_index,good_indices),np.take(runA_lumin,good_indices),"k",linewidth=9.0)
+	plt.plot(np.take(runA_index,g_i),np.take(runA_lumin,g_i),"k",linewidth=9.0)
 
 
 	x = .2
@@ -142,9 +147,14 @@ def graph_eff_lumin():
                 good_indices = np.logspace(np.log10(min(index)),np.log10(max(index)),num_samples).astype(int) #- min(index)
                 print len(index), len(eff_lumin)
 		
+		g_i = []
+		for m,ind in enumerate(index):
+			if ind in good_indices:
+				g_i.append(m)
+		
 
 
-        	plt.plot(np.take(index,np.where(good_indices==index)),np.take(eff_lumin,np.where(good_indices==index)),trigger_colors[trig],linewidth=4.0)
+        	plt.plot(np.take(index,g_i),np.take(eff_lumin,g_i),trigger_colors[trig],linewidth=4.0)
 
 		plt.text(trig_name_positions[trig][0],trig_name_positions[trig][1],trig[4:],color = trigger_colors[trig])
 
