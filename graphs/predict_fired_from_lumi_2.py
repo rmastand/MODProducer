@@ -81,7 +81,7 @@ lumi id
 effective lumi
 times fired
 """
-with open(output_file,"r") as output:
+with open(output_file,"w") as output:
 	for trigger in master_dict.keys():
 		lumi_ids = []
 		eff_lumins = []
