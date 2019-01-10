@@ -31,4 +31,5 @@ for trigger in trigger_dict.keys():
   plt.scatter(trigger_dict[trigger][0],trigger_dict[trigger][0],s=1)
   plt.xlabel("Effective Luminosity")
   plt.ylabel("Times Fired")
+  plt.title(trigger)
   plt.show()
