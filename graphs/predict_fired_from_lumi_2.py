@@ -4,6 +4,7 @@ import sys
 
 parsed_by_event = sys.argv[1]
 lumibyls_file = sys.argv[2]
+output_file = sys.argv[3]
 
 def read_lumi_by_ls(lumibyls_file):
 	"""
@@ -78,4 +79,35 @@ with open(parsed_by_event,"r") as event_listing:
 	print master_dict
 	break
 print "out"
+
+"""
+# trigger
+lumi id
+effective lumi
+times fired
+"""
+with open(output_file,"r") as output:
+	for trigger in master_dict.keys():
+		lumi_ids = []
+		eff_lumins = []
+		times_fired = []
+		output.write("# "+trigger+"\n")
+		for lumi_id in master_dict[trigger].keys():
+			lumi_ids.append(lumi_id[0]+":"+lumi_id[1])  
+			eff_lumins.append(lumi_id_to_lumin[lumi_id][1]/float(master_dict[trigger][lumi_id]["prescale"])
+			times_fired.append(master_dict[trigger][lumi_id]["times_fired"])
+		line = ""
+		for x in lumi_ids:
+			line += x + ","
+		output.write(line+"\n")
+		line = ""
+		for x in eff_lumins:
+			line += x + ","
+		output.write(line+"\n")
+		line = ""
+		for x in times_fired:
+			line += x + ","
+		output.write(line+"\n")
+					
+													  
       
