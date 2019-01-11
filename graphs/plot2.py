@@ -383,6 +383,6 @@ def graph_fired_over_eff_lumin_time_ordered(lumis):
 
 
 time_ordered_lumi_id = graph_eff_lumin()
-#graph_eff_lumin_time_ordered()
-#graph_fired_over_eff_lumin()
+graph_eff_lumin_time_ordered()
+graph_fired_over_eff_lumin()
 graph_fired_over_eff_lumin_time_ordered(time_ordered_lumi_id)
