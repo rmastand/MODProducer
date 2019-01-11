@@ -114,6 +114,7 @@ for trigger in rev_ordered_triggers:
 	trigger_index_dict[trigger] = []
 
 for trig_index,trigger in enumerate(rev_ordered_triggers):
+	print trigger
 	trigger_ids = trigger_ids_dict[trigger]
 	trigger_times = [id_to_time[x] for x in trigger_ids]
 	for i,master_time in enumerate(runA_times):
