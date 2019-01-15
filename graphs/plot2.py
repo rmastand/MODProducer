@@ -203,7 +203,7 @@ def graph_eff_lumin_time_ordered():
 	time_ordered_lumi_id = lines[0].split(",")
 
         #print np.logspace(min(master_index),max(master_index),num_samples)
-        good_indices = np.linspace(min(runA_index),max(runA_index),num_samples).astype(int) #-min(runA_index)
+        good_indices = np.linspace(min(runA_index),max(runA_index),num_samples).astype(int) - min(runA_index)
 	
 	g_i = []
 	for m,ind in enumerate(runA_index):
@@ -384,6 +384,6 @@ def graph_fired_over_eff_lumin_time_ordered(lumis):
 
 
 time_ordered_lumi_id = graph_eff_lumin()
-graph_eff_lumin_time_ordered()
-graph_fired_over_eff_lumin()
-graph_fired_over_eff_lumin_time_ordered(time_ordered_lumi_id)
+#graph_eff_lumin_time_ordered()
+#graph_fired_over_eff_lumin()
+#graph_fired_over_eff_lumin_time_ordered(time_ordered_lumi_id)
