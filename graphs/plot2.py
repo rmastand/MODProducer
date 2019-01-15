@@ -164,6 +164,7 @@ def graph_eff_lumin():
 	ax = plt.gca()
 
 	ax.set_xlim(left = .15,right = max(runA_index)*1.25)
+	ax.set_ylim(bottom = 0,right = 10000000000)
 
 	plt.xlabel("Cumulative Luminosity Blocks")
 	ax.add_artist(logo_box())
