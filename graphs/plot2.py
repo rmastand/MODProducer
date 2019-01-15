@@ -128,7 +128,7 @@ def graph_eff_lumin():
 		
 	
 
-	plt.plot(np.take(runA_index,g_i),np.take(runA_lumin,g_i),"k",linewidth=9.0)
+	#plt.plot(np.take(runA_index,g_i),np.take(runA_lumin,g_i),"k",linewidth=9.0)
 
 
 	x = .2
@@ -144,7 +144,7 @@ def graph_eff_lumin():
 		index = np.array([int(x) for x in lines[2*trig_index+3].split(",")[1:-1]])
 
 		eff_lumin = np.cumsum(np.array([float(x) for x in lines[2*trig_index+4].split(",")[1:-1]]))
-                good_indices = np.logspace(np.log10(min(index)),np.log10(max(index)),num_samples).astype(int) - min(index)
+                good_indices = np.logspace(np.log10(min(index)),np.log10(max(index)),num_samples).astype(int)# - min(index)
                 print len(index), len(eff_lumin)
 		
 		g_i = []
