@@ -152,7 +152,7 @@ def graph_eff_lumin():
 			if ind in good_indices:
 				g_i.append(m)
 		
-
+		print np.take(eff_lumin,g_i)
 
         	plt.plot(np.take(index,g_i),np.take(eff_lumin,g_i),trigger_colors[trig],linewidth=4.0)
 
