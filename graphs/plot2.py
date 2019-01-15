@@ -114,7 +114,7 @@ def graph_eff_lumin():
 	# for the total luminosity file:
 	
 	runA_lumin = np.array([float(x) for x in lines[2].split(",")])[1:]
-	runA_index = np.array([int(x) for x in lines[1].split(",")])[1:]
+	runA_index = np.cumsum(np.array([int(x) for x in lines[1].split(",")])[1:])
 	#master_index = np.array([int(x) for x in lines[3].split(",")])+1
 	#master_lumin = np.array([float(x) for x in lines[4].split(",")])
 	time_ordered_lumi_id = lines[0].split(",")
@@ -143,7 +143,7 @@ def graph_eff_lumin():
 
 		index = np.array([int(x) for x in lines[2*trig_index+3].split(",")[1:-1]])
 
-		eff_lumin = np.array([float(x) for x in lines[2*trig_index+4].split(",")[1:-1]])
+		eff_lumin = np.cumsum(np.array([float(x) for x in lines[2*trig_index+4].split(",")[1:-1]]))
                 good_indices = np.logspace(np.log10(min(index)),np.log10(max(index)),num_samples).astype(int) #- min(index)
                 print len(index), len(eff_lumin)
 		
@@ -191,7 +191,7 @@ def graph_eff_lumin_time_ordered():
 	# for the total luminosity file:
 	
 	runA_times = np.array([float(x) for x in lines[1].split(",")])
-	runA_lumin = np.array([float(x) for x in lines[2].split(",")])
+	runA_lumin = np.cumsum(np.array([float(x) for x in lines[2].split(",")]))
 	runA_index = range(len(runA_times))
 
 	
@@ -227,7 +227,7 @@ def graph_eff_lumin_time_ordered():
 		times = np.array([float(x) for x in lines[2*trig_index+3].split(",")])
 		index = range(len(times))
 
-		eff_lumin = np.array([float(x) for x in lines[2*trig_index+4].split(",")])
+		eff_lumin = np.cumsum(np.array([float(x) for x in lines[2*trig_index+4].split(",")]))
                 good_indices = np.linspace(min(index),max(index),num_samples).astype(int)# - min(index)
                 print len(index), len(eff_lumin)
 		g_i = []
