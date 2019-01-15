@@ -129,12 +129,14 @@ writer.writerow(runA_ids_sorted)
 writer.writerow(runA_times_sorted)  
 writer.writerow(runA_lumin_rec_sorted)  
 
+trig_lumin_rec = {}
 
 for trigger in rev_ordered_triggers:
   # write the times out
   trigger_times_sorted,trigger_lumin_rec_sorted = (list(t) for t in zip(*sorted(zip(trigger_times_dict[trigger],trigger_eff_lumis_dict[trigger]))))
   writer.writerow(trigger_times_sorted)  
   writer.writerow(trigger_lumin_rec_sorted)  
+  trig_lumin_rec[trigger] = trigger_lumin_rec_sorted
 output_1.close()
 
   
@@ -165,7 +167,7 @@ for trigger in rev_ordered_triggers:
     if time in trigger_times_dict[trigger]:
       trigger_ids.append(id)
   writer.writerow(trigger_ids)  
-  writer.writerow(trigger_lumin_rec_sorted)  
+  writer.writerow(trig_lumin_rec[trigger])  
 output_2.close()
 
 
