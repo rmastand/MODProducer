@@ -158,6 +158,8 @@ def graph_eff_lumin():
 
 			#print eff_lumin[-20:]
 			plt.plot(np.take(index,g_i),np.take(eff_lumin,g_i),trigger_colors[trig],linewidth=4.0)
+			print np.take(index,g_i)
+			print np.take(eff_lumin,g_i)
 
 			plt.text(trig_name_positions[trig][0],trig_name_positions[trig][1],trig[4:],color = trigger_colors[trig])
 
