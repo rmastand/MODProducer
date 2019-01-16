@@ -139,13 +139,13 @@ def graph_eff_lumin():
 			      "HLT_Jet240":(x,700),"HLT_Jet300":(x,2000),"HLT_Jet370":(x,5000)}
 
 	for trig_index,trig in enumerate(rev_ordered_triggers):
-		if trig != "HLT_Jet300":
+		
 			print trig
 
 
 			index = np.array([int(x) for x in lines[2*trig_index+3].split(",")])[1:]
 			
-			print index[-100:]
+			
 
 			eff_lumin = np.cumsum(np.array([float(x) for x in lines[2*trig_index+4].split(",")]))[1:]
 			good_indices = np.logspace(np.log10(min(index)),np.log10(max(index)),num_samples).astype(int)# - min(index)
@@ -158,8 +158,7 @@ def graph_eff_lumin():
 
 			#print eff_lumin[-20:]
 			plt.plot(np.take(index,g_i),np.take(eff_lumin,g_i),trigger_colors[trig],linewidth=4.0)
-			print np.take(index,g_i)
-			print np.take(eff_lumin,g_i)
+			
 
 			plt.text(trig_name_positions[trig][0],trig_name_positions[trig][1],trig[4:],color = trigger_colors[trig])
 
