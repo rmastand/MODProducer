@@ -152,7 +152,7 @@ def graph_eff_lumin():
 			if ind in good_indices:
 				g_i.append(m)
 		
-		print eff_lumin[-20:]
+		#print eff_lumin[-20:]
         	plt.plot(np.take(index,g_i),np.take(eff_lumin,g_i),trigger_colors[trig],linewidth=4.0)
 
 		plt.text(trig_name_positions[trig][0],trig_name_positions[trig][1],trig[4:],color = trigger_colors[trig])
