@@ -22,6 +22,7 @@ trigger_colors = {"HLT_Jet30":"#999999","HLT_Jet60":"#f781bf","HLT_Jet80":"#a656
 "HLT_Jet300":"#377eb8","HLT_Jet370":"#e41a1c"}
 logo_text = "Preliminary"
 rev_ordered_triggers = ["HLT_Jet30","HLT_Jet60","HLT_Jet80","HLT_Jet110","HLT_Jet150","HLT_Jet190","HLT_Jet240","HLT_Jet300","HLT_Jet370"][::-1]
+rev_ordered_triggers = ["HLT_Jet30","HLT_Jet60","HLT_Jet80","HLT_Jet110","HLT_Jet150","HLT_Jet190","HLT_Jet240","HLT_Jet370"][::-1]
 
 
 plt.rcParams['font.family'] = 'serif'
