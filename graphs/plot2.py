@@ -144,6 +144,8 @@ def graph_eff_lumin():
 
 
 			index = np.array([int(x) for x in lines[2*trig_index+3].split(",")])
+			
+			print index[-100:]
 
 			eff_lumin = np.cumsum(np.array([float(x) for x in lines[2*trig_index+4].split(",")]))
 			good_indices = np.logspace(np.log10(min(index)),np.log10(max(index)),num_samples).astype(int)# - min(index)
