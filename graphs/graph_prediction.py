@@ -33,3 +33,4 @@ for trigger in trigger_dict.keys():
   plt.ylabel("Times Fired")
   plt.title(trigger)
   plt.savefig(trigger+".png")
+  plt.show()
