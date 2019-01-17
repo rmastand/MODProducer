@@ -70,6 +70,8 @@ def read_lumi_by_ls(lumibyls_file):
 
 id_to_time,time_to_lumin,lumi_id_to_lumin,time_to_id = read_lumi_by_ls(lumibyls_file)
 
+print lumi_id_to_lumin[("165467","703")]
+
 
 """
 plot_eff_luminosity.txt:
