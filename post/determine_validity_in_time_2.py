@@ -40,7 +40,8 @@ def read_lumi_by_ls(lumibyls_file):
 	char = ""
 	id_to_time = {}
 	time_to_id = {}
-	time_to_lumin = {}
+	time_to_lumin_del = {}
+	time_to_lumin_rec = {}
 	lumi_id_to_lumin = {}
 	lumin_all = []
 	i = 0
@@ -55,22 +56,23 @@ def read_lumi_by_ls(lumibyls_file):
 		timestamp = time.mktime(dt.timetuple())
 		lumi_id_to_lumin[(run,lumi)] = (float(split_lines[i][5]),float(split_lines[i][6]))
 		id_to_time[(run,lumi)] = timestamp
-		time_to_lumin[timestamp] = float(split_lines[i][6])
+		time_to_lumin_rec[timestamp] = float(split_lines[i][6])
+		time_to_lumin_del[timestamp]= float(split_lines[i][5])
 		time_to_id[timestamp] = run+":"+lumi
 		i += 1
 		try:
 			char = split_lines[i][0][0]
 		except: pass
-	return id_to_time,time_to_lumin,lumi_id_to_lumin,time_to_id
+	return id_to_time,time_to_lumin_del,time_to_lumin_rec,lumi_id_to_lumin,time_to_id
 
 
 
 
 
 
-id_to_time,time_to_lumin,lumi_id_to_lumin,time_to_id = read_lumi_by_ls(lumibyls_file)
+id_to_time,time_to_lumin_del,time_to_lumin_rec,lumi_id_to_lumin,time_to_id = read_lumi_by_ls(lumibyls_file)
 
-print lumi_id_to_lumin[("165467","703")]
+
 
 
 """
@@ -135,7 +137,7 @@ for trigger in rev_ordered_triggers:
 w.write(first_line+"\n")
 
 n = 15
-first_line = setw("Event time",n) + setw("Event ID",n) +setw("Event Lumi",n) +setw("Pre time",n) +setw("Pre ID",n) +setw("Pre Lumi",n)  +setw("Post time",n) +setw("Post ID",n) +setw("Post Lumi",n) 
+first_line = setw("Event time",n) + setw("Event ID",n) +setw("EventLumiDel",n)+setw("EventLumiRec",n) +setw("Pre time",n) +setw("Pre ID",n) +setw("PreLumiDel",n)+setw("PreLumiRec",n)  +setw("Post time",n) +setw("Post ID",n) +setw("PostLumiDel",n)+setw("PostLumiRec",n) 
 
 s.write(first_line+"\n")
 
@@ -150,7 +152,8 @@ for i,master_time in enumerate(runA_times):
 	
 	event_time = master_time
 	event_id = time_to_id[event_time]	
-	event_lumin = time_to_lumin[event_time]
+	event_lumin_del = time_to_lumin_del[event_time]
+	event_lumin_rec = time_to_lumin_rec[event_time]
 	try: 
 		prev_time = runA_times[i-1]
 	except IndexError:
@@ -173,17 +176,21 @@ for i,master_time in enumerate(runA_times):
 	if test_sum == 0:
 		zero_events_times.append(event_time)
 		zero_events_lumis.append(event_id)
-		zero_events_lumin.append(event_lumin)
+		zero_events_lumin.append(event_lumin_rec)
 		try: prev_id = time_to_id[prev_time]	
 		except KeyError: prev_id = "N/A"
 		try: post_id = time_to_id[post_time]	
 		except KeyError: prev_id = "N/A"
-		try: prev_lumin = time_to_lumin[prev_time]	
+		try: 
+			prev_lumin_del = time_to_lumin_del[prev_time]	
+			prev_lumin_rec = time_to_lumin_rec[prev_time]	
 		except KeyError: prev_id = "N/A"
-		try: post_lumin = time_to_lumin[post_time]	
+		try: 
+			post_lumin_del = time_to_lumin_del[post_time]	
+			post_lumin_rec = time_to_lumin_rec[post_time]	
 		except KeyError: prev_id = "N/A"
 			
-		line  = setw(str(event_time),n) + setw(str(event_id),n) +setw(str(event_lumin),n) +setw(str(prev_time),n) +setw(str(prev_id),n) +setw(str(prev_lumin),n)  +setw(str(post_time),n) +setw(str(post_id),n) +setw(str(post_lumin),n) 
+		line  = setw(str(event_time),n) + setw(str(event_id),n) +setw(str(event_lumin_del),n)+setw(str(event_lumin_red),n) +setw(str(prev_time),n) +setw(str(prev_id),n) +setw(str(prev_lumin_del),n) +setw(str(prev_lumin_rec),n) +setw(str(post_time),n) +setw(str(post_id),n) +setw(str(post_lumin_del),n)+setw(str(post_lumin_rec),n)  
 		s.write(line+"\n")
 		
 
