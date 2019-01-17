@@ -190,7 +190,7 @@ for i,master_time in enumerate(runA_times):
 			post_lumin_rec = time_to_lumin_rec[post_time]	
 		except KeyError: prev_id = "N/A"
 			
-		line  = setw(str(event_time),n) + setw(str(event_id),n) +setw(str(event_lumin_del),n)+setw(str(event_lumin_red),n) +setw(str(prev_time),n) +setw(str(prev_id),n) +setw(str(prev_lumin_del),n) +setw(str(prev_lumin_rec),n) +setw(str(post_time),n) +setw(str(post_id),n) +setw(str(post_lumin_del),n)+setw(str(post_lumin_rec),n)  
+		line  = setw(str(event_time),n) + setw(str(event_id),n) +setw(str(event_lumin_del),n)+setw(str(event_lumin_rec),n) +setw(str(prev_time),n) +setw(str(prev_id),n) +setw(str(prev_lumin_del),n) +setw(str(prev_lumin_rec),n) +setw(str(post_time),n) +setw(str(post_id),n) +setw(str(post_lumin_del),n)+setw(str(post_lumin_rec),n)  
 		s.write(line+"\n")
 		
 
