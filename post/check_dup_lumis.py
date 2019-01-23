@@ -88,8 +88,10 @@ def read_stats_file(stats_file,file_name,i,num_files):
 				num_valid_events,num_total_events = line.split()[3], line.split()[2]
 			if ("Block" in line.split()) and ("#" not in line.split()):	
 				run,lumiBlock = line.split()[1],line.split()[2]
-				all_lumis.append(float(run+"."+lumiBlock))
+				if float(run+"."+lumiBlock) not in all_lumis:
+					all_lumis.append(float(run+"."+lumiBlock))
 				if is_lumi_valid((run,lumiBlock),lumi_id_to_lumin):
+					if float(run+"."+lumiBlock) not in valid_lumis:
 						valid_lumis.append(float(run+"."+lumiBlock))
 	return valid_lumis,all_lumis,num_valid_events,num_total_events
 
@@ -114,26 +116,26 @@ for dire in all_dirs:
 		all_num_lumis_total.append(len(all_lumis))
 print "all lumis duplicated, total lumis"
 print len(set([x for x in all_valid_lumis if all_valid_lumis.count(x) > 1]))
-print len(all_valid_lumis)
+print len(set(all_valid_lumis))
 #print set([x for x in all_valid_lumis if all_valid_lumis.count(x) > 1])
 
 plt.figure()
-plt.hist(all_num_events_valid)
+plt.hist(all_num_events_valid,bins=10)
 plt.title("all_num_events_valid")
 plt.show()
 
 plt.figure()
-plt.hist(all_num_events_total)
+plt.hist(all_num_events_total,bins=10)
 plt.title("all_num_events_total")
 plt.show()
 
 plt.figure()
-plt.hist(all_num_lumis_valid)
+plt.hist(all_num_lumis_valid,bins=10)
 plt.title("all_num_lumis_valid")
 plt.show()
 
 plt.figure()
-plt.hist(all_num_lumis_total)
+plt.hist(all_num_lumis_total,bins=10)
 plt.title("all_num_lumis_total")
 plt.show()
 
