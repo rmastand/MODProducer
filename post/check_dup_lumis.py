@@ -116,30 +116,29 @@ for dire in all_dirs:
 		all_num_lumis_valid.append(len(valid_lumis))
 		all_num_lumis_total.append(len(all_lumis))
 print "all lumis duplicated, total lumis"
-#print set([x for x in all_valid_lumis if all_valid_lumis.count(x) > 1])
-#print len(set([x for x in all_valid_lumis if all_valid_lumis.count(x) > 1]))
-#print len(set(all_valid_lumis))
+print set([x for x in all_valid_lumis if all_valid_lumis.count(x) > 1])
+print len(set([x for x in all_valid_lumis if all_valid_lumis.count(x) > 1]))
+print len(set(all_valid_lumis))
 
 
 plt.figure()
 plt.hist(all_num_events_valid,bins=50)
-
-plt.title("all_num_events_valid")
+plt.title("Number of valid events per file")
 plt.show()
 
 plt.figure()
 plt.hist(all_num_events_total,bins=50)
-plt.title("all_num_events_total")
+plt.title("Number of events per file")
 plt.show()
 
 plt.figure()
 plt.hist(all_num_lumis_valid,bins=50)
-plt.title("all_num_lumis_valid")
+plt.title("Number of valid lumiblocks per file")
 plt.show()
 
 plt.figure()
 plt.hist(all_num_lumis_total,bins=50)
-plt.title("all_num_lumis_total")
+plt.title("Number of lumiblocks per file")
 plt.show()
 
 
