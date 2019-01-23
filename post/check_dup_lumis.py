@@ -103,7 +103,7 @@ num_files = 1223
 for dire in all_dirs:
 	for file in os.listdir(dire):
 		# if file has not already been processed
-		print "Processing file " + file + ", File "+str(i)+" of " + str(num_files)
+		#print "Processing file " + file + ", File "+str(i)+" of " + str(num_files)
 		valid_lumis,all_lumis,num_valid_events,num_total_events = read_stats_file(dire+"/"+file,file,i,num_files)
 		all_valid_lumis += valid_lumis
 		i += 1
@@ -112,7 +112,8 @@ for dire in all_dirs:
 		all_num_lumis_valid.append(len(valid_lumis))
 		all_num_lumis_total.append(len(all_lumis))
 print "all lumis duplicated, total lumis"
-print len(set([x for x in all_valid_lumis if all_valid_lumis.count(x) > 1])),len(all_valid_lumis)
+print len(set([x for x in all_valid_lumis if all_valid_lumis.count(x) > 1]))
+print len(all_valid_lumis)
 #print set([x for x in all_valid_lumis if all_valid_lumis.count(x) > 1])
 
 plt.figure()
