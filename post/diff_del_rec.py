@@ -83,7 +83,7 @@ for id in runA_ids:
 
 print np.mean(runA_pdiffs)
 plt.figure()
-plt.hist(runA_pdiffs)
+plt.hist(runA_pdiffs,bins = 50)
 plt.show()
 
 """
@@ -99,6 +99,6 @@ with open(missing_lumi_file,"r") as missing_lumis:
 			missing_pdiffs.append(percent_diff(float(line.split()[2]),float(line.split()[3])))
 print np.mean(missing_pdiffs)
 plt.figure()
-plt.hist(missing_pdiffs)
+plt.hist(missing_pdiffs,bins = 50)
 plt.show()
 
