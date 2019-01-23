@@ -88,16 +88,11 @@ def read_stats_file(stats_file,file_name,i,num_files):
 				num_valid_events,num_total_events = line.split()[3], line.split()[2]
 			if ("Block" in line.split()) and ("#" not in line.split()):	
 				run,lumiBlock = line.split()[1],line.split()[2]
-				if float(run+"."+lumiBlock) not in all_lumis:
-					all_lumis.append(float(run+"."+lumiBlock))
-				else: 
-					
-					print stats_file
-					print run+"."+lumiBlock
-					print all_lumis
+				
+				all_lumis.append(run+":"+lumiBlock)
+				
 				if is_lumi_valid((run,lumiBlock),lumi_id_to_lumin):
-					if float(run+"."+lumiBlock) not in valid_lumis:
-						valid_lumis.append(float(run+"."+lumiBlock))
+						valid_lumis.append(run+":"+lumiBlock)
 	return valid_lumis,all_lumis,num_valid_events,num_total_events
 
 		
