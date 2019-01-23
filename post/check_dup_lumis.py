@@ -5,6 +5,7 @@ import sys
 import ast
 import os
 import csv
+import matplotlib.pyplot as plt
 
 """generates file trig dicts, prints them to 1 dict for each file"""
 
