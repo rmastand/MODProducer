@@ -14,7 +14,10 @@ lumibyls_file = sys.argv[2]
 run_alumi_file = sys.argv[3]
 
 def percent_diff(x,y):
-	return np.abs(2*(x-y)/(x+y))
+	try:
+		return np.abs(2*(x-y)/(x+y))
+	except ZeroDivisionError:
+		return 0
 
 runA_runs = []
 read_alumi_lines = open(run_alumi_file,"r").readlines()
