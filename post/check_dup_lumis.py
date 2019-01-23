@@ -88,6 +88,8 @@ def read_stats_file(stats_file,file_name,i,num_files):
 				num_valid_events,num_total_events = line.split()[3], line.split()[2]
 			if ("Block" in line.split()) and ("#" not in line.split()):	
 				run,lumiBlock = line.split()[1],line.split()[2]
+				if run,lumiBlock = "163255","603":
+					print stats_file
 				
 				all_lumis.append(run+":"+lumiBlock)
 				
