@@ -7,10 +7,14 @@ import sys
 import datetime
 import time
 import csv
+import matplotlib.pyplot as plt
 
-by_event_2_file = sys.argv[1]
+missing_lumi_file = sys.argv[1]
 lumibyls_file = sys.argv[2]
 run_alumi_file = sys.argv[3]
+
+def percent_diff(x,y):
+	return np.abs(2*(x-y)/(x+y))
 
 runA_runs = []
 read_alumi_lines = open(run_alumi_file,"r").readlines()
@@ -21,9 +25,6 @@ for line in read_alumi_lines[4:]:
   else:
     break
 print "Done reading in ALumi"
-
-rev_ordered_triggers = ["HLT_Jet30","HLT_Jet60","HLT_Jet80","HLT_Jet110","HLT_Jet150","HLT_Jet190","HLT_Jet240","HLT_Jet300","HLT_Jet370"][::-1]
-
 
 def read_lumi_by_ls(lumibyls_file):
 	"""
@@ -61,3 +62,40 @@ def read_lumi_by_ls(lumibyls_file):
 	return id_to_time,time_to_lumin,lumi_id_to_lumin,time_to_id
 
 id_to_time,time_to_lumin,lumi_id_to_lumin,time_to_id = read_lumi_by_ls(lumibyls_file)
+
+
+runA_ids = []
+
+for lumi_id in lumi_id_to_lumin.keys():
+		if lumi_id[0] in runA_runs:
+      			runA_ids.append(lumi_id[0]+":"+lumi_id[1])
+			
+"""
+percent diffs for runA
+"""
+runA_pdiffs = []
+for id in runA_ids:
+	runA_pdiffs.append(percent_diff(lumi_id_to_lumin[lumi_id][0],lumi_id_to_lumin[lumi_id][1]))
+	
+
+print np.mean(runA_pdiffs)
+plt.figure()
+plt.hist(runA_pdiffs)
+plt.show()
+
+"""
+percent diffs for missing blocks
+"""
+missing_pdiffs = []
+j = 0
+with open(missing_lumi_file,"r") as missing_lumis:
+	for line in missing_lumis:
+		j += 1
+		if j != 1:
+			
+			missing_pdiffs.append(percent_diff(float(line.split()[2]),float(line.split()[3])))
+print np.mean(missing_pdiffs)
+plt.figure()
+plt.hist(missing_pdiffs)
+plt.show()
+
