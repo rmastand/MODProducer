@@ -120,9 +120,10 @@ print set([x for x in all_valid_lumis if all_valid_lumis.count(x) > 1])
 print len(set([x for x in all_valid_lumis if all_valid_lumis.count(x) > 1]))
 print len(set(all_valid_lumis))
 #print set([x for x in all_valid_lumis if all_valid_lumis.count(x) > 1])
-
+print all_num_events_valid[:20]
 plt.figure()
 plt.hist(all_num_events_valid,bins=50)
+
 plt.title("all_num_events_valid")
 plt.show()
 
