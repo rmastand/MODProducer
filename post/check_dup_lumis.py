@@ -85,7 +85,7 @@ def read_stats_file(stats_file,file_name,i,num_files):
 			# keeps track of the run, lumiBlock
 			# this should signal each separate event
 			if ("File" in line.split()) and ("#" not in line.split()):
-				num_valid_events,num_total_events = line.split()[3], line.split()[2]
+				num_valid_events,num_total_events = int(line.split()[3]), int(line.split()[2])
 			if ("Block" in line.split()) and ("#" not in line.split()):	
 				run,lumiBlock = line.split()[1],line.split()[2]
 				
@@ -116,11 +116,11 @@ for dire in all_dirs:
 		all_num_lumis_valid.append(len(valid_lumis))
 		all_num_lumis_total.append(len(all_lumis))
 print "all lumis duplicated, total lumis"
-print set([x for x in all_valid_lumis if all_valid_lumis.count(x) > 1])
-print len(set([x for x in all_valid_lumis if all_valid_lumis.count(x) > 1]))
-print len(set(all_valid_lumis))
 #print set([x for x in all_valid_lumis if all_valid_lumis.count(x) > 1])
-print all_num_events_valid[:20]
+#print len(set([x for x in all_valid_lumis if all_valid_lumis.count(x) > 1]))
+#print len(set(all_valid_lumis))
+
+
 plt.figure()
 plt.hist(all_num_events_valid,bins=50)
 
