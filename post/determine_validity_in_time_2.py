@@ -109,8 +109,10 @@ runA_times= []
 for lumi_id in lumi_id_to_lumin.keys():
 		if lumi_id[0] in runA_runs:
 			runA_times.append(id_to_time[lumi_id])
+print len(runA_times)
+runA_times = sorted(runA_times)	
 
-runA_times = sorted(runA_times)			
+
 			
 trigger_index_dict = {}
 
