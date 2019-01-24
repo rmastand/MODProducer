@@ -102,8 +102,11 @@ with open(by_event_2_file, "r") as input:
       pass
     elif i == 3: # # times fired
       pass
-      
 
+for trigger in trigger_ids_dict.keys():
+	print trigger
+	print len(trigger_ids_dict[trigger])
+print "done reading file"
 # all point represent VALID lumiblocks, either in totla or for a given trigger
 runA_times= []
 for lumi_id in lumi_id_to_lumin.keys():
