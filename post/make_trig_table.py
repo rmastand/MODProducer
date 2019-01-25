@@ -19,7 +19,7 @@ all_triggers = ["HLT_Jet30","HLT_Jet60","HLT_Jet80","HLT_Jet110","HLT_Jet150","H
 		"HLT_DiJetAve60","HLT_DiJetAve80","HLT_DiJetAve110","HLT_DiJetAve150","HLT_DiJetAve190",
 		"HLT_DiJetAve240","HLT_DiJetAve300","HLT_DiJetAve370","HLT_DiJetAve15U","HLT_DiJetAve30U","HLT_DiJetAve50U",
 		"HLT_DiJetAve70U","HLT_DiJetAve100U",
-		"HLT_DiJetAve140U","HLT_DiJetAve180U","HLT_DiJetAve300U"
+		"HLT_DiJetAve140U","HLT_DiJetAve180U","HLT_DiJetAve300U",
 		"HLT_Jet240_CentralJet30_BTagIP","HLT_Jet270_CentralJet30_BTagIP","HLT_Jet370_NoJetID"]
 lumibyls_file = sys.argv[1]
 output_table = sys.argv[2]
