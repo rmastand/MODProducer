@@ -27,6 +27,9 @@ all_dirs = ["/Volumes/Seagate Backup Plus Drive/MITOpenDataProject/eos/opendata/
 master_triggers_pv_lumis = {}
 master_triggers_pv_events = {}
 master_triggers_pvf_events = {}
+total_p_events = 0
+total_pv_events = 0
+
 
 def read_trig_file(trig_file,file_name,i,num_files):
 	"""
@@ -48,6 +51,9 @@ def read_trig_file(trig_file,file_name,i,num_files):
 			# MOST CODE TAKEN FROM GET_TRIGGER_INFO.py
 			# keeps track of the run, lumiBlock
 			# this should signal each separate event
+			if ("File" in line.split()) and ("#" not in line.split()):
+				total_p_events += int(line.split([2]))
+				total_pv_events += int(line.split([3]))
 			if ("Trig" in line.split()) and ("#" not in line.split()):
 				trigger = line.split()[1][:-3]
 				pv_events = int(line.split()[3])
@@ -77,7 +83,7 @@ with open(output_table,"w") as output:
 	for trigger in master_triggers_pv_events,keys():
 		line = trigger+","+str(master_triggers_pv_events[trigger])+","+str(master_triggers_pvf_events[trigger])+"\n"
 		output.write(line)
-
+print total_p_events,total_pv_events
 
 
 
