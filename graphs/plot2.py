@@ -152,7 +152,6 @@ def graph_eff_lumin():
 				if ind in good_indices:
 					g_i.append(m)
 
-			#print eff_lumin[-20:]
 			plt.plot(np.take(index,g_i),np.take(eff_lumin,g_i),trigger_colors[trig],linewidth=4.0)
 			
 
@@ -229,7 +228,7 @@ def graph_eff_lumin_time_ordered():
 		index = range(len(times))
 
 		eff_lumin = np.cumsum(np.array([float(x) for x in lines[2*trig_index+4].split(",")]))
-		eff_lumin[:10]
+		print eff_lumin[:10]
                 good_indices = np.linspace(min(index),max(index),num_samples).astype(int)# - min(index)
                 print len(index), len(eff_lumin)
 		g_i = []
