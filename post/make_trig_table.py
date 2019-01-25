@@ -91,7 +91,7 @@ for dire in all_dirs:
 with open(output_table,"w") as output:
 	output.write("trigger_name,pv_events,pvf_events\n")
 	for trigger in all_triggers:
-		line = trigger+","+str(master_triggers_pv_events[trigger])+","+str(master_triggers_pvf_events[trigger])+"\n"
+		line = trigger.replace("_","\_")+","+str(master_triggers_pv_events[trigger])+","+str(master_triggers_pvf_events[trigger])+"\n"
 		output.write(line)
 print total_p_events,total_pv_events
 
