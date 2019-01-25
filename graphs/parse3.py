@@ -91,11 +91,7 @@ with open(by_event_2_file, "r") as input:
 
 for trigger in rev_ordered_triggers:
 	trigger_times_dict[trigger] = [id_to_time[x] for x in trigger_lumi_ids_dict[trigger]]
-	print trigger
-	print len(trigger_times_dict[trigger])
-	print len(trigger_eff_lumis_dict[trigger])
-	print len(trigger_eff_fired_dict[trigger])
-	print len(trigger_lumi_ids_dict[trigger])
+	
 
 
 runA_times= []
