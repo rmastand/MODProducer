@@ -13,6 +13,14 @@ ALL INFORMATION IS FOR VALID LUMIS
 columns: trigger name, present events, fired events
 """
 
+# setting the ordering
+all_triggers = ["HLT_Jet30","HLT_Jet60","HLT_Jet80","HLT_Jet110","HLT_Jet150","HLT_Jet190","HLT_Jet240","HLT_Jet300",
+		"HLT_Jet370","HLT_Jet800","HLT_DiJetAve30",
+		"HLT_DiJetAve60","HLT_DiJetAve80","HLT_DiJetAve110","HLT_DiJetAve150","HLT_DiJetAve190",
+		"HLT_DiJetAve240","HLT_DiJetAve300","HLT_DiJetAve370","HLT_DiJetAve15U","HLT_DiJetAve30U","HLT_DiJetAve50U",
+		"HLT_DiJetAve70U","HLT_DiJetAve100U",
+		"HLT_DiJetAve140U","HLT_DiJetAve180U","HLT_DiJetAve300U"
+		"HLT_Jet240_CentralJet30_BTagIP","HLT_Jet270_CentralJet30_BTagIP","HLT_Jet370_NoJetID"]
 lumibyls_file = sys.argv[1]
 output_table = sys.argv[2]
 
@@ -82,7 +90,7 @@ for dire in all_dirs:
 
 with open(output_table,"w") as output:
 	output.write("trigger_name,pv_events,pvf_events\n")
-	for trigger in master_triggers_pv_events.keys():
+	for trigger in all_triggers:
 		line = trigger+","+str(master_triggers_pv_events[trigger])+","+str(master_triggers_pvf_events[trigger])+"\n"
 		output.write(line)
 print total_p_events,total_pv_events
