@@ -29,11 +29,10 @@ master_triggers_pv_events = {}
 master_triggers_pvf_events = {}
 
 
-total_p_events = 0
-total_pv_events = 0
 
 
-def read_trig_file(trig_file,file_name,i,num_files):
+
+def read_trig_file(trig_file,file_name,total_p_events, total_pv_events):
 	"""
 	prints a dict of triggers FOR EACH MOD file
 	keys are triggers names (with versions)
@@ -68,15 +67,15 @@ def read_trig_file(trig_file,file_name,i,num_files):
 					master_triggers_pvf_events[trigger] += pvf_events
 				except KeyError:
 					master_triggers_pvf_events[trigger] = pvf_events
-
-
+	return total_p_events, total_pv_events
+total_p_events, total_pv_events = 0,0
 i = 1
 num_files = 1223
 for dire in all_dirs:
 	for file in os.listdir(dire):
 		# if file has not already been processed
 		#print "Processing file " + file + ", File "+str(i)+" of " + str(num_files)
-		read_trig_file(dire+"/"+file,file,i,num_files)
+		total_p_events, total_pv_events = read_trig_file(dire+"/"+file,file,total_p_events, total_pv_events)
 		i += 1
 		
 
