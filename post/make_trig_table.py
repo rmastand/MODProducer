@@ -53,8 +53,9 @@ def read_trig_file(trig_file,file_name,total_p_events, total_pv_events):
 			# keeps track of the run, lumiBlock
 			# this should signal each separate event
 			if ("File" in line.split()) and ("#" not in line.split()):
-				total_p_events += int(line.split([2]))
-				total_pv_events += int(line.split([3]))
+
+				total_p_events += int(line.split()[2])
+				total_pv_events += int(line.split()[3])
 			if ("Trig" in line.split()) and ("#" not in line.split()):
 				trigger = line.split()[1][:-3]
 				pv_events = int(line.split()[3])
