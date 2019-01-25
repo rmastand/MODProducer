@@ -47,7 +47,7 @@ plt.rcParams['ytick.minor.width'] = 2
 
 plt.rc('mathtext', rm='serif')
 plt.rcParams['figure.facecolor'] = "white"
-num_samples = 500
+num_samples = 1500
 id_spacing = 30000
 
 def zero_to_nan(values):
