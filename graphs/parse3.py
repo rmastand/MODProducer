@@ -137,6 +137,7 @@ for trigger in rev_ordered_triggers:
   trigger_times_sorted,trigger_lumin_rec_sorted = (list(t) for t in zip(*sorted(zip(trigger_times_dict[trigger],trigger_eff_lumis_dict[trigger]))))
   writer.writerow(trigger_times_sorted) 
   writer.writerow(trigger_lumin_rec_sorted)  
+  print trigger
   print trigger_lumin_rec_sorted[0]
   trig_lumin_rec[trigger] = trigger_lumin_rec_sorted
 output_1.close()
