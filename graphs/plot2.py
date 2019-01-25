@@ -113,8 +113,8 @@ def graph_eff_lumin():
 	lines = input_file.readlines()
 	# for the total luminosity file:
 	
-	runA_lumin = np.cumsum(np.array([float(x) for x in lines[2].split(",")]))[1:]
-	runA_index = np.array([int(x) for x in lines[1].split(",")])[1:]
+	runA_lumin = np.cumsum(np.array([float(x) for x in lines[2].split(",")]))
+	runA_index = np.array([int(x) for x in lines[1].split(",")]) + 1
 	#master_index = np.array([int(x) for x in lines[3].split(",")])+1
 	#master_lumin = np.array([float(x) for x in lines[4].split(",")])
 	time_ordered_lumi_id = lines[0].split(",")
@@ -142,16 +142,8 @@ def graph_eff_lumin():
 		
 			print trig
 
-
-				
-			
-			
-			if trig != "HLT_Jet_300":
-				eff_lumin = np.cumsum(np.array([float(x) for x in lines[2*trig_index+4].split(",")]))[1:]
-				index = np.array([int(x) for x in lines[2*trig_index+3].split(",")])[1:]
-			else: 
-				eff_lumin = np.cumsum(np.array([float(x) for x in lines[2*trig_index+4].split(",")]))
-				index = np.array([int(x) for x in lines[2*trig_index+3].split(",")])
+			eff_lumin = np.cumsum(np.array([float(x) for x in lines[2*trig_index+4].split(",")]))
+			index = np.array([int(x) for x in lines[2*trig_index+3].split(",")]) + 1
 			good_indices = np.logspace(np.log10(min(index)),np.log10(max(index)),num_samples).astype(int)
 			print eff_lumin[:10]
 
