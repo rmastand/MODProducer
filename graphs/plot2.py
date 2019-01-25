@@ -47,7 +47,7 @@ plt.rcParams['ytick.minor.width'] = 2
 
 plt.rc('mathtext', rm='serif')
 plt.rcParams['figure.facecolor'] = "white"
-num_samples = 1500
+num_samples = 2500
 id_spacing = 30000
 
 def zero_to_nan(values):
@@ -387,5 +387,5 @@ def graph_fired_over_eff_lumin_time_ordered(lumis):
 
 time_ordered_lumi_id = graph_eff_lumin()
 graph_eff_lumin_time_ordered()
-#graph_fired_over_eff_lumin()
-#graph_fired_over_eff_lumin_time_ordered(time_ordered_lumi_id)
+graph_fired_over_eff_lumin()
+graph_fired_over_eff_lumin_time_ordered(time_ordered_lumi_id)
