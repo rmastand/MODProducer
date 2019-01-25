@@ -45,7 +45,7 @@ def read_trig_file(trig_file,file_name,i,num_files):
 	"""
 
 
-	with open(stats_file) as file:
+	with open(trig_file) as file:
 		
 		for line in file:
 			# MOST CODE TAKEN FROM GET_TRIGGER_INFO.py
