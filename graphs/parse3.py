@@ -138,7 +138,7 @@ for trigger in rev_ordered_triggers:
   writer.writerow(trigger_times_sorted) 
   writer.writerow(trigger_lumin_rec_sorted)  
   print trigger
-  print trigger_lumin_rec_sorted[0]
+  print trigger_lumin_rec_sorted[0:5]
   trig_lumin_rec[trigger] = trigger_lumin_rec_sorted
 output_1.close()
 
