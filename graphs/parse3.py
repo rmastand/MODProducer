@@ -171,6 +171,7 @@ for trigger in rev_ordered_triggers:
       trigger_ids.append(id)
   writer.writerow(trigger_ids)  
   writer.writerow(trig_lumin_rec[trigger])  
+
 output_2.close()
 
 
