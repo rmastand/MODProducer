@@ -7,7 +7,7 @@ total_lumin = 0
 
 for line in open(file,"r").readlines():
   rec_lumi = line.split()[3]
-  total_lumin += rec_lumi
+  total_lumin += float(rec_lumi)
   
 print total_lumin
 
