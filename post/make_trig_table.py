@@ -87,12 +87,16 @@ for dire in all_dirs:
 		total_p_events, total_pv_events = read_trig_file(dire+"/"+file,file,total_p_events, total_pv_events)
 		i += 1
 		
+		
+		
 
 with open(output_table,"w") as output:
 	output.write("trigger_name,pv_events,pvf_events\n")
 	for trigger in all_triggers:
-		line = trigger.replace("_","\_")+","+str(master_triggers_pv_events[trigger])+","+str(master_triggers_pvf_events[trigger])+"\n"
+		line = "\texttt{+"trigger.replace("_","\_")+"}"+","+str("{:,}".format(master_triggers_pv_events[trigger]))+","+str("{:,}".format(master_triggers_pvf_events[trigger]))+"\n"
 		output.write(line)
+	line = "Total" + "," + "0" + "," + "0" + "\n"
+	output.write(line)
 print total_p_events,total_pv_events
 
 
