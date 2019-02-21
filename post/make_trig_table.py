@@ -128,7 +128,9 @@ master_triggers_crossec_final = {}
 for trigger in master_triggers_x_section.keys():
 	xsec = 0
 	for lumi_id in master_triggers_x_section[trigger]:
-		xsec += master_triggers_x_section[trigger][lumi_id][0]/master_triggers_x_section[trigger][lumi_id][1]
+		try:
+			xsec += master_triggers_x_section[trigger][lumi_id][0]/master_triggers_x_section[trigger][lumi_id][1]
+		except ZeroDivisionError: xsec += 0
 	master_triggers_crossec_final[trigger] = xsec/len(master_triggers_x_section[trigger])
 
 
