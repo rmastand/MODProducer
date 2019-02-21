@@ -75,8 +75,13 @@ master_triggers_eff_lumi = {}
 master_triggers_x_section = {}
 total_pv_events = 0
 total_pfv_events = 0
-total_eff_lumi = {}
+total_eff_lumi = 0
 total_x_section = {}
+total_lumis = {}
+
+for trigger in all_triggers:
+	master_triggers_pv_lumis[trigger] = []
+	master_triggers_x_section[trigger] = []
 
 with open(event_file,"r") as file:
 	for line in file:
@@ -84,34 +89,51 @@ with open(event_file,"r") as file:
 			event_num = line.split()[0]
 			run_num = line.split()[1]
 			lumi_num = line.split()[2]
-			triggers_present = line.split()[3].split(",")
-			print triggers_present
-			print line.split()[4].split(",")
-			trigger_prescales = [float(x) for x in line.split()[4].split(",")]
+			triggers_present = line.split()[3].split(",")[:-1]
+			trigger_prescales = [float(x) for x in line.split()[4].split(",")][:-1]
 			triggers_fired = line.split()[5].split(",")
-			print triggers_fired
 			total_pv_events += 1
+			if len(triggers_fired) > 0:
+				total_pvf_events += 1
+			try: total_lumis[(run_num,lumi_num)] += 1
+			except KeyError: 
+				total_eff_lumi += lumi_id_to_lumin[(run_num,lumi_num)]
+				total_lumis[(run_num,lumi_num)] = 0
 			for i,trigger in enumerate(triggers_present):
-				master_triggers_pv_events[trigger] += 1
+				eff_lumi = lumi_id_to_lumin[(run_num,lumi_num)]/trigger_prescales[i]
+				try: master_triggers_pv_events[trigger] += 1
+				except KeyError: master_triggers_pv_events[trigger] = 1
+				try: master_triggers_pv_events[trigger] += 1
+				except KeyError: master_triggers_pv_events[trigger] = 1
+				
+				try: master_triggers_pv_lumis[trigger][(run_num,lumi_num)] += 1
+				except KeyError: # means that the lumiblock has not already been looked at by THAT TRIGGER
+					master_triggers_eff_lumi[trigger] += eff_lumi
+					master_triggers_pv_lumis[trigger].append((run_num,lumi_num))
+				
+				
 				if trigger in triggers_fired:
-					master_triggers_pvf_events[trigger] += 1
+					try: master_triggers_pvf_events[trigger] += 1
+					except KeyError: master_triggers_pvf_events[trigger] = 1
+					try: master_triggers_x_section[trigger][(run_num,lumi_num)][0] += 1
+					except KeyError: master_triggers_x_section[trigger][(run_num,lumi_num)] = [1,eff_lumi]
 					
+master_triggers_crossec_final = {}
 
-"""
-master_triggers_eff_lumi = {}
-master_triggers_x_section = {}
-total_pv_events = 0
-total_pfv_events = 0
-total_eff_lumi = {}
-total_x_section = {}
-"""
+for trigger in master_triggers_x_section.keys():
+	xsec = 0
+	for lumi_id in master_triggers_x_section[trigger]:
+		xsec += master_triggers_x_section[trigger][lumi_id][0]/master_triggers_x_section[trigger][lumi_id][1]
+	master_triggers_crossec_final[trigger] = xsec/len(master_triggers_x_section[trigger])
+
 
 with open(output_table,"w") as output:
 	output.write("trigger_name,pv_events,pvf_events,eff_lumin,eff_cross_sec,\n")
 	for trigger in all_triggers:
-		line = "\\texttt{"+trigger.replace("_","\_")+"}"+","+str(master_triggers_pv_events[trigger])+","+str(master_triggers_pvf_events[trigger])+"\n"
+		line = "\\texttt{"+trigger.replace("_","\_")+"}"+","+str(master_triggers_pv_events[trigger])+","+str(master_triggers_pvf_events[trigger])
+		+str(master_triggers_eff_lumi[trigger])+","+str(master_triggers_crossec_final[trigger])+","+"\n"
 		output.write(line)
-	line = "Total" + "," + "0" + "," + "0" + "\n"
+	line = "Total" + "," + str(total_pv_events) + "," + str(total_pvf_events) + ","+str(total_eff_lumi)+"N/A"+"\n"
 	output.write(line)
 print total_p_events,total_pv_events
 
