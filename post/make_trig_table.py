@@ -87,7 +87,7 @@ l = 0
 with open(event_file,"r") as file:
 	for line in file:
 		l += 1
-		if % 1000000 == 0:
+		if l % 1000000 == 0:
 			print l
 		if "EventNum" not in line.split():
 			event_num = line.split()[0]
