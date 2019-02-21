@@ -80,8 +80,8 @@ total_x_section = {}
 total_lumis = {}
 
 for trigger in all_triggers:
-	master_triggers_pv_lumis[trigger] = []
-	master_triggers_x_section[trigger] = []
+	master_triggers_pv_lumis[trigger] = {}
+	master_triggers_x_section[trigger] = {}
 
 l = 0
 with open(event_file,"r") as file:
