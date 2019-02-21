@@ -11,6 +11,9 @@ import matplotlib.pyplot as plt
 USED FOR THE PAPER
 ALL INFORMATION IS FOR VALID LUMIS
 columns: trigger name, present events, fired events
+makes use of parse_by_event output
+columns
+eventnum runnum luminum triggerspresent triggerprescales triggersfired
 """
 
 # setting the ordering
@@ -23,75 +26,74 @@ all_triggers = ["HLT_Jet30","HLT_Jet60","HLT_Jet80","HLT_Jet110","HLT_Jet150","H
 		"HLT_Jet240_CentralJet30_BTagIP","HLT_Jet270_CentralJet30_BTagIP","HLT_Jet370_NoJetID"]
 lumibyls_file = sys.argv[1]
 output_table = sys.argv[2]
+event_file = sys.argv[3]
 
-all_dirs = ["/Volumes/Seagate Backup Plus Drive/MITOpenDataProject/eos/opendata/cms/Run2011A/Jet/trig/12Oct2013-v1/10000/",
-	   "/Volumes/Seagate Backup Plus Drive/MITOpenDataProject/eos/opendata/cms/Run2011A/Jet/trig/12Oct2013-v1/20000_a/",
-	   "/Volumes/Seagate Backup Plus Drive/MITOpenDataProject/eos/opendata/cms/Run2011A/Jet/trig/12Oct2013-v1/20000_b/",
-	   "/Volumes/Seagate Backup Plus Drive/MITOpenDataProject/eos/opendata/cms/Run2011A/Jet/trig/12Oct2013-v1/20000_c/",
-	   "/Volumes/Seagate Backup Plus Drive/MITOpenDataProject/eos/opendata/cms/Run2011A/Jet/trig/12Oct2013-v1/20001/"]
+"""
+all_dirs = ["/Volumes/Seagate Backup Plus Drive/MITOpenDataProject/eos/opendata/cms/Run2011A/Jet/MOD/12Oct2013-v1/10000/",
+	   "/Volumes/Seagate Backup Plus Drive/MITOpenDataProject/eos/opendata/cms/Run2011A/Jet/MOD/12Oct2013-v1/20000_a/",
+	   "/Volumes/Seagate Backup Plus Drive/MITOpenDataProject/eos/opendata/cms/Run2011A/Jet/MOD/12Oct2013-v1/20000_b/",
+	   "/Volumes/Seagate Backup Plus Drive/MITOpenDataProject/eos/opendata/cms/Run2011A/Jet/MOD/12Oct2013-v1/20000_c/",
+	   "/Volumes/Seagate Backup Plus Drive/MITOpenDataProject/eos/opendata/cms/Run2011A/Jet/MOD/12Oct2013-v1/20001/"]
+"""
+
+def read_lumi_by_ls(lumibyls_file):
+	"""
+	returns two dicts with keys = (run,lumiBlock)
+	1st values: gps times
+	2nd values: (lumi_delivered, lumi_recorded)
+	"""
+	lumibyls = open(lumibyls_file)
+	lines =  lumibyls.readlines()
+	split_lines = [line.split(",") for line in lines][2:]
+	char = ""
+	lumi_id_to_gps_times = {}
+	lumi_id_to_lumin = {}
+	i = 0
+	while char !="#":
+		run = split_lines[i][0].split(":")[0]
+		lumi = split_lines[i][1].split(":")[0]
+		date = split_lines[i][2].split(" ")[0]
+		tim = split_lines[i][2].split(" ")[1]
+		mdy = [int(x) for x in date.split("/")]
+		hms = [int(x) for x in tim.split(":")]
+		dt = datetime.datetime(mdy[2], mdy[0], mdy[1], hms[0], hms[1],hms[2])
+		lumi_id_to_gps_times[(run,lumi)] = time.mktime(dt.timetuple())
+		lumi_id_to_lumin[(run,lumi)] = (float(split_lines[i][5]),float(split_lines[i][6]))
+		i += 1
+		try:
+			char = split_lines[i][0][0]
+		except: pass
+	return lumi_id_to_gps_times,lumi_id_to_lumin
+lumi_id_to_gps_times,lumi_id_to_lumin = read_lumi_by_ls(lumibyls_file)
 
 
 # key = trigger names
 master_triggers_pv_lumis = {}
 master_triggers_pv_events = {}
 master_triggers_pvf_events = {}
+master_triggers_eff_lumi = {}
+master_triggers_x_section = {}
+total_pv_events = 0
+total_pfv_events = 0
+total_eff_lumi = 0
+total_x_section = 0
 
+with open(event_file,"r") as file:
+	for line in file:
+		if "EventNum" not in line.split():
+			event_num = line.split()[0]
+			run_num = line.split()[1]
+			lumi_num = line.split()[2]
+			triggers_present = line.split()[3]
+			trigger_prescales = line.split()[4]
+			triggers_fired = line.split()[5]
+			for i,trigger in enumerate()
 
-
-
-
-def read_trig_file(trig_file,file_name,total_p_events, total_pv_events):
-	"""
-	prints a dict of triggers FOR EACH MOD file
-	keys are triggers names (with versions)
-	subdicts are lists of good lumis the trigger was present for and the corresponding good prescale values
-	
-	each n correponds to a different trigger name
-	line n = uncut trigger name (with version)
-	line n+1 = list of good lumins ids trig_dict["good_lumis"]
-	line n+2 = list of good prescales trig_dict["good_prescales"]
-	line n+3 = list of lumi: # times fired paired. Comes from a dict where lumi id is the key and # times fired is the value trig_dict["fired"]
-	"""
-
-
-	with open(trig_file) as file:
-		
-		for line in file:
-			# MOST CODE TAKEN FROM GET_TRIGGER_INFO.py
-			# keeps track of the run, lumiBlock
-			# this should signal each separate event
-			if ("File" in line.split()) and ("#" not in line.split()):
-
-				total_p_events += int(line.split()[2])
-				total_pv_events += int(line.split()[3])
-			if ("Trig" in line.split()) and ("#" not in line.split()):
-				trigger = line.split()[1][:-3]
-				pv_events = int(line.split()[3])
-				pvf_events = int(line.split()[4])
-				try: 
-					master_triggers_pv_events[trigger] += pv_events
-				except KeyError:
-					master_triggers_pv_events[trigger] = pv_events
-				try: 
-					master_triggers_pvf_events[trigger] += pvf_events
-				except KeyError:
-					master_triggers_pvf_events[trigger] = pvf_events
-	return total_p_events, total_pv_events
-total_p_events, total_pv_events = 0,0
-i = 1
-num_files = 1223
-for dire in all_dirs:
-	for file in os.listdir(dire):
-		# if file has not already been processed
-		#print "Processing file " + file + ", File "+str(i)+" of " + str(num_files)
-		total_p_events, total_pv_events = read_trig_file(dire+"/"+file,file,total_p_events, total_pv_events)
-		i += 1
-		
 		
 		
 
 with open(output_table,"w") as output:
-	output.write("trigger_name,pv_events,pvf_events\n")
+	output.write("trigger_name,pv_events,pvf_events,eff_lumin,eff_cross_sec,\n")
 	for trigger in all_triggers:
 		line = "\\texttt{"+trigger.replace("_","\_")+"}"+","+str(master_triggers_pv_events[trigger])+","+str(master_triggers_pvf_events[trigger])+"\n"
 		output.write(line)
