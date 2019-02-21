@@ -75,8 +75,8 @@ master_triggers_eff_lumi = {}
 master_triggers_x_section = {}
 total_pv_events = 0
 total_pfv_events = 0
-total_eff_lumi = 0
-total_x_section = 0
+total_eff_lumi = {}
+total_x_section = {}
 
 with open(event_file,"r") as file:
 	for line in file:
@@ -84,13 +84,25 @@ with open(event_file,"r") as file:
 			event_num = line.split()[0]
 			run_num = line.split()[1]
 			lumi_num = line.split()[2]
-			triggers_present = line.split()[3]
-			trigger_prescales = line.split()[4]
-			triggers_fired = line.split()[5]
-			for i,trigger in enumerate()
+			triggers_present = line.split()[3].split(",")
+			trigger_prescales = float(line.split()[4].split(","))
+			triggers_fired = line.split()[5].split(",")
+			print triggers_fired
+			total_pv_events += 1
+			for i,trigger in enumerate(triggers_present):
+				master_triggers_pv_events[trigger] += 1
+				if trigger in triggers_fired:
+					master_triggers_pvf_events[trigger] += 1
+					
 
-		
-		
+"""
+master_triggers_eff_lumi = {}
+master_triggers_x_section = {}
+total_pv_events = 0
+total_pfv_events = 0
+total_eff_lumi = {}
+total_x_section = {}
+"""
 
 with open(output_table,"w") as output:
 	output.write("trigger_name,pv_events,pvf_events,eff_lumin,eff_cross_sec,\n")
