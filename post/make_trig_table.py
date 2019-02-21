@@ -101,10 +101,10 @@ with open(event_file,"r") as file:
 				total_pvf_events += 1
 			try: total_lumis[(run_num,lumi_num)] += 1
 			except KeyError: 
-				total_eff_lumi += lumi_id_to_lumin[(run_num,lumi_num)]
+				total_eff_lumi += lumi_id_to_lumin[(run_num,lumi_num)][1]
 				total_lumis[(run_num,lumi_num)] = 0
 			for i,trigger in enumerate(triggers_present):
-				eff_lumi = lumi_id_to_lumin[(run_num,lumi_num)]/trigger_prescales[i]
+				eff_lumi = lumi_id_to_lumin[(run_num,lumi_num)][1]/trigger_prescales[i]
 				try: master_triggers_pv_events[trigger] += 1
 				except KeyError: master_triggers_pv_events[trigger] = 1
 				try: master_triggers_pv_events[trigger] += 1
