@@ -85,7 +85,7 @@ with open(event_file,"r") as file:
 			run_num = line.split()[1]
 			lumi_num = line.split()[2]
 			triggers_present = line.split()[3].split(",")
-			trigger_prescales = float(line.split()[4].split(","))
+			trigger_prescales = [float(x) for x in line.split()[4].split(",")]
 			triggers_fired = line.split()[5].split(",")
 			print triggers_fired
 			total_pv_events += 1
