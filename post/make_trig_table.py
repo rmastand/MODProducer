@@ -83,8 +83,12 @@ for trigger in all_triggers:
 	master_triggers_pv_lumis[trigger] = []
 	master_triggers_x_section[trigger] = []
 
+l = 0
 with open(event_file,"r") as file:
 	for line in file:
+		l += 1
+		if % 1000000 == 0:
+			print l
 		if "EventNum" not in line.split():
 			event_num = line.split()[0]
 			run_num = line.split()[1]
