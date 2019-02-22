@@ -95,7 +95,7 @@ with open(eff_lumi_time,"r") as file:
     elif l == 7:
       jet300_lumin_rec = [float(x) for x in line.split(",")[:-1]]
 
-plt.figure()
+plt.figure(figsize=(10,10))
 plt.plot(runA_times,np.cumsum(runA_lumin_del),label="RunA Delivered")
 plt.plot(runA_times,np.cumsum(runA_lumin_rec),label="RunA Recorded")
 plt.plot(jet300_times,np.cumsum(jet300_lumin_rec),label="Jet300 Recorded")
