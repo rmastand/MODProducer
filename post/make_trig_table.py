@@ -138,9 +138,9 @@ print output_table
 with open(output_table,"w") as output:
 	output.write("trigger_name,pv_events,pvf_events,eff_lumin,eff_cross_sec,\n")
 	for trigger in all_triggers:
-		line = "\\texttt{"+trigger.replace("_","\_")+"}"+","+str(master_triggers_pv_events[trigger])+","+str(master_triggers_pvf_events[trigger])+str(master_triggers_eff_lumi[trigger])+","+str(master_triggers_crossec_final[trigger])+","+"\n"
+		line = "\\texttt{"+trigger.replace("_","\_")+"}"+","+str(master_triggers_pv_events[trigger])+","+str(master_triggers_pvf_events[trigger])+","+str(master_triggers_eff_lumi[trigger])+","+str(master_triggers_crossec_final[trigger])+","+"\n"
 		output.write(line)
-	line = "Total" + "," + str(total_pv_events) + "," + str(total_pvf_events) + ","+str(total_eff_lumi)+"N/A"+"\n"
+	line = "Total" + "," + str(total_pv_events) + "," + str(total_pvf_events) + ","+str(total_eff_lumi)+","+"N/A"+"\n"
 	output.write(line)
 
 
