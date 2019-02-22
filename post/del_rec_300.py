@@ -70,9 +70,9 @@ with open(eff_lumi_time,"r") as file:
       jet300_lumin_rec = [float(x) for x in line.split(",")[:-1]]
 
 plt.figure()
-plt.plot(runA_times,runA_lumin_del,label="RunA Delivered")
-plt.plot(runA_times,runA_lumin_rec,label="RunA Recorded")
-plt.plot(jet300_times,jet300_lumin_rec,label="Jet300 Recorded")
+plt.plot(runA_times,np.cumsum(runA_lumin_del),label="RunA Delivered")
+plt.plot(runA_times,np.cumsum(runA_lumin_rec),label="RunA Recorded")
+plt.plot(jet300_times,np.cumsum(jet300_lumin_rec),label="Jet300 Recorded")
 plt.legend()
 plt.show()
       
