@@ -1,6 +1,7 @@
 import numpy as np
 import sys
 import matplotlib.pyplot as plt
+import datetime
 
 lumibyls_file = sys.argv[1]
 eff_lumi_time = sys.argv[2]
@@ -15,9 +16,7 @@ def read_lumi_by_ls(lumibyls_file):
 	lines =  lumibyls.readlines()
 	split_lines = [line.split(",") for line in lines][2:]
 	char = ""
-	id_to_time = {}
-	time_to_id = {}
-	time_to_lumin = {}
+	lumi_id_to_date = {}
 	lumi_id_to_lumin = {}
 	lumin_all = []
 	i = 0
@@ -29,13 +28,15 @@ def read_lumi_by_ls(lumibyls_file):
 		mdy = [int(x) for x in date.split("/")]
 		hms = [int(x) for x in tim.split(":")]
 		lumi_id_to_lumin[(run,lumi)] = (float(split_lines[i][5]),float(split_lines[i][6]))
+		dt = datetime.datetime(mdy[2], mdy[0], mdy[1], hms[0], hms[1],hms[2])
+		lumi_id_to_date[(run,lumi)] = str(mdy[1])+"/"+str(mdy[0])+"/"+str(mdy[2])
 		i += 1
 		try:
 			char = split_lines[i][0][0]
 		except: pass
-	return lumi_id_to_lumin
+	return lumi_id_to_lumin,lumi_id_to_date
 
-lumi_id_to_lumin = read_lumi_by_ls(lumibyls_file)
+lumi_id_to_lumin,lumi_id_to_date = read_lumi_by_ls(lumibyls_file)
 
 """
 line 1 = runA ids
@@ -74,6 +75,17 @@ plt.plot(runA_times,np.cumsum(runA_lumin_del),label="RunA Delivered")
 plt.plot(runA_times,np.cumsum(runA_lumin_rec),label="RunA Recorded")
 plt.plot(jet300_times,np.cumsum(jet300_lumin_rec),label="Jet300 Recorded")
 plt.legend()
+plt.ylabel("Luminosity (ub^-1)")
+plt.xlabel("Date")
+ax = plt.gca()
+length = len(runA_times)-1
+indices_for_xaxis = np.linspace(length/20,length,5)
+indices_for_xaxis = [int(x) for x in indices_for_xaxis]
+plt.xticks(np.take(runA_times,indices_for_xaxis))
+labels = [item.get_text() for item in ax.get_xticklabels()]
+for i,index in enumerate(indices_for_xaxis):
+	labels[i] = lumi_id_to_date[(str(int(time_ordered_lumi_id[index].split(":")[0])),str(int(time_ordered_lumi_id[index].split(":")[1])))]	
+ax.set_xticklabels(labels)
 plt.show()
       
       
