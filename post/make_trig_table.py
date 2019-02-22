@@ -137,6 +137,7 @@ with open(output_table,"w") as output:
 	output.write("\\begin{table}[h!]\n")
 	output.write("\\begin{center}\n")
 	output.write("\\begin{tabular}{ |r|r|r|r|r| }\n")
+	output.write("\smallest\n")
 	output.write("\hline\n")
 	output.write("\hline\n")
 	output.write("Trigger Name & Valid Events & Fired Events & Eff. Lumin & Eff. Cross Sec \\ \n")
@@ -144,10 +145,10 @@ with open(output_table,"w") as output:
 	output.write("\hline\n")
 	#output.write("trigger_name,pv_events,pvf_events,eff_lumin,eff_cross_sec,\n")
 	for trigger in all_triggers:
-		line = "\\texttt{"+trigger.replace("_","\_")+"}"+" & "+str(master_triggers_pv_events[trigger])+" & "+str(master_triggers_pvf_events[trigger])+" & "+str(master_triggers_eff_lumi[trigger])+" & "+str(master_triggers_crossec_final[trigger])+" \\\ "+"\n"
+		line = "\\texttt{"+trigger.replace("_","\_")+"}"+" & "+"{:,}".format(str(master_triggers_pv_events[trigger]))+" & "+"{:,}".format(str(master_triggers_pvf_events[trigger]))+" & "+str(master_triggers_eff_lumi[trigger])+" & "+str(master_triggers_crossec_final[trigger])+" \\\ "+"\n"
 		output.write(line)
 		output.write("\hline\n")
-	line = "Total" + " & " + str(total_pv_events) + " & " + str(total_pvf_events) + " & "+str(total_eff_lumi)+" & "+"N/A"+ "\\\" + "\n"
+	line = "Total" + " & " + "{:,}".format(str(total_pv_events)) + " & " + "{:,}".format(str(total_pvf_events)) + " & "+str(total_eff_lumi)+" & "+"N/A"+ "\\\" + "\n"
 	output.write(line)
 	output.write("\hline\n")
 	output.write("\hline\n")
