@@ -90,7 +90,6 @@ with open(event_file,"r") as file:
 		l += 1
 		if l % 500000 == 0:
 			print l
-		if l == 500000: break
 		if "EventNum" not in line.split():
 			event_num = line.split()[0]
 			run_num = line.split()[1]
@@ -141,7 +140,7 @@ with open(output_table,"w") as output:
 	output.write("\smallest\n")
 	output.write("\hline\n")
 	output.write("\hline\n")
-	output.write("Trigger Name & Valid Events & Fired Events & Eff. Lumin & Eff. Cross Sec \\ \n")
+	output.write("Trigger Name & Valid Events & Fired Events & Eff. Lumin & Eff. Cross Sec \\\ \n")
 	output.write("\hline\n")
 	output.write("\hline\n")
 	#output.write("trigger_name,pv_events,pvf_events,eff_lumin,eff_cross_sec,\n")
