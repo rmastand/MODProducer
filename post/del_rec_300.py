@@ -28,19 +28,14 @@ def read_lumi_by_ls(lumibyls_file):
 		tim = split_lines[i][2].split(" ")[1]
 		mdy = [int(x) for x in date.split("/")]
 		hms = [int(x) for x in tim.split(":")]
-		dt = datetime.datetime(mdy[2], mdy[0], mdy[1], hms[0], hms[1],hms[2])
-		timestamp = time.mktime(dt.timetuple())
 		lumi_id_to_lumin[(run,lumi)] = (float(split_lines[i][5]),float(split_lines[i][6]))
-		id_to_time[(run,lumi)] = timestamp
-		time_to_lumin[timestamp] = float(split_lines[i][6])
-		time_to_id[timestamp] = run+":"+lumi
 		i += 1
 		try:
 			char = split_lines[i][0][0]
 		except: pass
-	return id_to_time,time_to_lumin,lumi_id_to_lumin,time_to_id
+	return lumi_id_to_lumin
 
-id_to_time,time_to_lumin,lumi_id_to_lumin,time_to_id = read_lumi_by_ls(lumibyls_file)
+lumi_id_to_lumin = read_lumi_by_ls(lumibyls_file)
 
 """
 line 1 = runA ids
