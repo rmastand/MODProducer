@@ -59,7 +59,7 @@ with open(eff_lumi_time,"r") as file:
     if l == 1:
       runA_lumis = line.split(",")[:-1]
       for lumi_id in runA_lumis:
-        runA_lumin_del.append(lumi_id_to_lumin[(lumi_id.split(":")[0],lumi_id.split(":")[1])])
+        runA_lumin_del.append(lumi_id_to_lumin[(lumi_id.split(":")[0],lumi_id.split(":")[1])][0])
     elif l == 2:
       runA_times = [float(x) for x in line.split(",")[:-1]]
     elif l == 3:
