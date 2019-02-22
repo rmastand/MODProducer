@@ -141,7 +141,7 @@ with open(output_table,"w") as output:
 		output.write(line)
 	line = "Total" + "," + str(total_pv_events) + "," + str(total_pvf_events) + ","+str(total_eff_lumi)+"N/A"+"\n"
 	output.write(line)
-print total_p_events,total_pv_events
+
 
 
 
