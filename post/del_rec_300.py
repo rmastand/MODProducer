@@ -84,7 +84,7 @@ indices_for_xaxis = [int(x) for x in indices_for_xaxis]
 plt.xticks(np.take(runA_times,indices_for_xaxis))
 labels = [item.get_text() for item in ax.get_xticklabels()]
 for i,index in enumerate(indices_for_xaxis):
-	labels[i] = lumi_id_to_date[(str(int(time_ordered_lumi_id[index].split(":")[0])),str(int(time_ordered_lumi_id[index].split(":")[1])))]	
+	labels[i] = lumi_id_to_date[(str(int(runA_lumis[index].split(":")[0])),str(int(runA_lumis[index].split(":")[1])))]	
 ax.set_xticklabels(labels)
 plt.show()
       
