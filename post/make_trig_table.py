@@ -98,7 +98,7 @@ with open(event_file,"r") as file:
 			trigger_prescales = [float(x) for x in line.split()[4].split(",")[:-1]]
 			triggers_fired = [x[:-3] for x in line.split()[5].split(",")]
 			total_pv_events += 1
-			if len(triggers_fired) > 0:
+			if len(triggers_fired) > 1:
 				total_pvf_events += 1
 			try: total_lumis[(run_num,lumi_num)] += 1
 			except KeyError: 
@@ -145,16 +145,18 @@ with open(output_table,"w") as output:
 	output.write("\hline\n")
 	#output.write("trigger_name,pv_events,pvf_events,eff_lumin,eff_cross_sec,\n")
 	for trigger in all_triggers:
-		line = "\\texttt{"+trigger.replace("_","\_")+"}"+" & "+"{:,}".format(master_triggers_pv_events[trigger])+" & "+"{:,}".format(master_triggers_pvf_events[trigger])+" & "+str(master_triggers_eff_lumi[trigger])+" & "+str(master_triggers_crossec_final[trigger])+" \\\ "+"\n"
+		line = "\\texttt{"+trigger.replace("_","\_")+"}"+" & "+"{:,}".format(master_triggers_pv_events[trigger])+" & "+"{:,}".format(master_triggers_pvf_events[trigger])+" & "+"{:.2f}".format(master_triggers_eff_lumi[trigger])+" & "+"{:.2f}".format(master_triggers_crossec_final[trigger])+" \\\ "+"\n"
 		output.write(line)
 		output.write("\hline\n")
-	line = "Total" + " & " + "{:,}".format(total_pv_events) + " & " + "{:,}".format(total_pvf_events) + " & "+str(total_eff_lumi)+" & "+"N/A"+ " \\\ " + "\n"
+	line = "Total" + " & " + "{:,}".format(total_pv_events) + " & " + "{:,}".format(total_pvf_events) + " & "+"{:.2f}".format(total_eff_lumi)+" & "+"N/A"+ " \\\ " + "\n"
 	output.write(line)
 	output.write("\hline\n")
 	output.write("\hline\n")
 	output.write("\end{tabular}\n")
 	output.write("\end{center}\n")
 	output.write("\end{table}\n")
+	
+	
 	
 	
 	
