@@ -108,8 +108,6 @@ with open(event_file,"r") as file:
 				eff_lumi = lumi_id_to_lumin[(run_num,lumi_num)][1]/trigger_prescales[i]
 				try: master_triggers_pv_events[trigger] += 1
 				except KeyError: master_triggers_pv_events[trigger] = 1
-				try: master_triggers_pv_events[trigger] += 1
-				except KeyError: master_triggers_pv_events[trigger] = 1
 				
 				try: master_triggers_pv_lumis[trigger][(run_num,lumi_num)] += 1
 				except KeyError: # means that the lumiblock has not already been looked at by THAT TRIGGER
