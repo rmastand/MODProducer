@@ -147,7 +147,7 @@ with open(output_table,"w") as output:
 		line = "\\texttt{"+trigger.replace("_","\_")+"}"+" & "+str(master_triggers_pv_events[trigger])+" & "+str(master_triggers_pvf_events[trigger])+" & "+str(master_triggers_eff_lumi[trigger])+" & "+str(master_triggers_crossec_final[trigger])+" \\\ "+"\n"
 		output.write(line)
 		output.write("\hline\n")
-	line = "Total" + " & " + str(total_pv_events) + " & " + str(total_pvf_events) + " & "+str(total_eff_lumi)+" & "+"N/A"+"\n"
+	line = "Total" + " & " + str(total_pv_events) + " & " + str(total_pvf_events) + " & "+str(total_eff_lumi)+" & "+"N/A"+ "\\\" + "\n"
 	output.write(line)
 	output.write("\hline\n")
 	output.write("\hline\n")
