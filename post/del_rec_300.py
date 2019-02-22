@@ -5,6 +5,7 @@ import datetime
 
 lumibyls_file = sys.argv[1]
 eff_lumi_time = sys.argv[2]
+fig_save = sys.argv[3]
 
 plt.rcParams['font.family'] = 'serif'
 plt.rcParams['font.size'] = 16
@@ -110,7 +111,7 @@ labels = [item.get_text() for item in ax.get_xticklabels()]
 for i,index in enumerate(indices_for_xaxis):
 	labels[i] = lumi_id_to_date[(str(int(runA_lumis[index].split(":")[0])),str(int(runA_lumis[index].split(":")[1])))]	
 ax.set_xticklabels(labels)
-plt.show()
+plt.savefig(fig_save)
       
       
       
