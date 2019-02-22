@@ -133,7 +133,8 @@ for trigger in master_triggers_x_section.keys():
 		except ZeroDivisionError: xsec += 0
 	master_triggers_crossec_final[trigger] = xsec/len(master_triggers_x_section[trigger])
 
-
+print "here"
+print output_table
 with open(output_table,"w") as output:
 	output.write("trigger_name,pv_events,pvf_events,eff_lumin,eff_cross_sec,\n")
 	for trigger in all_triggers:
