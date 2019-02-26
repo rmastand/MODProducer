@@ -27,7 +27,6 @@ def read_lumi_by_ls(lumibyls_file):
 		tim = split_lines[i][2].split(" ")[1]
 		mdy = [int(x) for x in date.split("/")]
 		hms = [int(x) for x in tim.split(":")]
-		dt = datetime.datetime(mdy[2], mdy[0], mdy[1], hms[0], hms[1],hms[2])
 		lumi_id_to_lumin[(run,lumi)] = (float(split_lines[i][5]),float(split_lines[i][6]))
 		i += 1
 		try:
