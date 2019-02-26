@@ -55,7 +55,6 @@ with open(mod_file, "r") as mod_file:
         lumi_is_valid = 1
       except KeyError: 
         lumi_is_valid = 0
-        print "not"
     if ("PFC" in line.split()) and ("#" not in line.split()): # getting the PFC info
       pdgid = int(line.split()[5])
       pt = np.sqrt(float(line.split()[1])**2 + float(line.split()[2])**2)
