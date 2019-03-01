@@ -7,8 +7,7 @@ import os
 all_pfcs = {}
 all_pfcs_1Gev = {}
 
-dat_file = sys.argv[1]
-output_file = sys.argv[2]
+output_file = sys.argv[1]
 
 jet_is_good = False
 
