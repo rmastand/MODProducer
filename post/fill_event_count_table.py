@@ -21,25 +21,25 @@ all_dirs = ["/Volumes/Seagate Backup Plus Drive/MODAnalyzerResults/2011_pfc_dat_
 l = 0
 for dat_dir in all_dirs:
 	for dat_file in os.listdir(dat_dir):
-    with open(dat_dir+"/"+dat_file, "r") as file:
-      l += 1
-      print l, 1223
-      for line in file:
-        if ("BeginJetProperties" in line.split()) and ("#" not in line.split()):
-          jet_pt = float(line.split()[2])
-          jet_eta = float(line.split()[4])
-          if (jet_pt > 85) and (-1.9 < jet_eta < 1.9):
-            jet_is_good = True
-          else: jet_is_good = False
+	    with open(dat_dir+"/"+dat_file, "r") as file:
+	      l += 1
+	      print l, 1223
+	      for line in file:
+		if ("BeginJetProperties" in line.split()) and ("#" not in line.split()):
+		  jet_pt = float(line.split()[2])
+		  jet_eta = float(line.split()[4])
+		  if (jet_pt > 85) and (-1.9 < jet_eta < 1.9):
+		    jet_is_good = True
+		  else: jet_is_good = False
 
-        if ("BeginParticle" in line.split()) and ("#" not in line.split()):
-          particle_pt = float(line.split()[1])
-          particle_id = int(line.split()[3])
-          try: all_pfcs[particle_id] += 1
-          except KeyError: all_pfcs[particle_id] = 1
-          if particle_pt > 1:
-            try: all_pfcs_1Gev[particle_id] += 1
-            except KeyError: all_pfcs_1Gev[particle_id] = 1
+		if ("BeginParticle" in line.split()) and ("#" not in line.split()):
+		  particle_pt = float(line.split()[1])
+		  particle_id = int(line.split()[3])
+		  try: all_pfcs[particle_id] += 1
+		  except KeyError: all_pfcs[particle_id] = 1
+		  if particle_pt > 1:
+		    try: all_pfcs_1Gev[particle_id] += 1
+		    except KeyError: all_pfcs_1Gev[particle_id] = 1
           
 
 pdg_id_order = [11, -11, 13, -13, 211, -211]
