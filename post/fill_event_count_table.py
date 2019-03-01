@@ -8,7 +8,7 @@ all_pfcs_1Gev = {}
 
 dat_file = sys.argv[1]
 
-jet_is_good = false
+jet_is_good = False
 
 with open(dat_file, "r") as file:
   for line in file:
