@@ -16,7 +16,6 @@ all_dirs = ["/Volumes/Seagate Backup Plus Drive/MODAnalyzerResults/2011_pfc_dat_
 	   "/Volumes/Seagate Backup Plus Drive/MODAnalyzerResults/2011_pfc_dat_files/20000_b/",
 	   "/Volumes/Seagate Backup Plus Drive/MODAnalyzerResults/2011_pfc_dat_files/20000_c/",
 	   "/Volumes/Seagate Backup Plus Drive/MODAnalyzerResults/2011_pfc_dat_files/20001/"]
-all_dirs = ["/Volumes/Seagate Backup Plus Drive/MODAnalyzerResults/2011_pfc_dat_files/20000_a/"]
 
 l = 0
 for dat_dir in all_dirs:
@@ -33,13 +32,14 @@ for dat_dir in all_dirs:
 		  else: jet_is_good = False
 
 		if ("BeginParticle" in line.split()) and ("#" not in line.split()):
-		  particle_pt = float(line.split()[1])
-		  particle_id = int(line.split()[3])
-		  try: all_pfcs[particle_id] += 1
-		  except KeyError: all_pfcs[particle_id] = 1
-		  if particle_pt > 1:
-		    try: all_pfcs_1Gev[particle_id] += 1
-		    except KeyError: all_pfcs_1Gev[particle_id] = 1
+		  if jet_is_good:
+			  particle_pt = float(line.split()[1])
+			  particle_id = int(line.split()[3])
+			  try: all_pfcs[particle_id] += 1
+			  except KeyError: all_pfcs[particle_id] = 1
+			  if particle_pt > 1:
+			    try: all_pfcs_1Gev[particle_id] += 1
+			    except KeyError: all_pfcs_1Gev[particle_id] = 1
           
 
 pdg_id_order = [11, -11, 13, -13, 211, -211]
