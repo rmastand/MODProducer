@@ -7,6 +7,7 @@ all_pfcs = {}
 all_pfcs_1Gev = {}
 
 dat_file = sys.argv[1]
+output_file = sys.argv[2]
 
 jet_is_good = False
 
@@ -31,5 +32,29 @@ with open(dat_file, "r") as file:
 print all_pfcs
 print
 print all_pfcs_1Gev
-        
-    
+   
+pdg_id_order = [11, -11, 13, -13, 211, -211]
+pdg_id_order_names = ["Electron", "Positron", "Muon", "Antimuon", "Positive Hadron", "Negative Hadron"]
+pdg_id_order_2 = [22, 130, 1, 2]
+pdg_id_order_2_names = ["Photon", "Neutral Hadron", "Object", "Object"]
+  
+with open(output_file,"w") as output:
+  output.write("\begin{table}[h!]\n")
+  output.write("\begin{center}\n")
+  output.write("\begin{tabular}{ |r|c|c|r| }\n")
+  output.write("\hline\n")
+  output.write("\hline\n")
+  output.write("Code & Candidate & Total Count & $\pt > $ 1GeV \\\ \n")
+  output.write("\hline\n")
+  output.write("\hline\n")
+  for i, object in enumerate(pdg_id_order):
+    output.write(object+ " & "+pdg_id_order_names[i]  " & " +all_pfcs[object]+" & " +all_pfcs_1Gev[object]+" & " +"\\\ \n")
+  output.write("\hline\n")
+  for i, object in enumerate(pdg_id_order_2):
+    output.write(object+ " & "+pdg_id_order_2_names[i]  " & " +all_pfcs[object]+" & " +all_pfcs_1Gev[object]+" & " +"\\\ \n")
+  output.write("\hline\n")
+  output.write("\hline\n")
+  output.write("\end{tabular} \n")
+  output.write("\end{center}\n")
+  output.write("\end{table}\n")
+
