@@ -44,8 +44,8 @@ for dat_dir in all_dirs:
 
 pdg_id_order = [11, -11, 13, -13, 211, -211]
 pdg_id_order_names = ["Electron", "Positron", "Muon", "Antimuon", "Positive Hadron", "Negative Hadron"]
-pdg_id_order_2 = [22, 130, 1, 2]
-pdg_id_order_2_names = ["Photon", "Neutral Hadron", "Object", "Object"]
+pdg_id_order_2 = [22, 130]
+pdg_id_order_2_names = ["Photon", "Neutral Hadron"]
 print all_pfcs
 print all_pfcs_1Gev
 with open(output_file,"w") as output:
