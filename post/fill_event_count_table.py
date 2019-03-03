@@ -58,11 +58,11 @@ with open(output_file,"w") as output:
   output.write("\hline\n")
   output.write("\hline\n")
   for i, object in enumerate(pdg_id_order):
-    output.write(str(object)+ " & "+str(pdg_id_order_names[i])+" & " +str(all_pfcs[object])+" & " +str(all_pfcs_1Gev[object])+" & " +"\\\ \n")
+    output.write(str(object)+ " & "+str(pdg_id_order_names[i])+" & " +str(all_pfcs[object])+" & " +str(all_pfcs_1Gev[object]) +"\\\ \n")
   output.write("\hline\n")
   for i, object in enumerate(pdg_id_order_2):
-	try: output.write(str(object)+ " & "+str(pdg_id_order_2_names[i])+" & " +str(all_pfcs[object])+" & " +str(all_pfcs_1Gev[object])+" & " +"\\\ \n")
-  	except KeyError: output.write(str(object)+ " & "+str(pdg_id_order_2_names[i])+" & " +str(all_pfcs[object])+" & " +str(0)+" & " +"\\\ \n")
+	try: output.write(str(object)+ " & "+str(pdg_id_order_2_names[i])+" & " +str(all_pfcs[object])+" & " +str(all_pfcs_1Gev[object]) +"\\\ \n")
+  	except KeyError: output.write(str(object)+ " & "+str(pdg_id_order_2_names[i])+" & " +str(all_pfcs[object])+" & " +str(0) +"\\\ \n")
 
   output.write("\hline\n")
   output.write("\hline\n")
