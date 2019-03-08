@@ -96,6 +96,7 @@ with open(by_event_2_file, "r") as input:
       print trigger
       i = 0
     elif i == 1: # lumi ids
+      print lumi_ids[-1]
       lumi_ids = line.split(",")[:-1]
       lumi_ids = [(x.split(":")[0],x.split(":")[1]) for x in lumi_ids]
       trigger_ids_dict[trigger] = lumi_ids
