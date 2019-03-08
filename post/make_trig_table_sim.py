@@ -25,30 +25,17 @@ all_triggers = ["HLT_Jet30","HLT_Jet60","HLT_Jet80","HLT_Jet110","HLT_Jet150","H
 		"HLT_DiJetAve140U","HLT_DiJetAve180U","HLT_DiJetAve300U",
 		"HLT_Jet240_CentralJet30_BTagIP","HLT_Jet270_CentralJet30_BTagIP","HLT_Jet370_NoJetID"]
 
-single_jet = ["HLT_Jet30","HLT_Jet60","HLT_Jet80","HLT_Jet110","HLT_Jet150","HLT_Jet190","HLT_Jet240","HLT_Jet300",
-		"HLT_Jet370","HLT_Jet800"]
-di_jet = ["HLT_DiJetAve30",
-		"HLT_DiJetAve60","HLT_DiJetAve80","HLT_DiJetAve110","HLT_DiJetAve150","HLT_DiJetAve190",
-		"HLT_DiJetAve240","HLT_DiJetAve300","HLT_DiJetAve370"]
-diu_jet = ["HLT_DiJetAve15U","HLT_DiJetAve30U","HLT_DiJetAve50U",
-		"HLT_DiJetAve70U","HLT_DiJetAve100U",
-		"HLT_DiJetAve140U","HLT_DiJetAve180U","HLT_DiJetAve300U"]
-misc = ["HLT_Jet240_CentralJet30_BTagIP","HLT_Jet270_CentralJet30_BTagIP","HLT_Jet370_NoJetID"]
+total_files = [55, 83, 5519, 277, 299, 317, 334, 387, 382, 274, 271, 295, 131, 182, 75]
+total_events = [1000025, 1495884, 9978850, 5837856, 5766430, 5867864, 5963264, 5975592, 5975016, 3967154, 3988701, 3945269,
+	       1956893, 1991792, 996500]
+total_disc_space = [.1378, .2233, 1.7, 1.0, 1.1, 1.2, 1.2, 1.3, 1.4, .9571, .9768, .9743, .4841, .4914, .2434]
+files_used = [55, 83, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 131, 182, 75]
 
-lumibyls_file = sys.argv[1]
-output_table = sys.argv[2]
-event_file = sys.argv[3]
-run_alumi_file = sys.argv[4]
 
-runA_runs = []
-read_alumi_lines = open(run_alumi_file,"r").readlines()
-for line in read_alumi_lines[4:]:
-  char = line[0]
-  if char != "+":
-    runA_runs.append(line.split()[1].split(":")[0])
-  else:
-    break
-print "Done reading in ALumi"
+output_table = sys.argv[1]
+event_file = sys.argv[2]
+
+
 
 
 """
@@ -59,42 +46,8 @@ all_dirs = ["/Volumes/Seagate Backup Plus Drive/MITOpenDataProject/eos/opendata/
 	   "/Volumes/Seagate Backup Plus Drive/MITOpenDataProject/eos/opendata/cms/Run2011A/Jet/MOD/12Oct2013-v1/20001/"]
 """
 
-def read_lumi_by_ls(lumibyls_file):
-	"""
-	returns two dicts with keys = (run,lumiBlock)
-	1st values: gps times
-	2nd values: (lumi_delivered, lumi_recorded)
-	"""
-	lumibyls = open(lumibyls_file)
-	lines =  lumibyls.readlines()
-	split_lines = [line.split(",") for line in lines][2:]
-	char = ""
-	lumi_id_to_gps_times = {}
-	lumi_id_to_lumin = {}
-	i = 0
-	while char !="#":
-		run = split_lines[i][0].split(":")[0]
-		lumi = split_lines[i][1].split(":")[0]
-		date = split_lines[i][2].split(" ")[0]
-		tim = split_lines[i][2].split(" ")[1]
-		mdy = [int(x) for x in date.split("/")]
-		hms = [int(x) for x in tim.split(":")]
-		dt = datetime.datetime(mdy[2], mdy[0], mdy[1], hms[0], hms[1],hms[2])
-		lumi_id_to_gps_times[(run,lumi)] = time.mktime(dt.timetuple())
-		lumi_id_to_lumin[(run,lumi)] = (float(split_lines[i][5]),float(split_lines[i][6]))
-		i += 1
-		try:
-			char = split_lines[i][0][0]
-		except: pass
-	return lumi_id_to_gps_times,lumi_id_to_lumin
-lumi_id_to_gps_times,lumi_id_to_lumin = read_lumi_by_ls(lumibyls_file)
-
-runA_blocks= []
-for lumi_id in lumi_id_to_lumin.keys():
-		if lumi_id[0] in runA_runs:
-			runA_blocks.append(lumi_id[0])
-
-
+pt_codes = ["0-5","5-15","15-30","30-50","50-80","80-120","120-170","170-300","300-470","470-600","600-800","800-1000",
+	    "1000-1400","1400-1800","1800"]
 
 
 # key = trigger names
@@ -164,13 +117,13 @@ for trigger in master_triggers_x_section.keys():
 print "here"
 print output_table
 with open(output_table,"w") as output:
-	output.write("\\begin{table}[h!]\n")
+	output.write("\\begin{table*}[h!]\n")
 	output.write("\\begin{center}\n")
-	output.write("\\begin{tabular}{ r @{$\quad$} r @{$\quad$} r @{$\quad$} r @{$\quad$} r @{$\quad$} r @{$\quad$} }\n")
+	output.write("\\begin{tabular}{ r @{$\quad$} r @{$\quad$} r @{$\quad$} r @{$\quad$} r @{$\quad$} r @{$\quad$}  r @{$\quad$} }\n")
 	output.write("\smallest\n")
 	output.write("\hline\n")
 	output.write("\hline\n")
-	output.write("Trigger Name & Valid Lumis & Valid Events & Fired Events & Eff. Lumin & Eff. Cross Sec \\\ \n")
+	output.write("Trigger Name & Events Used & Fired Events Used & Eff. Cross Sec & Total Events & Total Files & Total disc space\\\ \n")
 	output.write("\hline\n")
 	output.write("\hline\n")
 	#output.write("trigger_name,pv_events,pvf_events,eff_lumin,eff_cross_sec,\n")
