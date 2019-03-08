@@ -17,6 +17,7 @@ all_MOD_dirs = ["/Volumes/Drive/MITOpenLow/eos/opendata/cms/MonteCarlo2011/Summe
 
 output_file = sys.argv[1]
 
+lumi_id_to_lumin = 0
 
 def is_lumi_valid(lumi_id, lumi_id_to_lumin):
 	"""
