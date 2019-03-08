@@ -84,12 +84,12 @@ For each trigger, going from BIGGEST TO SMALLEST:
 Effective Luminosity, number index
 Effective Luminosity, cumsum value
 """
-
+j = 0
 trigger_ids_dict = {}
 i = 0
 with open(by_event_2_file, "r") as input:
-  print len(by_event_2_file.readlines())
   for line in input:
+    j += 1
     i += 1
     if "#" in line.split():
       trigger = line.split()[1]
@@ -103,6 +103,7 @@ with open(by_event_2_file, "r") as input:
       pass
     elif i == 3: # # times fired
       pass
+print j
 
 for trigger in trigger_ids_dict.keys():
 	print trigger
