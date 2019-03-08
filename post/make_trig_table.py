@@ -168,7 +168,7 @@ with open(output_table,"w") as output:
 		output.write(line)
 	output.write("\hline\n")
 	for trigger in diu_jet:
-		line = "\\texttt{"+trigger.replace("_","\_")+"}"+" & "+"{:,}".format(master_triggers_pv_events[trigger])+" & "+"{:,}".format(master_triggers_pvf_events[trigger])+" & "+("%.2f" %  master_triggers_eff_lumi[trigger])+" & "+("%.6f" % (float(master_triggers_pvf_events[trigger])/float(master_triggers_eff_lumi[trigger]))+" \\\ "+"\n"
+		line = "\\texttt{"+trigger.replace("_","\_")+"}"+" & "+"{:,}".format(master_triggers_pv_events[trigger])+" & "+"{:,}".format(master_triggers_pvf_events[trigger])+" & "+("%.2f" %  master_triggers_eff_lumi[trigger])+" & "+("%.6f" % (float(master_triggers_pvf_events[trigger])/float(master_triggers_eff_lumi[trigger])))+" \\\ "+"\n"
 		output.write(line)
 	output.write("\hline\n")
 	for trigger in misc:
