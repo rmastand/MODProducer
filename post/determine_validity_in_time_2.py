@@ -88,6 +88,7 @@ Effective Luminosity, cumsum value
 trigger_ids_dict = {}
 i = 0
 with open(by_event_2_file, "r") as input:
+  print len(by_event_2_file.readlines())
   for line in input:
     i += 1
     if "#" in line.split():
