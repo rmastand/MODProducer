@@ -11,7 +11,7 @@ import csv
 
 def setw(word,n):
 	return str(word)+" "*(n-len(word))
-all_MOD_dirs = ["/Volumes/Drive/MITOpenLow/eos/opendata/cms/MonteCarlo2011/Summer11LegDR/QCD_Pt-0to5_TuneZ2_7Tev/_pythia6/MOD/PU_S13_START53_LV6-v1/00000/"
+all_MOD_dirs = ["/Volumes/Drive/MITOpenLow/eos/opendata/cms/MonteCarlo2011/Summer11LegDR/QCD_Pt-0to5_TuneZ2_7Tev_pythia6/MOD/PU_S13_START53_LV6-v1/00000/"
 	      ]
 
 
