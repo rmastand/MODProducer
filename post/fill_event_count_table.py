@@ -2,7 +2,7 @@ import numpy as np
 import sys
 import os
 
-# make sure jet has pt > 85, eta < 1.9
+# make sure jet has pt > 375, eta < 1.9
 
 all_pfcs = {}
 all_pfcs_1Gev = {}
@@ -27,7 +27,7 @@ for dat_dir in all_dirs:
 		if ("BeginJetProperties" in line.split()) and ("#" not in line.split()):
 		  jet_pt = float(line.split()[2])
 		  jet_eta = float(line.split()[4])
-		  if (jet_pt > 85) and (-1.9 < jet_eta < 1.9):
+		  if (jet_pt > 375) and (-1.9 < jet_eta < 1.9):
 		    jet_is_good = True
 		  else: jet_is_good = False
 
