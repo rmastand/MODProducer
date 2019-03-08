@@ -43,15 +43,15 @@ for dat_dir in all_dirs:
           
 
 pdg_id_order = [11, -11, 13, -13, 211, -211]
-pdg_id_order_names = ["Electron", "Positron", "Muon", "Antimuon", "Positive Hadron", "Negative Hadron"]
+pdg_id_order_names = ["Electron (e$^-$)", "Positron (e$^+$)", "Muon ($\mu^-$)", "Antimuon ($\mu^+$)", "Positive Hadron ($\pi^+$)", "Negative Hadron ($\pi^-$)"]
 pdg_id_order_2 = [22, 130]
-pdg_id_order_2_names = ["Photon", "Neutral Hadron"]
+pdg_id_order_2_names = ["Photon ($\gamma$)", "Neutral Hadron ($K^0_L$)"]
 print all_pfcs
 print all_pfcs_1Gev
 with open(output_file,"w") as output:
   output.write("\\begin{table}[h!]\n")
   output.write("\\begin{center}\n")
-  output.write("\\begin{tabular}{ |r|c|r|r| }\n")
+  output.write("\\begin{tabular}{ |r|l|r|r| }\n")
   output.write("\hline\n")
   output.write("\hline\n")
   output.write("Code & Candidate & Total Count & $\pt > $ 1GeV \\\ \n")
@@ -67,6 +67,8 @@ with open(output_file,"w") as output:
   output.write("\hline\n")
   output.write("\hline\n")
   output.write("\end{tabular} \n")
-  output.write("\end{center}\n")
+  output.write("\end{tabular} \n")
+  output.write("\caption{} \n")
+  output.write("\label{table:object_count} \n")
   output.write("\end{table}\n")
 
