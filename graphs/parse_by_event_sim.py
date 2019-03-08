@@ -11,17 +11,18 @@ import csv
 
 def setw(word,n):
 	return str(word)+" "*(n-len(word))
-all_MOD_dirs = ["/Volumes/Drive/MITOpenLow/eos/opendata/cms/MonteCarlo2011/Summer11LegDR/QCD_Pt-0to5_TuneZ2_7Tev/_pythia6/MOD/PU_S13_START53_LV6-v1/00000/",
-	       "/Volumes/Seagate Backup Plus Drive/MITOpenDataProject/eos/opendata/cms/Run2011A/Jet/MOD/12Oct2013-v1/20000_a/",
-		"/Volumes/Seagate Backup Plus Drive/MITOpenDataProject/eos/opendata/cms/Run2011A/Jet/MOD/12Oct2013-v1/20000_b/",
-	       "/Volumes/Seagate Backup Plus Drive/MITOpenDataProject/eos/opendata/cms/Run2011A/Jet/MOD/12Oct2013-v1/20000_c/",
-	       "/Volumes/Seagate Backup Plus Drive/MITOpenDataProject/eos/opendata/cms/Run2011A/Jet/MOD/12Oct2013-v1/20001/"]
+all_MOD_dirs = ["/Volumes/Drive/MITOpenLow/eos/opendata/cms/MonteCarlo2011/Summer11LegDR/QCD_Pt-0to5_TuneZ2_7Tev/_pythia6/MOD/PU_S13_START53_LV6-v1/00000/"
+	      ]
 
 
 output_file = sys.argv[1]
 
 
-
+def is_lumi_valid(lumi_id, lumi_id_to_lumin):
+	"""
+	lumi_id = (run,lumiBlock)
+	"""
+	return True
 
 def read_mod_file(mod_file,file_name,i,num_files,output):
 
