@@ -134,7 +134,6 @@ with open(event_file,"r") as file:
 					except KeyError: master_triggers_x_section[trigger][(run_num,lumi_num)] = [1,eff_lumi]
 					
 master_triggers_crossec_final = {}
-print j
 for trigger in master_triggers_x_section.keys():
 	xsec = 0
 	for lumi_id in master_triggers_x_section[trigger]:
