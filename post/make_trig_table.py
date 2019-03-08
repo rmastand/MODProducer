@@ -38,6 +38,18 @@ misc = ["HLT_Jet240_CentralJet30_BTagIP","HLT_Jet270_CentralJet30_BTagIP","HLT_J
 lumibyls_file = sys.argv[1]
 output_table = sys.argv[2]
 event_file = sys.argv[3]
+run_alumi_file = sys.argv[4]
+
+runA_runs = []
+read_alumi_lines = open(run_alumi_file,"r").readlines()
+for line in read_alumi_lines[4:]:
+  char = line[0]
+  if char != "+":
+    runA_runs.append(line.split()[1].split(":")[0])
+  else:
+    break
+print "Done reading in ALumi"
+
 
 """
 all_dirs = ["/Volumes/Seagate Backup Plus Drive/MITOpenDataProject/eos/opendata/cms/Run2011A/Jet/MOD/12Oct2013-v1/10000/",
@@ -76,6 +88,13 @@ def read_lumi_by_ls(lumibyls_file):
 		except: pass
 	return lumi_id_to_gps_times,lumi_id_to_lumin
 lumi_id_to_gps_times,lumi_id_to_lumin = read_lumi_by_ls(lumibyls_file)
+
+runA_blocks= []
+for lumi_id in lumi_id_to_lumin.keys():
+		if lumi_id[0] in runA_runs:
+			runA_blocks.append(lumi_id[0])
+
+
 
 
 # key = trigger names
@@ -171,7 +190,7 @@ with open(output_table,"w") as output:
 		line = "\\texttt{"+trigger.replace("_","\_")+"}"+" & "+"{:,}".format(len(master_triggers_pv_lumis[trigger].keys()))+" & "+"{:,}".format(master_triggers_pvf_events[trigger])+" & "+("%.2f" %  master_triggers_eff_lumi[trigger])+" & "+("%.6f" % (float(master_triggers_pvf_events[trigger])/float(master_triggers_eff_lumi[trigger])))+" \\\ "+"\n"
 		output.write(line)
 	output.write("\hline\n")
-	line = "Total" + " & " + "{:,}".format(len(total_lumis.keys())) + " & " + "{:,}".format(total_pv_events) + " & " + "{:,}".format(total_pvf_events) + " & "+("%.2f" % total_eff_lumi)+" & "+"N/A"+ " \\\ " + "\n"
+	line = "Total" + " & " + "{:,}".format(len(runA_blocks)) + " & " + "{:,}".format(total_pv_events) + " & " + "{:,}".format(total_pvf_events) + " & "+("%.2f" % total_eff_lumi)+" & "+"N/A"+ " \\\ " + "\n"
 	output.write(line)
 	output.write("\hline\n")
 	output.write("\hline\n")
