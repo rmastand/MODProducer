@@ -51,7 +51,7 @@ print all_pfcs_1Gev
 with open(output_file,"w") as output:
   output.write("\\begin{table}[h!]\n")
   output.write("\\begin{center}\n")
-  output.write("\\begin{tabular}{ |r|l|r|r| }\n")
+  output.write("\\begin{tabular}{ r@{$\quad$} l @{$\quad$} r @{$\quad$} r }\n")
   output.write("\hline\n")
   output.write("\hline\n")
   output.write("Code & Candidate & Total Count & $\pt > $ 1GeV \\\ \n")
