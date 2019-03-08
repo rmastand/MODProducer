@@ -95,7 +95,7 @@ for trigger in all_triggers:
 	master_triggers_pv_lumis[trigger] = {}
 	master_triggers_x_section[trigger] = {}
 	master_triggers_eff_lumi[trigger] = 0
-	master_triggers_pvf_lumi_count[trigger] = 0
+	master_triggers_pvf_lumi_count[trigger] = []
 
 l = 0
 j = 0
@@ -127,9 +127,7 @@ with open(event_file,"r") as file:
 				try: master_triggers_pv_lumis[trigger][(run_num,lumi_num)] += 1
 				except KeyError: # means that the lumiblock has not already been looked at by THAT TRIGGER
 					master_triggers_eff_lumi[trigger] += eff_lumi
-					if trigger == "HLT_Jet30":
-						j += 1
-					master_triggers_pvf_lumi_count[trigger] += 1
+					master_triggers_pvf_lumi_count[trigger].append(eff_lumi)
 					master_triggers_pv_lumis[trigger][(run_num,lumi_num)] = 0
 				
 				
@@ -163,19 +161,19 @@ with open(output_table,"w") as output:
 	output.write("\hline\n")
 	#output.write("trigger_name,pv_events,pvf_events,eff_lumin,eff_cross_sec,\n")
 	for trigger in single_jet:
-		line = "\\texttt{"+trigger.replace("_","\_")+"}"+" & "+"{:,}".format(master_triggers_pv_events[trigger])+" & "+"{:,}".format(master_triggers_pvf_events[trigger])+" & "+("%.2f" %  master_triggers_eff_lumi[trigger])+" & "+("%.6f" % (float(master_triggers_pvf_events[trigger])/float(master_triggers_eff_lumi[trigger])))+" \\\ "+"\n"
+		line = "\\texttt{"+trigger.replace("_","\_")+"}"+" & "+"{:,}".format(len(master_triggers_pv_events[trigger]))+" & "+"{:,}".format(master_triggers_pvf_events[trigger])+" & "+("%.2f" %  master_triggers_eff_lumi[trigger])+" & "+("%.6f" % (float(master_triggers_pvf_events[trigger])/float(master_triggers_eff_lumi[trigger])))+" \\\ "+"\n"
 		output.write(line)
 	output.write("\hline\n")
 	for trigger in di_jet:
-		line = "\\texttt{"+trigger.replace("_","\_")+"}"+" & "+"{:,}".format(master_triggers_pv_events[trigger])+" & "+"{:,}".format(master_triggers_pvf_events[trigger])+" & "+("%.2f" %  master_triggers_eff_lumi[trigger])+" & "+("%.6f" % (float(master_triggers_pvf_events[trigger])/float(master_triggers_eff_lumi[trigger])))+" \\\ "+"\n"
+		line = "\\texttt{"+trigger.replace("_","\_")+"}"+" & "+"{:,}".format(len(master_triggers_pv_events[trigger]))+" & "+"{:,}".format(master_triggers_pvf_events[trigger])+" & "+("%.2f" %  master_triggers_eff_lumi[trigger])+" & "+("%.6f" % (float(master_triggers_pvf_events[trigger])/float(master_triggers_eff_lumi[trigger])))+" \\\ "+"\n"
 		output.write(line)
 	output.write("\hline\n")
 	for trigger in diu_jet:
-		line = "\\texttt{"+trigger.replace("_","\_")+"}"+" & "+"{:,}".format(master_triggers_pv_events[trigger])+" & "+"{:,}".format(master_triggers_pvf_events[trigger])+" & "+("%.2f" %  master_triggers_eff_lumi[trigger])+" & "+("%.6f" % (float(master_triggers_pvf_events[trigger])/float(master_triggers_eff_lumi[trigger])))+" \\\ "+"\n"
+		line = "\\texttt{"+trigger.replace("_","\_")+"}"+" & "+"{:,}".format(len(master_triggers_pv_events[trigger]))+" & "+"{:,}".format(master_triggers_pvf_events[trigger])+" & "+("%.2f" %  master_triggers_eff_lumi[trigger])+" & "+("%.6f" % (float(master_triggers_pvf_events[trigger])/float(master_triggers_eff_lumi[trigger])))+" \\\ "+"\n"
 		output.write(line)
 	output.write("\hline\n")
 	for trigger in misc:
-		line = "\\texttt{"+trigger.replace("_","\_")+"}"+" & "+"{:,}".format(master_triggers_pv_events[trigger])+" & "+"{:,}".format(master_triggers_pvf_events[trigger])+" & "+("%.2f" %  master_triggers_eff_lumi[trigger])+" & "+("%.6f" % (float(master_triggers_pvf_events[trigger])/float(master_triggers_eff_lumi[trigger])))+" \\\ "+"\n"
+		line = "\\texttt{"+trigger.replace("_","\_")+"}"+" & "+"{:,}".format(len(master_triggers_pv_events[trigger]))+" & "+"{:,}".format(master_triggers_pvf_events[trigger])+" & "+("%.2f" %  master_triggers_eff_lumi[trigger])+" & "+("%.6f" % (float(master_triggers_pvf_events[trigger])/float(master_triggers_eff_lumi[trigger])))+" \\\ "+"\n"
 		output.write(line)
 	output.write("\hline\n")
 	line = "Total" + " & " + "{:,}".format(master_triggers_pvf_lumi_count[trigger]) + " & " + "{:,}".format(total_pv_events) + " & " + "{:,}".format(total_pvf_events) + " & "+("%.2f" % total_eff_lumi)+" & "+"N/A"+ " \\\ " + "\n"
