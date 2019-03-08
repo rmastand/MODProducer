@@ -85,6 +85,7 @@ def read_mod_file(mod_file,file_name,i,num_files,output):
 	
 
 for l, dire in enumerate(all_MOD_dirs):
+	print "on file extension " + all_MOD_dir_labels[l]
 	num_files = len(os.listdir(dire))
 	i = 1
 	with open(folder+"/" + all_MOD_dir_labels[l]+output_extension,"w") as output:
