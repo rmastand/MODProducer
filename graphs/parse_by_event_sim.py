@@ -31,6 +31,7 @@ all_MOD_dirs = ["/Volumes/Drive/MITOpenLow/eos/opendata/cms/MonteCarlo2011/Summe
 all_MOD_dir_labels = ["0to5_","5to15_","15to30_","30to50_","50to80_","80to120_","120to170_","170to300_","300to470_"
 		     "470to600_","600to800_","800to1000_","1000to1400_","1400to1800_","1800_"]
 output_extension = sys.argv[1]
+folder = sys.argv[2]
 
 lumi_id_to_lumin = 0
 
@@ -86,7 +87,7 @@ def read_mod_file(mod_file,file_name,i,num_files,output):
 for l, dire in enumerate(all_MOD_dirs):
 	num_files = len(os.listdir(dire))
 	i = 1
-	with open(all_MOD_dir_labels[l]+output_extension,"w") as output:
+	with open(folder+"/" + all_MOD_dir_labels[l]+output_extension,"w") as output:
 		output.write(setw("EventNum",20)+setw("RunNum",15)+setw("LumiNum",15)+setw("Triggers Present",20)+setw("Trigger Prescales",20)+setw("Triggers Fired",20)+"\n")
 		for file in os.listdir(dire):
 			# if file has not already been processed
