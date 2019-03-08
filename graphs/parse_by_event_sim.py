@@ -68,11 +68,12 @@ def read_mod_file(mod_file,file_name,i,num_files,output):
 					output.write(to_write)
 	
 
-i = 1
+
 
 with open(output_file,"w") as output:
 	output.write(setw("EventNum",20)+setw("RunNum",15)+setw("LumiNum",15)+setw("Triggers Present",20)+setw("Trigger Prescales",20)+setw("Triggers Fired",20)+"\n")
 	for dire in all_MOD_dirs:
+		i = 1
 		num_files = len(os.listdir(dire))
 		
 		for file in os.listdir(dire):
