@@ -97,7 +97,7 @@ with open(by_event_2_file, "r") as input:
       i = 0
     elif i == 1: # lumi ids
       lumi_ids = line.split(",")
-      lumi_ids = [(x.split(":")[0],strip(x.split(":")[1])) for x in lumi_ids]
+      lumi_ids = [(x.split(":")[0],x.split(":")[1].strip()) for x in lumi_ids]
       trigger_ids_dict[trigger] = lumi_ids
     elif i == 2: # eff lumis
       pass
