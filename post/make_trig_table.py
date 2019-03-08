@@ -124,7 +124,6 @@ with open(event_file,"r") as file:
 				try: master_triggers_pv_lumis[trigger][(run_num,lumi_num)] += 1
 				except KeyError: # means that the lumiblock has not already been looked at by THAT TRIGGER
 					master_triggers_eff_lumi[trigger] += eff_lumi
-					master_triggers_pvf_lumi_count[trigger].append(eff_lumi)
 					master_triggers_pv_lumis[trigger][(run_num,lumi_num)] = 0
 				
 				
