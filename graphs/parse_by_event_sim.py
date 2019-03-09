@@ -11,11 +11,27 @@ import csv
 
 def setw(word,n):
 	return str(word)+" "*(n-len(word))
+
+"""
 all_MOD_dirs = ["/Volumes/Drive/MITOpenLow/eos/opendata/cms/MonteCarlo2011/Summer11LegDR/QCD_Pt-0to5_TuneZ2_7Tev_pythia6/MOD/PU_S13_START53_LV6-v1/00000/",
 		"/Volumes/Drive/MITOpenLow/eos/opendata/cms/MonteCarlo2011/Summer11LegDR/QCD_Pt-5to15_TuneZ2_7Tev_pythia6/MOD/PU_S13_START53_LV6-v1/00000/",
 		"/Volumes/Drive/MITOpenLow/eos/opendata/cms/MonteCarlo2011/Summer11LegDR/QCD_Pt-15to30_TuneZ2_7Tev_pythia6/MOD/PU_S13_START53_LV6-v1/00000/",
 		"/Volumes/Drive/MITOpenLow/eos/opendata/cms/MonteCarlo2011/Summer11LegDR/QCD_Pt-30to50_TuneZ2_7Tev_pythia6/MOD/PU_S13_START53_LV6-v1/00000/",
 		"/Volumes/Drive/MITOpenLow/eos/opendata/cms/MonteCarlo2011/Summer11LegDR/QCD_Pt-50to80_TuneZ2_7Tev_pythia6/MOD/PU_S13_START53_LV6-v1/00000/"
+		"/Volumes/Drive/MITOpenLow/eos/opendata/cms/MonteCarlo2011/Summer11LegDR/QCD_Pt-80to120_TuneZ2_7Tev_pythia6/MOD/PU_S13_START53_LV6-v1/00000/",
+		"/Volumes/Drive/MITOpenLow/eos/opendata/cms/MonteCarlo2011/Summer11LegDR/QCD_Pt-120to170_TuneZ2_7Tev_pythia6/MOD/PU_S13_START53_LV6-v1/00000/",
+		"/Volumes/Drive/MITOpenLow/eos/opendata/cms/MonteCarlo2011/Summer11LegDR/QCD_Pt-170to300_TuneZ2_7Tev_pythia6/MOD/PU_S13_START53_LV6-v1/00000/",
+		"/Volumes/SimDataHighPt/MITOpenLow/eos/opendata/cms/MonteCarlo2011/Summer11LegDR/QCD_Pt-300to470_TuneZ2_7Tev_pythia6/MOD/PU_S13_START53_LV6-v1/00000/",
+		"/Volumes/SimDataHighPt/MITOpenLow/eos/opendata/cms/MonteCarlo2011/Summer11LegDR/QCD_Pt-470to600_TuneZ2_7Tev_pythia6/MOD/PU_S13_START53_LV6-v1/00000/",
+		"/Volumes/SimDataHighPt/MITOpenLow/eos/opendata/cms/MonteCarlo2011/Summer11LegDR/QCD_Pt-600to800_TuneZ2_7Tev_pythia6/MOD/PU_S13_START53_LV6-v1/00000/",
+		"/Volumes/SimDataHighPt/MITOpenLow/eos/opendata/cms/MonteCarlo2011/Summer11LegDR/QCD_Pt-800to1000_TuneZ2_7Tev_pythia6/MOD/PU_S13_START53_LV6-v1/00000/",
+		"/Volumes/SimDataHighPt/MITOpenLow/eos/opendata/cms/MonteCarlo2011/Summer11LegDR/QCD_Pt-1000to1400_TuneZ2_7Tev_pythia6/MOD/PU_S13_START53_LV6-v1/00000/",
+		"/Volumes/SimDataHighPt/MITOpenLow/eos/opendata/cms/MonteCarlo2011/Summer11LegDR/QCD_Pt-1400to1800_TuneZ2_7Tev_pythia6/MOD/PU_S13_START53_LV6-v1/00000/",
+		"/Volumes/SimDataHighPt/MITOpenLow/eos/opendata/cms/MonteCarlo2011/Summer11LegDR/QCD_Pt-1800_TuneZ2_7Tev_pythia6/MOD/PU_S13_START53_LV6-v1/00000/"
+	      ]
+"""
+
+all_MOD_dirs = ["/Volumes/Drive/MITOpenLow/eos/opendata/cms/MonteCarlo2011/Summer11LegDR/QCD_Pt-50to80_TuneZ2_7Tev_pythia6/MOD/PU_S13_START53_LV6-v1/00000/",
 		"/Volumes/Drive/MITOpenLow/eos/opendata/cms/MonteCarlo2011/Summer11LegDR/QCD_Pt-80to120_TuneZ2_7Tev_pythia6/MOD/PU_S13_START53_LV6-v1/00000/",
 		"/Volumes/Drive/MITOpenLow/eos/opendata/cms/MonteCarlo2011/Summer11LegDR/QCD_Pt-120to170_TuneZ2_7Tev_pythia6/MOD/PU_S13_START53_LV6-v1/00000/",
 		"/Volumes/Drive/MITOpenLow/eos/opendata/cms/MonteCarlo2011/Summer11LegDR/QCD_Pt-170to300_TuneZ2_7Tev_pythia6/MOD/PU_S13_START53_LV6-v1/00000/",
