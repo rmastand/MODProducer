@@ -109,6 +109,9 @@ for l, dire in enumerate(all_MOD_dirs):
 		for file in os.listdir(dire):
 			# if file has not already been processed
 			print "Processing file " + file + ", File "+str(i)+" of " + str(num_files)
-			file_trig_dict = read_mod_file(dire+"/"+file,file,i,num_files,output)
+			try:
+				file_trig_dict = read_mod_file(dire+"/"+file,file,i,num_files,output)
+			except Exception as e:
+				print e.message
 			i += 1
 	
