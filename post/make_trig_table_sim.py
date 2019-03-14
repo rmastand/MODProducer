@@ -80,8 +80,9 @@ for pt_code in pt_codes:
 				if len(triggers_fired) > 1:
 					master_datasets_pvf_events[pt_code] += 1
 				
-
-
+for pt_code in pt_codes:
+	real_total_events += master_datasets_pv_events[pt_code]
+	real_fired_events += master_datasets_pvf_events[pt_code
 print "here"
 print output_table
 with open(output_table,"w") as output:
@@ -95,11 +96,11 @@ with open(output_table,"w") as output:
 	output.write("\hline\n")
 	output.write("\hline\n")
 	#output.write("trigger_name,pv_events,pvf_events,eff_lumin,eff_cross_sec,\n")
-	for pt_code in pt_codes:
-		line = "\\texttt{"+trigger.replace("_","\_")+"}"+" & "+"{:,}".format(len(master_triggers_pv_lumis[trigger].keys()))+" & "+"{:,}".format(master_triggers_pvf_events[trigger])+" & "+("%.2f" %  master_triggers_eff_lumi[trigger])+" & "+("%.6f" % (float(master_triggers_pvf_events[trigger])/float(master_triggers_eff_lumi[trigger])))+" \\\ "+"\n"
+	for i, pt_code in enumerate(pt_codes):
+		line = "\\texttt{"+pt_codes[pt_code]+"}"+" & "+"{:,}".format(master_datasets_pv_events[pt_code])+" & "+"{:,}".format(master_datasets_pvf_events[pt_code])+" & "+("%.5f" %  total_cross_sections[i])+" & "+"{:,}".format(total_events[i])+" & "+"{:,}".format(total_files[i])+" & "+"{:,}".format(total_disc_space[i])+" \\\ "+"\n"
 		output.write(line)
 	output.write("\hline\n")
-	line = "Total" + " & " + "{:,}".format(len(runA_blocks)) + " & " + "{:,}".format(total_pv_events) + " & " + "{:,}".format(total_pvf_events) + " & "+("%.2f" % total_eff_lumi)+" & "+"N/A"+ " \\\ " + "\n"
+	line = "Total" + " & " + "{:,}".format(len(runA_blocks)) + " & " + "{:,}".format(real_total_events) + " & " +"N/A" + " & " + str(sum(total_events)) + " & " +str(sum(total_files)) + " & " +str(sum(total_disc_space)) + " & " +" \\\ " + "\n"
 	output.write(line)
 	output.write("\hline\n")
 	output.write("\hline\n")
