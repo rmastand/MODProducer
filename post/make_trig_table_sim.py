@@ -99,7 +99,7 @@ with open(output_table,"w") as output:
 	output.write("\smallest\n")
 	output.write("\hline\n")
 	output.write("\hline\n")
-	output.write("Dataset & Events Used & Fired Events Used & Eff. Cross Sec & Total Events & Total Files & Total disc space\\\ \n")
+	output.write("Dataset & Events Used & Fired Events Used & Eff. Cross Sec & Total Events & Total Files & Total disc space (TB) \\\ \n")
 	output.write("\hline\n")
 	output.write("\hline\n")
 	#output.write("trigger_name,pv_events,pvf_events,eff_lumin,eff_cross_sec,\n")
@@ -107,12 +107,12 @@ with open(output_table,"w") as output:
 		line = "\\texttt{"+pt_codes[i]+"}"+" & "+"{:,}".format(master_datasets_pv_events[pt_code])+" & "+"{:,}".format(master_datasets_pvf_events[pt_code])+" & "+("%.5f" %  total_cross_sections[i])+" & "+"{:,}".format(total_events[i])+" & "+"{:,}".format(total_files[i])+" & "+"{:,}".format(total_disc_space[i])+" \\\ "+"\n"
 		output.write(line)
 	output.write("\hline\n")
-	line = "Total" + " & " + "{:,}".format(real_total_events) + " & " + "{:,}".format(real_fired_events) + " & " +"N/A" + " & " + str(sum(total_events)) + " & " +str(sum(total_files)) + " & " +str(sum(total_disc_space)) + " & " +" \\\ " + "\n"
+	line = "Total" + " & " + "{:,}".format(real_total_events) + " & " + "{:,}".format(real_fired_events) + " & " +"N/A" + " & " + "{:,}".format(sum(total_events)) + " & " +"{:,}".format(sum(total_files)) + " & " +str(sum(total_disc_space)) + " & " +" \\\ " + "\n"
 	output.write(line)
 	output.write("\hline\n")
 	output.write("\hline\n")
 	output.write("\end{tabular}\n")
 	output.write("\caption{} \n")
-	output.write("\label{table:full list of triggers}\n")
+	output.write("\label{table:qcd_datasets_cross_section_info}\n")
 	output.write("\end{center}\n")
-	output.write("\end{table}\n")
+	output.write("\end{table*}\n")
