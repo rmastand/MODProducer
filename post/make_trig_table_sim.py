@@ -63,6 +63,7 @@ for pt_code in pt_codes:
 l = 0
 
 for pt_code in pt_codes:
+	print pt_code
 	with open(event_file_dir+"/"+pt_code+"_by_event.txt","r") as file:
 		for line in file:
 			l += 1
