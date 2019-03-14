@@ -103,7 +103,7 @@ with open(output_table,"w") as output:
 	output.write("\hline\n")
 	#output.write("trigger_name,pv_events,pvf_events,eff_lumin,eff_cross_sec,\n")
 	for i, pt_code in enumerate(pt_codes):
-		line = "\\texttt{"+pt_codes[pt_code]+"}"+" & "+"{:,}".format(master_datasets_pv_events[pt_code])+" & "+"{:,}".format(master_datasets_pvf_events[pt_code])+" & "+("%.5f" %  total_cross_sections[i])+" & "+"{:,}".format(total_events[i])+" & "+"{:,}".format(total_files[i])+" & "+"{:,}".format(total_disc_space[i])+" \\\ "+"\n"
+		line = "\\texttt{"+pt_codes[i]+"}"+" & "+"{:,}".format(master_datasets_pv_events[pt_code])+" & "+"{:,}".format(master_datasets_pvf_events[pt_code])+" & "+("%.5f" %  total_cross_sections[i])+" & "+"{:,}".format(total_events[i])+" & "+"{:,}".format(total_files[i])+" & "+"{:,}".format(total_disc_space[i])+" \\\ "+"\n"
 		output.write(line)
 	output.write("\hline\n")
 	line = "Total" + " & " + "{:,}".format(len(runA_blocks)) + " & " + "{:,}".format(real_total_events) + " & " +"N/A" + " & " + str(sum(total_events)) + " & " +str(sum(total_files)) + " & " +str(sum(total_disc_space)) + " & " +" \\\ " + "\n"
