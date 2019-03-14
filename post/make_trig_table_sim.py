@@ -30,10 +30,11 @@ total_events = [1000025, 1495884, 9978850, 5837856, 5766430, 5867864, 5963264, 5
 	       1956893, 1991792, 996500]
 total_disc_space = [.1378, .2233, 1.7, 1.0, 1.1, 1.2, 1.2, 1.3, 1.4, .9571, .9768, .9743, .4841, .4914, .2434]
 files_used = [55, 83, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 131, 182, 75]
-
+total_cross_sections = [48444950000.000,36745720000.000,815912800.0,53122370.0,6359119.0,784265.0,115134.00,24262.8,1168.49,70.2242,
+		       15.5537,1.84369,0.332105,0.0108721,0.000357463]
 
 output_table = sys.argv[1]
-event_file = sys.argv[2]
+event_file_dir = sys.argv[2]
 
 
 
@@ -46,73 +47,40 @@ all_dirs = ["/Volumes/Seagate Backup Plus Drive/MITOpenDataProject/eos/opendata/
 	   "/Volumes/Seagate Backup Plus Drive/MITOpenDataProject/eos/opendata/cms/Run2011A/Jet/MOD/12Oct2013-v1/20001/"]
 """
 
-pt_codes = ["0-5","5-15","15-30","30-50","50-80","80-120","120-170","170-300","300-470","470-600","600-800","800-1000",
-	    "1000-1400","1400-1800","1800"]
+pt_codes = ["0to5","5to15","15to30","30to50","50to80","80to120","120to170","170to300","300to470","470to600","600to800","800to1000",
+	    "1000to1400","1400to1800","1800"]
 
 
 # key = trigger names
-master_triggers_pv_lumis = {}
-master_triggers_pv_events = {}
-master_triggers_pvf_events = {}
-master_triggers_eff_lumi = {}
-master_triggers_x_section = {}
-total_pv_events = 0
-total_pvf_events = 0
-total_eff_lumi = 0
-total_x_section = {}
-total_lumis = {}
+master_datasets_pv_events = {}
+master_datasets_pvf_events = {}
 
-for trigger in all_triggers:
-	master_triggers_pv_lumis[trigger] = {}
-	master_triggers_x_section[trigger] = {}
-	master_triggers_eff_lumi[trigger] = 0
+
+for pt_code in pt_codes:
+	master_datasets_pv_events[pt_code] = {}
+	master_datasets_pvf_events[pt_code] = {}
 
 l = 0
-with open(event_file,"r") as file:
-	for line in file:
-		l += 1
-		if l % 500000 == 0:
-			print l
-		#if l == 500000: break
-		if "EventNum" not in line.split():
-			event_num = line.split()[0]
-			run_num = line.split()[1]
-			lumi_num = line.split()[2]
-			triggers_present = [x[:-3] for x in line.split()[3].split(",")[:-1]]
-			trigger_prescales = [float(x) for x in line.split()[4].split(",")[:-1]]
-			triggers_fired = [x[:-3] for x in line.split()[5].split(",")]
-			total_pv_events += 1
-			if len(triggers_fired) > 1:
-				total_pvf_events += 1
-			try: total_lumis[(run_num,lumi_num)] += 1
-			except KeyError: 
-				total_eff_lumi += lumi_id_to_lumin[(run_num,lumi_num)][1]
-				total_lumis[(run_num,lumi_num)] = 0
-			for i,trigger in enumerate(triggers_present):
-				eff_lumi = lumi_id_to_lumin[(run_num,lumi_num)][1]/trigger_prescales[i]
-				try: master_triggers_pv_events[trigger] += 1
-				except KeyError: master_triggers_pv_events[trigger] = 1
+
+for pt_code in pt_codes:
+	with open(event_file_dir+"/"+pt_code+"_by_event.txt","r") as file:
+		for line in file:
+			l += 1
+			if l % 500000 == 0:
+				print l
+			#if l == 500000: break
+			if "EventNum" not in line.split():
+				event_num = line.split()[0]
+				run_num = line.split()[1]
+				lumi_num = line.split()[2]
+				triggers_present = [x[:-3] for x in line.split()[3].split(",")[:-1]]
+				trigger_prescales = [float(x) for x in line.split()[4].split(",")[:-1]]
+				triggers_fired = [x[:-3] for x in line.split()[5].split(",")]
+				master_datasets_pv_events[pt_code] += 1
+				if len(triggers_fired) > 1:
+					master_datasets_pvf_events[pt_code] += 1
 				
-				try: master_triggers_pv_lumis[trigger][(run_num,lumi_num)] += 1
-				except KeyError: # means that the lumiblock has not already been looked at by THAT TRIGGER
-					master_triggers_eff_lumi[trigger] += eff_lumi
-					master_triggers_pv_lumis[trigger][(run_num,lumi_num)] = 0
-				
-				
-				if trigger in triggers_fired:
-					try: master_triggers_pvf_events[trigger] += 1
-					except KeyError: master_triggers_pvf_events[trigger] = 1
-					try: master_triggers_x_section[trigger][(run_num,lumi_num)][0] += 1
-					except KeyError: master_triggers_x_section[trigger][(run_num,lumi_num)] = [1,eff_lumi]
-					
-master_triggers_crossec_final = {}
-for trigger in master_triggers_x_section.keys():
-	xsec = 0
-	for lumi_id in master_triggers_x_section[trigger]:
-		try:
-			xsec += master_triggers_x_section[trigger][lumi_id][0]/master_triggers_x_section[trigger][lumi_id][1]
-		except ZeroDivisionError: xsec += 0
-	master_triggers_crossec_final[trigger] = xsec/len(master_triggers_x_section[trigger])
+
 
 print "here"
 print output_table
@@ -123,23 +91,11 @@ with open(output_table,"w") as output:
 	output.write("\smallest\n")
 	output.write("\hline\n")
 	output.write("\hline\n")
-	output.write("Trigger Name & Events Used & Fired Events Used & Eff. Cross Sec & Total Events & Total Files & Total disc space\\\ \n")
+	output.write("Dataset & Events Used & Fired Events Used & Eff. Cross Sec & Total Events & Total Files & Total disc space\\\ \n")
 	output.write("\hline\n")
 	output.write("\hline\n")
 	#output.write("trigger_name,pv_events,pvf_events,eff_lumin,eff_cross_sec,\n")
-	for trigger in single_jet:
-		line = "\\texttt{"+trigger.replace("_","\_")+"}"+" & "+"{:,}".format(len(master_triggers_pv_lumis[trigger].keys()))+" & "+"{:,}".format(master_triggers_pvf_events[trigger])+" & "+("%.2f" %  master_triggers_eff_lumi[trigger])+" & "+("%.6f" % (float(master_triggers_pvf_events[trigger])/float(master_triggers_eff_lumi[trigger])))+" \\\ "+"\n"
-		output.write(line)
-	output.write("\hline\n")
-	for trigger in di_jet:
-		line = "\\texttt{"+trigger.replace("_","\_")+"}"+" & "+"{:,}".format(len(master_triggers_pv_lumis[trigger].keys()))+" & "+"{:,}".format(master_triggers_pvf_events[trigger])+" & "+("%.2f" %  master_triggers_eff_lumi[trigger])+" & "+("%.6f" % (float(master_triggers_pvf_events[trigger])/float(master_triggers_eff_lumi[trigger])))+" \\\ "+"\n"
-		output.write(line)
-	output.write("\hline\n")
-	for trigger in diu_jet:
-		line = "\\texttt{"+trigger.replace("_","\_")+"}"+" & "+"{:,}".format(len(master_triggers_pv_lumis[trigger].keys()))+" & "+"{:,}".format(master_triggers_pvf_events[trigger])+" & "+("%.2f" %  master_triggers_eff_lumi[trigger])+" & "+("%.6f" % (float(master_triggers_pvf_events[trigger])/float(master_triggers_eff_lumi[trigger])))+" \\\ "+"\n"
-		output.write(line)
-	output.write("\hline\n")
-	for trigger in misc:
+	for pt_code in pt_codes:
 		line = "\\texttt{"+trigger.replace("_","\_")+"}"+" & "+"{:,}".format(len(master_triggers_pv_lumis[trigger].keys()))+" & "+"{:,}".format(master_triggers_pvf_events[trigger])+" & "+("%.2f" %  master_triggers_eff_lumi[trigger])+" & "+("%.6f" % (float(master_triggers_pvf_events[trigger])/float(master_triggers_eff_lumi[trigger])))+" \\\ "+"\n"
 		output.write(line)
 	output.write("\hline\n")
