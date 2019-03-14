@@ -69,7 +69,7 @@ for pt_code in pt_codes:
 			l += 1
 			if l % 500000 == 0:
 				print l
-			if l == 500000: break
+			if l == 100000: break
 			if "EventNum" not in line.split():
 				event_num = line.split()[0]
 				run_num = line.split()[1]
