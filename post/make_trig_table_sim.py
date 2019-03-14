@@ -57,8 +57,8 @@ master_datasets_pvf_events = {}
 
 
 for pt_code in pt_codes:
-	master_datasets_pv_events[pt_code] = {}
-	master_datasets_pvf_events[pt_code] = {}
+	master_datasets_pv_events[pt_code] = 0
+	master_datasets_pvf_events[pt_code] = 0
 
 l = 0
 
