@@ -83,7 +83,9 @@ for pt_code in pt_codes:
 				master_datasets_pv_events[pt_code] += 1
 				if len(triggers_fired) > 1:
 					master_datasets_pvf_events[pt_code] += 1
-				
+					
+real_total_events =0
+real_fired_events =0
 for pt_code in pt_codes:
 	real_total_events += master_datasets_pv_events[pt_code]
 	real_fired_events += master_datasets_pvf_events[pt_code]
