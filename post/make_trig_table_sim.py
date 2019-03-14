@@ -60,9 +60,10 @@ for pt_code in pt_codes:
 	master_datasets_pv_events[pt_code] = 0
 	master_datasets_pvf_events[pt_code] = 0
 
-l = 0
+
 
 for pt_code in pt_codes:
+	l = 0
 	print pt_code
 	with open(event_file_dir+"/"+pt_code+"_by_event.txt","r") as file:
 		for line in file:
