@@ -70,6 +70,7 @@ for pt_code in pt_codes:
 				print l
 			#if l == 500000: break
 			if "EventNum" not in line.split():
+				print line.split()
 				event_num = line.split()[0]
 				run_num = line.split()[1]
 				lumi_num = line.split()[2]
