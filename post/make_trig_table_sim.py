@@ -82,7 +82,7 @@ for pt_code in pt_codes:
 				
 for pt_code in pt_codes:
 	real_total_events += master_datasets_pv_events[pt_code]
-	real_fired_events += master_datasets_pvf_events[pt_code
+	real_fired_events += master_datasets_pvf_events[pt_code]
 print "here"
 print output_table
 with open(output_table,"w") as output:
