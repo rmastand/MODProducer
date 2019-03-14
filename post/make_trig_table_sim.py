@@ -76,7 +76,10 @@ for pt_code in pt_codes:
 				lumi_num = line.split()[2]
 				triggers_present = [x[:-3] for x in line.split()[3].split(",")[:-1]]
 				trigger_prescales = [float(x) for x in line.split()[4].split(",")[:-1]]
-				triggers_fired = [x[:-3] for x in line.split()[5].split(",")]
+				try:
+					triggers_fired = [x[:-3] for x in line.split()[5].split(",")]
+				except IndexError:
+					triggers_fired = []
 				master_datasets_pv_events[pt_code] += 1
 				if len(triggers_fired) > 1:
 					master_datasets_pvf_events[pt_code] += 1
