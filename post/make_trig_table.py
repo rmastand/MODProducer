@@ -89,6 +89,8 @@ def read_lumi_by_ls(lumibyls_file):
 	return lumi_id_to_gps_times,lumi_id_to_lumin
 lumi_id_to_gps_times,lumi_id_to_lumin = read_lumi_by_ls(lumibyls_file)
 
+total_eff_lumi = 0
+
 runA_blocks= []
 for lumi_id in lumi_id_to_lumin.keys():
 		if lumi_id[0] in runA_runs:
@@ -106,7 +108,7 @@ master_triggers_eff_lumi = {}
 master_triggers_x_section = {}
 total_pv_events = 0
 total_pvf_events = 0
-total_eff_lumi = 0
+
 total_x_section = {}
 total_lumis = {}
 
