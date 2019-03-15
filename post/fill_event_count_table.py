@@ -62,7 +62,7 @@ with open(output_file,"w") as output:
     output.write(str(object)+ " & "+str(pdg_id_order_names[i])+" & " "{:,}".format(all_pfcs[object])+" & " "{:,}".format(all_pfcs_1Gev[object]) +"\\\ \n")
   output.write("\hline\n")
   for i, object in enumerate(pdg_id_order_2):
-	try: output.write(str(object)+ " & "+str(pdg_id_order_2_names[i])+" & " +"{:,}".format((all_pfcs[object])+" & " "{:,}".format(all_pfcs_1Gev[object]) +"\\\ \n")
+	try: output.write(str(object)+ " & "+str(pdg_id_order_2_names[i])+" & " +"{:,}".format(all_pfcs[object])+" & " "{:,}".format(all_pfcs_1Gev[object]) +"\\\ \n")
   	except KeyError: output.write(str(object)+ " & "+str(pdg_id_order_2_names[i])+" & " +"{:,}".format(all_pfcs[object])+" & " +str(0) +"\\\ \n")
 
   output.write("\hline\n")
