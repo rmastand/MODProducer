@@ -93,6 +93,7 @@ runA_blocks= []
 for lumi_id in lumi_id_to_lumin.keys():
 		if lumi_id[0] in runA_runs:
 			runA_blocks.append(lumi_id[0])
+			total_eff_lumi += lumi_id_to_lumin[lumi_id][1]
 
 
 
@@ -133,7 +134,6 @@ with open(event_file,"r") as file:
 				total_pvf_events += 1
 			try: total_lumis[(run_num,lumi_num)] += 1
 			except KeyError: 
-				total_eff_lumi += lumi_id_to_lumin[(run_num,lumi_num)][1]
 				total_lumis[(run_num,lumi_num)] = 0
 			for i,trigger in enumerate(triggers_present):
 				eff_lumi = lumi_id_to_lumin[(run_num,lumi_num)][1]/trigger_prescales[i]
