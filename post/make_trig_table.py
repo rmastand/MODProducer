@@ -5,7 +5,6 @@ import sys
 import ast
 import os
 import csv
-import matplotlib.pyplot as plt
 
 """
 USED FOR THE PAPER
