@@ -158,7 +158,7 @@ with open(event_file,"r") as file:
 					try: master_triggers_x_section[trigger][(run_num,lumi_num)][0] += 1
 					except KeyError: master_triggers_x_section[trigger][(run_num,lumi_num)] = [1,eff_lumi]
 					
-
+print master_triggers_pv_events
 
 print "here"
 print output_table
