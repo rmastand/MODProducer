@@ -55,6 +55,9 @@ for line in read_alumi_lines[4:]:
 print "Done reading in ALumi"
 
 
+trigger_nammies = {}
+
+
 """
 all_dirs = ["/Volumes/Seagate Backup Plus Drive/MITOpenDataProject/eos/opendata/cms/Run2011A/Jet/MOD/12Oct2013-v1/10000/",
 	   "/Volumes/Seagate Backup Plus Drive/MITOpenDataProject/eos/opendata/cms/Run2011A/Jet/MOD/12Oct2013-v1/20000_a/",
@@ -133,6 +136,12 @@ with open(event_file,"r") as file:
 			run_num = line.split()[1]
 			lumi_num = line.split()[2]
 			triggers_present = [shorten_trigger_name(x) for x in line.split()[3].split(",")[:-1]]
+			old_tp = [x for x in line.split()[3].split(",")[:-1]]
+			for t in old_tp:
+				try:
+					trigger_nammies[t] += 1
+				except KeyError:
+					trigger_nammies[t] = 1
 			trigger_prescales = [float(x) for x in line.split()[4].split(",")[:-1]]
 			triggers_fired = [shorten_trigger_name(x) for x in line.split()[5].split(",")]
 			total_pv_events += 1
@@ -142,6 +151,7 @@ with open(event_file,"r") as file:
 			except KeyError: 
 				total_lumis[(run_num,lumi_num)] = 0
 			for i,trigger in enumerate(triggers_present):
+
 				eff_lumi = lumi_id_to_lumin[(run_num,lumi_num)][1]/trigger_prescales[i]
 				try: master_triggers_pv_events[trigger] += 1
 				except KeyError: master_triggers_pv_events[trigger] = 1
@@ -158,7 +168,7 @@ with open(event_file,"r") as file:
 					try: master_triggers_x_section[trigger][(run_num,lumi_num)][0] += 1
 					except KeyError: master_triggers_x_section[trigger][(run_num,lumi_num)] = [1,eff_lumi]
 					
-print master_triggers_pv_events
+print trigger_nammies
 
 print "here"
 print output_table
