@@ -16,6 +16,9 @@ columns
 eventnum runnum luminum triggerspresent triggerprescales triggersfired
 """
 
+def shorten_trigger_name(trigger_name):
+	return trigger_name.rsplit("_",1)[0]
+
 # setting the ordering
 all_triggers = ["HLT_Jet30","HLT_Jet60","HLT_Jet80","HLT_Jet110","HLT_Jet150","HLT_Jet190","HLT_Jet240","HLT_Jet300",
 		"HLT_Jet370","HLT_Jet800","HLT_DiJetAve30",
@@ -23,6 +26,7 @@ all_triggers = ["HLT_Jet30","HLT_Jet60","HLT_Jet80","HLT_Jet110","HLT_Jet150","H
 		"HLT_DiJetAve240","HLT_DiJetAve300","HLT_DiJetAve370","HLT_DiJetAve15U","HLT_DiJetAve30U","HLT_DiJetAve50U",
 		"HLT_DiJetAve70U","HLT_DiJetAve100U",
 		"HLT_DiJetAve140U","HLT_DiJetAve180U","HLT_DiJetAve300U",
+		"HLT_Jet60_L1FastJet", "HLT_Jet240_L1FastJet", "HLT_Jet300_L1FastJet", "HLT_Jet30_L1FastJet", "HLT_Jet370_L1FastJet",
 		"HLT_Jet240_CentralJet30_BTagIP","HLT_Jet270_CentralJet30_BTagIP","HLT_Jet370_NoJetID"]
 
 single_jet = ["HLT_Jet30","HLT_Jet60","HLT_Jet80","HLT_Jet110","HLT_Jet150","HLT_Jet190","HLT_Jet240","HLT_Jet300",
@@ -33,6 +37,7 @@ di_jet = ["HLT_DiJetAve30",
 diu_jet = ["HLT_DiJetAve15U","HLT_DiJetAve30U","HLT_DiJetAve50U",
 		"HLT_DiJetAve70U","HLT_DiJetAve100U",
 		"HLT_DiJetAve140U","HLT_DiJetAve180U","HLT_DiJetAve300U"]
+fast_jet = ["HLT_Jet60_L1FastJet", "HLT_Jet240_L1FastJet", "HLT_Jet300_L1FastJet", "HLT_Jet30_L1FastJet", "HLT_Jet370_L1FastJet"]
 misc = ["HLT_Jet240_CentralJet30_BTagIP","HLT_Jet270_CentralJet30_BTagIP","HLT_Jet370_NoJetID"]
 
 lumibyls_file = sys.argv[1]
@@ -128,9 +133,9 @@ with open(event_file,"r") as file:
 			event_num = line.split()[0]
 			run_num = line.split()[1]
 			lumi_num = line.split()[2]
-			triggers_present = [x[:-3] for x in line.split()[3].split(",")[:-1]]
+			triggers_present = [shorten_trigger_name(x) for x in line.split()[3].split(",")[:-1]]
 			trigger_prescales = [float(x) for x in line.split()[4].split(",")[:-1]]
-			triggers_fired = [x[:-3] for x in line.split()[5].split(",")]
+			triggers_fired = [shorten_trigger_name(x) for x in line.split()[5].split(",")]
 			total_pv_events += 1
 			if len(triggers_fired) > 1:
 				total_pvf_events += 1
@@ -185,6 +190,10 @@ with open(output_table,"w") as output:
 		output.write(line)
 	output.write("\hline\n")
 	for trigger in diu_jet:
+		line = "\\texttt{"+trigger.replace("_","\_")+"}"+" & "+"{:,}".format(len(master_triggers_pv_lumis[trigger].keys()))+" & "+"{:,}".format(master_triggers_pv_events[trigger])+" & "+"{:,}".format(master_triggers_pvf_events[trigger])+" & "+("%.2f" %  master_triggers_eff_lumi[trigger])+" & "+("%.6f" % (float(master_triggers_pvf_events[trigger])/float(master_triggers_eff_lumi[trigger])))+" \\\ "+"\n"
+		output.write(line)
+	output.write("\hline\n")
+	for trigger in fast_jet:
 		line = "\\texttt{"+trigger.replace("_","\_")+"}"+" & "+"{:,}".format(len(master_triggers_pv_lumis[trigger].keys()))+" & "+"{:,}".format(master_triggers_pv_events[trigger])+" & "+"{:,}".format(master_triggers_pvf_events[trigger])+" & "+("%.2f" %  master_triggers_eff_lumi[trigger])+" & "+("%.6f" % (float(master_triggers_pvf_events[trigger])/float(master_triggers_eff_lumi[trigger])))+" \\\ "+"\n"
 		output.write(line)
 	output.write("\hline\n")
