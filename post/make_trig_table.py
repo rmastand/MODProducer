@@ -170,7 +170,7 @@ with open(event_file,"r") as file:
 					
 
 
-for t in trigger_nammies.keys().sort():
+for t in trigger_nammies.keys():
 	print t
 
 print "here"
