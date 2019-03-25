@@ -23,7 +23,8 @@ all_triggers = ["HLT_Jet30","HLT_Jet60","HLT_Jet80","HLT_Jet110","HLT_Jet150","H
 		"HLT_DiJetAve240","HLT_DiJetAve300","HLT_DiJetAve370","HLT_DiJetAve15U","HLT_DiJetAve30U","HLT_DiJetAve50U",
 		"HLT_DiJetAve70U","HLT_DiJetAve100U",
 		"HLT_DiJetAve140U","HLT_DiJetAve180U","HLT_DiJetAve300U",
-		"HLT_Jet240_CentralJet30_BTagIP","HLT_Jet270_CentralJet30_BTagIP","HLT_Jet370_NoJetID"]
+		"HLT_Jet240_CentralJet30_BTagIP","HLT_Jet270_CentralJet30_BTagIP","HLT_Jet370_NoJetID",
+	       "HLT_Jet60_L1FastJet", "HLT_Jet240_L1FastJet", "HLT_Jet300_L1FastJet", "HLT_Jet30_L1FastJet", "HLT_Jet370_L1FastJet"]
 
 total_files = [55, 83, 5519, 277, 299, 317, 334, 387, 382, 274, 271, 295, 131, 182, 75]
 total_events = [1000025, 1495884, 9978850, 5837856, 5766430, 5867864, 5963264, 5975592, 5975016, 3967154, 3988701, 3945269,
@@ -60,7 +61,8 @@ for pt_code in pt_codes:
 	master_datasets_pv_events[pt_code] = 0
 	master_datasets_pvf_events[pt_code] = 0
 
-
+def shorten_trigger_name(trigger_name):
+	return trigger_name.rsplit("_",1)[0]
 
 for pt_code in pt_codes:
 	l = 0
@@ -75,10 +77,10 @@ for pt_code in pt_codes:
 				event_num = line.split()[0]
 				run_num = line.split()[1]
 				lumi_num = line.split()[2]
-				triggers_present = [x[:-3] for x in line.split()[3].split(",")[:-1]]
+				triggers_present = [shorten_trigger_name(x) for x in line.split()[3].split(",")[:-1]]
 				trigger_prescales = [float(x) for x in line.split()[4].split(",")[:-1]]
 				try:
-					triggers_fired = [x[:-3] for x in line.split()[5].split(",")]
+					triggers_fired = [shorten_trigger_name(x) for x in line.split()[5].split(",")]
 				except IndexError:
 					triggers_fired = []
 				master_datasets_pv_events[pt_code] += 1
