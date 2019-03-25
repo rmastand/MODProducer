@@ -158,14 +158,7 @@ with open(event_file,"r") as file:
 					try: master_triggers_x_section[trigger][(run_num,lumi_num)][0] += 1
 					except KeyError: master_triggers_x_section[trigger][(run_num,lumi_num)] = [1,eff_lumi]
 					
-master_triggers_crossec_final = {}
-for trigger in master_triggers_x_section.keys():
-	xsec = 0
-	for lumi_id in master_triggers_x_section[trigger]:
-		try:
-			xsec += master_triggers_x_section[trigger][lumi_id][0]/master_triggers_x_section[trigger][lumi_id][1]
-		except ZeroDivisionError: xsec += 0
-	master_triggers_crossec_final[trigger] = xsec/len(master_triggers_x_section[trigger])
+
 
 print "here"
 print output_table
