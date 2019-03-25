@@ -130,7 +130,7 @@ with open(event_file,"r") as file:
 		l += 1
 		if l % 500000 == 0:
 			print l
-		if l == 500000: break
+		if l == 1500000: break
 		if "EventNum" not in line.split():
 			event_num = line.split()[0]
 			run_num = line.split()[1]
@@ -168,7 +168,10 @@ with open(event_file,"r") as file:
 					try: master_triggers_x_section[trigger][(run_num,lumi_num)][0] += 1
 					except KeyError: master_triggers_x_section[trigger][(run_num,lumi_num)] = [1,eff_lumi]
 					
-print trigger_nammies.keys()
+
+
+for t in trigger_nammies.keys():
+	print t
 
 print "here"
 print output_table
