@@ -7,6 +7,9 @@ parsed_by_event = sys.argv[1]
 lumibyls_file = sys.argv[2]
 output_file = sys.argv[3]
 
+def shorten_trigger_name(trigger_name):
+	return trigger_name.rsplit("_",1)[0]
+
 def read_lumi_by_ls(lumibyls_file):
 	"""
 	returns two dicts with keys = (run,lumiBlock)
@@ -59,9 +62,9 @@ with open(parsed_by_event,"r") as event_listing:
 			lumi_id = (line.split()[1],line.split()[2])
 			triggers_present = line.split()[3].split(",")
 			# cuts the version numbers out
-			triggers_present = [x[:-3] for x in triggers_present]
+			triggers_present = [shorten_trigger_name(x) for x in triggers_present]
 			triggers_fired = line.split()[5].split(",")
-			triggers_fired = [x[:-3] for x in triggers_fired]
+			triggers_fired = [shorten_trigger_name(x) for x in triggers_fired]
 			prescales = line.split()[4].split(",")[:-1]
 			prescales = [float(x) for x in prescales]
 
