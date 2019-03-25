@@ -130,7 +130,7 @@ with open(event_file,"r") as file:
 		l += 1
 		if l % 500000 == 0:
 			print l
-		if l == 1500000: break
+		#if l == 1500000: break
 		if "EventNum" not in line.split():
 			event_num = line.split()[0]
 			run_num = line.split()[1]
