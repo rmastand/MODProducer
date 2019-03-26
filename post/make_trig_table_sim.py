@@ -34,7 +34,9 @@ files_used = [55, 83, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 131, 182
 total_cross_sections_pb = [48444950000.000,36745720000.000,815912800.0,53122370.0,6359119.0,784265.0,115134.00,24262.8,1168.49,70.2242,
 		       15.5537,1.84369,0.332105,0.0108721,0.000357463]
 
-total_cross_sections_np = ['{:.12f}'.format(x/1000.) for x in total_cross_sections_pb]
+total_cross_sections_np_float = [x/1000. for x in total_cross_sections_pb]
+
+total_cross_sections_np_str = ['{:.12f}'.format(x/1000.) for x in total_cross_sections_pb]
 
 output_table = sys.argv[1]
 event_file_dir = sys.argv[2]
@@ -92,7 +94,7 @@ for pt_code in pt_codes:
 			l += 1
 			if l % 500000 == 0:
 				print l
-			if l == 100000: break
+			if l == 50000: break
 			if "EventNum" not in line.split():
 				event_num = line.split()[0]
 				run_num = line.split()[1]
@@ -112,8 +114,11 @@ real_fired_events =0
 for pt_code in pt_codes:
 	real_total_events += master_datasets_pv_events[pt_code]
 	real_fired_events += master_datasets_pvf_events[pt_code]
+	
+
+
 print "here"
-print output_table
+
 with open(output_table,"w") as output:
 	output.write("\\begin{table*}[h!]\n")
 	output.write("\\begin{center}\n")
@@ -127,14 +132,13 @@ with open(output_table,"w") as output:
 	#output.write("trigger_name,pv_events,pvf_events,eff_lumin,eff_cross_sec,\n")
 	for i, pt_code in enumerate(pt_codes):
 		
-		print "{:,}".format(master_datasets_pv_events[pt_code])
-		print total_cross_sections_np[i]*master_datasets_pv_events[pt_code]
-		print "%.3f" % total_cross_sections_np[i]*master_datasets_pv_events[pt_code]
-		print "{:,}".format(float(("%.3f" % total_cross_sections_np[i]*master_datasets_pv_events[pt_code])))
+		print total_cross_sections_np_float[i]*master_datasets_pv_events[pt_code]
+		print "%.3f" % total_cross_sections_np_float[i]*master_datasets_pv_events[pt_code]
+		print "{:,}".format(float(("%.3f" % total_cross_sections_np_float[i]*master_datasets_pv_events[pt_code])))
 		print convert(total_cross_sections_np[i]) 
 
 		
-		line = pt_hat_min[i]+" & "+pt_hat_max[i]+" & "+"{:,}".format(total_files[i])+" & "+"{:,}".format(files_used[i])+" & "+"{:,}".format(master_datasets_pv_events[pt_code])+" & "+ "{:,}".format(float(("%.3f" % total_cross_sections_np[i]*master_datasets_pv_events[pt_code]))) + " & " + convert(total_cross_sections_np[i]) + " \\\ " + "\n"
+		line = pt_hat_min[i]+" & "+pt_hat_max[i]+" & "+"{:,}".format(total_files[i])+" & "+"{:,}".format(files_used[i])+" & "+"{:,}".format(master_datasets_pv_events[pt_code])+" & "+ "{:,}".format(float(("%.3f" % total_cross_sections_np_float[i]*master_datasets_pv_events[pt_code]))) + " & " + convert(total_cross_sections_np_str[i]) + " \\\ " + "\n"
 		output.write(line)
 	output.write("\hline\n")
 	line = "Total"+" & "+"---"+" & "+"8,881"+" & "+"2,426"+" & "+"{:,}".format(real_total_events)+" & "+ "---" + " & " + "---" + " \\\ " + "\n"
