@@ -55,7 +55,6 @@ for line in read_alumi_lines[4:]:
 print "Done reading in ALumi"
 
 
-trigger_nammies = {}
 
 
 """
@@ -88,7 +87,7 @@ def read_lumi_by_ls(lumibyls_file):
 		hms = [int(x) for x in tim.split(":")]
 		dt = datetime.datetime(mdy[2], mdy[0], mdy[1], hms[0], hms[1],hms[2])
 		lumi_id_to_gps_times[(run,lumi)] = time.mktime(dt.timetuple())
-		lumi_id_to_lumin[(run,lumi)] = (float(split_lines[i][5]),float(split_lines[i][6]))
+		lumi_id_to_lumin[(run,lumi)] = (float(split_lines[i][5])/1000,float(split_lines[i][6])/1000)
 		i += 1
 		try:
 			char = split_lines[i][0][0]
@@ -112,6 +111,7 @@ master_triggers_pv_lumis = {}
 master_triggers_pv_events = {}
 master_triggers_pvf_events = {}
 master_triggers_eff_lumi = {}
+master_triggers_non_eff_lumi = {}
 master_triggers_x_section = {}
 total_pv_events = 0
 total_pvf_events = 0
@@ -123,6 +123,7 @@ for trigger in all_triggers:
 	master_triggers_pv_lumis[trigger] = {}
 	master_triggers_x_section[trigger] = {}
 	master_triggers_eff_lumi[trigger] = 0
+	master_triggers_non_eff_lumi[trigger] = 0
 
 l = 0
 with open(event_file,"r") as file:
@@ -136,12 +137,7 @@ with open(event_file,"r") as file:
 			run_num = line.split()[1]
 			lumi_num = line.split()[2]
 			triggers_present = [shorten_trigger_name(x) for x in line.split()[3].split(",")[:-1]]
-			old_tp = [x for x in line.split()[3].split(",")[:-1]]
-			for t in old_tp:
-				try:
-					trigger_nammies[t] += 1
-				except KeyError:
-					trigger_nammies[t] = 1
+	
 			trigger_prescales = [float(x) for x in line.split()[4].split(",")[:-1]]
 			triggers_fired = [shorten_trigger_name(x) for x in line.split()[5].split(",")]
 			total_pv_events += 1
@@ -153,12 +149,14 @@ with open(event_file,"r") as file:
 			for i,trigger in enumerate(triggers_present):
 
 				eff_lumi = lumi_id_to_lumin[(run_num,lumi_num)][1]/trigger_prescales[i]
+				non_eff_lumi = lumi_id_to_lumin[(run_num,lumi_num)][1]
 				try: master_triggers_pv_events[trigger] += 1
 				except KeyError: master_triggers_pv_events[trigger] = 1
 				
 				try: master_triggers_pv_lumis[trigger][(run_num,lumi_num)] += 1
 				except KeyError: # means that the lumiblock has not already been looked at by THAT TRIGGER
 					master_triggers_eff_lumi[trigger] += eff_lumi
+					master_triggers_non_eff_lumi[trigger] += non_eff_lumi
 					master_triggers_pv_lumis[trigger][(run_num,lumi_num)] = 0
 				
 				
@@ -170,40 +168,44 @@ with open(event_file,"r") as file:
 					
 
 
-for t in trigger_nammies.keys():
-	print t
 
 print "here"
 print output_table
 with open(output_table,"w") as output:
-	output.write("\\begin{table*}[h!]\n")
+	output.write("\\begin{table*}\n")
 	output.write("\\begin{center}\n")
-	output.write("\\begin{tabular}{ r @{$\quad$} r @{$\quad$} r @{$\quad$} r @{$\quad$} r @{$\quad$} r @{$\quad$} }\n")
+	output.write("\\begin{tabular}{ r @{$\quad$} r @{$\quad$} r @{$\quad$} r @{$\quad$} r @{$\quad$} r @{$\quad$} r @{$\quad$} }\n")
 	output.write("\smallest\n")
 	output.write("\hline\n")
 	output.write("\hline\n")
-	output.write("Trigger Name & Valid Lumis & Valid Events & Fired Events & Eff. Lumin & Eff. Cross Sec \\\ \n")
+	output.write("Trigger & Valid LBs & Valid Events & Fired Events & $\mathcal{L}^\text{trig}_{\rm eff}$ [$n \text{b}^{-1}$] & Ave. Prescale & $\sigma^\text{trig}_{\rm eff}$ [$n \text{b}$]  \\\ \n")
 	output.write("\hline\n")
 	output.write("\hline\n")
 	#output.write("trigger_name,pv_events,pvf_events,eff_lumin,eff_cross_sec,\n")
 	for trigger in single_jet:
-		line = "\\texttt{"+trigger.replace("_","\_")+"}"+" & "+"{:,}".format(len(master_triggers_pv_lumis[trigger].keys()))+" & "+"{:,}".format(master_triggers_pv_events[trigger])+" & "+"{:,}".format(master_triggers_pvf_events[trigger])+" & "+("%.2f" %  master_triggers_eff_lumi[trigger])+" & "+("%.6f" % (float(master_triggers_pvf_events[trigger])/float(master_triggers_eff_lumi[trigger])))+" \\\ "+"\n"
+		line = "\\texttt{"+trigger.replace("_","\_")+"}"+" & "+"{:,}".format(len(master_triggers_pv_lumis[trigger].keys()))+" & "+"{:,}".format(master_triggers_pv_events[trigger])+" & "+"{:,}".format(master_triggers_pvf_events[trigger])+" & “+"{:,}".format(float((“%.3f" %  master_triggers_eff_lumi[trigger])))+” & "+"{:,}".format(float(("%.3f" % (float(master_triggers_non_eff_lumi[trigger])/float(master_triggers_eff_lumi[trigger])))))
++" & "+"{:,}".format(float(("%.3f" % (float(master_triggers_pvf_events[trigger])/float(master_triggers_eff_lumi[trigger])))))+” \\\ "+"\n"
 		output.write(line)
 	output.write("\hline\n")
 	for trigger in di_jet:
-		line = "\\texttt{"+trigger.replace("_","\_")+"}"+" & "+"{:,}".format(len(master_triggers_pv_lumis[trigger].keys()))+" & "+"{:,}".format(master_triggers_pv_events[trigger])+" & "+"{:,}".format(master_triggers_pvf_events[trigger])+" & "+("%.2f" %  master_triggers_eff_lumi[trigger])+" & "+("%.6f" % (float(master_triggers_pvf_events[trigger])/float(master_triggers_eff_lumi[trigger])))+" \\\ "+"\n"
+		line = "\\texttt{"+trigger.replace("_","\_")+"}"+" & "+"{:,}".format(len(master_triggers_pv_lumis[trigger].keys()))+" & "+"{:,}".format(master_triggers_pv_events[trigger])+" & "+"{:,}".format(master_triggers_pvf_events[trigger])+" & “+"{:,}".format(float((“%.3f" %  master_triggers_eff_lumi[trigger])))+” & "+"{:,}".format(float(("%.3f" % (float(master_triggers_non_eff_lumi[trigger])/float(master_triggers_eff_lumi[trigger])))))
++" & "+"{:,}".format(float(("%.3f" % (float(master_triggers_pvf_events[trigger])/float(master_triggers_eff_lumi[trigger])))))+” \\\ "+"\n"
 		output.write(line)
 	output.write("\hline\n")
 	for trigger in diu_jet:
-		line = "\\texttt{"+trigger.replace("_","\_")+"}"+" & "+"{:,}".format(len(master_triggers_pv_lumis[trigger].keys()))+" & "+"{:,}".format(master_triggers_pv_events[trigger])+" & "+"{:,}".format(master_triggers_pvf_events[trigger])+" & "+("%.2f" %  master_triggers_eff_lumi[trigger])+" & "+("%.6f" % (float(master_triggers_pvf_events[trigger])/float(master_triggers_eff_lumi[trigger])))+" \\\ "+"\n"
+		line = "\\texttt{"+trigger.replace("_","\_")+"}"+" & "+"{:,}".format(len(master_triggers_pv_lumis[trigger].keys()))+" & "+"{:,}".format(master_triggers_pv_events[trigger])+" & "+"{:,}".format(master_triggers_pvf_events[trigger])+" & “+"{:,}".format(float((“%.3f" %  master_triggers_eff_lumi[trigger])))+” & "+"{:,}".format(float(("%.3f" % (float(master_triggers_non_eff_lumi[trigger])/float(master_triggers_eff_lumi[trigger])))))
++" & "+"{:,}".format(float(("%.3f" % (float(master_triggers_pvf_events[trigger])/float(master_triggers_eff_lumi[trigger])))))+” \\\ "+"\n"
 		output.write(line)
 	output.write("\hline\n")
 
 	for trigger in misc:
-		line = "\\texttt{"+trigger.replace("_","\_")+"}"+" & "+"{:,}".format(len(master_triggers_pv_lumis[trigger].keys()))+" & "+"{:,}".format(master_triggers_pv_events[trigger])+" & "+"{:,}".format(master_triggers_pvf_events[trigger])+" & "+("%.2f" %  master_triggers_eff_lumi[trigger])+" & "+("%.6f" % (float(master_triggers_pvf_events[trigger])/float(master_triggers_eff_lumi[trigger])))+" \\\ "+"\n"
+		line = "\\texttt{"+trigger.replace("_","\_")+"}"+" & "+"{:,}".format(len(master_triggers_pv_lumis[trigger].keys()))+" & "+"{:,}".format(master_triggers_pv_events[trigger])+" & "+"{:,}".format(master_triggers_pvf_events[trigger])+" & “+"{:,}".format(float((“%.3f" %  master_triggers_eff_lumi[trigger])))+” & "+"{:,}".format(float(("%.3f" % (float(master_triggers_non_eff_lumi[trigger])/float(master_triggers_eff_lumi[trigger])))))
++" & "+"{:,}".format(float(("%.3f" % (float(master_triggers_pvf_events[trigger])/float(master_triggers_eff_lumi[trigger])))))+” \\\ "+"\n"
 		output.write(line)
 	output.write("\hline\n")
-	line = "Total" + " & " + "{:,}".format(len(runA_blocks)) + " & " + "{:,}".format(total_pv_events) + " & " + "{:,}".format(total_pvf_events) + " & "+("%.2f" % total_eff_lumi)+" & "+"N/A"+ " \\\ " + "\n"
+	line = "Total" + " & " + "{:,}".format(len(runA_blocks)) + " & " + "{:,}".format(total_pv_events) + " & " + "{:,}".format(total_pvf_events) + " & "+("%.3f" % total_eff_lumi)+" & "+"---"+ " \\\ " + "\n"
+	output.write(line)
+	line = "Missing & 89 &--- & --- & 6,066.74 & ---"+ " \\\ " + "\n"
 	output.write(line)
 	output.write("\hline\n")
 	output.write("\hline\n")
@@ -211,4 +213,4 @@ with open(output_table,"w") as output:
 	output.write("\caption{} \n")
 	output.write("\label{table:full list of triggers}\n")
 	output.write("\end{center}\n")
-	output.write("\end{table}\n")
+	output.write("\end{table*}\n")
