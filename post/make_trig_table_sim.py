@@ -135,8 +135,8 @@ with open(output_table,"w") as output:
 	for i, pt_code in enumerate(pt_codes):
 		
 		
-		print "%.3f" % total_cross_sections_np_float[i]*master_datasets_pv_events[pt_code]
-		print type("%.3f" % total_cross_sections_np_float[i]*master_datasets_pv_events[pt_code])
+		print "%.3f" % (total_cross_sections_np_float[i]*master_datasets_pv_events[pt_code])
+		print type("%.3f" % (total_cross_sections_np_float[i]*master_datasets_pv_events[pt_code]))
 		#print "{:,}".format(float(("%.3f" % total_cross_sections_np_float[i]*master_datasets_pv_events[pt_code])))
 		#print convert(total_cross_sections_np[i]) 
 
