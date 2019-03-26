@@ -39,8 +39,6 @@ total_cross_sections_np_float = [x/1000. for x in total_cross_sections_pb]
 total_cross_sections_np_str = ['{:.12f}'.format(x/1000.) for x in total_cross_sections_pb]
 
 
-print total_cross_sections_np_float
-print total_cross_sections_np_str
 
 output_table = sys.argv[1]
 event_file_dir = sys.argv[2]
@@ -136,8 +134,9 @@ with open(output_table,"w") as output:
 	#output.write("trigger_name,pv_events,pvf_events,eff_lumin,eff_cross_sec,\n")
 	for i, pt_code in enumerate(pt_codes):
 		
-		print total_cross_sections_np_float[i]*master_datasets_pv_events[pt_code]
-		#print "%.3f" % total_cross_sections_np_float[i]*master_datasets_pv_events[pt_code]
+		
+		print "%.3f" % total_cross_sections_np_float[i]*master_datasets_pv_events[pt_code]
+		print type("%.3f" % total_cross_sections_np_float[i]*master_datasets_pv_events[pt_code])
 		#print "{:,}".format(float(("%.3f" % total_cross_sections_np_float[i]*master_datasets_pv_events[pt_code])))
 		#print convert(total_cross_sections_np[i]) 
 
