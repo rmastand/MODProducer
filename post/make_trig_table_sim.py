@@ -135,11 +135,10 @@ with open(output_table,"w") as output:
 	for i, pt_code in enumerate(pt_codes):
 		
 		
-		print "{:,}".format(float(("%.3f" % (total_cross_sections_np_float[i]*master_datasets_pv_events[pt_code]))))
-		#print convert(total_cross_sections_np[i]) 
+
 
 		
-		line = pt_hat_min[i]+" & "+pt_hat_max[i]+" & "+"{:,}".format(total_files[i])+" & "+"{:,}".format(files_used[i])+" & "+"{:,}".format(master_datasets_pv_events[pt_code])+" & "+ "{:,}".format(float(("%.3f" % total_cross_sections_np_float[i]*master_datasets_pv_events[pt_code]))) + " & " + convert(total_cross_sections_np_str[i]) + " \\\ " + "\n"
+		line = pt_hat_min[i]+" & "+pt_hat_max[i]+" & "+"{:,}".format(total_files[i])+" & "+"{:,}".format(files_used[i])+" & "+ "{:,}".format(float(("%.3f" % (total_cross_sections_np_float[i]*master_datasets_pv_events[pt_code])))) + " & " + convert(total_cross_sections_np_str[i]) + " \\\ " + "\n"
 		output.write(line)
 	output.write("\hline\n")
 	line = "Total"+" & "+"---"+" & "+"8,881"+" & "+"2,426"+" & "+"{:,}".format(real_total_events)+" & "+ "---" + " & " + "---" + " \\\ " + "\n"
