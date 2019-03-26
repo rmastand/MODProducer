@@ -192,6 +192,7 @@ for trigger in rev_ordered_triggers:
   ttimes = []
   trigger_cross_section_sorted = []
   for id,time in enumerate(runA_times_sorted):
+    l += 1
     if l % 10000 == 0:
 	print l
     if time in trigger_times_dict[trigger]:
@@ -221,7 +222,8 @@ print "cross section as id"
 for trigger in rev_ordered_triggers:
   trigger_ids = []
   trigger_cross_section_sorted = []
-  for id,time in enumerate(runA_times_sorted):
+  for id,time in enumerate(runA_times_sorted): 
+    l += 1
     if l % 10000 == 0:
 	print l
     if time in trigger_times_dict[trigger]:
