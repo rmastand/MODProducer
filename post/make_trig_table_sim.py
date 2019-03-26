@@ -36,9 +36,9 @@ total_cross_sections_pb = [48444950000.000,36745720000.000,815912800.0,53122370.
 
 total_cross_sections_np_float = [x/1000. for x in total_cross_sections_pb]
 
-total_cross_sections_np_scinot = ["4.844\times 10^{7}", "3.675\times 10^{7}", "8.159\times 10^{5}", "5.312\times 10^{4}", "6.359\times 10^{3}", "7.843\times 10^{2}",
-"1.151\times 10^{2}", "2.426\times 10^{1}", "1.168\times 10^{0}", "7.022\times 10^{-2}", "1.555\times 10^{-2}", "1.843\times 10^{-3}", 
-"3.321\times 10^{-4}", "1.087\times 10^{-5}", "3.574\times 10^{-7}"]
+total_cross_sections_np_scinot = ["4.844\\times 10^{7}", "3.675\\times 10^{7}", "8.159\\times 10^{5}", "5.312\\times 10^{4}", "6.359\\times 10^{3}", "7.843\\times 10^{2}",
+"1.151\\times 10^{2}", "2.426\\times 10^{1}", "1.168\\times 10^{0}", "7.022\\times 10^{-2}", "1.555\\times 10^{-2}", "1.843\\times 10^{-3}", 
+"3.321\\times 10^{-4}", "1.087\\times 10^{-5}", "3.574\\times 10^{-7}"]
 
 
 
