@@ -141,4 +141,3 @@ with open(output_table,"w") as output:
 	output.write("\end{table*}\n")
 
 	
-	total files, files used, events used, eff cross section 
