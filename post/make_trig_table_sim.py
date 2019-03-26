@@ -31,11 +31,28 @@ total_events = [1000025, 1495884, 9978850, 5837856, 5766430, 5867864, 5963264, 5
 	       1956893, 1991792, 996500]
 total_disc_space = [.1378, .2233, 1.7, 1.0, 1.1, 1.2, 1.2, 1.3, 1.4, .9571, .9768, .9743, .4841, .4914, .2434]
 files_used = [55, 83, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 131, 182, 75]
-total_cross_sections = [48444950000.000,36745720000.000,815912800.0,53122370.0,6359119.0,784265.0,115134.00,24262.8,1168.49,70.2242,
+total_cross_sections_pb = [48444950000.000,36745720000.000,815912800.0,53122370.0,6359119.0,784265.0,115134.00,24262.8,1168.49,70.2242,
 		       15.5537,1.84369,0.332105,0.0108721,0.000357463]
+
+total_cross_sections_np = ['{:.12f}'.format(x/1000.) for x in total_cross_sections_pb]
 
 output_table = sys.argv[1]
 event_file_dir = sys.argv[2]
+
+
+def convert(n):
+    n = str(n)
+    n_before_decimal = n.split(".")[0]
+    n_after_decimal = n.split(".")[1]
+    n_b_decimal = "{:,}".format(int(n_before_decimal))
+    l = 0
+    n_a_decimal = ""
+    for digit in n_after_decimal:
+        l += 1
+        n_a_decimal += digit
+        if l % 3 == 0:
+            n_a_decimal += " " 
+    return n_b_decimal+"."+n_a_decimal
 
 
 
@@ -50,6 +67,9 @@ all_dirs = ["/Volumes/Seagate Backup Plus Drive/MITOpenDataProject/eos/opendata/
 
 pt_codes = ["0to5","5to15","15to30","30to50","50to80","80to120","120to170","170to300","300to470","470to600","600to800","800to1000",
 	    "1000to1400","1400to1800","1800"]
+
+pt_hat_min = ["0","5","15","30","50","80","120","170","300","470","600","800","1000","1400","1800"]
+pt_hat_max = ["5","15","30","50","80","120","170","300","470","600","800","1000", "1400","1800","---"]
 
 
 # key = trigger names
@@ -72,7 +92,7 @@ for pt_code in pt_codes:
 			l += 1
 			if l % 500000 == 0:
 				print l
-			#if l == 100000: break
+			if l == 100000: break
 			if "EventNum" not in line.split():
 				event_num = line.split()[0]
 				run_num = line.split()[1]
@@ -97,19 +117,20 @@ print output_table
 with open(output_table,"w") as output:
 	output.write("\\begin{table*}[h!]\n")
 	output.write("\\begin{center}\n")
-	output.write("\\begin{tabular}{ r @{$\quad$} r @{$\quad$} r @{$\quad$} r @{$\quad$} r @{$\quad$} r @{$\quad$}  r @{$\quad$} }\n")
+	output.write("\\begin{tabular}{ r @{$\quad$} r @{$\quad$} r @{$\quad$} r @{$\quad$} r @{$\quad$} r @{$\quad$} r @{$\quad$}}\n")
 	output.write("\smallest\n")
 	output.write("\hline\n")
 	output.write("\hline\n")
-	output.write("Dataset & Events Used & Fired Events Used & Eff. Cross Sec & Total Events & Total Files & Total disc space (TB) \\\ \n")
+	output.write("$\hat{p}_T^{\rm min}$ & $\hat{p}_T^{\rm max}$ & Files Available & Files Used &  Events Used& $\mathcal{L}^\text{MC}_{\rm eff}$ [$\text{nb}^{-1}$] & $\sigma^\text{MC}_{\rm eff}$ [$\text{nb}$]  \\\ \n")
 	output.write("\hline\n")
 	output.write("\hline\n")
 	#output.write("trigger_name,pv_events,pvf_events,eff_lumin,eff_cross_sec,\n")
 	for i, pt_code in enumerate(pt_codes):
-		line = "\\texttt{"+pt_codes[i]+"}"+" & "+"{:,}".format(master_datasets_pv_events[pt_code])+" & "+"{:,}".format(master_datasets_pvf_events[pt_code])+" & "+("%.5f" %  total_cross_sections[i])+" & "+"{:,}".format(total_events[i])+" & "+"{:,}".format(total_files[i])+" & "+("%.4f" %  total_disc_space[i])+" \\\ "+"\n"
+		
+		line = pt_hat_min[i]+" & "+pt_hat_max[i]+" & "+total_files[i]+" & "+files_used[i]+" & "+"{:,}".format(master_datasets_pv_events[pt_code])+" & "+ "{:,}".format(float(("%.3f" % total_cross_sections_np[i]*master_datasets_pv_events[pt_code]))) + " & " + convert(total_cross_sections_np[i]) + " \\\ " + "\n"
 		output.write(line)
 	output.write("\hline\n")
-	line = "Total" + " & " + "{:,}".format(real_total_events) + " & " + "{:,}".format(real_fired_events) + " & " +"N/A" + " & " + "{:,}".format(sum(total_events)) + " & " +"{:,}".format(sum(total_files)) + " & " +("%.4f" %  sum(total_disc_space)) + " & " +" \\\ " + "\n"
+	line = "Total"+" & "+"---"+" & "+"8,881"+" & "+"2,426"+" & "+"{:,}".format(real_total_events)+" & "+ "---" + " & " + "---" + " \\\ " + "\n"
 	output.write(line)
 	output.write("\hline\n")
 	output.write("\hline\n")
@@ -118,3 +139,6 @@ with open(output_table,"w") as output:
 	output.write("\label{table:qcd_datasets_cross_section_info}\n")
 	output.write("\end{center}\n")
 	output.write("\end{table*}\n")
+
+	
+	total files, files used, events used, eff cross section 
