@@ -195,7 +195,7 @@ for trigger in rev_ordered_triggers:
       ttimes.append(time)
       i = trigger_times_dict[trigger].index(time)
       try:
-    		trigger_cross_section_sorted.append(float(trigger_eff_lumis_dict[trigger][i])/trigger_eff_fired_dict[trigger][i])
+    		trigger_cross_section_sorted.append(trigger_eff_fired_dict[trigger][i]/float(trigger_eff_lumis_dict[trigger][i]))
       except ZeroDivisionError:
 		trigger_cross_section_sorted.append(0.)
   writer.writerow(ttimes)  
@@ -222,7 +222,7 @@ for trigger in rev_ordered_triggers:
       trigger_ids.append(id)
       i = trigger_times_dict[trigger].index(time)
       try:
-    		trigger_cross_section_sorted.append(float(trigger_eff_lumis_dict[trigger][i])/trigger_eff_fired_dict[trigger][i])
+    		trigger_cross_section_sorted.append(trigger_eff_fired_dict[trigger][i]/float(trigger_eff_lumis_dict[trigger][i]))
       except ZeroDivisionError:
 		trigger_cross_section_sorted.append(0.)
   writer.writerow(trigger_ids)  
