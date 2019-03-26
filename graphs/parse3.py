@@ -121,7 +121,7 @@ runA luminosity
 for each trigger, largest to smallest:
 trigger times
 trigger luminosity
-"""
+
 output_1 = open("eff_lumi_time.txt","w")
 writer = csv.writer(output_1, lineterminator='\n')
 
@@ -142,7 +142,7 @@ for trigger in rev_ordered_triggers:
   trig_lumin_rec[trigger] = trigger_lumin_rec_sorted
 output_1.close()
 
-  
+"""
 """ 
 PLOT EFF LUMINOSITY AS THE LUMI ID
 print out:
@@ -152,7 +152,7 @@ runA luminosity
 for each trigger, largest to smallest:
 trigger ids nums
 trigger luminosity
-"""
+
 print "eff lumi as id" 
 
 output_2 = open("eff_lumi_id.txt","w")
@@ -173,7 +173,7 @@ for trigger in rev_ordered_triggers:
   writer.writerow(trig_lumin_rec[trigger])  
 
 output_2.close()
-
+"""
 
 """ 
 PLOT CROSS SECTION AS THE TIMES
