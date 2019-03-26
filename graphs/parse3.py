@@ -187,10 +187,13 @@ writer = csv.writer(output_3, lineterminator='\n')
 print "cross lumsection as time" 
 
 
+l = 0
 for trigger in rev_ordered_triggers:
   ttimes = []
   trigger_cross_section_sorted = []
   for id,time in enumerate(runA_times_sorted):
+    if l % 10000 == 0:
+	print l
     if time in trigger_times_dict[trigger]:
       ttimes.append(time)
       i = trigger_times_dict[trigger].index(time)
@@ -213,11 +216,14 @@ trigger luminosity
 output_4 = open("x_sec_id.txt","w")
 writer = csv.writer(output_4, lineterminator='\n')
 
+l = 0
 print "cross section as id" 
 for trigger in rev_ordered_triggers:
   trigger_ids = []
   trigger_cross_section_sorted = []
   for id,time in enumerate(runA_times_sorted):
+    if l % 10000 == 0:
+	print l
     if time in trigger_times_dict[trigger]:
       trigger_ids.append(id)
       i = trigger_times_dict[trigger].index(time)
