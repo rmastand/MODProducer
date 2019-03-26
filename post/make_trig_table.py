@@ -199,7 +199,7 @@ with open(output_table,"w") as output:
 		line = "\\texttt{"+trigger.replace("_","\_")+"}"+" & "+"{:,}".format(len(master_triggers_pv_lumis[trigger].keys()))+" & "+"{:,}".format(master_triggers_pv_events[trigger])+" & "+"{:,}".format(master_triggers_pvf_events[trigger])+" & "+"{:,}".format(float(("%.3f" %  master_triggers_eff_lumi[trigger])))+" & "+"{:,}".format(float(("%.3f" % (float(master_triggers_non_eff_lumi[trigger])/float(master_triggers_eff_lumi[trigger])))))+" & "+"{:,}".format(float(("%.3f" % (float(master_triggers_pvf_events[trigger])/float(master_triggers_eff_lumi[trigger])))))+" \\\ "+"\n"
 		output.write(line)
 	output.write("\hline\n")
-	line = "Total" + " & " + "{:,}".format(len(runA_blocks)) + " & " + "{:,}".format(total_pv_events) + " & " + "{:,}".format(total_pvf_events) + " & "+"{:,}".format(float(("%.3f" % total_eff_lumi))/1000.)+" & "+"---"+ " \\\ " + "\n"
+	line = "Total" + " & " + "{:,}".format(len(runA_blocks)) + " & " + "{:,}".format(total_pv_events) + " & " + "{:,}".format(total_pvf_events) + " & "+"{:,}".format(float(("%.3f" % total_eff_lumi)))+" & "+"---"+ " \\\ " + "\n"
 	output.write(line)
 	line = "Missing & 89 &--- & --- & 6,066.74 & ---"+ " \\\ " + "\n"
 	output.write(line)
