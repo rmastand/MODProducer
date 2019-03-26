@@ -127,6 +127,13 @@ with open(output_table,"w") as output:
 	#output.write("trigger_name,pv_events,pvf_events,eff_lumin,eff_cross_sec,\n")
 	for i, pt_code in enumerate(pt_codes):
 		
+		print "{:,}".format(master_datasets_pv_events[pt_code])
+		print total_cross_sections_np[i]*master_datasets_pv_events[pt_code]
+		print "%.3f" % total_cross_sections_np[i]*master_datasets_pv_events[pt_code]
+		print "{:,}".format(float(("%.3f" % total_cross_sections_np[i]*master_datasets_pv_events[pt_code])))
+		print convert(total_cross_sections_np[i]) 
+
+		
 		line = pt_hat_min[i]+" & "+pt_hat_max[i]+" & "+"{:,}".format(total_files[i])+" & "+"{:,}".format(files_used[i])+" & "+"{:,}".format(master_datasets_pv_events[pt_code])+" & "+ "{:,}".format(float(("%.3f" % total_cross_sections_np[i]*master_datasets_pv_events[pt_code]))) + " & " + convert(total_cross_sections_np[i]) + " \\\ " + "\n"
 		output.write(line)
 	output.write("\hline\n")
