@@ -36,7 +36,9 @@ total_cross_sections_pb = [48444950000.000,36745720000.000,815912800.0,53122370.
 
 total_cross_sections_np_float = [x/1000. for x in total_cross_sections_pb]
 
-total_cross_sections_np_str = ['{:.12f}'.format(x/1000.) for x in total_cross_sections_pb]
+total_cross_sections_np_scinot = ["4.844\times 10^{7}", "3.675\times 10^{7}", "8.159\times 10^{5}", "5.312\times 10^{4}", "6.359\times 10^{3}", "7.843\times 10^{2}",
+"1.151\times 10^{2}", "2.426\times 10^{1}", "1.168\times 10^{0}", "7.022\times 10^{-2}", "1.555\times 10^{-2}", "1.843\times 10^{-3}", 
+"3.321\times 10^{-4}", "1.087\times 10^{-5}", "3.574\times 10^{-7}"]
 
 
 
@@ -44,19 +46,7 @@ output_table = sys.argv[1]
 event_file_dir = sys.argv[2]
 
 
-def convert(n):
-    n = str(n)
-    n_before_decimal = n.split(".")[0]
-    n_after_decimal = n.split(".")[1]
-    n_b_decimal = "{:,}".format(int(n_before_decimal))
-    l = 0
-    n_a_decimal = ""
-    for digit in n_after_decimal:
-        l += 1
-        n_a_decimal += digit
-        if l % 3 == 0:
-            n_a_decimal += " " 
-    return n_b_decimal+"."+n_a_decimal
+
 
 
 
@@ -124,11 +114,11 @@ print "here"
 with open(output_table,"w") as output:
 	output.write("\\begin{table*}[h!]\n")
 	output.write("\\begin{center}\n")
-	output.write("\\begin{tabular}{ r @{$\quad$} r @{$\quad$} r @{$\quad$} r @{$\quad$} r @{$\quad$} r @{$\quad$} r @{$\quad$}}\n")
+	output.write("\\begin{tabular}{ r @{$\quad$} l @{$\quad$} r @{$\quad$} r @{$\quad$} r @{$\quad$}\n")
 	output.write("\smallest\n")
 	output.write("\hline\n")
 	output.write("\hline\n")
-	output.write("$\hat{p}_T^{\rm min}$ & $\hat{p}_T^{\rm max}$ & Files Available & Files Used &  Events Used& $\mathcal{L}^\text{MC}_{\rm eff}$ [$\text{nb}^{-1}$] & $\sigma^\text{MC}_{\rm eff}$ [$\text{nb}$]  \\\ \n")
+	output.write("$\hat{p}_T^{\rm min}$ & $\hat{p}_T^{\rm max}$ & Files Used & Events Used & $\sigma^\text{MC}_{\rm eff}$ [$\text{nb}$]  \\\ \n")
 	output.write("\hline\n")
 	output.write("\hline\n")
 	#output.write("trigger_name,pv_events,pvf_events,eff_lumin,eff_cross_sec,\n")
@@ -138,7 +128,7 @@ with open(output_table,"w") as output:
 
 
 		
-		line = pt_hat_min[i]+" & "+pt_hat_max[i]+" & "+"{:,}".format(total_files[i])+" & "+"{:,}".format(files_used[i])+" & "+"{:,}".format(master_datasets_pv_events[pt_code])+" & " + "{:,}".format(float(("%.3f" % (total_cross_sections_np_float[i]*master_datasets_pv_events[pt_code])))) + " & " + convert(total_cross_sections_np_str[i]) + " \\\ " + "\n"
+		line = pt_hat_min[i]+" & "+pt_hat_max[i]+" & "+"{:,}".format(files_used[i])+" / "+"{:,}".format(total_files[i])+" & "+"{:,}".format(master_datasets_pv_events[pt_code])+" & " + total_cross_sections_np_scinot[i] + " \\\ " + "\n"
 		output.write(line)
 	output.write("\hline\n")
 	line = "Total"+" & "+"---"+" & "+"8,881"+" & "+"2,426"+" & "+"{:,}".format(real_total_events)+" & "+ "---" + " & " + "---" + " \\\ " + "\n"
