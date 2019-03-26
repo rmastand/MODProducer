@@ -38,6 +38,10 @@ total_cross_sections_np_float = [x/1000. for x in total_cross_sections_pb]
 
 total_cross_sections_np_str = ['{:.12f}'.format(x/1000.) for x in total_cross_sections_pb]
 
+
+print total_cross_sections_np_float
+print total_cross_sections_np_str
+
 output_table = sys.argv[1]
 event_file_dir = sys.argv[2]
 
