@@ -5,7 +5,7 @@ import datetime
 
 lumibyls_file = sys.argv[1]
 eff_lumi_time = sys.argv[2]
-fig_save = sys.argv[3]
+text_save = sys.argv[3]
 
 plt.rcParams['font.family'] = 'serif'
 plt.rcParams['font.size'] = 16
@@ -95,23 +95,36 @@ with open(eff_lumi_time,"r") as file:
     elif l == 7:
       jet300_lumin_rec = [float(x) for x in line.split(",")[:-1]]
 
-plt.figure(figsize=(10,10))
-plt.plot(runA_times,np.cumsum(runA_lumin_del),label="RunA Delivered")
-plt.plot(runA_times,np.cumsum(runA_lumin_rec),label="RunA Recorded")
-plt.plot(jet300_times,np.cumsum(jet300_lumin_rec),label="Jet300 Recorded")
-plt.legend()
-plt.ylabel("Luminosity (ub^-1)")
-plt.xlabel("Date")
-ax = plt.gca()
-length = len(runA_times)-1
-indices_for_xaxis = np.linspace(length/20,length,5)
-indices_for_xaxis = [int(x) for x in indices_for_xaxis]
-plt.xticks(np.take(runA_times,indices_for_xaxis))
-labels = [item.get_text() for item in ax.get_xticklabels()]
-for i,index in enumerate(indices_for_xaxis):
-	labels[i] = lumi_id_to_date[(str(int(runA_lumis[index].split(":")[0])),str(int(runA_lumis[index].split(":")[1])))]	
-ax.set_xticklabels(labels)
-plt.savefig(fig_save)
+
+output = open(text_save,"w")
+
+line = "" 
+for element in runA_times:
+	line += str(element) + ","
+output.write(line+"\n")
+line = "" 
+for element in runA_lumin_del:
+	line += str(element) + ","
+output.write(line+"\n")
+line = "" 
+for element in runA_times:
+	line += str(element) + ","
+output.write(line+"\n")
+line = "" 
+for element in runA_lumin_rec:
+	line += str(element) + ","
+output.write(line+"\n")
+line = "" 
+for element in jet300_times:
+	line += str(element) + ","
+output.write(line+"\n")
+line = "" 
+for element in jet300_lumin_rec:
+	line += str(element) + ","
+output.write(line+"\n")
+
+output.close()
+
       
       
       
