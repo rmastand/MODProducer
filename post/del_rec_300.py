@@ -6,29 +6,7 @@ lumibyls_file = sys.argv[1]
 eff_lumi_time = sys.argv[2]
 text_save = sys.argv[3]
 
-plt.rcParams['font.family'] = 'serif'
-plt.rcParams['font.size'] = 16
-plt.rcParams['font.weight'] = "bold"
-plt.rcParams['axes.labelsize'] = 24
-plt.rcParams['xtick.labelsize'] = 18
-plt.rcParams['ytick.labelsize'] = 18
-plt.rcParams['legend.fontsize'] = 24
-plt.rcParams['legend.fontsize'] = 24
-plt.rcParams['legend.fontsize'] = 24
-plt.rcParams['axes.linewidth'] = 2
 
-
-plt.rcParams['xtick.major.size'] = 10
-plt.rcParams['xtick.major.width'] = 2
-plt.rcParams['xtick.minor.size'] = 5
-plt.rcParams['xtick.minor.width'] = 2
-plt.rcParams['ytick.major.size'] = 10
-plt.rcParams['ytick.major.width'] = 2
-plt.rcParams['ytick.minor.size'] = 5
-plt.rcParams['ytick.minor.width'] = 2
-
-plt.rc('mathtext', rm='serif')
-plt.rcParams['figure.facecolor'] = "white"
 
 def read_lumi_by_ls(lumibyls_file):
 	"""
