@@ -11,11 +11,11 @@ output_file = sys.argv[1]
 
 jet_is_good = False
 
-all_dirs = ["/Volumes/Seagate Backup Plus Drive/MODAnalyzerResults/ALL_FILES/10000/",
-	   "/Volumes/Seagate Backup Plus Drive/MODAnalyzerResults/ALL_FILES/20000_a/",
-	   "/Volumes/Seagate Backup Plus Drive/MODAnalyzerResults/ALL_FILES/20000_b/",
-	   "/Volumes/Seagate Backup Plus Drive/MODAnalyzerResults/ALL_FILES/20000_c/",
-	   "/Volumes/Seagate Backup Plus Drive/MODAnalyzerResults/ALL_FILES/20001/"]
+all_dirs = ["/Volumes/Seagate Backup Plus Drive/MODAnalyzerResults/ALL_FILES_2011_redone/10000/",
+	   "/Volumes/Seagate Backup Plus Drive/MODAnalyzerResults/ALL_FILES_2011_redone/20000_a/",
+	   "/Volumes/Seagate Backup Plus Drive/MODAnalyzerResults/ALL_FILES_2011_redone/20000_b/",
+	   "/Volumes/Seagate Backup Plus Drive/MODAnalyzerResults/ALL_FILES_2011_redone/20000_c/",
+	   "/Volumes/Seagate Backup Plus Drive/MODAnalyzerResults/ALL_FILES_2011_redone/20001/"]
 
 l = 0
 for dat_dir in all_dirs:
