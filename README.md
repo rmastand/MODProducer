@@ -302,11 +302,8 @@ This error message generally means that you didn't use  an encrypted Internet co
 
 
 ####create_registry.py:
-- [x] Is there a reason this isn't in the utilities folder?  Alternatively, does download.py need to be in a separate utilities folder?
 - [ ] Can you put comments at the beginning of this file saying how to run it?  (i.e. what the arguments are and what this does?)  This comment holds for all of the .py files that the user might call directly.
 
-####data:
-- [ ] This directory has a bit misleading name, since it isn't data.  I would call this "databases" instead.  I would put the list of validated runs here.
 
 ####file_paths:
 - [ ] It is a bad idea to have many nested folders if you don't need them.  If you move the list of validated runs to the databases folder, then inside in the file_paths, you can directly have a jet_primary_remote folder and jet_primary_small.txt
@@ -315,9 +312,5 @@ This error message generally means that you didn't use  an encrypted Internet co
 - [ ] Can this be moved to the utilities folder, or does it have to stay here?
 
 ####PFCanidateProducer.cc:
-- [x] Line 200: You shouldn't hard code "CMS_2010" and "Jet_Primary_Dataset".  Rather, they should be parameters just like the version number that can be changed easily.  Note that it should be "CMS_2010B".
-- [x] Line 273:  You shouldn't hard code "Jet" here.  Rather, the name of the primary data set should correlate with the name given in the header.  That way, we can run other primary datasets without having to change too much.
 - [ ] Line 453:  What's up with "TopPairElectronPlusJetsSelectionFilter"?
-- [x] add more spaces for trigger names'
-- [x] Get simulated data working!
 - [ ] Add DOI and name of AOD file to header for each event
