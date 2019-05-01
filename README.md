@@ -248,7 +248,7 @@ Finally, we need to transfer all of the MOD files from the CernVM to a host comp
 
 
 ### Notes about JEC
-While this repository already contains the necessary files to calculate JEC factors inside the directory `data/JEC/`, if you want to regenerate them or need to use a global tag other than GR_R_42:V25 FT_53_LV5_AN1, or START53_LV6A1 you can use the Python script `JEC_cfg.py`. 
+While this repository already contains the necessary files to calculate JEC factors inside the directory `data/JEC/`, if you want to regenerate them or need to use a global tag other than GR_R_42:V25, FT_53_LV5_AN1, or START53_LV6A1 you can use the Python script `JEC_cfg.py`. 
 
 
 First, create symbolic links to the global tags corresponding to the dataset that you want to use. For example, if using 2011 data, first set up the symbolic links to properly access the 2011 global tags.
@@ -256,17 +256,18 @@ First, create symbolic links to the global tags corresponding to the dataset tha
    ln -sf /cvmfs/cms-opendata-conddb.cern.ch/FT_53_LV5_AN1_RUNA FT_53_LV5_AN1
    ln -sf /cvmfs/cms-opendata-conddb.cern.ch/FT_53_LV5_AN1_RUNA.db FT_53_LV5_AN1_RUNA.db
    ```
+  
    
-   
-If using simulated data, the opendata page for that record will tell you which global tag to use. Set up the symbolic links as before:
+If using simulated data, set up the symbolic links as follows:
 
   ```
   ln -sf /cvmfs/cms-opendata-conddb.cern.ch/START53_LV6A1 START53_LV6A1
   ln -sf /cvmfs/cms-opendata-conddb.cern.ch/START53_LV6A1.db START53_LV6A1.db
    ```
 Now, edit `JEC_cfg.py` as necessary. For datasets later than 2010, you may need to add an analogue to lines 9 and 11. Ensure that `process.GlobalTag.globaltag` is set to the global tag you want to use + `::All` (line 14). ALso ensure that the `globaltag` argument in `process.ak5` is set to the correct global tag (line 24). 
- 
 
+Then run:
+ 
 ```
 cmsRun JEC_cfg.py
 ```
