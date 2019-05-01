@@ -248,13 +248,30 @@ Finally, we need to transfer all of the MOD files from the CernVM to a host comp
 
 
 ### Notes about JEC
-While this repository already contains the necessary files to calculate JEC factors inside the directory `data/JEC/`, if you want to regenerate them or need to use a global tag other than GR_R_42:V25, you can use the Python script `JEC_cfg.py`. The global tag can be edited on line 9 and 19. It might take a while (~20 minutes or more) for the script to complete. 
+While this repository already contains the necessary files to calculate JEC factors inside the directory `data/JEC/`, if you want to regenerate them or need to use a global tag other than GR_R_42:V25 FT_53_LV5_AN1, or START53_LV6A1 you can use the Python script `JEC_cfg.py`. 
+
+
+First, create symbolic links to the global tags corresponding to the dataset that you want to use. For example, if using 2011 data, first set up the symbolic links to properly access the 2011 global tags.
+   ```
+   ln -sf /cvmfs/cms-opendata-conddb.cern.ch/FT_53_LV5_AN1_RUNA FT_53_LV5_AN1
+   ln -sf /cvmfs/cms-opendata-conddb.cern.ch/FT_53_LV5_AN1_RUNA.db FT_53_LV5_AN1_RUNA.db
+   ```
+   
+   
+If using simulated data, the opendata page for that record will tell you which global tag to use. Set up the symbolic links as before:
+
+  ```
+  ln -sf /cvmfs/cms-opendata-conddb.cern.ch/START53_LV6A1 START53_LV6A1
+  ln -sf /cvmfs/cms-opendata-conddb.cern.ch/START53_LV6A1.db START53_LV6A1.db
+   ```
+Now, edit `JEC_cfg.py` as necessary. For datasets later than 2010, you may need to add an analogue to lines 9 and 11. Ensure that `process.GlobalTag.globaltag` is set to the global tag you want to use + `::All` (line 14). ALso ensure that the `globaltag` argument in `process.ak5` is set to the correct global tag (line 24). 
+ 
 
 ```
 cmsRun JEC_cfg.py
 ```
 
-If you're using a global tag other than GR_R_42:V25, the filenames will be different from what they are in the repository. For those cases, take all the JEC files that the aove code generates and place them in a directory in "data". Then change argument 5 of PFCandidateRun(online).py accordingly.
+Take all the JEC files that the above code generates and place them in a directory in "data". Then change argument 5 of PFCandidateRun(online).py accordingly.
 
 ## Other Notes
 Some random notes that might be helpful as you play around with the code here:
