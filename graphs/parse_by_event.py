@@ -57,7 +57,9 @@ def is_lumi_valid(lumi_id, lumi_id_to_lumin):
 	"""
 	try:
 		luminosity = lumi_id_to_lumin[lumi_id]
-		return 1
+		if luminosity[1] != 0: #checks for nonzero recorded luminosity
+			return 1
+		else: return 0
 	except KeyError:
 		pass
 
