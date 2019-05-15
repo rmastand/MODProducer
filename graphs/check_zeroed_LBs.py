@@ -86,9 +86,7 @@ def read_mod_file(mod_file,file_name,i,num_files):
 				triggers_prescales = []
 				triggers_fired = []
 				to_write = ""
-			elif ("Cond" in line.split()) and ("#" not in line.split()):
-				# means we hit a new event
-				run,event,lumiBlock = line.split()[1],line.split()[2],line.split()[3]
+			
 
 			elif ("Trig" in line.split()) and ("#" not in line.split()):
 				# all within 1 event
@@ -101,7 +99,10 @@ def read_mod_file(mod_file,file_name,i,num_files):
 						triggers_fired.append(line.split()[1])
 						
 			"""
-			if "EndEvent" in line.split():
+			if ("Cond" in line.split()) and ("#" not in line.split()):
+				# means we hit a new event
+				run,event,lumiBlock = line.split()[1],line.split()[2],line.split()[3]
+			elif "EndEvent" in line.split():
 				if is_lumi_valid((run,lumiBlock),lumi_id_to_lumin):
 					if (run,lumiBlock) in zeroed_lumins.keys():
 						zeroed_lumins[(run,lumiBlock)] += 1
