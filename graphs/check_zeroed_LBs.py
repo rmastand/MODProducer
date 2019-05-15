@@ -81,6 +81,12 @@ print "number of zeroed LBs"
 print len(zeroed_lumins.keys())
 
 print len(lumi_id_to_lumin.keys())
+
+m = 0
+for lumi in zeroed_lumins.keys():
+	if lumi[0] in runA_runs:
+		m += 1
+print(m)
 		
 
 def read_mod_file(mod_file,file_name,i,num_files):
