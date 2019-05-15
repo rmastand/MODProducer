@@ -20,6 +20,17 @@ all_MOD_dirs = ["/Volumes/Seagate Backup Plus Drive/MITOpenDataProject/eos/opend
 	       "/Volumes/Seagate Backup Plus Drive/MITOpenDataProject/eos/opendata/cms/Run2011A/Jet/MOD/12Oct2013-v1/20001/"]
 
 lumibyls_file = sys.argv[1]
+run_alumi_file = sys.argv[3]
+
+runA_runs = []
+read_alumi_lines = open(run_alumi_file,"r").readlines()
+for line in read_alumi_lines[4:]:
+  char = line[0]
+  if char != "+":
+    runA_runs.append(line.split()[1].split(":")[0])
+  else:
+    break
+print "Done reading in ALumi"
 
 def read_lumi_by_ls(lumibyls_file):
 	"""
@@ -68,7 +79,6 @@ for lumi in lumi_id_to_lumin.keys():
 		zeroed_lumins[lumi] = 0
 print "number of zeroed LBs"
 print len(zeroed_lumins.keys())
-print(zeroed_lumins.keys())
 
 print len(lumi_id_to_lumin.keys())
 		
@@ -122,4 +132,7 @@ for dire in all_MOD_dirs:
 		i += 1
 
 for lumi in zeroed_lumins.keys():
-	print lumi, lumi_id_to_lumin[lumi][0], lumi_id_to_lumin[lumi][1], zeroed_lumins[lumi]
+	if lumi[0] in runA_runs:
+		print lumi, 1, lumi_id_to_lumin[lumi][0], lumi_id_to_lumin[lumi][1], zeroed_lumins[lumi]
+	else: 
+		print lumi, 0, lumi_id_to_lumin[lumi][0], lumi_id_to_lumin[lumi][1], zeroed_lumins[lumi]
