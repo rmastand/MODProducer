@@ -92,11 +92,9 @@ def read_lumi_by_ls(lumibyls_file):
 		
 		if float(split_lines[i][6])/1000 != 0:
 			lumi_id_to_lumin[(run,lumi)] = (float(split_lines[i][5])/1000,float(split_lines[i][6])/1000)
-			q += 1
-		if q % 1000 == 0:
-			print q
-			print(run,lumi)
 		
+		
+		i += 1
 		try:
 			char = split_lines[i][0][0]
 		except: pass
