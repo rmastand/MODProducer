@@ -95,6 +95,7 @@ def read_lumi_by_ls(lumibyls_file):
 			q += 1
 		if q % 1000 == 0:
 			print q
+			print(run,lumi)
 		
 		try:
 			char = split_lines[i][0][0]
