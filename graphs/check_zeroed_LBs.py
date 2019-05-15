@@ -68,6 +68,7 @@ for lumi in lumi_id_to_lumin.keys():
 		zeroed_lumins[lumi] = 0
 print "number of zeroed LBs"
 print len(zeroed_lumins.keys())
+print(zeroed_lumins.keys())
 
 print len(lumi_id_to_lumin.keys())
 		
