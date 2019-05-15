@@ -91,13 +91,13 @@ def read_lumi_by_ls(lumibyls_file):
 		lumi_id_to_gps_times[(run,lumi)] = time.mktime(dt.timetuple())
 		if float(split_lines[i][6]) !=0:
 			lumi_id_to_lumin[(run,lumi)] = (float(split_lines[i][5])/1000,float(split_lines[i][6])/1000)
-			print("here")
+			
 		try:
 			char = split_lines[i][0][0]
 		except: pass
 	return lumi_id_to_gps_times,lumi_id_to_lumin
 lumi_id_to_gps_times,lumi_id_to_lumin = read_lumi_by_ls(lumibyls_file)
-
+print("here")
 total_eff_lumi = 0
 
 runA_blocks= []
