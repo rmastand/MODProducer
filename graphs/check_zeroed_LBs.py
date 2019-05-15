@@ -57,14 +57,19 @@ def is_lumi_valid(lumi_id, lumi_id_to_lumin):
 	"""
 	try:
 		luminosity = lumi_id_to_lumin[lumi_id]
-		if luminosity[1] != 0: #checks for nonzero recorded luminosity
-			return 1
-		else: return 0
 	except KeyError:
 		pass
 
 lumi_id_to_gps_times,lumi_id_to_lumin = read_lumi_by_ls(lumibyls_file)
 
+zeroed_lumins = {}
+
+for lumi in lumi_id_to_lumin.keys():
+	if lumi_id_to_lumin[key][1]==0:
+		zeroed_lumins[lumi] = 0
+print "number of zeroed LBs"
+print len(zeroed_lumins.keys())
+		
 
 def read_mod_file(mod_file,file_name,i,num_files,output):
 
@@ -95,29 +100,21 @@ def read_mod_file(mod_file,file_name,i,num_files,output):
 						
 			
 			elif "EndEvent" in line.split():
-				if is_lumi_valid((run,lumiBlock),lumi_id_to_lumin):
-					to_write += setw(event,20)+setw(run,15)+setw(lumiBlock,15)
-					for item in triggers_present:
-						to_write += item+','
-					to_write += "  "
-					for item in triggers_prescales:
-						to_write += item+','
-					to_write += "  "
-					for item in triggers_fired:
-						to_write += item+','
-					to_write += "\n"
-					output.write(to_write)
+				if (run,lumiBlock) in zeroed_lumins.keys():
+					zeroed_lumins[(run,lumiBlock)] += 1
+				
+				
 	
 
 i = 1
 num_files = 1223
-with open(output_file,"w") as output:
-	output.write(setw("EventNum",20)+setw("RunNum",15)+setw("LumiNum",15)+setw("Triggers Present",20)+setw("Trigger Prescales",20)+setw("Triggers Fired",20)+"\n")
-	for dire in all_MOD_dirs:
-		
-		for file in os.listdir(dire):
-			# if file has not already been processed
-			print "Processing file " + file + ", File "+str(i)+" of " + str(num_files)
-			file_trig_dict = read_mod_file(dire+"/"+file,file,i,num_files,output)
-			i += 1
-	
+for dire in all_MOD_dirs:
+
+	for file in os.listdir(dire):
+		# if file has not already been processed
+		print "Processing file " + file + ", File "+str(i)+" of " + str(num_files)
+		file_trig_dict = read_mod_file(dire+"/"+file,file,i,num_files,output)
+		i += 1
+
+for lumi in zeroed_lumins.keys():
+	print lumi, lumi_id_to_lumin[lumi][0], lumi_id_to_lumin[lumi][1], zeroed_lumins[lumi]
