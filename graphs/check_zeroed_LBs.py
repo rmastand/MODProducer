@@ -20,7 +20,7 @@ all_MOD_dirs = ["/Volumes/Seagate Backup Plus Drive/MITOpenDataProject/eos/opend
 	       "/Volumes/Seagate Backup Plus Drive/MITOpenDataProject/eos/opendata/cms/Run2011A/Jet/MOD/12Oct2013-v1/20001/"]
 
 lumibyls_file = sys.argv[1]
-run_alumi_file = sys.argv[3]
+run_alumi_file = sys.argv[2]
 
 runA_runs = []
 read_alumi_lines = open(run_alumi_file,"r").readlines()
