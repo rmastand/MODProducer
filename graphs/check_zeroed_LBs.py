@@ -64,7 +64,7 @@ lumi_id_to_gps_times,lumi_id_to_lumin = read_lumi_by_ls(lumibyls_file)
 zeroed_lumins = {}
 
 for lumi in lumi_id_to_lumin.keys():
-	if lumi_id_to_lumin[key][1]==0:
+	if lumi_id_to_lumin[lumi][1]==0:
 		zeroed_lumins[lumi] = 0
 print "number of zeroed LBs"
 print len(zeroed_lumins.keys())
