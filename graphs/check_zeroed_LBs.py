@@ -70,7 +70,7 @@ print "number of zeroed LBs"
 print len(zeroed_lumins.keys())
 		
 
-def read_mod_file(mod_file,file_name,i,num_files,output):
+def read_mod_file(mod_file,file_name,i,num_files):
 
 	with open(mod_file) as file:
 		
@@ -112,7 +112,7 @@ for dire in all_MOD_dirs:
 	for file in os.listdir(dire):
 		# if file has not already been processed
 		print "Processing file " + file + ", File "+str(i)+" of " + str(num_files)
-		file_trig_dict = read_mod_file(dire+"/"+file,file,i,num_files,output)
+		file_trig_dict = read_mod_file(dire+"/"+file,file,i,num_files)
 		i += 1
 
 for lumi in zeroed_lumins.keys():
