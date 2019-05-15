@@ -67,10 +67,12 @@ all_dirs = ["/Volumes/Seagate Backup Plus Drive/MITOpenDataProject/eos/opendata/
 
 def read_lumi_by_ls(lumibyls_file):
 	"""
+
 	returns two dicts with keys = (run,lumiBlock)
 	1st values: gps times
 	2nd values: (lumi_delivered, lumi_recorded)
 	"""
+	q = 0
 	lumibyls = open(lumibyls_file)
 	lines =  lumibyls.readlines()
 	split_lines = [line.split(",") for line in lines][2:]
@@ -88,10 +90,13 @@ def read_lumi_by_ls(lumibyls_file):
 		dt = datetime.datetime(mdy[2], mdy[0], mdy[1], hms[0], hms[1],hms[2])
 		lumi_id_to_gps_times[(run,lumi)] = time.mktime(dt.timetuple())
 		lumi_id_to_lumin[(run,lumi)] = (float(split_lines[i][5])/1000,float(split_lines[i][6])/1000)
+		if lumi_id_to_lumin[(run,lumi)][1] == 0:
+			q += 1
 		i += 1
 		try:
 			char = split_lines[i][0][0]
 		except: pass
+	print q
 	return lumi_id_to_gps_times,lumi_id_to_lumin
 lumi_id_to_gps_times,lumi_id_to_lumin = read_lumi_by_ls(lumibyls_file)
 
