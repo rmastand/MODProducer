@@ -80,6 +80,7 @@ def read_mod_file(mod_file,file_name,i,num_files):
 			# MOST CODE TAKEN FROM GET_TRIGGER_INFO.py
 			# keeps track of the run, lumiBlock
 			# this should signal each separate event
+			"""
 			if "BeginEvent" in line.split():
 				triggers_present = []
 				triggers_prescales = []
@@ -99,10 +100,11 @@ def read_mod_file(mod_file,file_name,i,num_files):
 					if int(line.split()[4]) == 1:
 						triggers_fired.append(line.split()[1])
 						
-			
+			"""
 			elif "EndEvent" in line.split():
-				if (run,lumiBlock) in zeroed_lumins.keys():
-					zeroed_lumins[(run,lumiBlock)] += 1
+				if is_lumi_valid((run,lumiBlock),lumi_id_to_lumin):
+					if (run,lumiBlock) in zeroed_lumins.keys():
+						zeroed_lumins[(run,lumiBlock)] += 1
 				
 				
 	
