@@ -90,7 +90,8 @@ def read_lumi_by_ls(lumibyls_file):
 		dt = datetime.datetime(mdy[2], mdy[0], mdy[1], hms[0], hms[1],hms[2])
 		lumi_id_to_gps_times[(run,lumi)] = time.mktime(dt.timetuple())
 		
-		lumi_id_to_lumin[(run,lumi)] = (float(split_lines[i][5])/1000,float(split_lines[i][6])/1000)
+		if float(split_lines[i][6])/1000 != 0:
+			lumi_id_to_lumin[(run,lumi)] = (float(split_lines[i][5])/1000,float(split_lines[i][6])/1000)
 		
 		try:
 			char = split_lines[i][0][0]
