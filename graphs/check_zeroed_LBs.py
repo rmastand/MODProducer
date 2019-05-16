@@ -66,8 +66,10 @@ def is_lumi_valid(lumi_id, lumi_id_to_lumin):
 	"""
 	try:
 		luminosity = lumi_id_to_lumin[lumi_id]
+		return 1
+	
 	except KeyError:
-		pass
+		return 0
 
 lumi_id_to_gps_times,lumi_id_to_lumin = read_lumi_by_ls(lumibyls_file)
 
