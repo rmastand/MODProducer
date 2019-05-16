@@ -13,8 +13,7 @@ import csv
 
 def setw(word,n):
 	return str(word)+" "*(n-len(word))
-all_MOD_dirs = ["/Volumes/Seagate Backup Plus Drive/MITOpenDataProject/eos/opendata/cms/Run2011A/Jet/MOD/12Oct2013-v1/10000/",
-	       "/Volumes/Seagate Backup Plus Drive/MITOpenDataProject/eos/opendata/cms/Run2011A/Jet/MOD/12Oct2013-v1/20000_a/",
+all_MOD_dirs = [ "/Volumes/Seagate Backup Plus Drive/MITOpenDataProject/eos/opendata/cms/Run2011A/Jet/MOD/12Oct2013-v1/20000_a/",
 		"/Volumes/Seagate Backup Plus Drive/MITOpenDataProject/eos/opendata/cms/Run2011A/Jet/MOD/12Oct2013-v1/20000_b/",
 	       "/Volumes/Seagate Backup Plus Drive/MITOpenDataProject/eos/opendata/cms/Run2011A/Jet/MOD/12Oct2013-v1/20000_c/",
 	       "/Volumes/Seagate Backup Plus Drive/MITOpenDataProject/eos/opendata/cms/Run2011A/Jet/MOD/12Oct2013-v1/20001/"]
@@ -120,6 +119,7 @@ def read_mod_file(mod_file,file_name,i,num_files):
 				# means we hit a new event
 				run,event,lumiBlock = line.split()[1],line.split()[2],line.split()[3]
 			elif "EndEvent" in line.split():
+				print "here
 				if is_lumi_valid((run,lumiBlock),lumi_id_to_lumin):
 					print (run,lumiBlock)
 					print zeroed_lumins.keys()
