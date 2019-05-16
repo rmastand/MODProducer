@@ -119,8 +119,9 @@ def read_mod_file(mod_file,file_name,i,num_files):
 				# means we hit a new event
 				run,event,lumiBlock = line.split()[1],line.split()[2],line.split()[3]
 			elif "EndEvent" in line.split():
-				print "here"
+				
 				if is_lumi_valid((run,lumiBlock),lumi_id_to_lumin):
+					print "here"
 					print (run,lumiBlock)
 					print zeroed_lumins.keys()
 					if (run,lumiBlock) in zeroed_lumins.keys():
